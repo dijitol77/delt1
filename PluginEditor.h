@@ -38,7 +38,6 @@ public:
     void cabOnButtonClicked();
     // Your implementation here
     void modelSelectChanged2();
-}
 
 private:
     // This reference is provided as a quick way for your editor to
