@@ -38,7 +38,6 @@ public:
     void cabOnButtonClicked();
     // Your implementation here
     void modelSelectChanged2();
-
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
@@ -104,7 +103,8 @@ private:
     void modelSelectChanged4();  // Add this line
 
     bool model_loaded = false;
-    };
+};  // This closing brace should be here
+
 
 public:
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
