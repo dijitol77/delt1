@@ -105,6 +105,7 @@ private:
     void modelSelectChanged4();  // Add this line
 
     bool model_loaded = false;
+    };
 
 public:
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
