@@ -17,13 +17,11 @@
 //==============================================================================
 /**
 */
-class ProteusAudioProcessorEditor  : public AudioProcessorEditor,
-                                       private Button::Listener,
-                                       private Slider::Listener                  
+class ProteusAudioProcessorEditor  : public AudioProcessorEditor
 {
 public:
     ProteusAudioProcessorEditor (ProteusAudioProcessor&);
-    ~ProteusAudioProcessorEditor();
+    ~ProteusAudioProcessorEditor() override;
 
     //==============================================================================
     void paint (Graphics&) override;
@@ -39,10 +37,10 @@ public:
     // Your implementation here
     void modelSelectChanged2();
 private:
-    // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
-    ProteusAudioProcessor& processor;
+    ProteusAudioProcessor& audioProcessor;
 
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
+};
     TextButton loadButton;
     void buttonClicked(Button* button) override;
     bool isValidFormat(File configFile);
