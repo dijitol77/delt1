@@ -33,6 +33,41 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     }
     modelSelect.onChange = [this] {modelSelectChanged();};
 
+    // Add these lines in the constructor
+addAndMakeVisible(modelSelect3);
+modelSelect3.setColour(juce::Label::textColourId, juce::Colours::black);
+modelSelect3.setScrollWheelEnabled(true);
+int c = 1;
+for (const auto& jsonFile : processor.jsonFiles) {
+    modelSelect3.addItem(jsonFile.getFileName(), c);
+    c += 1;
+}
+modelSelect3.onChange = [this] {modelSelect3Changed();};
+
+addAndMakeVisible(modelSelect4);
+modelSelect4.setColour(juce::Label::textColourId, juce::Colours::black);
+modelSelect4.setScrollWheelEnabled(true);
+c = 1;
+for (const auto& jsonFile : processor.jsonFiles) {
+    modelSelect4.addItem(jsonFile.getFileName(), c);
+    c += 1;
+}
+modelSelect4.onChange = [this] {modelSelect4Changed();};
+
+    addAndMakeVisible(loadButton2);
+loadButton2.setButtonText("LOAD MODEL 2");
+loadButton2.addListener(this);
+
+addAndMakeVisible(modelSelect2);
+modelSelect2.setColour(juce::Label::textColourId, juce::Colours::black);
+modelSelect2.setScrollWheelEnabled(true);
+int c2 = 1;
+for (const auto& jsonFile : processor.jsonFiles2) {
+    modelSelect2.addItem(jsonFile.getFileName(), c2);
+    c2 += 1;
+}
+modelSelect2.onChange = [this] {modelSelectChanged2();};
+
     auto font = modelLabel.getFont();
     float height = font.getHeight();
     font.setHeight(height);
@@ -69,6 +104,14 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odDriveKnob.setDoubleClickReturnValue(true, 0.5);
+
+    driveSliderAttach3 = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, "drive3", odDriveKnob3);
+    addAndMakeVisible(odDriveKnob3);
+    odDriveKnob3.setLookAndFeel(&bigKnobLAF);
+    odDriveKnob3.addListener(this);
+    odDriveKnob3.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    odDriveKnob3.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
+    odDriveKnob3.setDoubleClickReturnValue(true, 0.5);
 
     masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
     addAndMakeVisible(odLevelKnob);
@@ -109,7 +152,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     versionLabel.setFont(font);
 
     // Size of plugin GUI
-    setSize (500, 650);
+    setSize (1000, 650);
 
     resetImages();
 
@@ -158,6 +201,14 @@ void ProteusAudioProcessorEditor::resized()
     //Overall Widgets
     loadButton.setBounds(186, 48, 120, 24);
     modelSelect.setBounds(52, 11, 400, 28);
+    // Add these lines in the resized function after the existing controls for LSTM and LSTM2
+loadButton2.setBounds(186, 48 + 325, 120, 24); // Adjust the position according to your needs
+modelSelect2.setBounds(52, 11 + 325, 400, 28); // Adjust the position according to your needs
+// Add these lines in the resized() function
+modelSelect3.setBounds(52, 11, 400, 28); // Adjust these values as per your GUI layout
+modelSelect4.setBounds(52, 11, 400, 28); // Adjust these values as per your GUI layout
+odDriveKnob2.setBounds(668, 242, 190, 190);  // Position the new drive knob
+
     //modelLabel.setBounds(197, 2, 90, 25);
     versionLabel.setBounds(462, 632, 60, 10);
     cabOnButton.setBounds(115, 233, 53, 39);
@@ -311,6 +362,17 @@ void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
     }
 }
 
+void ProteusAudioProcessorEditor::buttonClicked2(juce::Button* button)
+{
+    //if (button == &odFootSw) {
+    //    odFootSwClicked();
+    if (button == &loadButton2) {
+        loadButtonClicked();
+    } else if (button == &cabOnButton) {
+        cabOnButtonClicked();
+    }
+}
+
 void ProteusAudioProcessorEditor::odFootSwClicked() {
     //if (processor.fw_state == 0)
     //    processor.fw_state = 1;
@@ -351,7 +413,44 @@ void ProteusAudioProcessorEditor::modelSelectChanged()
     repaint();
 }
 
+void ProteusAudioProcessorEditor::modelSelectChanged2()
+{
+    const int selectedFileIndex = modelSelect.getSelectedItemIndex();
+    if (selectedFileIndex >= 0 && selectedFileIndex < processor.jsonFiles.size() && processor.jsonFiles.empty() == false) { //check if correct 
+        if (processor.jsonFiles[selectedFileIndex].existsAsFile() && isValidFormat(processor.jsonFiles[selectedFileIndex])) {
+            processor.loadConfig(processor.jsonFiles[selectedFileIndex]);
+            processor.current_model_index = selectedFileIndex;
+            processor.saved_model = processor.jsonFiles[selectedFileIndex];
+        }
+    }
+    repaint();
+}
+// Add these functions
+void ProteusAudioProcessorEditor::modelSelect3Changed()
+{
+    const int selectedFileIndex = modelSelect3.getSelectedItemIndex();
+    if (selectedFileIndex >= 0 && selectedFileIndex < processor.jsonFiles.size() && processor.jsonFiles.empty() == false) { //check if correct 
+        if (processor.jsonFiles[selectedFileIndex].existsAsFile() && isValidFormat(processor.jsonFiles[selectedFileIndex])) {
+            processor.loadConfig3(processor.jsonFiles[selectedFileIndex]); // You need to implement this function
+            processor.current_model_index3 = selectedFileIndex; // You need to add this variable
+            processor.saved_model3 = processor.jsonFiles[selectedFileIndex]; // You need to add this variable
+        }
+    }
+    repaint();
+}
 
+void ProteusAudioProcessorEditor::modelSelect4Changed()
+{
+    const int selectedFileIndex = modelSelect4.getSelectedItemIndex();
+    if (selectedFileIndex >= 0 && selectedFileIndex < processor.jsonFiles.size() && processor.jsonFiles.empty() == false) { //check if correct 
+        if (processor.jsonFiles[selectedFileIndex].existsAsFile() && isValidFormat(processor.jsonFiles[selectedFileIndex])) {
+            processor.loadConfig4(processor.jsonFiles[selectedFileIndex]); // You need to implement this function
+            processor.current_model_index4 = selectedFileIndex; // You need to add this variable
+            processor.saved_model4 = processor.jsonFiles[selectedFileIndex]; // You need to add this variable
+        }
+    }
+    repaint();
+}
 void ProteusAudioProcessorEditor::resetImages()
 {
     loadFromFolder();

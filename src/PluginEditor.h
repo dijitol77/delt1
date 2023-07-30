@@ -32,6 +32,8 @@ public:
 
     void loadFromFolder();
     void resetImages();
+    // Add these lines in the public section
+
 
 private:
     // This reference is provided as a quick way for your editor to
@@ -56,6 +58,10 @@ private:
     Label versionLabel;
 
     ComboBox modelSelect;
+    // Add these lines in the private section
+    ComboBox modelSelect3;
+    ComboBox modelSelect4;
+    
 
     // Overdrive Widgets
     Slider ampBassKnob;
@@ -63,9 +69,17 @@ private:
     Slider ampTrebleKnob;
     Slider odDriveKnob;
     Slider odLevelKnob;
+    Slider odDriveKnob3;  // Add this line
+    Slider odLevelKnob3;  // Add this line
+    Slider odDriveKnob4;  // Add this line
+    Slider odLevelKnob4;  // Add this line
     //ImageButton odFootSw;
     //ImageButton odLED;
     ImageButton cabOnButton;
+    ImageButton odFootSw3;  // Add this line
+    ImageButton odLED3;  // Add this line
+    ImageButton odFootSw4;  // Add this line
+    ImageButton odLED4;  // Add this line
 
     
     // LookandFeels 
@@ -78,8 +92,14 @@ private:
     AudioProcessorParameter* getParameter(const String& paramId);
  
     void odFootSwClicked();
-    void modelSelectChanged();
+    void modelSelectChanged();// Add this line
+    void modelSelect3Changed();// Add this line
+    void modelSelect4Changed();// Add this line
     void cabOnButtonClicked();
+    void odFootSwClicked3();  // Add this line
+    void modelSelectChanged3();  // Add this line
+    void odFootSwClicked4();  // Add this line
+    void modelSelectChanged4();  // Add this line
 
     bool model_loaded = false;
 
@@ -89,6 +109,10 @@ public:
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach3;  // Add this line
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach3;  // Add this line
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach4;  // Add this line
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach4;  // Add this line
  
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
 };
