@@ -33,13 +33,14 @@ public:
     void loadFromFolder();
     void resetImages();
     // Add these lines in the public section
-    void buttonClicked2(Button* button) override;
+    void buttonClicked2(Button* button);
     void loadButtonClicked();
     void cabOnButtonClicked();
     // Your implementation here
+    void modelSelectChanged2();
 }
 
-void modelSelectChanged2();
+
 
 
 private:
@@ -50,11 +51,8 @@ private:
     
 
     TextButton loadButton;
-    virtual void buttonClicked(Button* button) override;
-    
-
+    void buttonClicked(Button* button) override;
     bool isValidFormat(File configFile);
-    void loadButtonClicked();
 
     //Image background = ImageCache::getFromMemory(BinaryData::smart_pedal_jpg, BinaryData::smart_pedal_jpgSize);
     // LookandFeels and Graphics
