@@ -36,7 +36,6 @@ public:
     void buttonClicked2(Button* button) override;
     void loadButtonClicked();
     void cabOnButtonClicked();
-    void ProteusAudioProcessorEditor::cabOnButtonClicked() {
     // Your implementation here
 }
 
@@ -49,9 +48,6 @@ private:
     ProteusAudioProcessor& processor;
 
     
-
-    TextButton cabOnButton;
-    virtual void buttonClicked(Button* button) override;
 
     TextButton loadButton;
     virtual void buttonClicked(Button* button) override;
