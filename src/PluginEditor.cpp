@@ -46,6 +46,7 @@ modelSelect3.onChange = [this] {modelSelect3Changed();};
 
 addAndMakeVisible(modelSelect4);
 modelSelect4.setColour(juce::Label::textColourId, juce::Colours::black);
+
 modelSelect4.setScrollWheelEnabled(true);
 c = 1;
 for (const auto& jsonFile : processor.jsonFiles) {
@@ -58,15 +59,7 @@ modelSelect4.onChange = [this] {modelSelect4Changed();};
 loadButton2.setButtonText("LOAD MODEL 2");
 loadButton2.addListener(this);
 
-addAndMakeVisible(modelSelect2);
-modelSelect2.setColour(juce::Label::textColourId, juce::Colours::black);
-modelSelect2.setScrollWheelEnabled(true);
-int c2 = 1;
-for (const auto& jsonFile : processor.jsonFiles2) {
-    modelSelect2.addItem(jsonFile.getFileName(), c2);
-    c2 += 1;
-}
-modelSelect2.onChange = [this] {modelSelectChanged2();};
+
 
     auto font = modelLabel.getFont();
     float height = font.getHeight();

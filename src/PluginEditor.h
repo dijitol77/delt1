@@ -33,6 +33,14 @@ public:
     void loadFromFolder();
     void resetImages();
     // Add these lines in the public section
+    void buttonClicked2(Button* button) override;
+    void loadButtonClicked();
+    void cabOnButtonClicked();
+    void ProteusAudioProcessorEditor::cabOnButtonClicked() {
+    // Your implementation here
+}
+
+void modelSelectChanged2();
 
 
 private:
@@ -40,9 +48,14 @@ private:
     // access the processor object that created it.
     ProteusAudioProcessor& processor;
 
+    
+
+    TextButton cabOnButton;
+    virtual void buttonClicked(Button* button) override;
 
     TextButton loadButton;
     virtual void buttonClicked(Button* button) override;
+    
 
     bool isValidFormat(File configFile);
     void loadButtonClicked();
@@ -81,6 +94,7 @@ private:
     ImageButton odFootSw4;  // Add this line
     ImageButton odLED4;  // Add this line
 
+    TextButton loadButton2;
     
     // LookandFeels 
     //myLookAndFeel blackHexKnobLAF;
