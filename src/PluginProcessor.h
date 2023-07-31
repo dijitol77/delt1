@@ -54,8 +54,7 @@ public:
 
     void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
     void processBlockBypassed (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
-void processBlockRealtime (juce::AudioBuffer<float>&, juce::MidiBuffer&);
-
+    void processBlockRealtime (juce::AudioBuffer<float>&, juce::MidiBuffer&);
 
     //==============================================================================
     juce::AudioProcessorEditor* createEditor() override;
@@ -100,8 +99,6 @@ private:
     float previousDriveValue = 0.5f;
     float previousMasterValue = 0.5f;
 
-    // Add these private member variables
-   
     RT_LSTM LSTM;
     RT_LSTM LSTM2;
 
