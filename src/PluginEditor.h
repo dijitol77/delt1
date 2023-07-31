@@ -31,6 +31,10 @@ public:
 
     void loadFromFolder();
     void resetImages();
+    void buttonClicked(juce::Button* button) override;
+    void loadButtonClicked();
+    void cabOnButtonClicked();
+    void modelSelectChanged2();
 
 private:
     // This reference is provided as a quick way for your editor to
