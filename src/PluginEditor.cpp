@@ -37,7 +37,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
 addAndMakeVisible(modelSelect3);
     modelSelect3.setColour(juce::Label::textColourId, juce::Colours::black);
     modelSelect3.setScrollWheelEnabled(true);
-    int c = 1;
+    // Remove this line as c is already defined above
     for (const auto& jsonFile : processor.jsonFiles) {
         modelSelect3.addItem(jsonFile.getFileName(), c);
         c += 1;
