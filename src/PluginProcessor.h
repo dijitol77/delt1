@@ -11,7 +11,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-
+#include "RT_LSTM.h"
 
 #define GAIN_ID "drive"
 #define GAIN_NAME "Drive"
@@ -37,24 +37,31 @@ class ProteusAudioProcessor  : public AudioProcessor
 public:
     //==============================================================================
     ProteusAudioProcessor();
-    ~ProteusAudioProcessor();
+    ~ProteusAudioProcessor() override;
 
     //==============================================================================
-    void prepareToPlay(double sampleRate, int samplesPerBlock) override;
+    void loadConfig2();
+    void loadConfig3();
+    void loadConfig4();
+
+    //==============================================================================
+    void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
 
-   #ifndef JucePlugin_PreferredChannelConfigurations
-    bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
-   #endif
+#ifndef JucePlugin_PreferredChannelConfigurations
+    bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
+#endif
 
-    void processBlock(AudioBuffer<float>&, MidiBuffer&) override;
+    void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+    void processBlockBypassed (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+    void processBlockRealtime (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
 
     //==============================================================================
-    AudioProcessorEditor* createEditor() override;
+    juce::AudioProcessorEditor* createEditor() override;
     bool hasEditor() const override;
 
     //==============================================================================
-    const String getName() const override;
+    const juce::String getName() const override;
 
     bool acceptsMidi() const override;
     bool producesMidi() const override;
@@ -64,41 +71,13 @@ public:
     //==============================================================================
     int getNumPrograms() override;
     int getCurrentProgram() override;
-    void setCurrentProgram(int index) override;
-    const String getProgramName(int index) override;
-    void changeProgramName(int index, const String& newName) override;
+    void setCurrentProgram (int index) override;
+    const juce::String getProgramName (int index) override;
+    void changeProgramName (int index, const juce::String& newName) override;
 
     //==============================================================================
-    void getStateInformation(MemoryBlock& destData) override;
-    void setStateInformation(const void* data, int sizeInBytes) override;
-
-    void set_ampEQ(float bass_slider, float mid_slider, float treble_slider);
-
-    // Files and configuration
-    void loadConfig(File configFile);
-
-    // Pedal/amp states
-    int fw_state = 1;       // 0 = off, 1 = on
-    int cab_state = 1; // 0 = off, 1 = on
-
-    File currentDirectory = File::getCurrentWorkingDirectory().getFullPathName();
-    int current_model_index = 0;
-
-    Array<File> fileArray;
-    std::vector<File> jsonFiles;
-    int num_models = 0;
-    File folder = File::getSpecialLocation(File::userDesktopDirectory);
-    File saved_model;
-
-    AudioProcessorValueTreeState treeState;
-
-    bool conditioned = false;
-
-    const char* char_filename = "";
-
-    int pauseVolume = 3;
-
-    bool model_loaded = false;
+    void getStateInformation (juce::MemoryBlock& destData) override;
+    void setStateInformation (const void* data, int sizeInBytes) override;
 
 private:
 
@@ -111,10 +90,17 @@ private:
     std::atomic<float>* midParam = nullptr;
     std::atomic<float>* trebleParam = nullptr;
 
-    float previousDriveValue = 0.5;
-    float previousMasterValue = 0.5;
-    //float steppedValue1 = 0.0;
+    juce::AudioProcessorValueTreeState treeState;
+    juce::AudioParameterFloat* driveParam;
+    juce::AudioParameterFloat* masterParam;
+    juce::AudioParameterFloat* bassParam;
+    juce::AudioParameterFloat* midParam;
+    juce::AudioParameterFloat* trebleParam;
+    float previousDriveValue = 0.5f;
+    float previousMasterValue = 0.5f;
 
+    // Add these private member variables
+   
     RT_LSTM LSTM;
     RT_LSTM LSTM2;
 
