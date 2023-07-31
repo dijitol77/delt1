@@ -11,7 +11,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "RT_LSTM.h"
+#include "RTNeuralLSTM.h"
 
 #define GAIN_ID "drive"
 #define GAIN_NAME "Drive"
