@@ -124,17 +124,3 @@ private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessor)
 };
-class ProteusAudioProcessorEditor  : public juce::AudioProcessorEditor
-{
-public:
-    // ...
-    void buttonClicked2();
-    void loadButtonClicked();
-    void cabOnButtonClicked();
-    void modelSelectChanged2()
-    // ...
-    juce::TextButton loadButton2;
-    juce::TextButton cabOnButton;
-    ProteusAudioProcessor& processor;
-    // ...
-};
