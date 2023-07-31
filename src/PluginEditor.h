@@ -7,6 +7,7 @@
 
   ==============================================================================
 */
+
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
@@ -15,8 +16,10 @@
 
 //==============================================================================
 /**
-*/class ProteusAudioProcessorEditor  : public juce::AudioProcessorEditor,
-                                     public juce::Button::Listener
+*/
+class ProteusAudioProcessorEditor  : public AudioProcessorEditor,
+                                       private Button::Listener,
+                                       private Slider::Listener                  
 {
 public:
     ProteusAudioProcessorEditor (ProteusAudioProcessor&);
@@ -25,6 +28,8 @@ public:
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
+    std::unique_ptr<FileChooser> myChooser;
+
     void loadFromFolder();
     void resetImages();
     void buttonClicked(juce::Button* button) override;
@@ -38,23 +43,16 @@ private:
     ProteusAudioProcessor& audioProcessor;
 
     TextButton loadButton;
+    TextButton loadButton2; // Add the declaration of loadButton2
     Label modelLabel;
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
     ImageButton cabOnButton;
     Slider odDriveKnob;
     Slider odLevelKnob;
-    Label modelLabel;
     ComboBox modelSelect;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
-    TextButton loadButton;
-    // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
-    ProteusAudioProcessor& processor;
-
-    TextButton loadButton;
-    TextButton loadButton2; // Add the declaration of loadButton2
 
     virtual void buttonClicked(Button* button) override;
 
@@ -72,12 +70,12 @@ private:
     Label versionLabel;
 
     // Existing ComboBoxes
-    juce::ComboBox modelSelect;
     juce::ComboBox modelSelect2;
 
     // New ComboBoxes for the third and fourth model
     juce::ComboBox modelSelect3;
     juce::ComboBox modelSelect4;
+
 
     // Overdrive Widgets
     Slider ampBassKnob;
@@ -89,6 +87,7 @@ private:
     //ImageButton odLED;
     ImageButton cabOnButton;
 
+    
     // LookandFeels 
     //myLookAndFeel blackHexKnobLAF;
     myLookAndFeel bigKnobLAF;
@@ -113,6 +112,6 @@ public: // Public access specifier should be placed here
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
-
+ 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
 };
