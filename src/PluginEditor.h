@@ -15,18 +15,16 @@
 
 //==============================================================================
 /**
-*/
-class ProteusAudioProcessorEditor  : public juce::AudioProcessorEditor,
+*/class ProteusAudioProcessorEditor  : public juce::AudioProcessorEditor,
                                      public juce::Button::Listener
 {
 public:
-    ProteusAudioProcessorEditor(ProteusAudioProcessor& p);
+    ProteusAudioProcessorEditor (ProteusAudioProcessor&);
+    ~ProteusAudioProcessorEditor();
 
     //==============================================================================
-    void paint(Graphics&) override;
+    void paint (juce::Graphics&) override;
     void resized() override;
-    std::unique_ptr<FileChooser> myChooser;
-
     void loadFromFolder();
     void resetImages();
     void buttonClicked(juce::Button* button) override;
@@ -35,8 +33,13 @@ public:
     void modelSelectChanged2();
 
 private:
+    // This reference is provided as a quick way for your editor to
+    // access the processor object that created it.
+    ProteusAudioProcessor& audioProcessor;
 
-myLookAndFeel bigKnobLAF;
+    TextButton loadButton;
+    Label modelLabel;
+    myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
     ImageButton cabOnButton;
     Slider odDriveKnob;
