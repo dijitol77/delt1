@@ -17,11 +17,13 @@
 //==============================================================================
 /**
 */
-class ProteusAudioProcessorEditor  : public AudioProcessorEditor
+class ProteusAudioProcessorEditor  : public AudioProcessorEditor,
+                                       private Button::Listener,
+                                       private Slider::Listener                  
 {
 public:
     ProteusAudioProcessorEditor (ProteusAudioProcessor&);
-    ~ProteusAudioProcessorEditor() override;
+    ~ProteusAudioProcessorEditor();
 
     //==============================================================================
     void paint (Graphics&) override;
@@ -37,7 +39,9 @@ public:
     // Your implementation here
     void modelSelectChanged2();
 private:
-    ProteusAudioProcessor& audioProcessor;
+    // This reference is provided as a quick way for your editor to
+    // access the processor object that created it.
+    ProteusAudioProcessor& processor;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
 };

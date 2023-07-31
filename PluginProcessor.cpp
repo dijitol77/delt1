@@ -11,9 +11,15 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-//==============================================================================
+#define GAIN_MODULE1_NAME "Module1"
+#define GAIN_MODULE2_ID "Module2_ID"
+#define GAIN_MODULE2_NAME "Module2"
+#define GAIN_ID3 "Gain3_ID"
+#define GAIN_NAME3 "Gain3"
+#define GAIN_ID4 "Gain4_ID"
+#define GAIN_NAME4 "Gain4"
+
 ProteusAudioProcessor::ProteusAudioProcessor()
-#ifndef JucePlugin_PreferredChannelConfigurations
     : AudioProcessor(BusesProperties()
 #if ! JucePlugin_IsMidiEffect
 #if ! JucePlugin_IsSynth
@@ -23,8 +29,10 @@ ProteusAudioProcessor::ProteusAudioProcessor()
 #endif
     ),
 
-    // Your code for treeState initialization remains unchanged
+    // Your code for treeState initialization remains 
+    firmwareState(1), // Initialize firmwareState with the desired value
     treeState(*this, nullptr, "PARAMETER", {
+
         // Gain for Module 1
         std::make_unique<AudioParameterFloat>(GAIN_MODULE1_ID, GAIN_MODULE1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
         // Gain for Module 2
