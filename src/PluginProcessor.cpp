@@ -71,6 +71,8 @@ ProteusAudioProcessor::ProteusAudioProcessor()
 
 ProteusAudioProcessor::~ProteusAudioProcessor()
 {
+}
+
   void ProteusAudioProcessor::loadConfig2()
 {
     // Load configuration for the second model (modelSelect2)
@@ -123,7 +125,6 @@ void ProteusAudioProcessor::loadConfig4()
         // Set parameters in the treeState or any other necessary actions
         // ...
     }
-}
 }
 
 //==============================================================================
@@ -211,6 +212,20 @@ void ProteusAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock
 
     // Set up IR
     cabSimIRa.prepare(spec);
+
+    // Initialize driveSliderAttach3
+    driveSliderAttach3.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    driveSliderAttach3.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+    addAndMakeVisible(driveSliderAttach3);
+
+    // Initialize odDriveKnob3
+    odDriveKnob3.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    odDriveKnob3.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+    addAndMakeVisible(odDriveKnob3);
+
+    // Other UI component initialization...
+
+    // Other code...
 }
 
 void ProteusAudioProcessor::releaseResources()
@@ -335,15 +350,13 @@ void ProteusAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer&
         buffer.applyGain(2.0);
     }
 
-    // Master Volume 
-    // Apply ramped changes for gain smoothing
-    if (masterValue == previousMasterValue)
-    {
-        buffer.applyGain(masterValue);
+        // Clip
+        for (int i = 0; i < buffer.getNumSamples(); i++) {
+            if (buffer.getSample(ch, i) > 1.0f) {
+                buffer.setSample(ch, i, 1.0f);
     }
-    else {
-        buffer.applyGainRamp(0, buffer.getNumSamples(), previousMasterValue, masterValue);
-        previousMasterValue = masterValue;
+            else if (buffer.getSample(ch, i) < -1.0f) {
+                buffer.setSample(ch, i, -1.0f);
     }
 
     // Smooth pop sound when changing models
@@ -408,7 +421,7 @@ bool ProteusAudioProcessor::hasEditor() const
 
 AudioProcessorEditor* ProteusAudioProcessor::createEditor()
 {
-    return new ProteusAudioProcessorEditor (*this);
+    return new ProteusAudioProcessorEditor(*this);
 }
 
 //==============================================================================
@@ -418,9 +431,20 @@ void ProteusAudioProcessor::getStateInformation(MemoryBlock& destData)
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
 
-    std::unique_ptr<XmlElement> xml (treeState.state.createXml());
-    copyXmlToBinary (*xml, destData);
+    // TreeState will handle saving the parameters, so you don't need to add any code here.
+    // The treeState state will be automatically saved by the host.
+
 }
+
+void ProteusAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
+{
+    // You should use this method to restore your parameters from this memory block,
+    // whose contents will have been created by the getStateInformation() call.
+    
+    // TreeState will handle restoring the parameters, so you don't need to add any code here.
+    // The treeState state will be automatically restored by the host.
+}
+
 
 void ProteusAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
@@ -432,6 +456,7 @@ void ProteusAudioProcessor::setStateInformation(const void* data, int sizeInByte
         if (xmlState->hasTagName (treeState.state.getType()))
             treeState.state = ValueTree::fromXml (*xmlState);
 }
+
 // This creates new instances of the plugin..
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
