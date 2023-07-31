@@ -70,6 +70,59 @@ ProteusAudioProcessor::ProteusAudioProcessor()
 
 ProteusAudioProcessor::~ProteusAudioProcessor()
 {
+  void ProteusAudioProcessor::loadConfig2()
+{
+    // Load configuration for the second model (modelSelect2)
+    // Implement the necessary logic to load the configuration based on the selected model
+    // For example, you can use the selected index `current_model_index2` to access the correct configuration file.
+    // You can use the fileArray and jsonFiles arrays to retrieve the file path of the selected configuration.
+
+    // Example code: (This is just a placeholder and needs to be replaced with actual implementation)
+    if (current_model_index2 >= 0 && current_model_index2 < jsonFiles.size())
+    {
+        File configFile = jsonFiles[current_model_index2];
+        // Load configuration from configFile
+        // ...
+        // Set parameters in the treeState or any other necessary actions
+        // ...
+    }
+}
+
+void ProteusAudioProcessor::loadConfig3()
+{
+    // Load configuration for the third model (modelSelect3)
+    // Implement the necessary logic to load the configuration based on the selected model
+    // For example, you can use the selected index `current_model_index3` to access the correct configuration file.
+    // You can use the fileArray and jsonFiles arrays to retrieve the file path of the selected configuration.
+
+    // Example code: (This is just a placeholder and needs to be replaced with actual implementation)
+    if (current_model_index3 >= 0 && current_model_index3 < jsonFiles.size())
+    {
+        File configFile = jsonFiles[current_model_index3];
+        // Load configuration from configFile
+        // ...
+        // Set parameters in the treeState or any other necessary actions
+        // ...
+    }
+}
+
+void ProteusAudioProcessor::loadConfig4()
+{
+    // Load configuration for the fourth model (modelSelect4)
+    // Implement the necessary logic to load the configuration based on the selected model
+    // For example, you can use the selected index `current_model_index4` to access the correct configuration file.
+    // You can use the fileArray and jsonFiles arrays to retrieve the file path of the selected configuration.
+
+    // Example code: (This is just a placeholder and needs to be replaced with actual implementation)
+    if (current_model_index4 >= 0 && current_model_index4 < jsonFiles.size())
+    {
+        File configFile = jsonFiles[current_model_index4];
+        // Load configuration from configFile
+        // ...
+        // Set parameters in the treeState or any other necessary actions
+        // ...
+    }
+}
 }
 
 //==============================================================================
