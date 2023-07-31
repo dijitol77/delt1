@@ -34,25 +34,25 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     modelSelect.onChange = [this] {modelSelectChanged();};
 
     // Add these lines in the constructor
-    addAndMakeVisible(modelSelect3);
-    modelSelect3.setColour(juce::Label::textColourId, juce::Colours::black);
-    modelSelect3.setScrollWheelEnabled(true);
-    for (const auto& jsonFile : processor.jsonFiles) {
-        modelSelect3.addItem(jsonFile.modelName, c); // Replace getModelName() with the actual property/method representing the model name
-        c += 1;
-    }
-    modelSelect3.onChange = [this] { modelSelect3Changed(); };
+   // Add these lines in the constructor
+addAndMakeVisible(modelSelect3);
+modelSelect3.setColour(juce::Label::textColourId, juce::Colours::black);
+modelSelect3.setScrollWheelEnabled(true);
+for (const auto& jsonFile : processor.jsonFiles) {
+    modelSelect3.addItem(jsonFile.modelName, c); // Replace getModelName() with the actual property/method representing the model name
+    c += 1;
+}
+modelSelect3.onChange = [this] { modelSelect3Changed(); };
 
-    addAndMakeVisible(modelSelect4);
-    modelSelect4.setColour(juce::Label::textColourId, juce::Colours::black);
-    modelSelect4.setScrollWheelEnabled(true);
-    // Remove this line as c is already defined above
-    for (const auto& jsonFile : processor.jsonFiles) {
-        modelSelect4.addItem(jsonFile.modelName, c); // Replace getModelName() with the actual property/method representing the model name
-        c += 1;
-    }
-    modelSelect4.onChange = [this] { modelSelect4Changed(); };
-
+addAndMakeVisible(modelSelect4);
+modelSelect4.setColour(juce::Label::textColourId, juce::Colours::black);
+modelSelect4.setScrollWheelEnabled(true);
+// Remove this line as c is already defined above
+for (const auto& jsonFile : processor.jsonFiles) {
+    modelSelect4.addItem(jsonFile.modelName, c); // Replace getModelName() with the actual property/method representing the model name
+    c += 1;
+}
+modelSelect4.onChange = [this] { modelSelect4Changed(); };
     addAndMakeVisible(loadButton2);
     loadButton2.setButtonText("LOAD MODEL 2");
     loadButton2.addListener(this);
