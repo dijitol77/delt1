@@ -23,16 +23,19 @@ ProteusAudioProcessor::ProteusAudioProcessor()
 #endif
     ),
 
-    treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN_ID, GAIN_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
-                        std::make_unique<AudioParameterFloat>(BASS_ID, BASS_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                        std::make_unique<AudioParameterFloat>(MID_ID, MID_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                        std::make_unique<AudioParameterFloat>(TREBLE_ID, TREBLE_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                        std::make_unique<AudioParameterFloat>(MASTER_ID, MASTER_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5) })
-
+     treeState(*this, nullptr, "PARAMETER", { 
+        std::make_unique<AudioParameterFloat>(GAIN_ID1, GAIN_NAME1, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
+        std::make_unique<AudioParameterFloat>(GAIN_ID2, GAIN_NAME2, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
+        std::make_unique<AudioParameterFloat>(BASS_ID, BASS_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+        std::make_unique<AudioParameterFloat>(MID_ID, MID_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+        std::make_unique<AudioParameterFloat>(TREBLE_ID, TREBLE_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+        std::make_unique<AudioParameterFloat>(MASTER_ID, MASTER_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5) 
+    })
     
 #endif
 {
-    driveParam = treeState.getRawParameterValue (GAIN_ID);
+     driveParam1 = treeState.getRawParameterValue (GAIN_ID1);
+    driveParam2 = treeState.getRawParameterValue (GAIN_ID2);
     masterParam = treeState.getRawParameterValue (MASTER_ID);
     bassParam = treeState.getRawParameterValue (BASS_ID);
     midParam = treeState.getRawParameterValue (MID_ID);
@@ -179,7 +182,8 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
 {
     ScopedNoDenormals noDenormals;
 
-    auto driveValue = static_cast<float> (driveParam->load());
+   auto driveValue1 = static_cast<float> (driveParam1->load());
+    auto driveValue2 = static_cast<float> (driveParam2->load());
     auto masterValue = static_cast<float> (masterParam->load());
     auto bassValue = static_cast<float> (bassParam->load());
     auto midValue = static_cast<float> (midParam->load());
@@ -198,20 +202,41 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
         
         if (conditioned == false) {
             // Apply ramped changes for gain smoothing
-            if (driveValue == previousDriveValue)
+         if (driveValue1 == previousDriveValue1)
             {
-                buffer.applyGain(driveValue*2.5);
+                buffer.applyGain(driveValue1*2.5);
             }
-             else {
-                buffer.applyGainRamp(0, (int) buffer.getNumSamples(), previousDriveValue * 2.5, driveValue * 2.5);
-                previousDriveValue = driveValue;
+            else {
+                buffer.applyGainRamp(0, (int) buffer.getNumSamples(), previousDriveValue1 * 2.5, driveValue1 * 2.5);
+                previousDriveValue1 = driveValue1;
             }
-            auto block44k = resampler.processIn(block);
-            for (int ch = 0; ch < buffer.getNumChannels(); ++ch)
+
+            // ... rest of the function ...
+
+            // Apply LSTM model
+            if (ch == 0) {
+                LSTM1.process(block44k.getChannelPointer(0), block44k.getChannelPointer(0), (int)block44k.getNumSamples());
+            }
+            else if (ch == 1) {
+                LSTM1.process(block44k.getChannelPointer(1), block44k.getChannelPointer(1), (int)block44k.getNumSamples());
+            }
+
+            // ... rest of the function ...
+
+            if (driveValue2 == previousDriveValue2)
             {
+                buffer.applyGain(driveValue2*2.5);
+            }
+            else {
+                buffer.applyGainRamp(0, (int) buffer.getNumSamples(), previousDriveValue2 * 2.5, driveValue2 * 2.5);
+                previousDriveValue2 = driveValue2;
+            }
+
+            // ... rest of the function ...
+    
                 // Apply LSTM model
                 if (ch == 0) {
-                    LSTM.process(block44k.getChannelPointer(0), block44k.getChannelPointer(0), (int)block44k.getNumSamples());
+          LSTM2.process(block44k.getChannelPointer(0), block44k.getChannelPointer(0), (int)block44k.getNumSamples());
                 }
                 else if (ch == 1) {
                     LSTM2.process(block44k.getChannelPointer(1), block44k.getChannelPointer(1), (int)block44k.getNumSamples());
@@ -225,13 +250,21 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
             auto block44k = resampler.processIn(block);
             for (int ch = 0; ch < buffer.getNumChannels(); ++ch)
             {
-                // Apply LSTM model
-                if (ch == 0) {
-                    LSTM.process(block44k.getChannelPointer(0), driveValue, block44k.getChannelPointer(0), (int)block44k.getNumSamples());
+                 // Apply LSTM model
+            if (ch == 0) {
+                LSTM1.process(block44k.getChannelPointer(0), driveValue1, block44k.getChannelPointer(0), (int)block44k.getNumSamples());
+            }
+            else if (ch == 1) {
+                LSTM1.process(block44k.getChannelPointer(1), driveValue1, block44k.getChannelPointer(1), (int)block44k.getNumSamples());
                 }
-                else if (ch == 1) {
-                    LSTM2.process(block44k.getChannelPointer(1), driveValue, block44k.getChannelPointer(1), (int)block44k.getNumSamples());
-                }
+                 // ... rest of the function ...
+
+            // Apply LSTM model
+            if (ch == 0) {
+                LSTM2.process(block44k.getChannelPointer(0), driveValue2, block44k.getChannelPointer(0), (int)block44k.getNumSamples());
+            }
+            else if (ch == 1) {
+                LSTM2.process(block44k.getChannelPointer(1), driveValue2, block44k.getChannelPointer(1), (int)block44k.getNumSamples());
             }
             resampler.processOut(block44k, block);
         }
