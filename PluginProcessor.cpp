@@ -22,15 +22,21 @@ ProteusAudioProcessor::ProteusAudioProcessor()
         .withOutput("Output", AudioChannelSet::stereo(), true)
 #endif
     ),
-    treeState(*this, nullptr, "PARAMETER", { 
-        std::make_unique<AudioParameterFloat>(GAIN_ID, GAIN_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
-        std::make_unique<AudioParameterFloat>(BASS_ID, BASS_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-        std::make_unique<AudioParameterFloat>(MID_ID, MID_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-        std::make_unique<AudioParameterFloat>(TREBLE_ID, TREBLE_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-        std::make_unique<AudioParameterFloat>(MASTER_ID, MASTER_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5),
+
+    // Your code for treeState initialization remains unchanged
+    treeState(*this, nullptr, "PARAMETER", {
+        // Gain for Module 1
+        std::make_unique<AudioParameterFloat>(GAIN_MODULE1_ID, GAIN_MODULE1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
+        // Gain for Module 2
+        std::make_unique<AudioParameterFloat>(GAIN_MODULE2_ID, GAIN_MODULE2_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
+        // Other parameters for both modules
+        std::make_unique<AudioParameterFloat>(BASS_ID, "Bass", NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+        std::make_unique<AudioParameterFloat>(MID_ID, "Mid", NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+        std::make_unique<AudioParameterFloat>(TREBLE_ID, "Treble", NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+        std::make_unique<AudioParameterFloat>(MASTER_ID, "Master", NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
         std::make_unique<AudioParameterFloat>(GAIN_ID3, GAIN_NAME3, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f), // Add this line for LSTM3
-        std::make_unique<AudioParameterFloat>(GAIN_ID4, GAIN_NAME4, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f) }) // Add this line for LSTM4
-#endif
+        std::make_unique<AudioParameterFloat>(GAIN_ID4, GAIN_NAME4, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f) // Add this line for LSTM4
+    })
 {
     driveParam = treeState.getRawParameterValue(GAIN_ID);
     masterParam = treeState.getRawParameterValue(MASTER_ID);
