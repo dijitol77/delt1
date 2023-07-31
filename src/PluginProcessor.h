@@ -118,6 +118,10 @@ private:
     RT_LSTM LSTM;
     RT_LSTM LSTM2;
 
+    // Add these declarations here
+    LSTMType LSTM3;
+    LSTMType LSTM4;
+
     dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> dcBlocker;
 
     chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>> resampler;
