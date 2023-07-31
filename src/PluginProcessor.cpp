@@ -64,8 +64,8 @@ ProteusAudioProcessor::ProteusAudioProcessor()
     cabSimIRa.load(BinaryData::default_ir_wav, BinaryData::default_ir_wavSize);
 
     // Add these declarations at the appropriate location in your code
-    LSTMType LSTM3;
-    LSTMType LSTM4;
+    RT_LSTM LSTM3;
+    RT_LSTM LSTM4;
 }
 
 ProteusAudioProcessor::~ProteusAudioProcessor()
