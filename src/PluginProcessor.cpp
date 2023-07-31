@@ -430,16 +430,41 @@ AudioProcessorEditor* ProteusAudioProcessor::createEditor()
 }
 
 //==============================================================================
-void ProteusAudioProcessor::getStateInformation(MemoryBlock& destData)
+void ProteusAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
-    // ... (implementation of getStateInformation)
+    // Create an XmlElement object to store the current state of your parameters
+    std::unique_ptr<XmlElement> xml (new XmlElement ("MyPluginSettings"));
+
+    // Store the value of each parameter in the XmlElement
+    xml->setAttribute ("driveParam", *driveParam);
+    xml->setAttribute ("masterParam", *masterParam);
+    xml->setAttribute ("bassParam", *bassParam);
+    xml->setAttribute ("midParam", *midParam);
+    xml->setAttribute ("trebleParam", *trebleParam);
+
+    // Convert the XmlElement to a string and store it in the MemoryBlock
+    copyXmlToBinary (*xml, destData);
 }
 
-void ProteusAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
+void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // ... (implementation of setStateInformation)
-}
+    // Convert the data back into an XmlElement
+    std::unique_ptr<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
 
+    // If the XmlElement isn't null and its tag matches the one you used when saving, you can restore the parameters
+    if (xmlState != nullptr)
+    {
+        if (xmlState->hasTagName ("MyPluginSettings"))
+        {
+            // Restore the parameters from the XmlElement
+            *driveParam = xmlState->getDoubleAttribute ("driveParam", 1.0);
+            *masterParam = xmlState->getDoubleAttribute ("masterParam", 1.0);
+            *bassParam = xmlState->getDoubleAttribute ("bassParam", 1.0);
+            *midParam = xmlState->getDoubleAttribute ("midParam", 1.0);
+            *trebleParam = xmlState->getDoubleAttribute ("trebleParam", 1.0);
+        }
+    }
+}
 // This creates new instances of the plugin..
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
