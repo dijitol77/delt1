@@ -51,6 +51,9 @@ private:
     Slider odDriveKnob;
     Slider odLevelKnob;
     ComboBox modelSelect;
+    ComboBox modelSelect2;
+    ComboBox modelSelect3;
+    ComboBox modelSelect4;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
 
@@ -113,5 +116,40 @@ public: // Public access specifier should be placed here
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
  
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
+};
+
+    Label versionLabel;
+
+    // Existing ComboBoxes
+    juce::ComboBox modelSelect2;
+
+    // New ComboBoxes for the third and fourth model
+    juce::ComboBox modelSelect3;
+    juce::ComboBox modelSelect4;
+
+    // Overdrive Widgets
+    Slider ampBassKnob;
+    Slider ampMidKnob;
+    Slider ampTrebleKnob;
+
+    virtual void sliderValueChanged(Slider* slider) override;
+
+    AudioProcessorParameter* getParameter(const String& paramId);
+
+    void odFootSwClicked();
+    void cabOnButtonClicked();
+    void modelSelectChanged();
+    void modelSelect2Changed();
+    void modelSelect3Changed();
+    void modelSelect4Changed();
+
+    bool model_loaded = false;
+
+public: // Public access specifier should be placed here
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> midSliderAttach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
 };
