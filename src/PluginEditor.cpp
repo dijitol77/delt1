@@ -28,7 +28,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     modelSelect.setScrollWheelEnabled(true);
     int c = 1;
     for (const auto& jsonFile : processor.jsonFiles) {
-        modelSelect.addItem(jsonFile.modelName, c); // Replace getModelName() with the actual property/method representing the model name
+        modelSelect.addItem(jsonFile.getFileName(), c);
         c += 1;
     }
     modelSelect.onChange = [this] {modelSelectChanged();};
@@ -187,7 +187,7 @@ void ProteusAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
 
-    // Overall Widgets
+    //Overall Widgets
     loadButton.setBounds(186, 48, 120, 24);
     modelSelect.setBounds(52, 11, 400, 28);
     
@@ -360,7 +360,7 @@ void ProteusAudioProcessorEditor::buttonClicked2(juce::Button* button)
 {
     //if (button == &odFootSw) {
     //    odFootSwClicked();
-    if (button == &loadButton2) {
+    if (button == &loadButton) {
         loadButtonClicked();
     } else if (button == &cabOnButton) {
         cabOnButtonClicked();
