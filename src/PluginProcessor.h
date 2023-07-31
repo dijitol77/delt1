@@ -83,12 +83,12 @@ private:
 
     Eq4Band eq4band; // Amp EQ
     Eq4Band eq4band2; // Amp EQ
-
-    std::atomic<float>* driveParam = nullptr;
-    std::atomic<float>* masterParam = nullptr;
-    std::atomic<float>* bassParam = nullptr;
-    std::atomic<float>* midParam = nullptr;
-    std::atomic<float>* trebleParam = nullptr;
+// Remove these lines
+    // std::atomic<float>* driveParam = nullptr;
+    // std::atomic<float>* masterParam = nullptr;
+    // std::atomic<float>* bassParam = nullptr;
+    // std::atomic<float>* midParam = nullptr;
+    // std::atomic<float>* trebleParam = nullptr;
 
     juce::AudioProcessorValueTreeState treeState;
     juce::AudioParameterFloat* driveParam;
