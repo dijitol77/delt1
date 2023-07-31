@@ -119,3 +119,46 @@ private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessor)
 };
+class ProteusAudioProcessor  : public juce::AudioProcessor
+{
+public:
+    // ...
+    std::vector<File> jsonFiles; // This is just an example, replace with the actual type
+    int num_models;
+    int saved_model;
+    void loadConfig();
+    bool cab_state;
+    void set_ampEQ();
+    // ...
+};
+'juce::ComboBox::addItem': function does not take 1 arguments
+In the file where you're calling addItem on a juce::ComboBox, you should provide two arguments. Here's an example:
+
+cpp
+Copy code
+comboBox.addItem("Item text", 1); // The second argument is an item identifier
+'buttonClicked2', 'loadButtonClicked', 'cabOnButtonClicked', 'modelSelectChanged2' is not a member of 'ProteusAudioProcessorEditor'
+In your PluginEditor.h file, you should declare these functions in the ProteusAudioProcessorEditor class. Here's an example:
+
+cpp
+Copy code
+class ProteusAudioProcessorEditor  : public juce::AudioProcessorEditor
+{
+public:
+    // ...
+    void buttonClicked2();
+    void loadButtonClicked();
+    void cabOnButtonClicked();
+    void modelSelectChanged2();
+    // ...
+};
+
+class ProteusAudioProcessorEditor  : public juce::AudioProcessorEditor
+{
+public:
+    // ...
+    juce::TextButton loadButton2;
+    juce::TextButton cabOnButton;
+    ProteusAudioProcessor& processor;
+    // ...
+};
