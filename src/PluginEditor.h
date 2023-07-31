@@ -18,7 +18,7 @@
 */
 class ProteusAudioProcessorEditor  : public juce::AudioProcessorEditor,
                                      public juce::Button::Listener,
-                                     public juce::ComboBox::Listener                 
+                                               
 {
 public:
     ProteusAudioProcessorEditor(ProteusAudioProcessor& p);
