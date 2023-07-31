@@ -54,7 +54,8 @@ public:
 
     void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
     void processBlockBypassed (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
-    void processBlockRealtime (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+void processBlockRealtime (juce::AudioBuffer<float>&, juce::MidiBuffer&);
+
 
     //==============================================================================
     juce::AudioProcessorEditor* createEditor() override;
