@@ -69,32 +69,22 @@ private:
     //Image background_off = ImageCache::getFromMemory(BinaryData::background_off_jpg, BinaryData::background_off_jpgSize);
 
     // Global Widgets
-    Label modelLabel;
+    // Label modelLabel; // Duplicate declaration, commented out
     Label versionLabel;
 
     // Existing ComboBoxes
-    juce::ComboBox modelSelect2;
+    // juce::ComboBox modelSelect2; // Duplicate declaration, commented out
 
     // New ComboBoxes for the third and fourth model
-    juce::ComboBox modelSelect3;
-    juce::ComboBox modelSelect4;
-
+    // juce::ComboBox modelSelect3; // Duplicate declaration, commented out
+    // juce::ComboBox modelSelect4; // Duplicate declaration, commented out
 
     // Overdrive Widgets
     Slider ampBassKnob;
     Slider ampMidKnob;
     Slider ampTrebleKnob;
-    Slider odDriveKnob;
-    Slider odLevelKnob;
-    //ImageButton odFootSw;
-    //ImageButton odLED;
-    ImageButton cabOnButton;
-
-    
-    // LookandFeels 
-    //myLookAndFeel blackHexKnobLAF;
-    myLookAndFeel bigKnobLAF;
-    myLookAndFeel smallKnobLAF;
+    // Slider odDriveKnob; // Duplicate declaration, commented out
+    // Slider odLevelKnob; // Duplicate declaration, commented out
 
     virtual void sliderValueChanged(Slider* slider) override;
 
@@ -113,9 +103,9 @@ public: // Public access specifier should be placed here
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> midSliderAttach;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
- 
+    // std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach; // Duplicate declaration, commented out
+    // std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach; // Duplicate declaration, commented out
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
 };
 
