@@ -55,7 +55,13 @@ private:
     Label modelLabel;
     Label versionLabel;
 
-    ComboBox modelSelect;
+   // Existing ComboBoxes
+    juce::ComboBox modelSelect;
+    juce::ComboBox modelSelect2;
+
+    // New ComboBoxes for the third and fourth model
+    juce::ComboBox modelSelect3;
+    juce::ComboBox modelSelect4;
 
     // Overdrive Widgets
     Slider ampBassKnob;
