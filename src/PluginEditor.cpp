@@ -187,16 +187,21 @@ void ProteusAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
 
-    //Overall Widgets
+    // Overall Widgets
     loadButton.setBounds(186, 48, 120, 24);
     modelSelect.setBounds(52, 11, 400, 28);
+    
     // Add these lines in the resized function after the existing controls for LSTM and LSTM2
-loadButton2.setBounds(186, 48 + 325, 120, 24); // Adjust the position according to your needs
-modelSelect2.setBounds(52, 11 + 325, 400, 28); // Adjust the position according to your needs
-// Add these lines in the resized() function
-modelSelect3.setBounds(52, 11, 400, 28); // Adjust these values as per your GUI layout
-modelSelect4.setBounds(52, 11, 400, 28); // Adjust these values as per your GUI layout
-odDriveKnob2.setBounds(668, 242, 190, 190);  // Position the new drive knob
+    loadButton2.setBounds(186, 48 + 325, 120, 24); // Adjust the position according to your needs
+    modelSelect2.setBounds(52, 11 + 325, 400, 28); // Adjust the position according to your needs
+    
+    // Add these lines in the resized() function
+    modelSelect3.setBounds(52, 11 + 2 * 325, 400, 28); // Adjust these values as per your GUI layout
+    modelSelect4.setBounds(52, 11 + 3 * 325, 400, 28); // Adjust these values as per your GUI layout
+    
+    odDriveKnob2.setBounds(668, 242, 190, 190);  // Position the new drive knob
+
+    // Other widgets...
 
     //modelLabel.setBounds(197, 2, 90, 25);
     versionLabel.setBounds(462, 632, 60, 10);
