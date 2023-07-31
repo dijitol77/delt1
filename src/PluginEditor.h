@@ -26,7 +26,7 @@ public:
     ~ProteusAudioProcessorEditor();
 
     //==============================================================================
-    void paint (Graphics&) override;
+void paint(Graphics&) override;
     void resized() override;
     std::unique_ptr<FileChooser> myChooser;
 
@@ -38,8 +38,7 @@ private:
     // access the processor object that created it.
     ProteusAudioProcessor& processor;
 
-
-    TextButton loadButton;
+TextButton loadButton;
     virtual void buttonClicked(Button* button) override;
 
     bool isValidFormat(File configFile);
@@ -80,14 +79,13 @@ private:
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
 
-    virtual void sliderValueChanged(Slider* slider) override;
+   virtual void sliderValueChanged(Slider* slider) override;
 
     AudioProcessorParameter* getParameter(const String& paramId);
- 
+
     void odFootSwClicked();
-    void modelSelectChanged();
     void cabOnButtonClicked();
-void modelSelectChanged();
+    void modelSelectChanged();
     void modelSelect2Changed();
     void modelSelect3Changed();
     void modelSelect4Changed();
