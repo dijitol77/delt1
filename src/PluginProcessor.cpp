@@ -73,7 +73,7 @@ ProteusAudioProcessor::~ProteusAudioProcessor()
 {
 }
 
-  void ProteusAudioProcessor::loadConfig2()
+void ProteusAudioProcessor::loadConfig2()
 {
     // Load configuration for the second model (modelSelect2)
     // Implement the necessary logic to load the configuration based on the selected model
@@ -349,13 +349,16 @@ void ProteusAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer&
         buffer.applyGain(2.0);
     }
 
-        // Clip
+    // Clip
+    for (int ch = 0; ch < buffer.getNumChannels(); ++ch) {
         for (int i = 0; i < buffer.getNumSamples(); i++) {
             if (buffer.getSample(ch, i) > 1.0f) {
                 buffer.setSample(ch, i, 1.0f);
-    }
+            }
             else if (buffer.getSample(ch, i) < -1.0f) {
                 buffer.setSample(ch, i, -1.0f);
+            }
+        }
     }
 
     // Smooth pop sound when changing models
@@ -408,6 +411,7 @@ void ProteusAudioProcessor::processBlockBypassed(AudioBuffer<float>& buffer, Mid
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear(i, 0, buffer.getNumSamples());
 }
+
 void ProteusAudioProcessor::processBlockRealtime(AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
     processBlock(buffer, midiMessages);
