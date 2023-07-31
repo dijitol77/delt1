@@ -21,8 +21,7 @@ class ProteusAudioProcessorEditor  : public juce::AudioProcessorEditor,
                                      public juce::ComboBox::Listener                 
 {
 public:
-    ProteusAudioProcessorEditor (ProteusAudioProcessor&);
-    ~ProteusAudioProcessorEditor();
+    ProteusAudioProcessorEditor(ProteusAudioProcessor& p);
 
     //==============================================================================
     void paint(Graphics&) override;
