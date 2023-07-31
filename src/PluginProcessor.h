@@ -79,6 +79,14 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+// Add these declarations here
+    std::vector<File> jsonFiles; // This is just an example, replace with the actual type
+    int num_models;
+    int saved_model;
+    void loadConfig();
+    bool cab_state;
+    void set_ampEQ();
+
 private:
 
     Eq4Band eq4band; // Amp EQ
@@ -115,18 +123,6 @@ private:
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessor)
-};
-class ProteusAudioProcessor  : public juce::AudioProcessor
-{
-public:
-    // ...
-    std::vector<File> jsonFiles; // This is just an example, replace with the actual type
-    int num_models;
-    int saved_model;
-    void loadConfig();
-    bool cab_state;
-    void set_ampEQ();
-    // ...
 };
 class ProteusAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
