@@ -39,6 +39,8 @@ private:
     ProteusAudioProcessor& processor;
 
 TextButton loadButton;
+    TextButton loadButton2; // Add the declaration of loadButton2
+
     virtual void buttonClicked(Button* button) override;
 
     bool isValidFormat(File configFile);
