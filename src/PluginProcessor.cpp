@@ -28,6 +28,7 @@ ProteusAudioProcessor::ProteusAudioProcessor()
         .withOutput("Output", AudioChannelSet::stereo(), true)
 #endif
     ),
+    conditioned3(false), // Initialize conditioned3 with the desired value
 
     // Your code for treeState initialization remains 
     firmwareState(1), // Initialize firmwareState with the desired value
