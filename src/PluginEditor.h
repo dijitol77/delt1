@@ -63,10 +63,6 @@ private:
     juce::ComboBox modelSelect3;
     juce::ComboBox modelSelect4;
 
-void modelSelectChanged();
-    void modelSelect2Changed();
-    void modelSelect3Changed();
-    void modelSelect4Changed();
 
     // Overdrive Widgets
     Slider ampBassKnob;
@@ -91,6 +87,10 @@ void modelSelectChanged();
     void odFootSwClicked();
     void modelSelectChanged();
     void cabOnButtonClicked();
+void modelSelectChanged();
+    void modelSelect2Changed();
+    void modelSelect3Changed();
+    void modelSelect4Changed();
 
     bool model_loaded = false;
 
