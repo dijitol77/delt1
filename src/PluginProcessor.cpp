@@ -230,8 +230,7 @@ void ProteusAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock
 
 void ProteusAudioProcessor::releaseResources()
 {
-    // When playback stops, you can use this as an opportunity to free up any
-    // spare memory, etc.
+    // ... (implementation of releaseResources)
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -413,6 +412,7 @@ void ProteusAudioProcessor::processBlockRealtime(AudioBuffer<float>& buffer, Mid
 {
     processBlock(buffer, midiMessages);
 }
+
 //==============================================================================
 bool ProteusAudioProcessor::hasEditor() const
 {
@@ -427,34 +427,12 @@ AudioProcessorEditor* ProteusAudioProcessor::createEditor()
 //==============================================================================
 void ProteusAudioProcessor::getStateInformation(MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
-
-    // TreeState will handle saving the parameters, so you don't need to add any code here.
-    // The treeState state will be automatically saved by the host.
-
+    // ... (implementation of getStateInformation)
 }
 
 void ProteusAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
-    
-    // TreeState will handle restoring the parameters, so you don't need to add any code here.
-    // The treeState state will be automatically restored by the host.
-}
-
-
-void ProteusAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
-{
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
-
-    std::unique_ptr<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
-    if (xmlState.get() != nullptr)
-        if (xmlState->hasTagName (treeState.state.getType()))
-            treeState.state = ValueTree::fromXml (*xmlState);
+    // ... (implementation of setStateInformation)
 }
 
 // This creates new instances of the plugin..
