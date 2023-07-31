@@ -36,6 +36,17 @@ public:
     void modelSelectChanged2();
 
 private:
+
+myLookAndFeel bigKnobLAF;
+    myLookAndFeel smallKnobLAF;
+    ImageButton cabOnButton;
+    Slider odDriveKnob;
+    Slider odLevelKnob;
+    Label modelLabel;
+    ComboBox modelSelect;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
+    TextButton loadButton;
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     ProteusAudioProcessor& processor;
