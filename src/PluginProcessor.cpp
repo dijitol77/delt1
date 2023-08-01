@@ -14,42 +14,30 @@
 //==============================================================================
 ProteusAudioProcessor::ProteusAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
-    : AudioProcessor(BusesProperties()
-#if ! JucePlugin_IsMidiEffect
-#if ! JucePlugin_IsSynth
-        .withInput("Input", AudioChannelSet::stereo(), true)
-#endif
-        .withOutput("Output", AudioChannelSet::stereo(), true)
-#endif
-    ),
-
-    treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN_ID, GAIN_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
-                        std::make_unique<AudioParameterFloat>(BASS_ID, BASS_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                        std::make_unique<AudioParameterFloat>(MID_ID, MID_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                        std::make_unique<AudioParameterFloat>(TREBLE_ID, TREBLE_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                        std::make_unique<AudioParameterFloat>(MASTER_ID, MASTER_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5) })
-
-    
+     : AudioProcessor (BusesProperties()
+                     #if ! JucePlugin_IsMidiEffect
+                      #if ! JucePlugin_IsSynth
+                       .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
+                      #endif
+                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
+                     #endif
+                       )
 #endif
 {
-    driveParam = treeState.getRawParameterValue (GAIN_ID);
-    masterParam = treeState.getRawParameterValue (MASTER_ID);
-    bassParam = treeState.getRawParameterValue (BASS_ID);
-    midParam = treeState.getRawParameterValue (MID_ID);
-    trebleParam = treeState.getRawParameterValue (TREBLE_ID);
+    // Initialize parameters
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterFloat>("ampBass", "Amp Bass", 0.0f, 1.0f, 0.5f));
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterFloat>("ampMid", "Amp Mid", 0.0f, 1.0f, 0.5f));
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterFloat>("ampTreble", "Amp Treble", 0.0f, 1.0f, 0.5f));
+    parameters.createAndAddParameter(std::make_unique<juce::AudioParameterFloat>("odDrive", "OD Drive", 0.0f, 1.0f, 0.5f));
 
-    auto bassValue = static_cast<float> (bassParam->load());
-    auto midValue = static_cast<float> (midParam->load());
-    auto trebleValue = static_cast<float> (trebleParam->load());
+    // Initialize LSTM models
+    LSTM1.load_json("path_to_your_first_json_file");
+    LSTM2.load_json("path_to_your_first_json_file");
+    LSTM3.load_json("path_to_your_second_json_file");
+    LSTM4.load_json("path_to_your_second_json_file");
 
-    eq4band.setParameters(bassValue, midValue, trebleValue, 0.0);
-    eq4band2.setParameters(bassValue, midValue, trebleValue, 0.0);
-
-    pauseVolume = 3;
-
-    cabSimIRa.load(BinaryData::default_ir_wav, BinaryData::default_ir_wavSize);
-
-    // Initialize LSTM3 and LSTM4 here (assuming you have these defined and initialized)
+    // Initialize state
+    treeState = new juce::AudioProcessorValueTreeState(*this, nullptr, "PARAMETERS", parameters);
 }
 
 ProteusAudioProcessor::~ProteusAudioProcessor()
@@ -121,64 +109,31 @@ void ProteusAudioProcessor::changeProgramName (int index, const String& newName)
 //==============================================================================
 void ProteusAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
-    
-    *dcBlocker.state = *dsp::IIR::Coefficients<float>::makeHighPass (sampleRate, 35.0f);
-
-    // prepare resampler for target sample rate: 44.1 kHz
-    constexpr double targetSampleRate = 44100.0;
-    //resampler.prepareWithTargetSampleRate ({ sampleRate, (uint32) samplesPerBlock, 1 }, targetSampleRate);
-    resampler.prepareWithTargetSampleRate({ sampleRate, (uint32)samplesPerBlock, 2 }, targetSampleRate);
-
-
-    dsp::ProcessSpec specMono { sampleRate, static_cast<uint32> (samplesPerBlock), 1 };
-    dsp::ProcessSpec spec{ sampleRate, static_cast<uint32> (samplesPerBlock), 2 };
-
-    dcBlocker.prepare (spec); 
-
-    LSTM.reset();
+    // Prepare the LSTM models and any other DSP objects for processing audio data
+    LSTM1.reset();
     LSTM2.reset();
-    LSTM3.reset(); // Initialize LSTM3 here (assuming you have this defined and initialized)
-    LSTM4.reset(); // Initialize LSTM4 here (assuming you have this defined and initialized)
-
-    // Set up IR
-    cabSimIRa.prepare(spec);
-
+    LSTM3.reset();
+    LSTM4.reset();
+    // Add any other preparation code here
 }
 
 void ProteusAudioProcessor::releaseResources()
 {
-    // When playback stops, you can use this as an opportunity to free up any
-    // spare memory, etc.
+    // Release any resources used by the LSTM models
+    // Add any other resource releasing code here
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
 bool ProteusAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
-  #if JucePlugin_IsMidiEffect
-    ignoreUnused (layouts);
-    return true;
-  #else
-    // This is the place where you check if the layout is supported.
-    // In this template code we only support mono or stereo.
-    if (layouts.getMainOutputChannelSet() != AudioChannelSet::mono()
-     && layouts.getMainOutputChannelSet() != AudioChannelSet::stereo())
-        return false;
-
-    // This checks if the input layout matches the output layout
-   #if ! JucePlugin_IsSynth
-    if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
-        return false;
-   #endif
-
+    // Check if the bus layout is supported by the LSTM models
+    // Add your bus layout checking code here
     return true;
   #endif
 }
 #endif
 
-
-void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
+void ProteusAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     ScopedNoDenormals noDenormals;
 
@@ -293,13 +248,13 @@ bool ProteusAudioProcessor::hasEditor() const
     return true; // (change this to false if you choose to not supply an editor)
 }
 
-AudioProcessorEditor* ProteusAudioProcessor::createEditor()
+juce::AudioProcessorEditor* ProteusAudioProcessor::createEditor()
 {
     return new ProteusAudioProcessorEditor (*this);
 }
 
 //==============================================================================
-void ProteusAudioProcessor::getStateInformation (MemoryBlock& destData)
+void ProteusAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
