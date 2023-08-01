@@ -1,12 +1,10 @@
-/*
-  ==============================================================================
+//==============================================================================
 
-    This file was auto-generated!
+This file was auto-generated!
 
-    It contains the basic framework code for a JUCE plugin editor.
+It contains the basic framework code for a JUCE plugin editor.
 
-  ==============================================================================
-*/
+//==============================================================================
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
@@ -78,7 +76,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     odLevelKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odLevelKnob.setDoubleClickReturnValue(true, 0.5);
 
-    bassSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob);    	    
+    bassSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob);        
     addAndMakeVisible(ampBassKnob);
     ampBassKnob.setLookAndFeel(&smallKnobLAF);
     ampBassKnob.addListener(this);
@@ -149,17 +147,17 @@ ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
     ampTrebleKnob.setLookAndFeel(nullptr);
 }
 
-//==============================================================================
-void ProteusAudioProcessorEditor::paint (Graphics& g)
+void ProteusAudioProcessorEditor::paint(Graphics& g)
 {
     // Workaround for graphics on Windows builds (clipping code doesn't work correctly on Windows)
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
     //if (processor.fw_state == 0) {
     //    g.drawImageAt(background_off, 0, 0);  // Debug Line: Redraw entire background image
     if (processor.fw_state == 1 && processor.conditioned == true) {
-        g.drawImageAt(background_on, 0, 0);  // Debug Line: Redraw entire background image
-    } else if (processor.fw_state == 1 && processor.conditioned == false) {
-        g.drawImageAt(background_on_blue, 0, 0);  // Debug Line: Redraw entire background image
+        g.drawImageAt(background_on, 0, 0);
+    }
+    else if (processor.fw_state == 1 && processor.conditioned == false) {
+        g.drawImageAt(background_on_blue, 0, 0);
     }
 #else
 // Redraw only the clipped part of the background image
