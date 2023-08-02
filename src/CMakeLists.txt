@@ -6,6 +6,14 @@ target_sources(Proteus PRIVATE
 	PluginEditor.cpp
 	PluginEditor.h
 	PluginProcessor.cpp
+    	PluginProcessorInit.cpp
+    	AudioProcessing.cpp
+    	MidiProcessing.cpp
+    	Programs.cpp
+    	StateManagement.cpp
+    	EditorCreation.cpp
+    	UtilityFunctions.cpp
+    	PluginCreation.cpp
 	PluginProcessor.h
 	RTNeuralLSTM.cpp
 	RTNeuralLSTM.h
@@ -15,3 +23,4 @@ target_sources(Proteus PRIVATE
 )
 
 #target_precompile_headers(Proteus PRIVATE pch.h)
+
