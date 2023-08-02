@@ -43,14 +43,6 @@ void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInByt
 
             if (saved_model.existsAsFile()) {
                 loadConfig(saved_model);
-            }          
-
-void ProteusAudioProcessor::set_ampEQ(float low, float mid, float high)
-{
-    // Your code here
-}
-
-void ProteusAudioProcessor::loadConfig(File configFile)
-{
-    // Your code here
+        }          
+     }
 }
