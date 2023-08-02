@@ -1,4 +1,5 @@
 #include "PluginProcessor.h"
+#include "PluginEditor.h"
 #include "PluginProcessorInit.cpp"
 #include "AudioProcessing.cpp"
 #include "MidiProcessing.cpp"
@@ -6,4 +7,10 @@
 #include "StateManagement.cpp"
 #include "EditorCreation.cpp"
 #include "UtilityFunctions.cpp"
-#include "PluginCreation.cpp"
+
+//==============================================================================
+// This creates new instances of the plugin..
+AudioProcessor* JUCE_CALLTYPE createPluginFilter()
+{
+    return new ProteusAudioProcessor();
+}
