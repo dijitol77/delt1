@@ -1,14 +1,16 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "StateManagement.h"
+#include "juce_core/juce_core.h" // Include this for the MemoryBlock class
 
-void ProteusAudioProcessor::getStateInformation (MemoryBlock& destData)
+void ProteusAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
     
     auto state = treeState.copyState();
-    std::unique_ptr<XmlElement> xml (state.createXml());
+    std::unique_ptr<juce::XmlElement> xml (state.createXml());
     xml->setAttribute ("fw_state", fw_state);
     xml->setAttribute("folder", folder.getFullPathName().toStdString());
     xml->setAttribute("saved_model", saved_model.getFullPathName().toStdString());
@@ -31,12 +33,12 @@ void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInByt
         {
             treeState.replaceState (juce::ValueTree::fromXml (*xmlState));
             fw_state = xmlState->getBoolAttribute ("fw_state");
-            File temp_saved_model = xmlState->getStringAttribute("saved_model");
+            juce::File temp_saved_model = xmlState->getStringAttribute("saved_model");
             saved_model = temp_saved_model;
             cab_state = xmlState->getBoolAttribute ("cab_state");
 
             current_model_index = xmlState->getIntAttribute("current_model_index");
-            File temp = xmlState->getStringAttribute("folder");
+            juce::File temp = xmlState->getStringAttribute("folder");
             folder = temp;
             if (auto* editor = dynamic_cast<ProteusAudioProcessorEditor*> (getActiveEditor()))
                 editor->resetImages();
