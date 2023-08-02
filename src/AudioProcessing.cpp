@@ -1,19 +1,14 @@
+#include "PluginProcessor.h"
 #include "AudioProcessing.h"
+#include "juce_dsp/juce_dsp.h" // Include this for the dsp::IIR::Coefficients class
 
-
-// Define the implementation of the class methods here
-void ProteusAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock) 
+void ProteusAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
-    
     *dcBlocker.state = *dsp::IIR::Coefficients<float>::makeHighPass (sampleRate, 35.0f);
 
     // prepare resampler for target sample rate: 44.1 kHz
     constexpr double targetSampleRate = 44100.0;
-    //resampler.prepareWithTargetSampleRate ({ sampleRate, (uint32) samplesPerBlock, 1 }, targetSampleRate);
     resampler.prepareWithTargetSampleRate({ sampleRate, (uint32)samplesPerBlock, 2 }, targetSampleRate);
-
 
     dsp::ProcessSpec specMono { sampleRate, static_cast<uint32> (samplesPerBlock), 1 };
     dsp::ProcessSpec spec{ sampleRate, static_cast<uint32> (samplesPerBlock), 2 };
@@ -25,7 +20,6 @@ void ProteusAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock
 
     // Set up IR
     cabSimIRa.prepare(spec);
-
 }
 
 void ProteusAudioProcessor::releaseResources()
@@ -34,7 +28,7 @@ void ProteusAudioProcessor::releaseResources()
     // spare memory, etc.
 }
 
-void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
+void ProteusAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     ScopedNoDenormals noDenormals;
 
