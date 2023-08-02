@@ -50,33 +50,6 @@ const String ProteusAudioProcessor::getName() const
     return JucePlugin_Name;
 }
 
-bool ProteusAudioProcessor::acceptsMidi() const
-{
-   #if JucePlugin_WantsMidiInput
-    return true;
-   #else
-    return false;
-   #endif
-}
-
-bool ProteusAudioProcessor::producesMidi() const
-{
-   #if JucePlugin_ProducesMidiOutput
-    return true;
-   #else
-    return false;
-   #endif
-}
-
-bool ProteusAudioProcessor::isMidiEffect() const
-{
-   #if JucePlugin_IsMidiEffect
-    return true;
-   #else
-    return false;
-   #endif
-}
-
 double ProteusAudioProcessor::getTailLengthSeconds() const
 {
     return 0.0;
