@@ -11,9 +11,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "RTNeuralLSTM.h"
-#include "Eq4Band.h"
-#include "CabSim.h"
+
 
 #define GAIN_ID "drive"
 #define GAIN_NAME "Drive"
@@ -76,17 +74,6 @@ public:
 
     void set_ampEQ(float bass_slider, float mid_slider, float treble_slider);
 
-     // ...seconded to by the GUI
-    void buttonClicked2();
-    void loadButtonClicked();
-    void cabOnButtonClicked();
-    void modelSelectChanged2();
-    // ...
-    juce::TextButton loadButton2;
-    juce::TextButton cabOnButton;
-    ProteusAudioProcessor& processor;
-    // ...
-
     // Files and configuration
     void loadConfig(File configFile);
 
@@ -117,12 +104,6 @@ private:
 
     Eq4Band eq4band; // Amp EQ
     Eq4Band eq4band2; // Amp EQ
-// Remove these lines
-    // std::atomic<float>* driveParam = nullptr;
-    // std::atomic<float>* masterParam = nullptr;
-    // std::atomic<float>* bassParam = nullptr;
-    // std::atomic<float>* midParam = nullptr;
-    // std::atomic<float>* trebleParam = nullptr;
 
     std::atomic<float>* driveParam = nullptr;
     std::atomic<float>* masterParam = nullptr;
@@ -136,10 +117,6 @@ private:
 
     RT_LSTM LSTM;
     RT_LSTM LSTM2;
-
-    // Add these declarations here
-    RT_LSTM LSTM3;
-    RT_LSTM LSTM4;
 
     dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> dcBlocker;
 
