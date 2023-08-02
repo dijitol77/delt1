@@ -1,3 +1,13 @@
+/*
+  ==============================================================================
+
+    This file was auto-generated!
+
+    It contains the basic framework code for a JUCE plugin editor.
+
+  ==============================================================================
+*/
+
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
@@ -28,10 +38,6 @@ private:
     // access the processor object that created it.
     ProteusAudioProcessor& processor;
 
-    bool acceptsMidi() const override;
-    bool producesMidi() const override;
-    bool isMidiEffect() const override;
-    double getTailLengthSeconds() const override;
 
     TextButton loadButton;
     virtual void buttonClicked(Button* button) override;
