@@ -153,6 +153,11 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
     const int numInputChannels = getTotalNumInputChannels();
     const int sampleRate = getSampleRate();
 
+if (sampleRate == 0) {
+    // handle error, perhaps by returning early or setting a default sample rate
+    return;
+}
+
     dsp::AudioBlock<float> block(buffer);
     dsp::ProcessContextReplacing<float> context(block);
 
