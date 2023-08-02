@@ -45,12 +45,12 @@ void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInByt
                 loadConfig(saved_model);
             }          
 
-        }
-    }
-}
-//==============================================================================
-// This creates new instances of the plugin..
-AudioProcessor* JUCE_CALLTYPE createPluginFilter()
+void ProteusAudioProcessor::set_ampEQ(float low, float mid, float high)
 {
-    return new ProteusAudioProcessor();
+    // Your code here
+}
+
+void ProteusAudioProcessor::loadConfig(File configFile)
+{
+    // Your code here
 }
