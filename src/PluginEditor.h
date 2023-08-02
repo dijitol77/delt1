@@ -1,130 +1,88 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-
-
-#define GAIN_ID "drive"
-#define GAIN_NAME "Drive"
-#define MASTER_ID "level"
-#define MASTER_NAME "Level"
-#define BASS_ID "bass"
-#define BASS_NAME "Bass"
-#define MID_ID "mid"
-#define MID_NAME "Mid"
-#define TREBLE_ID "treble"
-#define TREBLE_NAME "Treble"
-#define FW_ID "fw"
-#define FW_NAME "Fuzz"
-#define CAB_ID "cab"
-#define CAB_NAME "Cab"
-#define MODEL_ID "model"
-#define MODEL_NAME "Model"
-#define MODEL_ID2 "model2"
-#define MODEL_NAME2 "Model2"
-
-#include <nlohmann/json.hpp>
-#include "RTNeuralLSTM.h"
-#include "Eq4Band.h"
-#include "CabSim.h"
+#include "PluginProcessor.h"
+#include "myLookAndFeel.h"
 
 //==============================================================================
 /**
 */
-class ProteusAudioProcessor  : public AudioProcessor
+class ProteusAudioProcessorEditor  : public AudioProcessorEditor,
+                                       private Button::Listener,
+                                       private Slider::Listener                  
 {
 public:
-    //==============================================================================
-    ProteusAudioProcessor();
-    ~ProteusAudioProcessor();
+    ProteusAudioProcessorEditor (ProteusAudioProcessor&);
+    ~ProteusAudioProcessorEditor();
 
     //==============================================================================
-    void prepareToPlay (double sampleRate, int samplesPerBlock) override;
-    void releaseResources() override;
+    void paint (Graphics&) override;
+    void resized() override;
+    std::unique_ptr<FileChooser> myChooser;
 
-   #ifndef JucePlugin_PreferredChannelConfigurations
-    bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
-   #endif
+    void loadFromFolder();
+    void resetImages();
 
-    void processBlock (AudioBuffer<float>&, MidiBuffer&) override;
-
-    //==============================================================================
-    AudioProcessorEditor* createEditor() override;
-    bool hasEditor() const override;
-
-    //==============================================================================
-    const String getName() const override;
+private:
+    // This reference is provided as a quick way for your editor to
+    // access the processor object that created it.
+    ProteusAudioProcessor& processor;
 
     bool acceptsMidi() const override;
     bool producesMidi() const override;
     bool isMidiEffect() const override;
     double getTailLengthSeconds() const override;
 
-    //==============================================================================
-    int getNumPrograms() override;
-    int getCurrentProgram() override;
-    void setCurrentProgram (int index) override;
-    const String getProgramName (int index) override;
-    void changeProgramName (int index, const String& newName) override;
+    TextButton loadButton;
+    virtual void buttonClicked(Button* button) override;
 
-    //==============================================================================
-    void getStateInformation (MemoryBlock& destData) override;
-    void setStateInformation (const void* data, int sizeInBytes) override;
+    bool isValidFormat(File configFile);
+    void loadButtonClicked();
 
-    void set_ampEQ(float bass_slider, float mid_slider, float treble_slider);
+    //Image background = ImageCache::getFromMemory(BinaryData::smart_pedal_jpg, BinaryData::smart_pedal_jpgSize);
+    // LookandFeels and Graphics
+    Image background_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
+    Image background_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
+    //Image background_off = ImageCache::getFromMemory(BinaryData::background_off_jpg, BinaryData::background_off_jpgSize);
 
-    // Files and configuration
-    void loadConfig(File configFile);
+    // Global Widgets
+    Label modelLabel;
+    Label versionLabel;
 
-    // Pedal/amp states
-    int fw_state = 1;       // 0 = off, 1 = on
-    int cab_state = 1; // 0 = off, 1 = on
+    ComboBox modelSelect;
 
-    File currentDirectory = File::getCurrentWorkingDirectory().getFullPathName();
-    int current_model_index = 0;
+    // Overdrive Widgets
+    Slider ampBassKnob;
+    Slider ampMidKnob;
+    Slider ampTrebleKnob;
+    Slider odDriveKnob;
+    Slider odLevelKnob;
+    //ImageButton odFootSw;
+    //ImageButton odLED;
+    ImageButton cabOnButton;
 
-    Array<File> fileArray;
-    std::vector<File> jsonFiles;
-    int num_models = 0;
-    File folder = File::getSpecialLocation(File::userDesktopDirectory);
-    File saved_model;
+    
+    // LookandFeels 
+    //myLookAndFeel blackHexKnobLAF;
+    myLookAndFeel bigKnobLAF;
+    myLookAndFeel smallKnobLAF;
 
-    AudioProcessorValueTreeState treeState;
+    virtual void sliderValueChanged(Slider* slider) override;
 
-    bool conditioned = false;
-
-    const char* char_filename = "";
-
-    int pauseVolume = 3;
+    AudioProcessorParameter* getParameter(const String& paramId);
+ 
+    void odFootSwClicked();
+    void modelSelectChanged();
+    void cabOnButtonClicked();
 
     bool model_loaded = false;
 
-private:
-
-    Eq4Band eq4band; // Amp EQ
-    Eq4Band eq4band2; // Amp EQ
-
-    std::atomic<float>* driveParam = nullptr;
-    std::atomic<float>* masterParam = nullptr;
-    std::atomic<float>* bassParam = nullptr;
-    std::atomic<float>* midParam = nullptr;
-    std::atomic<float>* trebleParam = nullptr;
-
-    float previousDriveValue = 0.5;
-    float previousMasterValue = 0.5;
-    //float steppedValue1 = 0.0;
-
-    RT_LSTM LSTM;
-    RT_LSTM LSTM2;
-    RT_LSTM LSTM3; // Declaration for the third LSTM object for the second model
-    RT_LSTM LSTM4; // Declaration for the fourth LSTM object for the second model
-
-    dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> dcBlocker;
-
-    chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>> resampler;
-
-    // IR processing
-    CabSim cabSimIRa;
-
-    //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessor)
+public:
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> midSliderAttach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
+ 
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
 };
