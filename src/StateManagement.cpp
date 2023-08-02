@@ -1,4 +1,5 @@
 #include "PluginProcessor.h"
+#include "PluginEditor.h"
 
 void ProteusAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
