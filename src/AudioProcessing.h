@@ -1,6 +1,7 @@
 #pragma once
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "RTNeuralLSTM.h" // Include this for RT_LSTM
 
 #ifndef AUDIO_PROCESSING_H_INCLUDED
 #define AUDIO_PROCESSING_H_INCLUDED
