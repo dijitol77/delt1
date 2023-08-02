@@ -3,7 +3,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "PluginProcessorInit.cpp"
-#include "AudioProcessing.cpp"
+#include "AudioProcessing.h"
 #include "MidiProcessing.cpp"
 #include "Programs.cpp"
 #include "StateManagement.cpp"
