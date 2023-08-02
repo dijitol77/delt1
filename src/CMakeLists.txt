@@ -6,6 +6,7 @@ target_sources(Proteus PRIVATE
 	PluginEditor.cpp
 	PluginEditor.h
 	PluginProcessor.cpp
+        PluginProcessor.h
     	PluginProcessorInit.cpp
     	AudioProcessing.cpp
     	MidiProcessing.cpp
@@ -13,8 +14,6 @@ target_sources(Proteus PRIVATE
     	StateManagement.cpp
     	EditorCreation.cpp
     	UtilityFunctions.cpp
-    	PluginCreation.cpp
-	PluginProcessor.h
 	RTNeuralLSTM.cpp
 	RTNeuralLSTM.h
         CabSim.h
