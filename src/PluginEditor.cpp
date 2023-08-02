@@ -1,12 +1,11 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "myLookAndFeel.h"
 
-//==============================================================================
-ProteusAudioProcessorEditor::ProteusAudioProcessorEditor(ProteusAudioProcessor& p)
-    : AudioProcessorEditor(&p), processor(p)
+ProteusAudioProcessorEditor::ProteusAudioProcessorEditor(ProteusAudioProcessor& processor)
+    : AudioProcessorEditor(processor), processor(processor)
 {
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be
+    setSize(600, 400);
 
     // Overall Widgets
     addAndMakeVisible(loadButton);
@@ -26,6 +25,17 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor(ProteusAudioProcessor& 
     auto font = modelSelect.getFont();
     float height = font.getHeight();
     font.setHeight(height);
+
+    // Create and set the LookAndFeel object for the editor
+    myLookAndFeel lookAndFeel;
+    setLookAndFeel(&lookAndFeel);
+
+    // Set default model selection
+    currentModel = 0;
+    currentNewModel = 0;
+
+    // Create and position the GUI elements for the second model
+    positionNewModelElements(xPos, yPos, knobWidth, knobHeight);
 
     // Set Widget Graphics
     bigKnobLAF.setLookAndFeel(juce::ImageCache::getFromMemory(BinaryData::big_knob_png, BinaryData::big_knob_pngSize));
@@ -182,19 +192,23 @@ void ProteusAudioProcessorEditor::paint(juce::Graphics& g)
 
 void ProteusAudioProcessorEditor::resized()
 {
-    // ...
-    // Resizing code for existing GUI elements
-    // ...
+    // ... (Resizing code for existing GUI elements)
 
     // Position the new GUI elements for the second model
-    positionNewModelElements();
+    positionElements();
 }
 
-void ProteusAudioProcessorEditor::positionElements()
+
+void ProteusAudioProcessorEditor::cabOnButtonClicked()
 {
-    // ...
-    // Positioning code for existing GUI elements
-    // ...
+    // ... (Existing cabOnButtonClicked() function code)
+}
+
+void ProteusAudioProcessorEditor::modelSelectChanged()
+{
+    // ... (Define the logic to handle model selection changes)
+
+    // ... (Positioning code for existing GUI elements)
 
     // Position the new GUI elements for the second model
     int xPos = 100;
@@ -238,7 +252,6 @@ void ProteusAudioProcessorEditor::positionElements()
 void ProteusAudioProcessorEditor::positionNewModelElements(int xPos, int yPos, int knobWidth, int knobHeight)
 {
     // Define the position for the GUI elements of the second model
-    // ...
 
     // Set the position of newAmpBassKnob
     newAmpBassKnob.setBounds(xPos, yPos, knobWidth, knobHeight);
