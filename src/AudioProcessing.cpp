@@ -1,7 +1,8 @@
 #include "AudioProcessing.h"
-#include "PluginProcessor.h"  // Add this line
+#include "PluginProcessor.h"
 
-void ProteusAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+// Define the implementation of the class methods here
+void ProteusAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock) 
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
