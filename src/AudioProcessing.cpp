@@ -1,5 +1,3 @@
-#include "PluginProcessor.h"
-#include "PluginEditor.h"
 #include "AudioProcessing.h"
 
 void ProteusAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
