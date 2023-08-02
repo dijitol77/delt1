@@ -1,4 +1,4 @@
-#pragma once
+##pragma once
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "RTNeuralLSTM.h" // Include this for RT_LSTM
@@ -16,6 +16,15 @@ public:
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
     void processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages) override;
+    int getTotalNumInputChannels();
+    double getSampleRate();
+    void load();
+
+    // Member variables
+    float driveParam, masterParam, bassParam, midParam, trebleParam;
+    bool fw_state, model_loaded, conditioned, cab_state;
+    float previousDriveValue, previousMasterValue, pauseVolume;
+    juce::dsp::IIR::Filter<float> eq4band, eq4band2;
 
 private:
     // Private member variables and objects
@@ -24,6 +33,11 @@ private:
     RT_LSTM LSTM; // Using RT_LSTM from RTNeuralLSTM.h
     RT_LSTM LSTM2; // Using RT_LSTM from RTNeuralLSTM.h
     juce::dsp::Convolution cabSimIRa; // Using dsp::Convolution from juce_dsp namespace
+    juce::AudioBuffer<float> buffer;
+    juce::MidiBuffer midiMessages;
+    juce::dsp::AudioBlock<float> block;
+    juce::dsp::ProcessContextReplacing<float> context;
+    juce::AudioBuffer<float> block44k;
     // ... other member variables ...
 };
 
