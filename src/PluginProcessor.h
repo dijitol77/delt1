@@ -39,31 +39,24 @@ class ProteusAudioProcessor  : public AudioProcessor
 public:
     //==============================================================================
     ProteusAudioProcessor();
-    ~ProteusAudioProcessor() override;
-
-    //==============================================================================
-    void loadConfig2();
-    void loadConfig3();
-    void loadConfig4();
+    ~ProteusAudioProcessor();
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
 
-#ifndef JucePlugin_PreferredChannelConfigurations
+   #ifndef JucePlugin_PreferredChannelConfigurations
     bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
-#endif
+   #endif
 
-    void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
-    void processBlockBypassed (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
-    void processBlockRealtime (juce::AudioBuffer<float>&, juce::MidiBuffer&);
+    void processBlock (AudioBuffer<float>&, MidiBuffer&) override;
 
     //==============================================================================
-    juce::AudioProcessorEditor* createEditor() override;
+    AudioProcessorEditor* createEditor() override;
     bool hasEditor() const override;
 
     //==============================================================================
-    const juce::String getName() const override;
+    const String getName() const override;
 
     bool acceptsMidi() const override;
     bool producesMidi() const override;
@@ -74,20 +67,51 @@ public:
     int getNumPrograms() override;
     int getCurrentProgram() override;
     void setCurrentProgram (int index) override;
-    const juce::String getProgramName (int index) override;
-    void changeProgramName (int index, const juce::String& newName) override;
+    const String getProgramName (int index) override;
+    void changeProgramName (int index, const String& newName) override;
 
     //==============================================================================
-    void getStateInformation (juce::MemoryBlock& destData) override;
+    void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
-// Add these declarations here
-    std::vector<File> jsonFiles; // This is just an example, replace with the actual type
-    int num_models;
-    int saved_model;
-    void loadConfig();
-    bool cab_state;
-    void set_ampEQ();
+    void set_ampEQ(float bass_slider, float mid_slider, float treble_slider);
+
+     // ...seconded to by the GUI
+    void buttonClicked2();
+    void loadButtonClicked();
+    void cabOnButtonClicked();
+    void modelSelectChanged2();
+    // ...
+    juce::TextButton loadButton2;
+    juce::TextButton cabOnButton;
+    ProteusAudioProcessor& processor;
+    // ...
+
+    // Files and configuration
+    void loadConfig(File configFile);
+
+    // Pedal/amp states
+    int fw_state = 1;       // 0 = off, 1 = on
+    int cab_state = 1; // 0 = off, 1 = on
+
+    File currentDirectory = File::getCurrentWorkingDirectory().getFullPathName();
+    int current_model_index = 0;
+
+    Array<File> fileArray;
+    std::vector<File> jsonFiles;
+    int num_models = 0;
+    File folder = File::getSpecialLocation(File::userDesktopDirectory);
+    File saved_model;
+
+    AudioProcessorValueTreeState treeState;
+
+    bool conditioned = false;
+
+    const char* char_filename = "";
+
+    int pauseVolume = 3;
+
+    bool model_loaded = false;
 
 private:
 
@@ -100,14 +124,15 @@ private:
     // std::atomic<float>* midParam = nullptr;
     // std::atomic<float>* trebleParam = nullptr;
 
-    juce::AudioProcessorValueTreeState treeState;
-    juce::AudioParameterFloat* driveParam;
-    juce::AudioParameterFloat* masterParam;
-    juce::AudioParameterFloat* bassParam;
-    juce::AudioParameterFloat* midParam;
-    juce::AudioParameterFloat* trebleParam;
-    float previousDriveValue = 0.5f;
-    float previousMasterValue = 0.5f;
+    std::atomic<float>* driveParam = nullptr;
+    std::atomic<float>* masterParam = nullptr;
+    std::atomic<float>* bassParam = nullptr;
+    std::atomic<float>* midParam = nullptr;
+    std::atomic<float>* trebleParam = nullptr;
+
+    float previousDriveValue = 0.5;
+    float previousMasterValue = 0.5;
+    //float steppedValue1 = 0.0;
 
     RT_LSTM LSTM;
     RT_LSTM LSTM2;
@@ -125,19 +150,4 @@ private:
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessor)
-};
-
-class ProteusAudioProcessorEditor  : public juce::AudioProcessorEditor
-{
-public:
-    // ...
-    void buttonClicked2();
-    void loadButtonClicked();
-    void cabOnButtonClicked();
-    void modelSelectChanged2();
-    // ...
-    juce::TextButton loadButton2;
-    juce::TextButton cabOnButton;
-    ProteusAudioProcessor& processor;
-    // ...
 };
