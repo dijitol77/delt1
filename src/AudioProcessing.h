@@ -21,8 +21,8 @@ private:
     // Private member variables and objects
     juce::IIRFilter dcBlocker;
     juce::ResamplingAudioSource resampler;
-    juce::dsp::LSTM LSTM; // Using dsp::LSTM from juce_dsp namespace
-    juce::dsp::LSTM LSTM2; // Using dsp::LSTM from juce_dsp namespace
+    RT_LSTM LSTM; // Using RT_LSTM from RTNeuralLSTM.h
+    RT_LSTM LSTM2; // Using RT_LSTM from RTNeuralLSTM.h
     juce::dsp::Convolution cabSimIRa; // Using dsp::Convolution from juce_dsp namespace
     // ... other member variables ...
 };
