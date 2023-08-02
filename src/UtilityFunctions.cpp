@@ -2,26 +2,26 @@
 #include "UtilityFunctions.h"
 #include "juce_core/juce_core.h" // Include this for the File class
 
-void ProteusAudioProcessor::loadConfig(juce::File configFile)
+void loadConfig(ProteusAudioProcessor& processor, juce::File configFile)
 {
-    this->suspendProcessing(true);
-    pauseVolume = 3;
+    processor.suspendProcessing(true);
+    processor.pauseVolume = 3;
     juce::String path = configFile.getFullPathName();
-    char_filename = path.toUTF8();
+    processor.char_filename = path.toUTF8();
 
-    LSTM.reset();
-    LSTM2.reset();
+    processor.LSTM.reset();
+    processor.LSTM2.reset();
 
-    LSTM.load_json(char_filename);
-    LSTM2.load_json(char_filename);
+    processor.LSTM.load_json(processor.char_filename);
+    processor.LSTM2.load_json(processor.char_filename);
 
-    if (LSTM.input_size == 1) {
-        conditioned = false;
+    if (processor.LSTM.input_size == 1) {
+        processor.conditioned = false;
     } else {
-        conditioned = true;
+        processor.conditioned = true;
     }
 
-    //saved_model = configFile;
-    model_loaded = true;
-    this->suspendProcessing(false);
+    //processor.saved_model = configFile;
+    processor.model_loaded = true;
+    processor.suspendProcessing(false);
 }
