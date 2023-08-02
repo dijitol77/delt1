@@ -1,369 +1,381 @@
+/*
+  ==============================================================================
+
+    This file was auto-generated!
+
+    It contains the basic framework code for a JUCE plugin processor.
+
+  ==============================================================================
+*/
+
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "myLookAndFeel.h"
 
-ProteusAudioProcessorEditor::ProteusAudioProcessorEditor(ProteusAudioProcessor& processor)
-    : AudioProcessorEditor(processor), processor(processor)
+//==============================================================================
+ProteusAudioProcessor::ProteusAudioProcessor()
+#ifndef JucePlugin_PreferredChannelConfigurations
+    : AudioProcessor(BusesProperties()
+#if ! JucePlugin_IsMidiEffect
+#if ! JucePlugin_IsSynth
+        .withInput("Input", AudioChannelSet::stereo(), true)
+#endif
+        .withOutput("Output", AudioChannelSet::stereo(), true)
+#endif
+    ),
+
+    treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN_ID, GAIN_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
+                        std::make_unique<AudioParameterFloat>(BASS_ID, BASS_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                        std::make_unique<AudioParameterFloat>(MID_ID, MID_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                        std::make_unique<AudioParameterFloat>(TREBLE_ID, TREBLE_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                        std::make_unique<AudioParameterFloat>(MASTER_ID, MASTER_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5) })
+
+    
+#endif
 {
-    setSize(600, 400);
+    driveParam = treeState.getRawParameterValue (GAIN_ID);
+    masterParam = treeState.getRawParameterValue (MASTER_ID);
+    bassParam = treeState.getRawParameterValue (BASS_ID);
+    midParam = treeState.getRawParameterValue (MID_ID);
+    trebleParam = treeState.getRawParameterValue (TREBLE_ID);
 
-    // Overall Widgets
-    addAndMakeVisible(loadButton);
-    loadButton.setButtonText("LOAD MODEL");
-    loadButton.addListener(this);
+    auto bassValue = static_cast<float> (bassParam->load());
+    auto midValue = static_cast<float> (midParam->load());
+    auto trebleValue = static_cast<float> (trebleParam->load());
 
-    addAndMakeVisible(modelSelect);
-    modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
-    modelSelect.setScrollWheelEnabled(true);
-    int c = 1;
-    for (const auto& jsonFile : processor.jsonFiles) {
-        modelSelect.addItem(jsonFile.getFileName(), c);
-        c += 1;
-    }
-    modelSelect.onChange = [this] { modelSelectChanged(); };
+    eq4band.setParameters(bassValue, midValue, trebleValue, 0.0);
+    eq4band2.setParameters(bassValue, midValue, trebleValue, 0.0);
 
-    auto font = modelSelect.getFont();
-    float height = font.getHeight();
-    font.setHeight(height);
+    pauseVolume = 3;
 
-    // Create and set the LookAndFeel object for the editor
-    myLookAndFeel lookAndFeel;
-    setLookAndFeel(&lookAndFeel);
+    cabSimIRa.load(BinaryData::default_ir_wav, BinaryData::default_ir_wavSize);
 
-    // Set default model selection
-    currentModel = 0;
-    currentNewModel = 0;
-
-    // Create and position the GUI elements for the second model
-    positionNewModelElements(xPos, yPos, knobWidth, knobHeight);
-
-    // Set Widget Graphics
-    bigKnobLAF.setLookAndFeel(juce::ImageCache::getFromMemory(BinaryData::big_knob_png, BinaryData::big_knob_pngSize));
-    smallKnobLAF.setLookAndFeel(juce::ImageCache::getFromMemory(BinaryData::small_knob_png, BinaryData::small_knob_pngSize));
-
-    // Pre Amp Pedal Widgets
-
-    /*
-    // Overdrive
-    odFootSw.setImages(true, true, true,
-        ImageCache::getFromMemory(BinaryData::footswitch_up_png, BinaryData::footswitch_up_pngSize), 1.0, Colours::transparentWhite,
-        Image(), 1.0, Colours::transparentWhite,
-        ImageCache::getFromMemory(BinaryData::footswitch_down_png, BinaryData::footswitch_down_pngSize), 1.0, Colours::transparentWhite,
-        0.0);
-    addAndMakeVisible(odFootSw);
-    odFootSw.addListener(this);
-    */
-
-    cabOnButton.setImages(true, true, true,
-        juce::ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, juce::Colours::transparentWhite,
-        juce::Image(), 1.0, juce::Colours::transparentWhite,
-        juce::ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, juce::Colours::transparentWhite,
-        0.0);
-    addAndMakeVisible(cabOnButton);
-    cabOnButton.addListener(this);
-
-    // Initialize GUI elements for the first model
-    odDriveKnobAttach = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
-    addAndMakeVisible(odDriveKnob);
-    odDriveKnob.setLookAndFeel(&bigKnobLAF);
-    odDriveKnob.addListener(this);
-    odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    odDriveKnob.setDoubleClickReturnValue(true, 0.5);
-
-    masterSliderAttach = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
-    addAndMakeVisible(odLevelKnob);
-    odLevelKnob.setLookAndFeel(&smallKnobLAF);
-    odLevelKnob.addListener(this);
-    odLevelKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    odLevelKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    odLevelKnob.setDoubleClickReturnValue(true, 0.5);
-
-    bassSliderAttach = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob);
-    addAndMakeVisible(ampBassKnob);
-    ampBassKnob.setLookAndFeel(&smallKnobLAF);
-    ampBassKnob.addListener(this);
-    ampBassKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    ampBassKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    ampBassKnob.setDoubleClickReturnValue(true, 0.0);
-
-    midSliderAttach = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MID_ID, ampMidKnob);
-    addAndMakeVisible(ampMidKnob);
-    ampMidKnob.setLookAndFeel(&smallKnobLAF);
-    ampMidKnob.addListener(this);
-    ampMidKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    ampMidKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    ampMidKnob.setDoubleClickReturnValue(true, 0.0);
-
-    // Example initialization for ampTrebleKnob
-    ampTrebleKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    ampTrebleKnob.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
-    ampTrebleKnob.setPopupDisplayEnabled(true, false, this);
-    ampTrebleKnob.setTextValueSuffix(" Treble");
-    ampTrebleKnob.setValue(0.5); // Example initial value
-    addAndMakeVisible(ampTrebleKnob);
-    ampTrebleKnob.setLookAndFeel(&smallKnobLAF);
-    ampTrebleKnob.addListener(this);
-    ampTrebleKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    ampTrebleKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    ampTrebleKnob.setDoubleClickReturnValue(true, 0.0);
-
-    // Example initialization for versionLabel
-    versionLabel.setText("Version 1.0.0", juce::NotificationType::dontSendNotification);
-    versionLabel.setFont(juce::Font(14.0f, juce::Font::plain));
-    versionLabel.setJustificationType(juce::Justification::centred);
-    // Example initialization for versionLabel
-    versionLabel.setText("Version 1.0.0", juce::NotificationType::dontSendNotification);
-    versionLabel.setFont(juce::Font(14.0f, juce::Font::plain));
-    versionLabel.setJustificationType(juce::Justification::centred);
-    // Example initialization for versionLabel
-    versionLabel.setText("Version 1.0.0", juce::NotificationType::dontSendNotification);
-    versionLabel.setFont(juce::Font(14.0f, juce::Font::plain));
-    versionLabel.setJustificationType(juce::Justification::centred);
-    addAndMakeVisible(versionLabel);
-    versionLabel.setText("v1.2", juce::NotificationType::dontSendNotification);
-    versionLabel.setJustificationType(juce::Justification::left);
-    versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
-    versionLabel.setFont(font);
-
-    // Set Width of Plugin GUI to 1000
-    setSize(1000, 650);
-
-    // Initialize newModelSelect
-    newModelSelect.addItem("Default Model", 1);
-    newModelSelect.setSelectedId(1);
-    newModelSelect.onChange = [this]() { newModelSelectChanged(); };
-    addAndMakeVisible(newModelSelect);
-    newModelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
-    newModelSelect.setScrollWheelEnabled(true);
-    int d = 1;
-    for (const auto& jsonFile : processor.jsonFiles) {
-        newModelSelect.addItem(jsonFile.getFileName(), d);
-        d += 1;
-    }
-    newModelSelect.onChange = [this] { newModelSelectChanged(); };
-
-    // Position the GUI Elements
-    positionElements();
-
-    // Connect the sliders to the processor parameters
-    ampTrebleKnobAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(processor.parameters, "ampTreble", ampTrebleKnob);
-    newAmpBassKnobAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(processor.parameters, "newAmpBass", newAmpBassKnob);
-    newAmpMidKnobAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(processor.parameters, "newAmpMid", newAmpMidKnob);
-    newAmpTrebleKnobAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(processor.parameters, "newAmpTreble", newAmpTrebleKnob);
-    newOdDriveKnobAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(processor.parameters, "newOdDrive", newOdDriveKnob);
 }
 
-ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
+ProteusAudioProcessor::~ProteusAudioProcessor()
 {
-    odDriveKnob.setLookAndFeel(nullptr);
-    odLevelKnob.setLookAndFeel(nullptr);
-    ampBassKnob.setLookAndFeel(nullptr);
-    ampMidKnob.setLookAndFeel(nullptr);
-    ampTrebleKnob.setLookAndFeel(nullptr);
 }
 
 //==============================================================================
-void ProteusAudioProcessorEditor::paint(juce::Graphics& g)
+const String ProteusAudioProcessor::getName() const
 {
-    // Workaround for graphics on Windows builds (clipping code doesn't work correctly on Windows)
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
-    //if (processor.fw_state == 0) {
-    //    g.drawImageAt(background_off, 0, 0);  // Debug Line: Redraw entire background image
-    if (processor.fw_state == 1 && processor.conditioned == true) {
-        g.drawImageAt(background_on, 0, 0);  // Debug Line: Redraw entire background image
-    }
-    else if (processor.fw_state == 1 && processor.conditioned == false) {
-        g.drawImageAt(background_on_blue, 0, 0);  // Debug Line: Redraw entire background image
-    }
-#else
-    // Redraw only the clipped part of the background image
-    juce::Rectangle<int> ClipRect = g.getClipBounds();
-    //if (processor.fw_state == 0) {
-    //    g.drawImage(background_off, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
-    if (processor.fw_state == 1 && processor.conditioned == true) {
-        g.drawImage(background_on, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
-    }
-    else if (processor.fw_state == 1 && processor.conditioned == false) {
-        g.drawImage(background_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
-    }
+    return JucePlugin_Name;
+}
+
+bool ProteusAudioProcessor::acceptsMidi() const
+{
+   #if JucePlugin_WantsMidiInput
+    return true;
+   #else
+    return false;
+   #endif
+}
+
+bool ProteusAudioProcessor::producesMidi() const
+{
+   #if JucePlugin_ProducesMidiOutput
+    return true;
+   #else
+    return false;
+   #endif
+}
+
+bool ProteusAudioProcessor::isMidiEffect() const
+{
+   #if JucePlugin_IsMidiEffect
+    return true;
+   #else
+    return false;
+   #endif
+}
+
+double ProteusAudioProcessor::getTailLengthSeconds() const
+{
+    return 0.0;
+}
+
+int ProteusAudioProcessor::getNumPrograms()
+{
+    return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
+                // so this should be at least 1, even if you're not really implementing programs.
+}
+
+int ProteusAudioProcessor::getCurrentProgram()
+{
+    return 0;
+}
+
+void ProteusAudioProcessor::setCurrentProgram (int index)
+{
+}
+
+const String ProteusAudioProcessor::getProgramName (int index)
+{
+    return {};
+}
+
+void ProteusAudioProcessor::changeProgramName (int index, const String& newName)
+{
+}
+
+//==============================================================================
+void ProteusAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+{
+    // Use this method as the place to do any pre-playback
+    // initialisation that you need..
+    
+    *dcBlocker.state = *dsp::IIR::Coefficients<float>::makeHighPass (sampleRate, 35.0f);
+
+    // prepare resampler for target sample rate: 44.1 kHz
+    constexpr double targetSampleRate = 44100.0;
+    //resampler.prepareWithTargetSampleRate ({ sampleRate, (uint32) samplesPerBlock, 1 }, targetSampleRate);
+    resampler.prepareWithTargetSampleRate({ sampleRate, (uint32)samplesPerBlock, 2 }, targetSampleRate);
+
+
+    dsp::ProcessSpec specMono { sampleRate, static_cast<uint32> (samplesPerBlock), 1 };
+    dsp::ProcessSpec spec{ sampleRate, static_cast<uint32> (samplesPerBlock), 2 };
+
+    dcBlocker.prepare (spec); 
+
+    LSTM.reset();
+    LSTM2.reset();
+
+    // Set up IR
+    cabSimIRa.prepare(spec);
+
+}
+
+void ProteusAudioProcessor::releaseResources()
+{
+    // When playback stops, you can use this as an opportunity to free up any
+    // spare memory, etc.
+}
+
+#ifndef JucePlugin_PreferredChannelConfigurations
+bool ProteusAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+{
+  #if JucePlugin_IsMidiEffect
+    ignoreUnused (layouts);
+    return true;
+  #else
+    // This is the place where you check if the layout is supported.
+    // In this template code we only support mono or stereo.
+    if (layouts.getMainOutputChannelSet() != AudioChannelSet::mono()
+     && layouts.getMainOutputChannelSet() != AudioChannelSet::stereo())
+        return false;
+
+    // This checks if the input layout matches the output layout
+   #if ! JucePlugin_IsSynth
+    if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
+        return false;
+   #endif
+
+    return true;
+  #endif
+}
 #endif
-}
 
-void ProteusAudioProcessorEditor::resized()
+
+void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
-    // ... (Resizing code for existing GUI elements)
+    ScopedNoDenormals noDenormals;
 
-    // Position the new GUI elements for the second model
-    positionElements();
-}
+    auto driveValue = static_cast<float> (driveParam->load());
+    auto masterValue = static_cast<float> (masterParam->load());
+    auto bassValue = static_cast<float> (bassParam->load());
+    auto midValue = static_cast<float> (midParam->load());
+    auto trebleValue = static_cast<float> (trebleParam->load());
 
+    // Setup Audio Data
+    const int numSamples = buffer.getNumSamples();
+    const int numInputChannels = getTotalNumInputChannels();
+    const int sampleRate = getSampleRate();
 
-void ProteusAudioProcessorEditor::cabOnButtonClicked()
-{
-    // ... (Existing cabOnButtonClicked() function code)
-}
+    dsp::AudioBlock<float> block(buffer);
+    dsp::ProcessContextReplacing<float> context(block);
 
-void ProteusAudioProcessorEditor::modelSelectChanged()
-{
-    // ... (Define the logic to handle model selection changes)
+    // Overdrive Pedal ================================================================== 
+    if (fw_state == 1 && model_loaded == true) {
+        
+        if (conditioned == false) {
+            // Apply ramped changes for gain smoothing
+            if (driveValue == previousDriveValue)
+            {
+                buffer.applyGain(driveValue*2.5);
+            }
+             else {
+                buffer.applyGainRamp(0, (int) buffer.getNumSamples(), previousDriveValue * 2.5, driveValue * 2.5);
+                previousDriveValue = driveValue;
+            }
+            auto block44k = resampler.processIn(block);
+            for (int ch = 0; ch < buffer.getNumChannels(); ++ch)
+            {
+                // Apply LSTM model
+                if (ch == 0) {
+                    LSTM.process(block44k.getChannelPointer(0), block44k.getChannelPointer(0), (int)block44k.getNumSamples());
+                }
+                else if (ch == 1) {
+                    LSTM2.process(block44k.getChannelPointer(1), block44k.getChannelPointer(1), (int)block44k.getNumSamples());
+                }
+            }
+            resampler.processOut(block44k, block);
+        } else {
+            buffer.applyGain(1.5); // Apply default boost to help sound
+            // resample to target sample rate
+            
+            auto block44k = resampler.processIn(block);
+            for (int ch = 0; ch < buffer.getNumChannels(); ++ch)
+            {
+                // Apply LSTM model
+                if (ch == 0) {
+                    LSTM.process(block44k.getChannelPointer(0), driveValue, block44k.getChannelPointer(0), (int)block44k.getNumSamples());
+                }
+                else if (ch == 1) {
+                    LSTM2.process(block44k.getChannelPointer(1), driveValue, block44k.getChannelPointer(1), (int)block44k.getNumSamples());
+                }
+            }
+            resampler.processOut(block44k, block);
+        }
 
-    // ... (Positioning code for existing GUI elements)
+        dcBlocker.process(context);
 
-    // Position the new GUI elements for the second model
-    int xPos = 100;
-    int yPos = 100;
-    int knobWidth = 100;
-    int knobHeight = 100;
+        for (int ch = 0; ch < buffer.getNumChannels(); ++ch)
+        {
+            // Apply EQ
+            if (ch == 0) {
+                eq4band.process(buffer.getReadPointer(0), buffer.getWritePointer(0), midiMessages, numSamples, numInputChannels, sampleRate);
+            
+            }
+            else if (ch == 1) {
+                eq4band2.process(buffer.getReadPointer(1), buffer.getWritePointer(1), midiMessages, numSamples, numInputChannels, sampleRate);
+            }
+        }
 
-    // Set positions and sizes for existing GUI elements
-    // ...
+        if (cab_state == 1) {
+            cabSimIRa.process(context); // Process IR a on channel 0
+            buffer.applyGain(2.0);
+        //} else {
+        //    buffer.applyGain(0.7);
+        }
 
-    // Position the new GUI elements for the second model
-    positionNewModelElements(xPos, yPos, knobWidth, knobHeight);
+        // Master Volume 
+        // Apply ramped changes for gain smoothing
+        if (masterValue == previousMasterValue)
+        {
+            buffer.applyGain(masterValue);
+        }
+        else {
+            buffer.applyGainRamp(0, (int) buffer.getNumSamples(), previousMasterValue, masterValue);
+            previousMasterValue = masterValue;
+        }
 
-
-
-
-
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
-
-    //Overall Widgets
-    loadButton.setBounds(186, 48, 120, 24);
-    modelSelect.setBounds(52, 11, 400, 28);
-    //modelLabel.setBounds(197, 2, 90, 25);
-    versionLabel.setBounds(462, 632, 60, 10);
-    cabOnButton.setBounds(115, 233, 53, 39);
-
-    // Overdrive Widgets
-    odDriveKnob.setBounds(168, 242, 190, 190);
-    odLevelKnob.setBounds(340, 225, 62, 62);
-    //odFootSw.setBounds(185, 416, 175, 160);
-
-    ampBassKnob.setBounds(113, 131, 62, 62);
-    ampMidKnob.setBounds(227, 131, 62, 62);
-    ampTrebleKnob.setBounds(340, 131, 62, 62);
-
-    // Position the GUI Elements for the Second Model
-    positionNewModelElements();
-}
-
-void ProteusAudioProcessorEditor::positionNewModelElements(int xPos, int yPos, int knobWidth, int knobHeight)
-{
-    // Define the position for the GUI elements of the second model
-
-    // Set the position of newAmpBassKnob
-    newAmpBassKnob.setBounds(xPos, yPos, knobWidth, knobHeight);
-    addAndMakeVisible(newAmpBassKnob);
-    newAmpBassKnob.setLookAndFeel(&smallKnobLAF);
-    newAmpBassKnob.addListener(this);
-    newAmpBassKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    newAmpBassKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    newAmpBassKnob.setDoubleClickReturnValue(true, 0.0);
-
-    // Set the position of newAmpMidKnob
-    newAmpMidKnob.setBounds(xPos, yPos, knobWidth, knobHeight);
-    addAndMakeVisible(newAmpMidKnob);
-    newAmpMidKnob.setLookAndFeel(&smallKnobLAF);
-    newAmpMidKnob.addListener(this);
-    newAmpMidKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    newAmpMidKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    newAmpMidKnob.setDoubleClickReturnValue(true, 0.0);
-
-    // Set the position of newAmpTrebleKnob
-    newAmpTrebleKnob.setBounds(xPos, yPos, knobWidth, knobHeight);
-    addAndMakeVisible(newAmpTrebleKnob);
-    newAmpTrebleKnob.setLookAndFeel(&smallKnobLAF);
-    newAmpTrebleKnob.addListener(this);
-    newAmpTrebleKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    newAmpTrebleKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    newAmpTrebleKnob.setDoubleClickReturnValue(true, 0.0);
-
-    // Set the position of newOdDriveKnob
-    newOdDriveKnob.setBounds(xPos, yPos, knobWidth, knobHeight);
-    addAndMakeVisible(newOdDriveKnob);
-    newOdDriveKnob.setLookAndFeel(&bigKnobLAF);
-    newOdDriveKnob.addListener(this);
-    newOdDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    newOdDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    newOdDriveKnob.setDoubleClickReturnValue(true, 0.0);
-}
-
-void ProteusAudioProcessorEditor::loadButtonClicked()
-{
-    auto selectedModel = modelSelect.getSelectedItemIndex();
-    if (selectedModel > 0)
-    {
-        processor.loadModel(selectedModel - 1); // Adjusting for 0-based index
-        updateVisibility();
-        resized();
+        // Smooth pop sound when changing models
+        if (pauseVolume > 0) {
+            if (pauseVolume > 2)
+                buffer.applyGain(0.0);
+            else if (pauseVolume == 2)
+                buffer.applyGainRamp(0, (int)buffer.getNumSamples(), 0, masterValue / 2);
+            else
+                buffer.applyGainRamp(0, (int)buffer.getNumSamples(), masterValue / 2, masterValue);
+            pauseVolume -= 1;
+        }
     }
 }
 
-void ProteusAudioProcessorEditor::modelSelectChanged()
+//==============================================================================
+bool ProteusAudioProcessor::hasEditor() const
 {
-    auto selectedModel = modelSelect.getSelectedItemIndex();
-    if (selectedModel > 0)
+    return true; // (change this to false if you choose to not supply an editor)
+}
+
+AudioProcessorEditor* ProteusAudioProcessor::createEditor()
+{
+    return new ProteusAudioProcessorEditor (*this);
+}
+
+//==============================================================================
+void ProteusAudioProcessor::getStateInformation (MemoryBlock& destData)
+{
+    // You should use this method to store your parameters in the memory block.
+    // You could do that either as raw data, or use the XML or ValueTree classes
+    // as intermediaries to make it easy to save and load complex data.
+    
+    auto state = treeState.copyState();
+    std::unique_ptr<XmlElement> xml (state.createXml());
+    xml->setAttribute ("fw_state", fw_state);
+    xml->setAttribute("folder", folder.getFullPathName().toStdString());
+    xml->setAttribute("saved_model", saved_model.getFullPathName().toStdString());
+    xml->setAttribute("current_model_index", current_model_index);
+    xml->setAttribute ("cab_state", cab_state);
+    copyXmlToBinary (*xml, destData);
+
+}
+
+void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+{
+    // You should use this method to restore your parameters from this memory block,
+    // whose contents will have been created by the getStateInformation() call.
+
+    std::unique_ptr<juce::XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+
+    if (xmlState.get() != nullptr)
     {
-        processor.loadModel(selectedModel - 1); // Adjusting for 0-based index
-        updateVisibility();
-        resized();
-    }
-    repaint();
-}
+        if (xmlState->hasTagName (treeState.state.getType()))
+        {
+            treeState.replaceState (juce::ValueTree::fromXml (*xmlState));
+            fw_state = xmlState->getBoolAttribute ("fw_state");
+            File temp_saved_model = xmlState->getStringAttribute("saved_model");
+            saved_model = temp_saved_model;
+            cab_state = xmlState->getBoolAttribute ("cab_state");
 
-void ProteusAudioProcessorEditor::newModelSelectChanged()
-{
-    auto selectedNewModel = newModelSelect.getSelectedItemIndex();
-    if (selectedNewModel > 0)
-    {
-        processor.loadNewModel(selectedNewModel - 1); // Adjusting for 0-based index
-        updateVisibility();
-        resized();
-    }
-}
+            current_model_index = xmlState->getIntAttribute("current_model_index");
+            File temp = xmlState->getStringAttribute("folder");
+            folder = temp;
+            if (auto* editor = dynamic_cast<ProteusAudioProcessorEditor*> (getActiveEditor()))
+                editor->resetImages();
 
-void ProteusAudioProcessorEditor::updateVisibility()
-{
-    bool isFirstModelSelected = (modelSelect.getSelectedItemIndex() > 0);
-    // Set the visibility of GUI elements based on selected models
-    odDriveKnob.setVisible(isFirstModelSelected);
-    odLevelKnob.setVisible(isFirstModelSelected);
-    ampBassKnob.setVisible(isFirstModelSelected);
-    ampMidKnob.setVisible(isFirstModelSelected);
-    ampTrebleKnob.setVisible(isFirstModelSelected);
+            if (saved_model.existsAsFile()) {
+                loadConfig(saved_model);
+            }          
 
-    bool isNewModelSelected = (newModelSelect.getSelectedItemIndex() > 0);
-    // Set the visibility of GUI elements for the second model
-    newAmpBassKnob.setVisible(isNewModelSelected);
-    newAmpMidKnob.setVisible(isNewModelSelected);
-    newAmpTrebleKnob.setVisible(isNewModelSelected);
-    newOdDriveKnob.setVisible(isNewModelSelected);
-}
-
-void ProteusAudioProcessorEditor::odFootSwClicked()
-{
-    // ... (Code to handle OD footswitch click)
-}
-
-// ... (Implement other button click handlers)
-
-void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged)
-{
-    if (comboBoxThatHasChanged == &modelSelect)
-    {
-        modelSelectChanged();
-    }
-    else if (comboBoxThatHasChanged == &newModelSelect)
-    {
-        newModelSelectChanged();
+        }
     }
 }
 
-// ... (Implement other listener methods)
-
-bool isValidFormat(const juce::File& file)
+void ProteusAudioProcessor::set_ampEQ(float bass_slider, float mid_slider, float treble_slider)
 {
-    return file.hasFileExtension(".json");
+    eq4band.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
+    eq4band2.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
+}
+
+void ProteusAudioProcessor::loadConfig(File configFile)
+{
+    this->suspendProcessing(true);
+    pauseVolume = 3;
+    String path = configFile.getFullPathName();
+    char_filename = path.toUTF8();
+
+    LSTM.reset();
+    LSTM2.reset();
+
+    LSTM.load_json(char_filename);
+    LSTM2.load_json(char_filename);
+
+    if (LSTM.input_size == 1) {
+        conditioned = false;
+    } else {
+        conditioned = true;
+    }
+
+    //saved_model = configFile;
+    model_loaded = true;
+    this->suspendProcessing(false);
+}
+
+
+
+//==============================================================================
+// This creates new instances of the plugin..
+AudioProcessor* JUCE_CALLTYPE createPluginFilter()
+{
+    return new ProteusAudioProcessor();
 }
