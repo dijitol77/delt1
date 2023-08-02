@@ -182,15 +182,19 @@ void ProteusAudioProcessorEditor::paint(juce::Graphics& g)
 
 void ProteusAudioProcessorEditor::resized()
 {
-    // ... (Resizing code for existing GUI elements)
+    // ...
+    // Resizing code for existing GUI elements
+    // ...
 
     // Position the new GUI elements for the second model
-    positionElements();
+    positionNewModelElements();
 }
 
 void ProteusAudioProcessorEditor::positionElements()
 {
-    // ... (Positioning code for existing GUI elements)
+    // ...
+    // Positioning code for existing GUI elements
+    // ...
 
     // Position the new GUI elements for the second model
     int xPos = 100;
@@ -234,6 +238,7 @@ void ProteusAudioProcessorEditor::positionElements()
 void ProteusAudioProcessorEditor::positionNewModelElements(int xPos, int yPos, int knobWidth, int knobHeight)
 {
     // Define the position for the GUI elements of the second model
+    // ...
 
     // Set the position of newAmpBassKnob
     newAmpBassKnob.setBounds(xPos, yPos, knobWidth, knobHeight);
