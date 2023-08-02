@@ -3,7 +3,7 @@
 
 bool ProteusAudioProcessor::hasEditor() const
 {
-    return true;
+    return true; // (change this to false if you choose to not supply an editor)
 }
 
 AudioProcessorEditor* ProteusAudioProcessor::createEditor()
