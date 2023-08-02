@@ -1,10 +1,12 @@
 #include "PluginProcessor.h"
+#include "UtilityFunctions.h"
+#include "juce_core/juce_core.h" // Include this for the File class
 
-void ProteusAudioProcessor::loadConfig(File configFile)
+void ProteusAudioProcessor::loadConfig(juce::File configFile)
 {
     this->suspendProcessing(true);
     pauseVolume = 3;
-    String path = configFile.getFullPathName();
+    juce::String path = configFile.getFullPathName();
     char_filename = path.toUTF8();
 
     LSTM.reset();
