@@ -2,6 +2,33 @@
 #include "PluginEditor.h"
 #include <juce_audio_processors/juce_audio_processors.h> // for AudioParameterFloat
 
+
+// In PluginProcessorInit.h
+class PluginProcessorInit {
+public:
+    PluginProcessorInit(ProteusAudioProcessor& p) : processor(p) {}
+    void initialize();
+
+private:
+    ProteusAudioProcessor& processor;
+    AudioProcessing audioProcessing;
+    MidiProcessing midiProcessing;
+    Programs programs;
+    StateManagement stateManagement;
+    EditorCreation editorCreation;
+    UtilityFunctions utilityFunctions;
+};
+
+// In PluginProcessorInit.cpp
+void PluginProcessorInit::initialize() {
+    audioProcessing = AudioProcessing(processor);
+    midiProcessing = MidiProcessing(processor);
+    programs = Programs(processor);
+    stateManagement = StateManagement(processor);
+    editorCreation = EditorCreation(processor);
+    utilityFunctions = UtilityFunctions(processor);
+}
+
 ProteusAudioProcessor::ProteusAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
     : AudioProcessor(BusesProperties()
