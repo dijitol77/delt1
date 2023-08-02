@@ -1,5 +1,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "Programs.h"
+#include "juce_core/juce_core.h" // Include this for the String class
 
 int ProteusAudioProcessor::getNumPrograms()
 {
@@ -15,11 +17,11 @@ void ProteusAudioProcessor::setCurrentProgram (int index)
 {
 }
 
-const String ProteusAudioProcessor::getProgramName (int index)
+const juce::String ProteusAudioProcessor::getProgramName (int index)
 {
     return {};
 }
 
-void ProteusAudioProcessor::changeProgramName (int index, const String& newName)
+void ProteusAudioProcessor::changeProgramName (int index, const juce::String& newName)
 {
 }
