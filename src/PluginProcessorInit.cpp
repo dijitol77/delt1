@@ -56,30 +56,6 @@ double ProteusAudioProcessor::getTailLengthSeconds() const
     return 0.0;
 }
 
-int ProteusAudioProcessor::getNumPrograms()
-{
-    return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
-                // so this should be at least 1, even if you're not really implementing programs.
-}
-
-int ProteusAudioProcessor::getCurrentProgram()
-{
-    return 0;
-}
-
-void ProteusAudioProcessor::setCurrentProgram (int index)
-{
-}
-
-const String ProteusAudioProcessor::getProgramName (int index)
-{
-    return {};
-}
-
-void ProteusAudioProcessor::changeProgramName (int index, const String& newName)
-{
-}
-
 //==============================================================================
 
 
