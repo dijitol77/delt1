@@ -1,4 +1,5 @@
 #include "AudioProcessing.h"
+#include "PluginProcessor.h"  // Add this line
 
 void ProteusAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
