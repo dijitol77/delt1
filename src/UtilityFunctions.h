@@ -1,13 +1,13 @@
 #pragma once
 
-#include "PluginProcessor.h"
-#include "juce_core/juce_core.h"
+#include "juce_core/juce_core.h" // Include only the required header for juce::File
+
+class ProteusAudioProcessor; // Forward declaration
 
 class UtilityFunctions
 {
 public:
-    UtilityFunctions(ProteusAudioProcessor& p);
-
+    UtilityFunctions(ProteusAudioProcessor& p); // Constructor
     void loadConfig(juce::File configFile);
 
 private:
