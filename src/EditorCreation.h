@@ -1,11 +1,12 @@
 #pragma once
-#include "AudioProcessing.h"
-#include "juce_audio_processors/juce_audio_processors.h" // Include this for the AudioProcessorEditor class
-
-class ProteusAudioProcessor;
+#include "PluginProcessor.h"
 
 class EditorCreation {
 public:
+    EditorCreation(ProteusAudioProcessor& p) : processor(p) {}
     bool hasEditor() const;
     juce::AudioProcessorEditor* createEditor();
+
+private:
+    ProteusAudioProcessor& processor;
 };
