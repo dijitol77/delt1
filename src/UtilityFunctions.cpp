@@ -1,5 +1,5 @@
-#include "PluginProcessor.h"
-#include "UtilityFunctions.h"
+#include "PluginProcessor.h" // Include this first
+#include "UtilityFunctions.h" // Then this
 #include "juce_core/juce_core.h" // Include this for the File class
 
 UtilityFunctions::UtilityFunctions(ProteusAudioProcessor& p) : processor(p) {}
