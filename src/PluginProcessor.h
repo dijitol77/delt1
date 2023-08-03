@@ -68,6 +68,8 @@ public:
 
     // Files and configuration
     void loadConfig(File configFile);
+const RT_LSTM& getLSTM() const { return LSTM; }
+    const RT_LSTM& getLSTM2() const { return LSTM2; }
 
     // Pedal/amp states
     int fw_state = 1;       // 0 = off, 1 = on
@@ -92,8 +94,7 @@ public:
 
     bool model_loaded = false;
 
-    const RT_LSTM& getLSTM() const { return LSTM; }
-    const RT_LSTM& getLSTM2() const { return LSTM2; }
+   
     const dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>>& getDcBlocker() const { return dcBlocker; }
     const chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>>& getResampler() const { return resampler; }
     const CabSim& getCabSimIRa() const { return cabSimIRa; }
@@ -102,6 +103,10 @@ public:
     float getPreviousMasterValue() const { return previousMasterValue; }
 
 private:
+
+    RT_LSTM LSTM;
+    RT_LSTM LSTM2;
+
     Eq4Band eq4band; // Amp EQ
     Eq4Band eq4band2; // Amp EQ
 
@@ -114,9 +119,6 @@ private:
     float previousDriveValue = 0.5;
     float previousMasterValue = 0.5;
 
-    RT_LSTM LSTM;
-    RT_LSTM LSTM2;
-
     dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> dcBlocker;
 
     chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>> resampler;
@@ -128,3 +130,14 @@ private:
 
     // ... Other private member functions and variables ...
 };
+
+class RT_LSTM
+{
+public:
+     
+    int getInputSize() const { return input_size; }
+
+private:
+    int input_size;
+   
+}
