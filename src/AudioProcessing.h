@@ -1,16 +1,16 @@
 #pragma once
 #include "PluginProcessor.h"
 #include "juce_dsp/juce_dsp.h"
-#include "juce_audio_processors/juce_audio_processors.h" // Include this for MemoryBlock
-#include "juce_core/juce_core.h" // Include this for File class
+#include "juce_audio_processors/juce_audio_processors.h"
+#include "juce_core/juce_core.h"
 
 class ProteusAudioProcessor; // Forward declaration of ProteusAudioProcessor
 
 class AudioProcessing
 {
 public:
-    AudioProcessing(); // constructor
-    ~AudioProcessing(); // destructor
+    AudioProcessing();
+    ~AudioProcessing();
     void initialize(ProteusAudioProcessor& p);
     void prepareToPlay(double sampleRate, int samplesPerBlock);
     void releaseResources();
@@ -23,10 +23,10 @@ public:
     int getNumPrograms();
     int getCurrentProgram();
     void setCurrentProgram(int index);
-    const String getProgramName(int index) override; // Add 'override' here
-    void changeProgramName(int index, const String& newName) override; // Add 'override' here
+    const juce::String getProgramName(int index) override; // Add 'override' here
+    void changeProgramName(int index, const juce::String& newName) override; // Add 'override' here
     bool hasEditor() const;
-    AudioProcessorEditor* createEditor();
+    juce::AudioProcessorEditor* createEditor();
     void getStateInformation(juce::MemoryBlock& destData); // Use fully qualified name for MemoryBlock
     void setStateInformation(const void* data, int sizeInBytes);
     void loadConfig(juce::File configFile); // Use fully qualified name for File
