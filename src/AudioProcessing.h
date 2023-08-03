@@ -1,6 +1,8 @@
-// PluginProcessor.h
 #pragma once
-#include "JuceHeader.h"
+#include "PluginProcessor.h"
+#include "juce_dsp/juce_dsp.h"
+
+class ProteusAudioProcessor; // Forward declaration of ProteusAudioProcessor
 
 class AudioProcessing
 {
