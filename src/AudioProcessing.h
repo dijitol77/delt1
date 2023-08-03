@@ -1,6 +1,8 @@
 #pragma once
 #include "PluginProcessor.h"
 #include "juce_dsp/juce_dsp.h"
+#include "juce_audio_processors/juce_audio_processors.h" // Include this for MemoryBlock
+#include "juce_core/juce_core.h" // Include this for File class
 
 class ProteusAudioProcessor; // Forward declaration of ProteusAudioProcessor
 
@@ -21,16 +23,16 @@ public:
     int getNumPrograms();
     int getCurrentProgram();
     void setCurrentProgram(int index);
-    const String getProgramName(int index);
-    void changeProgramName(int index, const String& newName);
+    const String getProgramName(int index) override; // Add 'override' here
+    void changeProgramName(int index, const String& newName) override; // Add 'override' here
     bool hasEditor() const;
     AudioProcessorEditor* createEditor();
-    void getStateInformation(MemoryBlock& destData);
+    void getStateInformation(juce::MemoryBlock& destData); // Use fully qualified name for MemoryBlock
     void setStateInformation(const void* data, int sizeInBytes);
-    void loadConfig(File configFile);
+    void loadConfig(juce::File configFile); // Use fully qualified name for File
 
     // Declare member variables here
-    AudioProcessorValueTreeState treeState;
+    juce::AudioProcessorValueTreeState treeState; // Use fully qualified name for AudioProcessorValueTreeState
     std::atomic<float>* driveParam;
     std::atomic<float>* masterParam;
     std::atomic<float>* bassParam;
