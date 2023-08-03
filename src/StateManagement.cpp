@@ -1,6 +1,7 @@
 #include "StateManagement.h"
 #include "juce_core/juce_core.h" // Include this for the MemoryBlock class
 
+
 void StateManagement::getStateInformation(juce::MemoryBlock& destData)
 {
     // You should use this method to store your parameters in the memory block.
