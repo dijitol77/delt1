@@ -1,8 +1,6 @@
 #pragma once
-#include "AudioProcessing.h"
+#include "PluginProcessor.h"
 #include "juce_core/juce_core.h" // Include this for the MemoryBlock class
-
-class ProteusAudioProcessor;
 
 class StateManagement {
 public:
