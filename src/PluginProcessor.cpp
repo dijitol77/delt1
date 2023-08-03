@@ -10,6 +10,7 @@
 #include "StateManagement.h"
 #include "EditorCreation.h"
 #include "UtilityFunctions.h"
+#include "AudioProcessingDerived.h" // Include the header for the derived class
 
 class ProteusAudioProcessor : public juce::AudioProcessor
 {
