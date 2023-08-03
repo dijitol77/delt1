@@ -1,4 +1,5 @@
 #include "PluginProcessorInit.h"
+#include "AudioProcessingDerived.h" // Include the header for the derived class
 
 void PluginProcessorInit::initialize(ProteusAudioProcessor& p) {
     audioProcessing.initialize(p);
