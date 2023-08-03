@@ -2,7 +2,7 @@
 
 #include "JuceHeader.h"
 #include "PluginProcessor.h"
-#include "AudioProcessingDerived.h" // Include the header for the derived class
+
 
 #include "MidiProcessing.h"
 #include "Programs.h"
