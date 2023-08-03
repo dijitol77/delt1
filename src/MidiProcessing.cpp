@@ -1,9 +1,16 @@
-#include "PluginProcessor.h"
-#include "PluginEditor.h"
 #include "MidiProcessing.h"
+#include "PluginProcessor.h"
 #include "juce_audio_plugin_client/juce_audio_plugin_client.h" // Include this for the JucePlugin_WantsMidiInput, etc.
 
-bool ProteusAudioProcessor::acceptsMidi() const
+void MidiProcessing::processMidi(juce::MidiBuffer& midiMessages)
+{
+    // Use processor to access necessary member variables and functions
+    // For example:
+    // processor.someMemberVariable = someValue;
+    // processor.someMemberFunction(someArgument);
+}
+
+bool MidiProcessing::acceptsMidi() const
 {
    #if JucePlugin_WantsMidiInput
     return true;
@@ -12,7 +19,7 @@ bool ProteusAudioProcessor::acceptsMidi() const
    #endif
 }
 
-bool ProteusAudioProcessor::producesMidi() const
+bool MidiProcessing::producesMidi() const
 {
    #if JucePlugin_ProducesMidiOutput
     return true;
@@ -21,7 +28,7 @@ bool ProteusAudioProcessor::producesMidi() const
    #endif
 }
 
-bool ProteusAudioProcessor::isMidiEffect() const
+bool MidiProcessing::isMidiEffect() const
 {
    #if JucePlugin_IsMidiEffect
     return true;
