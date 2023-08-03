@@ -1,15 +1,15 @@
 #include "StateManagement.h"
 #include "juce_core/juce_core.h" // Include this for the MemoryBlock class
 
-void StateManagement::getStateInformation(juce::MemoryBlock& destData)
+void StateManagement::getStateInformation(juce::MemoryBlock& destData, YourProcessorClass& processor)
 {
-    auto state = this->processor.treeState.copyState();
+    auto state = processor.treeState.copyState();
     std::unique_ptr<juce::XmlElement> xml (state.createXml());
-    xml->setAttribute ("fw_state", this->processor.fw_state);
-    xml->setAttribute("folder", this->processor.folder.getFullPathName().toStdString());
-    xml->setAttribute("saved_model", this->processor.saved_model.getFullPathName().toStdString());
-    xml->setAttribute("current_model_index", this->processor.current_model_index);
-    xml->setAttribute ("cab_state", this->processor.cab_state);
+    xml->setAttribute ("fw_state", processor.fw_state);
+    xml->setAttribute("folder", processor.folder.getFullPathName().toStdString());
+    xml->setAttribute("saved_model", processor.saved_model.getFullPathName().toStdString());
+    xml->setAttribute("current_model_index", processor.current_model_index);
+    xml->setAttribute ("cab_state", processor.cab_state);
     copyXmlToBinary (*xml, destData);
 }
 
