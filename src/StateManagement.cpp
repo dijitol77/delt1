@@ -1,7 +1,7 @@
 #include "StateManagement.h"
 #include "juce_core/juce_core.h" // Include this for the MemoryBlock class
 
-void StateManagement::getStateInformation(juce::MemoryBlock& destData, YourProcessorClass& processor)
+void StateManagement::getStateInformation(juce::MemoryBlock& destData, ProteusAudioProcessor& processor)
 {
     auto state = processor.treeState.copyState();
     std::unique_ptr<juce::XmlElement> xml (state.createXml());
