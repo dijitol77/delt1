@@ -32,11 +32,11 @@ void AudioProcessing::processBlock (juce::AudioBuffer<float>& buffer, juce::Midi
 {
     ScopedNoDenormals noDenormals;
 
-    auto driveValue = static_cast<float> (processor.driveParam->load());
-    auto masterValue = static_cast<float> (processor.masterParam->load());
-    auto bassValue = static_cast<float> (processor.bassParam->load());
-    auto midValue = static_cast<float> (processor.midParam->load());
-    auto trebleValue = static_cast<float> (processor.trebleParam->load());
+    auto driveValue = static_cast<float> (this->driveParam->load());
+    auto masterValue = static_cast<float> (this->masterParam->load());
+    auto bassValue = static_cast<float> (this->bassParam->load());
+    auto midValue = static_cast<float> (this->midParam->load());
+    auto trebleValue = static_cast<float> (this->trebleParam->load());
 
     // Setup Audio Data
     const int numSamples = buffer.getNumSamples();
