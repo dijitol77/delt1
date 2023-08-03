@@ -35,7 +35,8 @@ public:
             // For example: memberVariable = other.memberVariable;
         }
         return *this;
-    }
+    } 
+StateManagement stateManagement{*this};
 
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
