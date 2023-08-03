@@ -6,7 +6,7 @@
 
 class ProteusAudioProcessor; // Forward declaration of ProteusAudioProcessor
 
-class AudioProcessing
+class AudioProcessing : public juce::AudioProcessor
 {
 public:
     AudioProcessing();
