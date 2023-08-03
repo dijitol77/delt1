@@ -18,48 +18,38 @@
 #include "Eq4Band.h"
 #include "CabSim.h"
 
-//==============================================================================
-/**
-*/
 class ProteusAudioProcessor : public juce::AudioProcessor
 {
 public:
-      //==============================================================================
     ProteusAudioProcessor();
     ~ProteusAudioProcessor();
 
-    //==============================================================================
-    void prepareToPlay (double sampleRate, int samplesPerBlock) override;
+    void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
 
-   #ifndef JucePlugin_PreferredChannelConfigurations
-    bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
-   #endif
+#ifndef JucePlugin_PreferredChannelConfigurations
+    bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
+#endif
 
-    void processBlock (AudioBuffer<float>&, MidiBuffer&) override;
+    void processBlock(AudioBuffer<float>& buffer, MidiBuffer& midiMessages) override;
 
-    //==============================================================================
     AudioProcessorEditor* createEditor() override;
     bool hasEditor() const override;
 
-    //==============================================================================
     const String getName() const override;
-
     bool acceptsMidi() const override;
     bool producesMidi() const override;
     bool isMidiEffect() const override;
     double getTailLengthSeconds() const override;
 
-    //==============================================================================
     int getNumPrograms() override;
     int getCurrentProgram() override;
-    void setCurrentProgram (int index) override;
-    const String getProgramName (int index) override;
-    void changeProgramName (int index, const String& newName) override;
+    void setCurrentProgram(int index) override;
+    const String getProgramName(int index) override;
+    void changeProgramName(int index, const String& newName) override;
 
-    //==============================================================================
-    void getStateInformation (MemoryBlock& destData) override;
-    void setStateInformation (const void* data, int sizeInBytes) override;
+    void getStateInformation(MemoryBlock& destData) override;
+    void setStateInformation(const void* data, int sizeInBytes) override;
 
     void set_ampEQ(float bass_slider, float mid_slider, float treble_slider);
 
@@ -89,11 +79,11 @@ public:
 
     bool model_loaded = false;
 
-     const RT_LSTM& getLSTM() const { return LSTM; }
+    const RT_LSTM& getLSTM() const { return LSTM; }
     const RT_LSTM& getLSTM2() const { return LSTM2; }
 
 private:
-   Eq4Band eq4band; // Amp EQ
+    Eq4Band eq4band; // Amp EQ
     Eq4Band eq4band2; // Amp EQ
 
     std::atomic<float>* driveParam = nullptr;
@@ -104,10 +94,9 @@ private:
 
     float previousDriveValue = 0.5;
     float previousMasterValue = 0.5;
-    //float steppedValue1 = 0.0;
 
-     RT_LSTM LSTM;
-     RT_LSTM LSTM2;
+    RT_LSTM LSTM;
+    RT_LSTM LSTM2;
 
     dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> dcBlocker;
 
@@ -116,8 +105,8 @@ private:
     // IR processing
     CabSim cabSimIRa;
 
-    //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProteusAudioProcessor)
 
     // ... Other private member functions and variables ...
 };
+
