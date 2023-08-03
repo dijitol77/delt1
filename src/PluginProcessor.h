@@ -18,9 +18,13 @@
 #include "Eq4Band.h"
 #include "CabSim.h"
 
-class ProteusAudioProcessor : public juce::AudioProcessor
+class StateManagement;  // Forward declaration
+
+class ProteusAudioProcessor  : public juce::AudioProcessor
 {
 public:
+    // ... existing code ...
+
     ProteusAudioProcessor();
     ~ProteusAudioProcessor();
 
@@ -102,6 +106,8 @@ const RT_LSTM& getLSTM() const { return LSTM; }
     const Eq4Band& getEq4band() const { return eq4band; }
     const Eq4Band& getEq4band2() const { return eq4band2; }
     float getPreviousMasterValue() const { return previousMasterValue; }
+
+ friend class StateManagement;
 
 private:
 
