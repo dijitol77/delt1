@@ -2,7 +2,9 @@
 #include "UtilityFunctions.h"
 #include "juce_core/juce_core.h" // Include this for the File class
 
-void loadConfig(ProteusAudioProcessor& processor, juce::File configFile)
+UtilityFunctions::UtilityFunctions(ProteusAudioProcessor& p) : processor(p) {}
+
+void UtilityFunctions::loadConfig(juce::File configFile)
 {
     processor.suspendProcessing(true);
     processor.pauseVolume = 3;
