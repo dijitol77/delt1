@@ -1,5 +1,5 @@
 #include "UtilityFunctions.h"
-#include "ProteusAudioProcessor.h"
+#include "PluginProcessor.h"
 
 // Constructor
 UtilityFunctions::UtilityFunctions(ProteusAudioProcessor& p) : processor(p) {}
