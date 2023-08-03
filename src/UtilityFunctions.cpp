@@ -16,7 +16,7 @@ void UtilityFunctions::loadConfig(juce::File configFile)
     processor.loadLSTM();
     processor.loadLSTM2();
 
-    if (processor.LSTM != nullptr && processor.LSTM->input_size == 1)
+    if (processor.getLSTM() != nullptr && processor.getLSTM().input_size == 1)
     {
         processor.conditioned = false;
     }
