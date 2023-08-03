@@ -13,7 +13,7 @@
 class PluginProcessorInit {
 public:
     PluginProcessorInit(ProteusAudioProcessor& p) : processor(p),
-        audioProcessing(static_cast<AudioProcessingDerived&>(p)), // Use the derived class
+        audioProcessing(p), // Use the base class
         midiProcessing(p), programs(p),
         stateManagement(p), editorCreation(p), utilityFunctions(p) {}
     void initialize();
