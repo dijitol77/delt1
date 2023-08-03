@@ -1,27 +1,24 @@
-#include "PluginProcessor.h"
-#include "PluginEditor.h"
 #include "Programs.h"
-#include "juce_core/juce_core.h" // Include this for the String class
 
-int ProteusAudioProcessor::getNumPrograms()
+int Programs::getNumPrograms()
 {
     return 1;
 }
 
-int ProteusAudioProcessor::getCurrentProgram()
+int Programs::getCurrentProgram()
 {
     return 0;
 }
 
-void ProteusAudioProcessor::setCurrentProgram (int index)
+void Programs::setCurrentProgram (int index)
 {
 }
 
-const juce::String ProteusAudioProcessor::getProgramName (int index)
+const juce::String Programs::getProgramName (int index)
 {
     return {};
 }
 
-void ProteusAudioProcessor::changeProgramName (int index, const juce::String& newName)
+void Programs::changeProgramName (int index, const juce::String& newName)
 {
 }
