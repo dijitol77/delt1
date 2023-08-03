@@ -1,6 +1,21 @@
-#include "MidiProcessing.h"
+#pragma once
 #include "PluginProcessor.h"
 #include "juce_audio_plugin_client/juce_audio_plugin_client.h" // Include this for the JucePlugin_WantsMidiInput, etc.
+
+class MidiProcessing
+{
+public:
+    // Constructor and Destructor if needed
+
+    // Declare member functions here
+    void processMidi(juce::MidiBuffer& midiMessages);
+    bool acceptsMidi() const;
+    bool producesMidi() const;
+    bool isMidiEffect() const;
+
+private:
+    // You can include any private member variables or functions here if needed
+};
 
 void MidiProcessing::processMidi(juce::MidiBuffer& midiMessages)
 {
