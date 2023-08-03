@@ -21,10 +21,10 @@
 //==============================================================================
 /**
 */
-class ProteusAudioProcessor  : public AudioProcessor
+class ProteusAudioProcessor : public juce::AudioProcessor
 {
 public:
-    //==============================================================================
+      //==============================================================================
     ProteusAudioProcessor();
     ~ProteusAudioProcessor();
 
@@ -89,9 +89,11 @@ public:
 
     bool model_loaded = false;
 
-private:
+     const RT_LSTM& getLSTM() const { return LSTM; }
+    const RT_LSTM& getLSTM2() const { return LSTM2; }
 
-    Eq4Band eq4band; // Amp EQ
+private:
+   Eq4Band eq4band; // Amp EQ
     Eq4Band eq4band2; // Amp EQ
 
     std::atomic<float>* driveParam = nullptr;
@@ -104,8 +106,8 @@ private:
     float previousMasterValue = 0.5;
     //float steppedValue1 = 0.0;
 
-    RT_LSTM LSTM;
-    RT_LSTM LSTM2;
+     RT_LSTM LSTM;
+     RT_LSTM LSTM2;
 
     dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> dcBlocker;
 
@@ -116,4 +118,6 @@ private:
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessor)
+
+    // ... Other private member functions and variables ...
 };
