@@ -1,5 +1,3 @@
-#include "PluginProcessor.h"
-#include "PluginEditor.h"
 #include "StateManagement.h"
 #include "juce_core/juce_core.h" // Include this for the MemoryBlock class
 
