@@ -49,8 +49,15 @@ public:
     const String getProgramName(int index) override;
     void changeProgramName(int index, const String& newName) override;
 
-    void getStateInformation(MemoryBlock& destData) override;
-    void setStateInformation(const void* data, int sizeInBytes) override;
+    void ProteusAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
+{
+    stateManagement.getStateInformation(*this, destData);
+}
+
+void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+{
+    stateManagement.setStateInformation(*this, data, sizeInBytes);
+}
 
     void set_ampEQ(float bass_slider, float mid_slider, float treble_slider);
 
