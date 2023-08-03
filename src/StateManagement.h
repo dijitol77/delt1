@@ -7,8 +7,9 @@ class StateManagement
 public:
     StateManagement(ProteusAudioProcessor& p) : processor(p) {}
 
-    void getStateInformation (juce::MemoryBlock& destData);
-    void setStateInformation (const void* data, int sizeInBytes);
+void getStateInformation (ProteusAudioProcessor& processor, juce::MemoryBlock& destData);
+void setStateInformation (ProteusAudioProcessor& processor, const void* data, int sizeInBytes);
+
 
 private:
     ProteusAudioProcessor& processor;
