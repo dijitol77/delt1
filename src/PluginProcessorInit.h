@@ -11,8 +11,9 @@
 
 class PluginProcessorInit {
 public:
-    PluginProcessorInit(ProteusAudioProcessor& p) : processor(p), 
-        audioProcessing(p), midiProcessing(p), programs(p), 
+    PluginProcessorInit(ProteusAudioProcessor& p) : processor(p),
+        audioProcessing(static_cast<AudioProcessing&>(p)), // Fix the constructor argument type
+        midiProcessing(p), programs(p), 
         stateManagement(p), editorCreation(p), utilityFunctions(p) {}
     void initialize();
 
