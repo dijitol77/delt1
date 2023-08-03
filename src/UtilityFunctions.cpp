@@ -1,9 +1,10 @@
-#include "PluginProcessor.h"
 #include "UtilityFunctions.h"
 #include "juce_core/juce_core.h"
 
+// Constructor
 UtilityFunctions::UtilityFunctions(ProteusAudioProcessor& p) : processor(p) {}
 
+// Public member functions
 void UtilityFunctions::loadConfig(juce::File configFile)
 {
     juce::String path = configFile.getFullPathName();
@@ -23,4 +24,3 @@ void UtilityFunctions::loadConfig(juce::File configFile)
 
     processor.model_loaded = true;
 }
-
