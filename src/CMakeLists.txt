@@ -22,6 +22,7 @@ target_sources(Proteus PRIVATE
         UtilityFunctions.h
 	RTNeuralLSTM.cpp
 	RTNeuralLSTM.h
+        AudioProcessingDerived.h
         CabSim.h
         Eq4Band.cpp
         Eq4Band.h
