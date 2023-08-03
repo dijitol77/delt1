@@ -1,7 +1,6 @@
 #pragma once
 #include "AudioProcessing.h"
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "PluginProcessor.h"
 
 #define GAIN_ID "drive"
 #define GAIN_NAME "Drive"
