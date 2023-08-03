@@ -2,14 +2,15 @@
 #pragma once
 #include "JuceHeader.h"
 
-class ProteusAudioProcessor : public AudioProcessor
+class AudioProcessing
 {
 public:
-    ProteusAudioProcessor();
-    ~ProteusAudioProcessor();
-
+AudioProcessing(); // constructor
+    ~AudioProcessing(); // destructor
+    void initialize(ProteusAudioProcessor& p);
     void prepareToPlay (double sampleRate, int samplesPerBlock);
-    void processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages);
+    void releaseResources();
+    void processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages);
     void releaseResources();
     void set_ampEQ(float bass_slider, float mid_slider, float treble_slider);
     bool acceptsMidi() const;
@@ -36,7 +37,7 @@ public:
     std::atomic<float>* trebleParam;
     // ... other member variables ...
 
+
 private:
-    // Declare private member variables and functions here
-    // ...
+    ProteusAudioProcessor& processor; // assuming 'processor' is a member variable of AudioProcessing
 };
