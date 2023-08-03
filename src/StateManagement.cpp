@@ -3,19 +3,19 @@
 
 void StateManagement::getStateInformation (juce::MemoryBlock& destData)
 {
-    auto state = processor.treeState.copyState();
+    auto state = this->processor.treeState.copyState();
     std::unique_ptr<juce::XmlElement> xml (state.createXml());
-    xml->setAttribute ("fw_state", processor.fw_state);
-    xml->setAttribute("folder", processor.folder.getFullPathName().toStdString());
-    xml->setAttribute("saved_model", processor.saved_model.getFullPathName().toStdString());
-    xml->setAttribute("current_model_index", processor.current_model_index);
-    xml->setAttribute ("cab_state", processor.cab_state);
-    copyXmlToBinary (*xml, destData);
+    xml->setAttribute ("fw_state", this->processor.fw_state);
+    xml->setAttribute("folder", this->processor.folder.getFullPathName().toStdString());
+    xml->setAttribute("saved_model", this->processor.saved_model.getFullPathName().toStdString());
+    xml->setAttribute("current_model_index", this->processor.current_model_index);
+    xml->setAttribute ("cab_state", this->processor.cab_state);
+    juce::copyXmlToBinary (*xml, destData);
 }
 
 void StateManagement::setStateInformation (const void* data, int sizeInBytes)
 {
-    std::unique_ptr<juce::XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+    std::unique_ptr<juce::XmlElement> xmlState (juce::getXmlFromBinary (data, sizeInBytes));
 
     if (xmlState.get() != nullptr)
     {
