@@ -1,6 +1,7 @@
 #pragma once
 #include "AudioProcessing.h"
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "PluginProcessor.h"
 
 #define GAIN_ID "drive"
 #define GAIN_NAME "Drive"
@@ -17,6 +18,7 @@
 #include "RTNeuralLSTM.h"
 #include "Eq4Band.h"
 #include "CabSim.h"
+
 
 class ProteusAudioProcessor : public juce::AudioProcessor
 {
@@ -89,6 +91,8 @@ public:
     const Eq4Band& getEq4band2() const { return eq4band2; }
     float getPreviousMasterValue() const { return previousMasterValue; }
 
+
+    // Add your methods and member variables here
 private:
 
     RT_LSTM LSTM;
