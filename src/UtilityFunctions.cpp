@@ -1,5 +1,5 @@
 #include "UtilityFunctions.h"
-#include "juce_core/juce_core.h"
+#include "ProteusAudioProcessor.h"
 
 // Constructor
 UtilityFunctions::UtilityFunctions(ProteusAudioProcessor& p) : processor(p) {}
@@ -13,12 +13,15 @@ void UtilityFunctions::loadConfig(juce::File configFile)
     processor.resetLSTM();
     processor.resetLSTM2();
 
-    processor.loadLSTM(processor.char_filename);
-    processor.loadLSTM2(processor.char_filename);
+    processor.loadLSTM();
+    processor.loadLSTM2();
 
-    if (processor.LSTM != nullptr && processor.LSTM->input_size == 1) {
+    if (processor.LSTM != nullptr && processor.LSTM->input_size == 1)
+    {
         processor.conditioned = false;
-    } else {
+    }
+    else
+    {
         processor.conditioned = true;
     }
 
