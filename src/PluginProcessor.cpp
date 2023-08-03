@@ -1,3 +1,4 @@
+#pragma once
 #include <juce_audio_processors/juce_audio_processors.h> // for AudioBuffer, MidiBuffer
 #include <juce_dsp/juce_dsp.h> // for dsp::AudioBlock, dsp::ProcessContextReplacing, ScopedNoDenormals
 #include "PluginProcessor.h"
@@ -10,45 +11,118 @@
 #include "EditorCreation.h"
 #include "UtilityFunctions.h"
 
-ProteusAudioProcessor::ProteusAudioProcessor()
+class ProteusAudioProcessor : public juce::AudioProcessor
+{
+public:
+    ProteusAudioProcessor();
+    ~ProteusAudioProcessor();
+
+    void prepareToPlay(double sampleRate, int samplesPerBlock) override;
+    void releaseResources() override;
+
 #ifndef JucePlugin_PreferredChannelConfigurations
-    : AudioProcessor(BusesProperties()
-#if ! JucePlugin_IsMidiEffect
-#if ! JucePlugin_IsSynth
-        .withInput("Input", AudioChannelSet::stereo(), true)
+    bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
 #endif
-        .withOutput("Output", AudioChannelSet::stereo(), true)
-#endif
-    ),
-    treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN_ID, GAIN_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
-                        std::make_unique<AudioParameterFloat>(BASS_ID, BASS_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                        std::make_unique<AudioParameterFloat>(MID_ID, MID_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                        std::make_unique<AudioParameterFloat>(TREBLE_ID, TREBLE_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                        std::make_unique<AudioParameterFloat>(MASTER_ID, MASTER_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5) })
-#endif
-{
-    driveParam = treeState.getRawParameterValue (GAIN_ID);
-    masterParam = treeState.getRawParameterValue (MASTER_ID);
-    bassParam = treeState.getRawParameterValue (BASS_ID);
-    midParam = treeState.getRawParameterValue (MID_ID);
-    trebleParam = treeState.getRawParameterValue (TREBLE_ID);
 
-    auto bassValue = static_cast<float> (bassParam->load());
-    auto midValue = static_cast<float> (midParam->load());
-    auto trebleValue = static_cast<float> (trebleParam->load());
+    void processBlock(AudioBuffer<float>& buffer, MidiBuffer& midiMessages) override;
 
-    eq4band.setParameters(bassValue, midValue, trebleValue, 0.0);
-    eq4band2.setParameters(bassValue, midValue, trebleValue, 0.0);
+    AudioProcessorEditor* createEditor() override;
+    bool hasEditor() const override;
 
-    pauseVolume = 3;
+    const String getName() const override;
+    bool acceptsMidi() const override;
+    bool producesMidi() const override;
+    bool isMidiEffect() const override;
+    double getTailLengthSeconds() const override;
 
-    cabSimIRa.load(BinaryData::default_ir_wav, BinaryData::default_ir_wavSize);
+    int getNumPrograms() override;
+    int getCurrentProgram() override;
+    void setCurrentProgram(int index) override;
+    const String getProgramName(int index) override;
+    void changeProgramName(int index, const String& newName) override;
 
-    PluginProcessorInit processorInit(*this);
-    processorInit.initialize();
-}
+    void getStateInformation(MemoryBlock& destData) override;
+    void setStateInformation(const void* data, int sizeInBytes) override;
 
-ProteusAudioProcessor::~ProteusAudioProcessor()
-{
-    // Destructor code here
-}
+    void set_ampEQ(float bass_slider, float mid_slider, float treble_slider);
+
+    // Files and configuration
+    void loadConfig(File configFile);
+
+    // Pedal/amp states
+    int fw_state = 1;       // 0 = off, 1 = on
+    int cab_state = 1; // 0 = off, 1 = on
+
+    File currentDirectory = File::getCurrentWorkingDirectory().getFullPathName();
+    int current_model_index = 0;
+
+    Array<File> fileArray;
+    std::vector<File> jsonFiles;
+    int num_models = 0;
+    File folder = File::getSpecialLocation(File::userDesktopDirectory);
+    File saved_model;
+
+    AudioProcessorValueTreeState treeState;
+
+    bool conditioned = false;
+
+    const char* char_filename = "";
+
+    int pauseVolume = 3;
+
+    bool model_loaded = false;
+
+    const RT_LSTM& getLSTM() const { return LSTM; }
+    const RT_LSTM& getLSTM2() const { return LSTM2; }
+
+    // Fix the function definitions here:
+    void resetLSTM()
+    {
+        LSTM.reset(new LSTMClass());
+    }
+
+    void resetLSTM2()
+    {
+        LSTM2.reset(new LSTMClass());
+    }
+
+    void loadLSTM(const juce::String& filename)
+    {
+        if (LSTM != nullptr)
+            LSTM->load_json(filename.toUTF8());
+    }
+
+    void loadLSTM2(const juce::String& filename)
+    {
+        if (LSTM2 != nullptr)
+            LSTM2->load_json(filename.toUTF8());
+    }
+
+private:
+    Eq4Band eq4band; // Amp EQ
+    Eq4Band eq4band2; // Amp EQ
+
+    std::atomic<float>* driveParam = nullptr;
+    std::atomic<float>* masterParam = nullptr;
+    std::atomic<float>* bassParam = nullptr;
+    std::atomic<float>* midParam = nullptr;
+    std::atomic<float>* trebleParam = nullptr;
+
+    float previousDriveValue = 0.5;
+    float previousMasterValue = 0.5;
+
+    std::unique_ptr<LSTMClass> LSTM;
+    std::unique_ptr<LSTMClass> LSTM2;
+
+    dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> dcBlocker;
+
+    chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>> resampler;
+
+    // IR processing
+    CabSim cabSimIRa;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProteusAudioProcessor)
+
+    // ... Other private member functions and variables ...
+};
+
