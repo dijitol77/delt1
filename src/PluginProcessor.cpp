@@ -1,21 +1,41 @@
 #pragma once
-#include <juce_audio_processors/juce_audio_processors.h> // for AudioBuffer, MidiBuffer
-#include <juce_dsp/juce_dsp.h> // for dsp::AudioBlock, dsp::ProcessContextReplacing, ScopedNoDenormals
-#include "PluginProcessor.h"
-#include "PluginEditor.h"
-#include "PluginProcessorInit.h"
 #include "AudioProcessing.h"
-#include "MidiProcessing.h"
-#include "Programs.h"
-#include "StateManagement.h"
-#include "EditorCreation.h"
-#include "UtilityFunctions.h"
+#include "../JuceLibraryCode/JuceHeader.h"
+
+#define GAIN_ID "drive"
+#define GAIN_NAME "Drive"
+#define MASTER_ID "level"
+#define MASTER_NAME "Level"
+#define BASS_ID "bass"
+#define BASS_NAME "Bass"
+#define MID_ID "mid"
+#define MID_NAME "Mid"
+#define TREBLE_ID "treble"
+#define TREBLE_NAME "Treble"
+
+#include <nlohmann/json.hpp>
+#include "RTNeuralLSTM.h"
+#include "Eq4Band.h"
+#include "CabSim.h"
 
 class ProteusAudioProcessor : public juce::AudioProcessor
 {
 public:
     ProteusAudioProcessor();
     ~ProteusAudioProcessor();
+
+    // Your constructor and other member functions
+
+    // Custom assignment operator
+    ProteusAudioProcessor& operator=(const ProteusAudioProcessor& other) {
+        // Implement the assignment logic here
+        // Make sure to handle all member variables and resources properly
+        if (this != &other) {
+            // Copy member variables from 'other' to 'this'
+            // For example: memberVariable = other.memberVariable;
+        }
+        return *this;
+    }
 
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
@@ -49,6 +69,9 @@ public:
     // Files and configuration
     void loadConfig(File configFile);
 
+    const RT_LSTM& getLSTM() const { return LSTM; }
+    const RT_LSTM& getLSTM2() const { return LSTM2; }
+
     // Pedal/amp states
     int fw_state = 1;       // 0 = off, 1 = on
     int cab_state = 1; // 0 = off, 1 = on
@@ -72,33 +95,18 @@ public:
 
     bool model_loaded = false;
 
-    const RT_LSTM& getLSTM() const { return LSTM; }
-    const RT_LSTM& getLSTM2() const { return LSTM2; }
-
-    // Fix the function definitions here:
-    void resetLSTM()
-    {
-        LSTM.reset(new LSTMClass());
-    }
-
-    void resetLSTM2()
-    {
-        LSTM2.reset(new LSTMClass());
-    }
-
-    void loadLSTM(const juce::String& filename)
-    {
-        if (LSTM != nullptr)
-            LSTM->load_json(filename.toUTF8());
-    }
-
-    void loadLSTM2(const juce::String& filename)
-    {
-        if (LSTM2 != nullptr)
-            LSTM2->load_json(filename.toUTF8());
-    }
+    const dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>>& getDcBlocker() const { return dcBlocker; }
+    const chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>>& getResampler() const { return resampler; }
+    const CabSim& getCabSimIRa() const { return cabSimIRa; }
+    const Eq4Band& getEq4band() const { return eq4band; }
+    const Eq4Band& getEq4band2() const { return eq4band2; }
+    float getPreviousMasterValue() const { return previousMasterValue; }
 
 private:
+
+    RT_LSTM LSTM;
+    RT_LSTM LSTM2;
+
     Eq4Band eq4band; // Amp EQ
     Eq4Band eq4band2; // Amp EQ
 
@@ -111,9 +119,6 @@ private:
     float previousDriveValue = 0.5;
     float previousMasterValue = 0.5;
 
-    std::unique_ptr<LSTMClass> LSTM;
-    std::unique_ptr<LSTMClass> LSTM2;
-
     dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> dcBlocker;
 
     chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>> resampler;
@@ -125,3 +130,14 @@ private:
 
     // ... Other private member functions and variables ...
 };
+
+class RT_LSTM
+{
+public:
+     
+    int getInputSize() const { return input_size; }
+
+private:
+    int input_size;
+   
+}
