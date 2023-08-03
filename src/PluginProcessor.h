@@ -94,6 +94,12 @@ public:
 
     const RT_LSTM& getLSTM() const { return LSTM; }
     const RT_LSTM& getLSTM2() const { return LSTM2; }
+    const dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>>& getDcBlocker() const { return dcBlocker; }
+    const chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>>& getResampler() const { return resampler; }
+    const CabSim& getCabSimIRa() const { return cabSimIRa; }
+    const Eq4Band& getEq4band() const { return eq4band; }
+    const Eq4Band& getEq4band2() const { return eq4band2; }
+    float getPreviousMasterValue() const { return previousMasterValue; }
 
 private:
     Eq4Band eq4band; // Amp EQ
@@ -122,4 +128,3 @@ private:
 
     // ... Other private member functions and variables ...
 };
-
