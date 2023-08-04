@@ -120,7 +120,8 @@ const RT_LSTM& getLSTM() const { return LSTM; }
     const Eq4Band& getEq4band2() const { return eq4band2; }
     float getPreviousMasterValue() const { return previousMasterValue; }
 
- friend class StateManagement;
+ int getInputSize() const { return input_size; }
+
 
 private:
 
@@ -142,10 +143,9 @@ private:
     dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> dcBlocker;
 
     chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>> resampler;
+ // ... other member variables ...
+    StateManagement stateManagement{*this}; // Initialize stateManagement with a referenc
 
-// ...
-    StateManagement stateManagement;
-    // ...
 };
 
 void ProteusAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
@@ -156,31 +156,6 @@ void ProteusAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     stateManagement.setStateInformation(data, sizeInBytes);
-}
-In your StateManagement class, you need to ensure that the getStateInformation and setStateInformation methods have access to the ProteusAudioProcessor object. One way to do this is to pass a reference to the ProteusAudioProcessor object to the StateManagement constructor:
-
-cpp
-Copy code
-class StateManagement
-{
-public:
-    StateManagement(ProteusAudioProcessor& p) : processor(p) {}
-
-    void getStateInformation(juce::MemoryBlock& destData);
-    void setStateInformation(const void* data, int sizeInBytes);
-
-private:
-    ProteusAudioProcessor& processor;
-};
-Then, in your PluginProcessor.cpp file, you can initialize the stateManagement object with a reference to *this:
-
-class ProteusAudioProcessor  : public juce::AudioProcessor
-{
-
-    
-    {
-        // ...
-    }
 
     // ... rest of the class definition ...
 
