@@ -146,14 +146,3 @@ private:
     StateManagement stateManagement{*this}; // Initialize stateManagement with a referenc
     
 };
-
-class RT_LSTM
-{
-public:
-     
-    int getInputSize() const { return input_size; }
-
-private:
-    int input_size;
-   
-}; // Added missing semicolon
