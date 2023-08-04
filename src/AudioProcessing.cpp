@@ -49,6 +49,7 @@ void AudioProcessing::releaseResources()
 void AudioProcessing::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     ScopedNoDenormals noDenormals;
+    midiProcessing.processMidi(midiMessages);
 
     auto driveValue = static_cast<float> (this->driveParam->load());
     auto masterValue = static_cast<float> (this->masterParam->load());
