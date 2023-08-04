@@ -122,6 +122,9 @@ const RT_LSTM& getLSTM() const { return LSTM; }
 
  int getInputSize() const { return input_size; }
 
+   ~ProteusAudioProcessor();
+
+    // Your other member functions
 
     void getStateInformation (juce::MemoryBlock& destData) override
     {
@@ -166,4 +169,4 @@ public:
 private:
     int input_size;
    
-}
+}; // Added missing semicolon
