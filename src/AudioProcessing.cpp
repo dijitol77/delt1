@@ -34,6 +34,7 @@ void AudioProcessing::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
+    
 }
 
 void AudioProcessing::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
