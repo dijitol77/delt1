@@ -1,3 +1,4 @@
+#include "RT_LSTM.h" // Include the correct header for RT_LSTM
 #include "UtilityFunctions.h"
 #include "PluginProcessor.h"
 
