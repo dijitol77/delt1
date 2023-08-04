@@ -39,20 +39,7 @@ public:
         // ...
     }
 
-    ~ProteusAudioProcessor();
 
-    // Your constructor and other member functions
-
-    // Custom assignment operator
-    ProteusAudioProcessor& operator=(const ProteusAudioProcessor& other) {
-        // Implement the assignment logic here
-        // Make sure to handle all member variables and resources properly
-        if (this != &other) {
-            // Copy member variables from 'other' to 'this'
-            // For example: memberVariable = other.memberVariable;
-        }
-        return *this;
-    } 
     StateManagement stateManagement{*this};
 
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
