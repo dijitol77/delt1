@@ -1,14 +1,16 @@
 #pragma once
-#include "AudioProcessing.h"
-#include "juce_core/juce_core.h" // Include this for the String class
-
-class ProteusAudioProcessor;
+#include "PluginProcessor.h"
 
 class Programs {
 public:
+    Programs(ProteusAudioProcessor& p); // Constructor
+    void initialize(ProteusAudioProcessor& p);
     int getNumPrograms();
     int getCurrentProgram();
     void setCurrentProgram (int index);
     const juce::String getProgramName (int index);
     void changeProgramName (int index, const juce::String& newName);
+
+private:
+    ProteusAudioProcessor& processor; // Add this member variable
 };
