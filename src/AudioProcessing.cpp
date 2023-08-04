@@ -2,8 +2,12 @@
 #include "AudioProcessing.h"
 #include "juce_dsp/juce_dsp.h" // Include this for the dsp::IIR::Coefficients class
 
-void AudioProcessing::initialize(ProteusAudioProcessor& p) {
-    processor = p; // assuming 'processor' is a member variable of AudioProcessing
+class AudioProcessing
+{
+public:
+    AudioProcessing(ProteusAudioProcessor& p) : processor(p) {}
+
+    void initialize()
 }
 
 void AudioProcessing::prepareToPlay (double sampleRate, int samplesPerBlock)
