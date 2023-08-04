@@ -17,14 +17,12 @@
 #include "RTNeuralLSTM.h"
 #include "Eq4Band.h"
 #include "CabSim.h"
-
-class StateManagement;  // Forward declaration
+#include "StateManagement.h" // Include the StateManagement header file
 
 class ProteusAudioProcessor  : public juce::AudioProcessor
 {
 public:
-    // ... existing code ...
-ProteusAudioProcessor()
+    ProteusAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
@@ -37,8 +35,10 @@ ProteusAudioProcessor()
       treeState(*this, nullptr, "PARAMETERS", createParameterLayout()),
       stateManagement(*this) // Initialize stateManagement with a reference to this object
 #endif
+    {
+        // ...
+    }
 
-    ProteusAudioProcessor();
     ~ProteusAudioProcessor();
 
     // Your constructor and other member functions
@@ -53,7 +53,7 @@ ProteusAudioProcessor()
         }
         return *this;
     } 
-StateManagement stateManagement{*this};
+    StateManagement stateManagement{*this};
 
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
@@ -123,8 +123,17 @@ const RT_LSTM& getLSTM() const { return LSTM; }
  int getInputSize() const { return input_size; }
 
 
-private:
+    void getStateInformation (juce::MemoryBlock& destData) override
+    {
+        stateManagement.getStateInformation(destData); // Call the getStateInformation method of the stateManagement object
+    }
 
+    void setStateInformation (const void* data, int sizeInBytes) override
+    {
+        stateManagement.setStateInformation(data, sizeInBytes); // Call the setStateInformation method of the stateManagement object
+    }
+
+private:
     RT_LSTM LSTM;
     RT_LSTM LSTM2;
 
@@ -145,37 +154,7 @@ private:
     chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>> resampler;
  // ... other member variables ...
     StateManagement stateManagement{*this}; // Initialize stateManagement with a referenc
-
-};
-
-void ProteusAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
-{
-    stateManagement.getStateInformation(destData);
-}
-
-void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
-{
-    stateManagement.setStateInformation(data, sizeInBytes);
-
-    // ... rest of the class definition ...
-
-    void getStateInformation (juce::MemoryBlock& destData) override
-    {
-        stateManagement.getStateInformation(destData); // Call the getStateInformation method of the stateManagement object
-    }
-
-    void setStateInformation (const void* data, int sizeInBytes) override
-    {
-        stateManagement.setStateInformation(data, sizeInBytes); // Call the setStateInformation method of the stateManagement object
-    }
-
     
-    // IR processing
-    CabSim cabSimIRa;
-
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProteusAudioProcessor)
-
-    stateManagement(*this)
 };
 
 class RT_LSTM
