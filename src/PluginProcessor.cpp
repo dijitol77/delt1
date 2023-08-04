@@ -53,13 +53,14 @@ public:
 
 void ProteusAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
-    StateManagement stateManagement(*this);
+    
+    
     stateManagement.getStateInformation(destData);
 }
 
 void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    StateManagement stateManagement(*this);
+    
     stateManagement.setStateInformation(data, sizeInBytes);
 }
 
