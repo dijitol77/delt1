@@ -1,6 +1,7 @@
 #pragma once
 #include "AudioProcessing.h"
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "CabSim.h" // Include the header for the CabSim class
 
 #define GAIN_ID "drive"
 #define GAIN_NAME "Drive"
@@ -90,14 +91,13 @@ const RT_LSTM& getLSTM() const { return LSTM; }
     File saved_model;
 
     AudioProcessorValueTreeState treeState;
-
     bool conditioned = false;
-
     const char* char_filename = "";
-
     int pauseVolume = 3;
-
     bool model_loaded = false;
+
+    CabSim cabSimIRa; // Declare cabSimIRa of type CabSim
+    int input_size;   // Declare input_size as an integer
 
    
     const dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>>& getDcBlocker() const { return dcBlocker; }
