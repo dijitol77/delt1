@@ -139,6 +139,8 @@ private:
     float previousDriveValue = 0.5;
     float previousMasterValue = 0.5;
 
+    juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+
     dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> dcBlocker;
 
     chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>> resampler;
