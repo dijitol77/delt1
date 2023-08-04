@@ -49,6 +49,11 @@ public:
     const String getProgramName(int index) override;
     void changeProgramName(int index, const String& newName) override;
 
+juce::AudioProcessorValueTreeState::ParameterLayout ProteusAudioProcessor::createParameterLayout()
+{
+    // Your implementation here
+}
+
 // ... other code ...
 
 void ProteusAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
