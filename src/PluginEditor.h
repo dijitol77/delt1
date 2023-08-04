@@ -31,7 +31,7 @@ public:
     std::unique_ptr<FileChooser> myChooser;
 
     void loadFromFolder();
-    void resetImages();
+   void ProteusAudioProcessorEditor::resetImages()
 
 private:
     // This reference is provided as a quick way for your editor to
