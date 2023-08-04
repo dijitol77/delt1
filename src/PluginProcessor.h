@@ -24,6 +24,19 @@ class ProteusAudioProcessor  : public juce::AudioProcessor
 {
 public:
     // ... existing code ...
+ProteusAudioProcessor()
+#ifndef JucePlugin_PreferredChannelConfigurations
+     : AudioProcessor (BusesProperties()
+                     #if ! JucePlugin_IsMidiEffect
+                      #if ! JucePlugin_IsSynth
+                       .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
+                      #endif
+                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
+                     #endif
+                       ),
+      treeState(*this, nullptr, "PARAMETERS", createParameterLayout()),
+      stateManagement(*this) // Initialize stateManagement with a reference to this object
+#endif
 
     ProteusAudioProcessor();
     ~ProteusAudioProcessor();
@@ -134,10 +147,7 @@ private:
     StateManagement stateManagement;
     // ...
 };
-Then, in your PluginProcessor.cpp file, you should call the getStateInformation and setStateInformation methods of the stateManagement object:
 
-cpp
-Copy code
 void ProteusAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
     stateManagement.getStateInformation(destData);
@@ -164,20 +174,26 @@ private:
 };
 Then, in your PluginProcessor.cpp file, you can initialize the stateManagement object with a reference to *this:
 
-cpp
-Copy code
-ProteusAudioProcessor::ProteusAudioProcessor()
-#ifndef JucePlugin_PreferredChannelConfigurations
-     : AudioProcessor (BusesProperties()
-                     #if ! JucePlugin_IsMidiEffect
-                      #if ! JucePlugin_IsSynth
-                       .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
-                      #endif
-                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
-                     #endif
-                       ),
-      treeState(*this, nullptr, "PARAMETERS", createParameterLayout()),
-      
+class ProteusAudioProcessor  : public juce::AudioProcessor
+{
+
+    
+    {
+        // ...
+    }
+
+    // ... rest of the class definition ...
+
+    void getStateInformation (juce::MemoryBlock& destData) override
+    {
+        stateManagement.getStateInformation(destData); // Call the getStateInformation method of the stateManagement object
+    }
+
+    void setStateInformation (const void* data, int sizeInBytes) override
+    {
+        stateManagement.setStateInformation(data, sizeInBytes); // Call the setStateInformation method of the stateManagement object
+    }
+
     
     // IR processing
     CabSim cabSimIRa;
