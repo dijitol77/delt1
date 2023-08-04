@@ -13,7 +13,7 @@ private:
 
 bool EditorCreation::hasEditor() const
 {
-    // Implement this method to return whether your plugin has an editor.
+    return true; // return true if your plugin has an editor, false otherwise
 }
 
 juce::AudioProcessorEditor* EditorCreation::createEditor()
