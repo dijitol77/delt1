@@ -4,14 +4,15 @@
 #include "juce_audio_processors/juce_audio_processors.h"
 #include "juce_core/juce_core.h"
 
-class ProteusAudioProcessor; // Forward declaration of ProteusAudioProcessor
-
-class AudioProcessing : public juce::AudioProcessor
+class AudioProcessing
 {
 public:
+    AudioProcessing(ProteusAudioProcessor& p) : processor(p) {}
+
+    void initialize()
+
     AudioProcessing();
     ~AudioProcessing();
-    void initialize(ProteusAudioProcessor& p);
     void prepareToPlay(double sampleRate, int samplesPerBlock);
     void releaseResources();
     void processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages);
