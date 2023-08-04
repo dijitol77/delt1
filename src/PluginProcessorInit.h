@@ -20,7 +20,6 @@ public:
 
 private:
     ProteusAudioProcessor& processor;
-    AudioProcessingDerived audioProcessing; // Use the derived class
     MidiProcessing midiProcessing;
     Programs programs;
     StateManagement stateManagement;
