@@ -19,6 +19,26 @@ private:
 
 void MidiProcessing::processMidi(juce::MidiBuffer& midiMessages)
 {
+    // MIDI Processing
+    midiMessages.clear();
+    MidiBuffer processedMidi;
+    int time;
+    MidiMessage m;
+    for (MidiBuffer::Iterator i (midiMessages); i.getNextEvent (m, time);)
+    {
+        if (m.isNoteOn())
+            m = MidiMessage::noteOn (m.getChannel(), m.getNoteNumber(), (uint8)127);
+        else if (m.isNoteOff())
+            m = MidiMessage::noteOff (m.getChannel(), m.getNoteNumber(), (uint8)0);
+        else if (m.isAftertouch())
+            m = MidiMessage::aftertouchChange (m.getChannel(), m.getNoteNumber(), m.getAfterTouchValue());
+        else if (m.isPitchWheel())
+            m = MidiMessage::pitchWheel (m.getChannel(), m.getPitchWheelValue());
+        else if (m.isController())
+            m = MidiMessage::controllerEvent (m.getChannel(), m.getControllerNumber(), m.getControllerValue());
+
+        processedMidi.addEvent (m, time);
+    }
     // Use processor to access necessary member variables and functions
     // For example:
     // processor.someMemberVariable = someValue;
