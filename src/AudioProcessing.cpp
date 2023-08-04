@@ -2,25 +2,19 @@
 #include "AudioProcessing.h"
 #include "juce_dsp/juce_dsp.h" // Include this for the dsp::IIR::Coefficients class
 
-class AudioProcessing
-{
-public:
-    AudioProcessing(ProteusAudioProcessor& p) : processor(p) {}
+AudioProcessing::AudioProcessing(ProteusAudioProcessor& p) : processor(p) {}
 
-    void initialize()
-}
-
-void AudioProcessing::initialize(ProteusAudioProcessor& p)
+void AudioProcessing::initialize()
 {
     // Initialize treeState with the parameters of the audio processor
-    treeState = p.treeState;
+    treeState = processor.treeState;
 
     // Initialize the parameters with the corresponding parameters from the audio processor
-    driveParam = p.driveParam;
-    masterParam = p.masterParam;
-    bassParam = p.bassParam;
-    midParam = p.midParam;
-    trebleParam = p.trebleParam;
+    driveParam = processor.driveParam;
+    masterParam = processor.masterParam;
+    bassParam = processor.bassParam;
+    midParam = processor.midParam;
+    trebleParam = processor.trebleParam;
 
     // Add any other necessary initialization code here
 }
