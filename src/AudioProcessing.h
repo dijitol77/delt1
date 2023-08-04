@@ -7,7 +7,10 @@
 class AudioProcessing
 {
 public:
-    AudioProcessing(ProteusAudioProcessor& p) : processor(p) {}
+    AudioProcessing(ProteusAudioProcessor& p, MidiProcessing& m) : processor(p), midiProcessing(m) {}
+
+    // Other member functions...
+
 
     void initialize();
 
@@ -43,4 +46,5 @@ public:
 
 private:
     ProteusAudioProcessor& processor; // assuming 'processor' is a member variable of AudioProcessing
+    MidiProcessing& midiProcessing;
 };
