@@ -10,6 +10,21 @@ public:
     void initialize()
 }
 
+void AudioProcessing::initialize(ProteusAudioProcessor& p)
+{
+    // Initialize treeState with the parameters of the audio processor
+    treeState = p.treeState;
+
+    // Initialize the parameters with the corresponding parameters from the audio processor
+    driveParam = p.driveParam;
+    masterParam = p.masterParam;
+    bassParam = p.bassParam;
+    midParam = p.midParam;
+    trebleParam = p.trebleParam;
+
+    // Add any other necessary initialization code here
+}
+
 void AudioProcessing::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     *processor.dcBlocker.state = *dsp::IIR::Coefficients<float>::makeHighPass (sampleRate, 35.0f);
