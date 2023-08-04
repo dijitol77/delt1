@@ -20,7 +20,6 @@ private:
 void MidiProcessing::processMidi(juce::MidiBuffer& midiMessages)
 {
     // MIDI Processing
-    midiMessages.clear();
     MidiBuffer processedMidi;
     int time;
     MidiMessage m;
@@ -39,10 +38,9 @@ void MidiProcessing::processMidi(juce::MidiBuffer& midiMessages)
 
         processedMidi.addEvent (m, time);
     }
-    // Use processor to access necessary member variables and functions
-    // For example:
-    // processor.someMemberVariable = someValue;
-    // processor.someMemberFunction(someArgument);
+
+    midiMessages.clear();
+    midiMessages = processedMidi;
 }
 
 bool MidiProcessing::acceptsMidi() const
