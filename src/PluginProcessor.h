@@ -130,12 +130,61 @@ private:
 
     chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>> resampler;
 
+// ...
+    StateManagement stateManagement;
+    // ...
+};
+Then, in your PluginProcessor.cpp file, you should call the getStateInformation and setStateInformation methods of the stateManagement object:
+
+cpp
+Copy code
+void ProteusAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
+{
+    stateManagement.getStateInformation(destData);
+}
+
+void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+{
+    stateManagement.setStateInformation(data, sizeInBytes);
+}
+In your StateManagement class, you need to ensure that the getStateInformation and setStateInformation methods have access to the ProteusAudioProcessor object. One way to do this is to pass a reference to the ProteusAudioProcessor object to the StateManagement constructor:
+
+cpp
+Copy code
+class StateManagement
+{
+public:
+    StateManagement(ProteusAudioProcessor& p) : processor(p) {}
+
+    void getStateInformation(juce::MemoryBlock& destData);
+    void setStateInformation(const void* data, int sizeInBytes);
+
+private:
+    ProteusAudioProcessor& processor;
+};
+Then, in your PluginProcessor.cpp file, you can initialize the stateManagement object with a reference to *this:
+
+cpp
+Copy code
+ProteusAudioProcessor::ProteusAudioProcessor()
+#ifndef JucePlugin_PreferredChannelConfigurations
+     : AudioProcessor (BusesProperties()
+                     #if ! JucePlugin_IsMidiEffect
+                      #if ! JucePlugin_IsSynth
+                       .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
+                      #endif
+                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
+                     #endif
+                       ),
+      treeState(*this, nullptr, "PARAMETERS", createParameterLayout()),
+      
+    
     // IR processing
     CabSim cabSimIRa;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProteusAudioProcessor)
 
-    // ... Other private member functions and variables ...
+    stateManagement(*this)
 };
 
 class RT_LSTM
