@@ -10,3 +10,14 @@ public:
 private:
     ProteusAudioProcessor& processor;
 };
+
+bool EditorCreation::hasEditor() const
+{
+    // Implement this method to return whether your plugin has an editor.
+}
+
+juce::AudioProcessorEditor* EditorCreation::createEditor()
+{
+    return new ProteusAudioProcessorEditor(processor);
+}
+
