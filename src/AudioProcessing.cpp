@@ -2,8 +2,9 @@
 #include "AudioProcessing.h"
 #include "juce_dsp/juce_dsp.h" // Include this for the dsp::IIR::Coefficients class
 
-AudioProcessing::AudioProcessing(ProteusAudioProcessor& p) : processor(p) {}
+AudioProcessing::AudioProcessing(ProteusAudioProcessor& p, MidiProcessing& m) : processor(p), midiProcessing(m) 
 
+  
 void AudioProcessing::initialize()
 {
     // Initialize treeState with the parameters of the audio processor
