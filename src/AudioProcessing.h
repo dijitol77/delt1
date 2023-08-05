@@ -1,19 +1,15 @@
 #pragma once
+#include "PluginProcessor.h" // Ensure this is included at the top
 #include "juce_dsp/juce_dsp.h"
 #include "juce_audio_processors/juce_audio_processors.h"
 #include "juce_core/juce_core.h"
 
-class ProteusAudioProcessor;
 class MidiProcessing;
 
 class AudioProcessing
 {
 public:
     AudioProcessing(ProteusAudioProcessor& p, MidiProcessing& m) : processor(p), midiProcessing(m) {}
-
-    // Other member functions...
-
-
     void initialize();
     void prepareToPlay(double sampleRate, int samplesPerBlock);
     void releaseResources();
