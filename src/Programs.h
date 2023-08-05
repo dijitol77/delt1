@@ -1,5 +1,4 @@
 #pragma once
-#include "PluginProcessor.h"
 
 class Programs {
 public:
