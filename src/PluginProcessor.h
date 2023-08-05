@@ -1,52 +1,34 @@
 #pragma once
 
-#include "AudioProcessing.h"
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "CabSim.h" // Include the header for the CabSim class
-#include <nlohmann/json.hpp>
+#include "AudioProcessing.h"
+#include "CabSim.h"
 #include "RTNeuralLSTM.h"
 #include "Eq4Band.h"
-#include "CabSim.h"
-#include "StateManagement.h" // Include the StateManagement header file
+#include "StateManagement.h"
+#include <nlohmann/json.hpp>
 
 class ProteusAudioProcessor : public juce::AudioProcessor
 {
 public:
     ProteusAudioProcessor();
 
-    StateManagement stateManagement;
-
-#ifndef JucePlugin_PreferredChannelConfigurations
-     AudioProcessor (BusesProperties()
-                     #if ! JucePlugin_IsMidiEffect
-                      #if ! JucePlugin_IsSynth
-                       .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
-                      #endif
-                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
-                     #endif
-                       ),
-      treeState(*this, nullptr, "PARAMETERS", createParameterLayout()),
-      stateManagement(*this) // Initialize stateManagement with a reference to this object
-#endif
-
-
-    void prepareToPlay(double sampleRate, int samplesPerBlock) override;
-    void releaseResources() override;
-
 #ifndef JucePlugin_PreferredChannelConfigurations
     bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
 #endif
 
+    void prepareToPlay(double sampleRate, int samplesPerBlock) override;
+    void releaseResources() override;
     void processBlock(AudioBuffer<float>& buffer, MidiBuffer& midiMessages) override;
 
     AudioProcessorEditor* createEditor() override;
     bool hasEditor() const override;
-
     const String getName() const override;
     bool acceptsMidi() const override;
     bool producesMidi() const override;
     bool isMidiEffect() const override;
     double getTailLengthSeconds() const override;
+
 
     int getNumPrograms() override;
     int getCurrentProgram() override;
@@ -58,10 +40,9 @@ public:
     void setStateInformation(const void* data, int sizeInBytes) override;
 
     void set_ampEQ(float bass_slider, float mid_slider, float treble_slider);
-
-    // Files and configuration
     void loadConfig(File configFile);
-const RT_LSTM& getLSTM() const { return LSTM; }
+
+    const RT_LSTM& getLSTM() const { return LSTM; }
     const RT_LSTM& getLSTM2() const { return LSTM2; }
 
     // Pedal/amp states
@@ -129,9 +110,7 @@ private:
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
 
     dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> dcBlocker;
-
     chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>> resampler;
- // ... other member variables ...
-    StateManagement stateManagement{*this}; // Initialize stateManagement with a referenc
-    
+
+    StateManagement stateManagement{*this}; // Initialize stateManagement with a reference
 };
