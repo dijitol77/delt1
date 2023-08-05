@@ -4,6 +4,7 @@
 #include "juce_core/juce_core.h"
 
 class ProteusAudioProcessor;
+class MidiProcessing;
 
 class AudioProcessing
 {
