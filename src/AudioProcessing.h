@@ -9,7 +9,7 @@ class MidiProcessing;
 class AudioProcessing
 {
 public:
-    AudioProcessing(ProteusAudioProcessor& p, MidiProcessing& m) : processor(p), midiProcessing(m) {}
+    AudioProcessing(ProteusAudioProcessor& p, MidiProcessing& m);
     void initialize();
     void prepareToPlay(double sampleRate, int samplesPerBlock);
     void releaseResources();
