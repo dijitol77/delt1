@@ -3,8 +3,10 @@
 #include "juce_dsp/juce_dsp.h" // Include this for the dsp::IIR::Coefficients class
 
 AudioProcessing::AudioProcessing(ProteusAudioProcessor& p, MidiProcessing& m) : processor(p), midiProcessing(m) 
+{
+    // Constructor body. If there's any code you want to run when an object of this class is created, put it here.
+}
 
-  
 void AudioProcessing::initialize()
 {
     // Initialize treeState with the parameters of the audio processor
@@ -19,6 +21,7 @@ void AudioProcessing::initialize()
 
     // Add any other necessary initialization code here
 }
+
 
 void AudioProcessing::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
