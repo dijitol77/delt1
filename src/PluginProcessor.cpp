@@ -1,17 +1,18 @@
 /*
-  ==============================================================================
-
+1. HEADER AND INCLUDES
+   ==============================================================================
     This file was auto-generated!
-
     It contains the basic framework code for a JUCE plugin processor.
-
-  ==============================================================================
+   ==============================================================================
 */
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
 //==============================================================================
+// 2. CONSTRUCTOR AND DESTRUCTOR
+
+// 2.1 Constructor for the ProteusAudioProcessor class.
 ProteusAudioProcessor::ProteusAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
     : AudioProcessor(BusesProperties()
@@ -22,14 +23,11 @@ ProteusAudioProcessor::ProteusAudioProcessor()
         .withOutput("Output", AudioChannelSet::stereo(), true)
 #endif
     ),
-
     treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN_ID, GAIN_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
                         std::make_unique<AudioParameterFloat>(BASS_ID, BASS_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
                         std::make_unique<AudioParameterFloat>(MID_ID, MID_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
                         std::make_unique<AudioParameterFloat>(TREBLE_ID, TREBLE_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
                         std::make_unique<AudioParameterFloat>(MASTER_ID, MASTER_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5) })
-
-    
 #endif
 {
     driveParam = treeState.getRawParameterValue (GAIN_ID);
@@ -48,19 +46,23 @@ ProteusAudioProcessor::ProteusAudioProcessor()
     pauseVolume = 3;
 
     cabSimIRa.load(BinaryData::default_ir_wav, BinaryData::default_ir_wavSize);
-
 }
 
+// 2.2 Destructor for the ProteusAudioProcessor class.
 ProteusAudioProcessor::~ProteusAudioProcessor()
 {
 }
 
 //==============================================================================
+// 3. PLUGIN INFORMATION FUNCTIONS
+
+// 3.1 Return the name of the plugin.
 const String ProteusAudioProcessor::getName() const
 {
     return JucePlugin_Name;
 }
 
+// 3.2 Check if the plugin accepts MIDI input.
 bool ProteusAudioProcessor::acceptsMidi() const
 {
    #if JucePlugin_WantsMidiInput
@@ -70,6 +72,7 @@ bool ProteusAudioProcessor::acceptsMidi() const
    #endif
 }
 
+// 3.3 Check if the plugin produces MIDI output.
 bool ProteusAudioProcessor::producesMidi() const
 {
    #if JucePlugin_ProducesMidiOutput
@@ -79,6 +82,7 @@ bool ProteusAudioProcessor::producesMidi() const
    #endif
 }
 
+// 3.4 Check if the plugin is a MIDI effect.
 bool ProteusAudioProcessor::isMidiEffect() const
 {
    #if JucePlugin_IsMidiEffect
@@ -88,36 +92,45 @@ bool ProteusAudioProcessor::isMidiEffect() const
    #endif
 }
 
+// 3.5 Return the tail length in seconds.
 double ProteusAudioProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
 
+// 3.6 Return the number of programs.
 int ProteusAudioProcessor::getNumPrograms()
 {
     return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
                 // so this should be at least 1, even if you're not really implementing programs.
 }
 
+// 3.7 Return the current program.
 int ProteusAudioProcessor::getCurrentProgram()
 {
     return 0;
 }
 
+// 3.8 Set the current program.
 void ProteusAudioProcessor::setCurrentProgram (int index)
 {
 }
 
+// 3.9 Return the program name.
 const String ProteusAudioProcessor::getProgramName (int index)
 {
     return {};
 }
 
+// 3.10 Change the program name.
 void ProteusAudioProcessor::changeProgramName (int index, const String& newName)
 {
 }
 
 //==============================================================================
+// 4. AUDIO PROCESSING FUNCTIONS
+
+// 4.1 Prepare the plugin for playback.
 void ProteusAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
@@ -127,9 +140,7 @@ void ProteusAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBloc
 
     // prepare resampler for target sample rate: 44.1 kHz
     constexpr double targetSampleRate = 44100.0;
-    //resampler.prepareWithTargetSampleRate ({ sampleRate, (uint32) samplesPerBlock, 1 }, targetSampleRate);
     resampler.prepareWithTargetSampleRate({ sampleRate, (uint32)samplesPerBlock, 2 }, targetSampleRate);
-
 
     dsp::ProcessSpec specMono { sampleRate, static_cast<uint32> (samplesPerBlock), 1 };
     dsp::ProcessSpec spec{ sampleRate, static_cast<uint32> (samplesPerBlock), 2 };
@@ -141,16 +152,16 @@ void ProteusAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBloc
 
     // Set up IR
     cabSimIRa.prepare(spec);
-
 }
 
+// 4.2 Release any resources when playback stops.
 void ProteusAudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
 }
 
-#ifndef JucePlugin_PreferredChannelConfigurations
+// 4.3 Check if the bus layout is supported.
 bool ProteusAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
   #if JucePlugin_IsMidiEffect
@@ -172,9 +183,8 @@ bool ProteusAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) 
     return true;
   #endif
 }
-#endif
 
-
+// 4.4 Process the audio buffer.
 void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
     ScopedNoDenormals noDenormals;
@@ -253,8 +263,6 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
         if (cab_state == 1) {
             cabSimIRa.process(context); // Process IR a on channel 0
             buffer.applyGain(2.0);
-        //} else {
-        //    buffer.applyGain(0.7);
         }
 
         // Master Volume 
@@ -282,23 +290,26 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
 }
 
 //==============================================================================
+// 5. EDITOR FUNCTIONS
+
+// 5.1 Check if the plugin has an editor.
 bool ProteusAudioProcessor::hasEditor() const
 {
     return true; // (change this to false if you choose to not supply an editor)
 }
 
+// 5.2 Create the plugin editor.
 AudioProcessorEditor* ProteusAudioProcessor::createEditor()
 {
     return new ProteusAudioProcessorEditor (*this);
 }
 
 //==============================================================================
+// 6. STATE MANAGEMENT FUNCTIONS
+
+// 6.1 Store the plugin state.
 void ProteusAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
-    
     auto state = treeState.copyState();
     std::unique_ptr<XmlElement> xml (state.createXml());
     xml->setAttribute ("fw_state", fw_state);
@@ -307,14 +318,11 @@ void ProteusAudioProcessor::getStateInformation (MemoryBlock& destData)
     xml->setAttribute("current_model_index", current_model_index);
     xml->setAttribute ("cab_state", cab_state);
     copyXmlToBinary (*xml, destData);
-
 }
 
+// 6.2 Restore the plugin state.
 void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
-
     std::unique_ptr<juce::XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
 
     if (xmlState.get() != nullptr)
@@ -336,17 +344,18 @@ void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInByt
             if (saved_model.existsAsFile()) {
                 loadConfig(saved_model);
             }          
-
         }
     }
 }
 
+// 6.3 Set the EQ parameters for the amplifier.
 void ProteusAudioProcessor::set_ampEQ(float bass_slider, float mid_slider, float treble_slider)
 {
     eq4band.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
     eq4band2.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
 }
 
+// 6.4 Load the configuration from a file.
 void ProteusAudioProcessor::loadConfig(File configFile)
 {
     this->suspendProcessing(true);
@@ -366,15 +375,14 @@ void ProteusAudioProcessor::loadConfig(File configFile)
         conditioned = true;
     }
 
-    //saved_model = configFile;
     model_loaded = true;
     this->suspendProcessing(false);
 }
 
-
-
 //==============================================================================
-// This creates new instances of the plugin..
+// 7. PLUGIN CREATION
+
+// This creates new instances of the plugin.
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new ProteusAudioProcessor();
