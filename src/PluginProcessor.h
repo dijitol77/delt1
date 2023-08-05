@@ -28,12 +28,7 @@ public:
       treeState(*this, nullptr, "PARAMETERS", createParameterLayout()),
       stateManagement(*this) // Initialize stateManagement with a reference to this object
 #endif
-    {
-        // ...
-    }
 
-
-    StateManagement stateManagement{*this};
 
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
