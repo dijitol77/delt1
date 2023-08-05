@@ -7,19 +7,19 @@ target_sources(Proteus PRIVATE
 	PluginEditor.h
 	PluginProcessor.cpp
         PluginProcessor.h
-    	PluginProcessorInit.cpp
-    	AudioProcessing.cpp
-        AudioProcessing.h
-    	MidiProcessing.cpp
-     	MidiProcessing.h
-    	Programs.cpp
-     	Programs.h
-    	StateManagement.cpp
-        StateManagement.h
-    	EditorCreation.cpp
-        EditorCreation.h
-    	UtilityFunctions.cpp
-        UtilityFunctions.h
+    	// PluginProcessorInit.cpp
+    	// AudioProcessing.cpp
+        // AudioProcessing.h
+    	// MidiProcessing.cpp
+     	// MidiProcessing.h
+    	//  Programs.cpp
+     	// Programs.h
+    	// StateManagement.cpp
+        // StateManagement.h
+    	// EditorCreation.cpp
+        // EditorCreation.h
+    	// UtilityFunctions.cpp
+        // UtilityFunctions.h
 	RTNeuralLSTM.cpp
 	RTNeuralLSTM.h
         CabSim.h
