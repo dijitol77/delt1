@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "AudioProcessing.h"
 #include <nlohmann/json.hpp>
 
 class ProteusAudioProcessor : public juce::AudioProcessor
