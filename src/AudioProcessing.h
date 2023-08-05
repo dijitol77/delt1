@@ -1,13 +1,15 @@
 #pragma once
 
-#include "PluginProcessor.h" 
+// Forward declarations
+class ProteusAudioProcessor;
+class MidiProcessing;
+
+// Includes
+#include "PluginProcessor.h"
 #include "juce_dsp/juce_dsp.h"
 #include "juce_audio_processors/juce_audio_processors.h"
 #include "juce_core/juce_core.h"
 
-class MidiProcessing;
-
-class AudioProcessing
 {
 public:
     AudioProcessing(ProteusAudioProcessor& p, MidiProcessing& m);
