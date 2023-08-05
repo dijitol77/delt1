@@ -3,13 +3,6 @@
 #include "JuceHeader.h"
 #include "PluginProcessor.h"
 
-
-#include "MidiProcessing.h"
-#include "Programs.h"
-#include "StateManagement.h"
-#include "EditorCreation.h"
-#include "UtilityFunctions.h"
-
 class PluginProcessorInit {
 public:
     PluginProcessorInit(ProteusAudioProcessor& p) : processor(p),
