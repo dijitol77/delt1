@@ -10,8 +10,8 @@ target_sources(Proteus PRIVATE
     	# PluginProcessorInit.cpp
     	# AudioProcessing.cpp
         # AudioProcessing.h
-    	 MidiProcessing.cpp
-     	 MidiProcessing.h
+    	# MidiProcessing.cpp
+     	# MidiProcessing.h
     	#  Programs.cpp
      	# Programs.h
     	# StateManagement.cpp
