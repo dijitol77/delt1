@@ -14,7 +14,7 @@ class ProteusAudioProcessor : public juce::AudioProcessor
 public:
     ProteusAudioProcessor();
 
-    StateManagement stateManagement{*this};
+    StateManagement stateManagement;
 
 #ifndef JucePlugin_PreferredChannelConfigurations
      AudioProcessor (BusesProperties()
