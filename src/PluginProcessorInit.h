@@ -4,9 +4,13 @@
 #include "PluginProcessor.h"
 #include "MidiProcessing.h"
 #include "Programs.h"
-#include "StateManagement.h"
 #include "EditorCreation.h"
 #include "UtilityFunctions.h"
+#include "AudioProcessing.h"
+#include "CabSim.h"
+#include "RTNeuralLSTM.h"
+#include "Eq4Band.h"
+#include "StateManagement.h"
 
 class PluginProcessorInit {
 public:
