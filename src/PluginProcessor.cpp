@@ -1,4 +1,5 @@
-#pragma once
+#pragma 
+#include "PluginProcessor.h"
 #include "AudioProcessing.h"
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -56,16 +57,14 @@ juce::AudioProcessorValueTreeState::ParameterLayout ProteusAudioProcessor::creat
 
 // ... other code ...
 
-void ProteusAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
+void ProteusAudioProcessor::getStateInformation(MemoryBlock& destData)
 {
-    
-    
     stateManagement.getStateInformation(destData);
+    
 }
 
-void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void ProteusAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
-    
     stateManagement.setStateInformation(data, sizeInBytes);
 }
 
