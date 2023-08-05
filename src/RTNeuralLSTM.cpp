@@ -4,8 +4,8 @@ using Vec2d = std::vector<std::vector<float>>;
 
 Vec2d transpose(const Vec2d& x)
 {
-    auto outer_size = x.size();
-    auto inner_size = x[0].size();
+    size_t outer_size = x.size();
+    size_t inner_size = x[0].size();
     Vec2d y(inner_size, std::vector<float>(outer_size, 0.0f));
 
     for (size_t i = 0; i < outer_size; ++i)
@@ -46,8 +46,8 @@ void RT_LSTM::set_weights(T1 model, const char* filename)
 
     std::vector<float> dense_bias = weights_json["/state_dict/lin.bias"_json_pointer];
     dense.setBias(dense_bias.data());
-   
 }
+
 void RT_LSTM::load_json(const char* filename)
 {
     // Read in the JSON file
@@ -56,7 +56,7 @@ void RT_LSTM::load_json(const char* filename)
     i2 >> weights_json;
 
     // Get the input size of the JSON file
-    int input_size_json = weights_json["/model_data/input_size"_json_pointer];
+    int input_size_json = static_cast<int>(weights_json["/model_data/input_size"_json_pointer]);
     input_size = input_size_json;
 
     // Load the appropriate model
@@ -71,7 +71,6 @@ void RT_LSTM::load_json(const char* filename)
     }
 }
 
-
 void RT_LSTM::reset()
 {
     if (input_size == 1) {
@@ -83,7 +82,6 @@ void RT_LSTM::reset()
 
 void RT_LSTM::process(const float* inData, float* outData, int numSamples)
 {
-
     for (int i = 0; i < numSamples; ++i)
         outData[i] = model.forward(inData + i) + inData[i];
 }
@@ -124,4 +122,3 @@ void RT_LSTM::process(const float* inData, float param1, float param2, float* ou
         outData[i] = model_cond2.forward(inArray2) + inData[i];
     }
 }
-
