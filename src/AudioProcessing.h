@@ -14,9 +14,6 @@ public:
 
 
     void initialize();
-
-    AudioProcessing();
-    ~AudioProcessing();
     void prepareToPlay(double sampleRate, int samplesPerBlock);
     void releaseResources();
     void processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages);
