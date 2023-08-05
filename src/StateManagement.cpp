@@ -1,4 +1,5 @@
 #include "StateManagement.h"
+#include "PluginProcessor.h" // Include this here
 #include "juce_core/juce_core.h" // Include this for the MemoryBlock class
 
 void StateManagement::getStateInformation (juce::MemoryBlock& destData)
