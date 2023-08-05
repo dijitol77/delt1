@@ -2,6 +2,7 @@
 
 #include "JuceHeader.h"
 #include "PluginProcessor.h"
+#include "AudioProcessing.h"
 #include "MidiProcessing.h"
 #include "Programs.h"
 #include "EditorCreation.h"
