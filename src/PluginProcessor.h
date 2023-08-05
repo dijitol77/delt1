@@ -1,29 +1,21 @@
 #pragma once
+
 #include "AudioProcessing.h"
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "CabSim.h" // Include the header for the CabSim class
-
-#define GAIN_ID "drive"
-#define GAIN_NAME "Drive"
-#define MASTER_ID "level"
-#define MASTER_NAME "Level"
-#define BASS_ID "bass"
-#define BASS_NAME "Bass"
-#define MID_ID "mid"
-#define MID_NAME "Mid"
-#define TREBLE_ID "treble"
-#define TREBLE_NAME "Treble"
-
 #include <nlohmann/json.hpp>
 #include "RTNeuralLSTM.h"
 #include "Eq4Band.h"
 #include "CabSim.h"
 #include "StateManagement.h" // Include the StateManagement header file
 
-class ProteusAudioProcessor  : public juce::AudioProcessor
+class ProteusAudioProcessor : public juce::AudioProcessor
 {
 public:
-    ProteusAudioProcessor()
+    ProteusAudioProcessor();
+
+    StateManagement stateManagement{*this};
+
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
