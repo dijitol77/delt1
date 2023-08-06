@@ -1,35 +1,7 @@
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-
-    It contains the basic framework code for a JUCE plugin processor.
-
-  ==============================================================================
-*/
-
 #pragma once
 
-#include "../JuceLibraryCode/JuceHeader.h"
-// Add at the top
+#include <JuceHeader.h>
 #include "StateManagement.h"
-
-
-#define GAIN_ID "drive"
-#define GAIN_NAME "Drive"
-#define MASTER_ID "level"
-#define MASTER_NAME "Level"
-#define BASS_ID "bass"
-#define BASS_NAME "Bass"
-#define MID_ID "mid"
-#define MID_NAME "Mid"
-#define TREBLE_ID "treble"
-#define TREBLE_NAME "Treble"
-
-#include <nlohmann/json.hpp>
-#include "RTNeuralLSTM.h"
-#include "Eq4Band.h"
-#include "CabSim.h"
 
 //==============================================================================
 /**
@@ -45,9 +17,9 @@ public:
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
 
-   #ifndef JucePlugin_PreferredChannelConfigurations
+    #ifndef JucePlugin_PreferredChannelConfigurations
     bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
-   #endif
+    #endif
 
     void processBlock (AudioBuffer<float>&, MidiBuffer&) override;
 
@@ -74,61 +46,18 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
-    void set_ampEQ(float bass_slider, float mid_slider, float treble_slider);
-
-    // Files and configuration
-    void loadConfig(File configFile);
-
-    // Pedal/amp states
-    int fw_state = 1;       // 0 = off, 1 = on
-    int cab_state = 1; // 0 = off, 1 = on
-
-    File currentDirectory = File::getCurrentWorkingDirectory().getFullPathName();
-    int current_model_index = 0;
-
-    Array<File> fileArray;
-    std::vector<File> jsonFiles;
-    int num_models = 0;
-    File folder = File::getSpecialLocation(File::userDesktopDirectory);
+    //==============================================================================
+    // State variables
+    bool fw_state = false;
+    File folder;
     File saved_model;
+    int current_model_index = 0;
+    bool cab_state = false;
+    float bass_slider = 0.0f;
+    float mid_slider = 0.0f;
+    float treble_slider = 0.0f;
 
-    AudioProcessorValueTreeState treeState;
-
-    bool conditioned = false;
-
-    const char* char_filename = "";
-
-    int pauseVolume = 3;
-
-    bool model_loaded = false;
-
-// Inside the ProteusAudioProcessor class declaration
 private:
-    StateManagement stateManager;
-
-    Eq4Band eq4band; // Amp EQ
-    Eq4Band eq4band2; // Amp EQ
-
-    std::atomic<float>* driveParam = nullptr;
-    std::atomic<float>* masterParam = nullptr;
-    std::atomic<float>* bassParam = nullptr;
-    std::atomic<float>* midParam = nullptr;
-    std::atomic<float>* trebleParam = nullptr;
-
-    float previousDriveValue = 0.5;
-    float previousMasterValue = 0.5;
-    //float steppedValue1 = 0.0;
-
-    RT_LSTM LSTM;
-    RT_LSTM LSTM2;
-
-    dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> dcBlocker;
-
-    chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>> resampler;
-
-    // IR processing
-    CabSim cabSimIRa;
-
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessor)
 };
