@@ -7,8 +7,6 @@ target_sources(Proteus PRIVATE
 	PluginEditor.h
 	PluginProcessor.cpp
 	PluginProcessor.h
- StateManagement.cpp
- StateManagement.h
 	RTNeuralLSTM.cpp
 	RTNeuralLSTM.h
         CabSim.h
