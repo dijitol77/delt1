@@ -26,7 +26,7 @@ void StateManagement::getStateInformation(MemoryBlock& destData, ValueTree treeS
     copyXmlToBinary (*xml, destData);
 }
 
-void StateManagement::setStateInformation(const void* data, int sizeInBytes, ValueTree& treeState, bool& fw_state, File& saved_model, int& current_model_index, bool& cab_state, ProteusAudioProcessorEditor* getActiveEditor)
+void StateManagement::setStateInformation(const void* data, int sizeInBytes, ValueTree& treeState, bool& fw_state, File& folder, File& saved_model, int& current_model_index, bool& cab_state, ProteusAudioProcessorEditor* getActiveEditor)
 {
     std::unique_ptr<juce::XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
 
@@ -59,7 +59,7 @@ void StateManagement::set_ampEQ(float bass_slider, float mid_slider, float trebl
     eq4band2.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
 }
 
-void StateManagement::loadConfig(File configFile, bool& conditioned, bool& model_loaded, void (*suspendProcessingFunc)(bool), int& pauseVolume, LSTMClass& LSTM, LSTMClass& LSTM2)
+void StateManagement::loadConfig(File configFile, bool& conditioned, bool& model_loaded, void (*suspendProcessingFunc)(bool), int& pauseVolume, LSTMClass& LSTM, LSTMClass& LSTM2, const char* char_filename)
 {
     suspendProcessingFunc(true);
     pauseVolume = 3;
