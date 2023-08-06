@@ -1,7 +1,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "RT_LSTM.h"
+#include "RTNeuralLSTM.h"
 
 class StateManagement
 {
