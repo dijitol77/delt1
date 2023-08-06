@@ -1,36 +1,34 @@
-// StateManagement.cpp
-
-#include "PluginEditor.h"
 #include "StateManagement.h"
+#include "PluginEditor.h"
 
 StateManagement::StateManagement()
 {
     // Constructor implementation if needed
-    // From the original file, there doesn't seem to be any specific initialization for state management.
 }
 
 StateManagement::~StateManagement()
 {
     // Destructor implementation if needed
-    // No specific destructor code was provided in the original file.
 }
 
-void StateManagement::getStateInformation(MemoryBlock& destData, ValueTree treeState, bool fw_state, File folder, File saved_model, int current_model_index, bool cab_state)
+void StateManagement::getStateInformation(MemoryBlock& destData, ValueTree treeState, bool fw_state, File folder, File saved_model, int current_model_index, bool cab_state, float bass_slider, float mid_slider, float treble_slider)
 {
     treeState.setProperty("fw_state", fw_state, nullptr);
     treeState.setProperty("folder", folder.getFullPathName(), nullptr);
     treeState.setProperty("saved_model", saved_model.getFullPathName(), nullptr);
     treeState.setProperty("current_model_index", current_model_index, nullptr);
     treeState.setProperty("cab_state", cab_state, nullptr);
+    treeState.setProperty("bass_slider", bass_slider, nullptr);
+    treeState.setProperty("mid_slider", mid_slider, nullptr);
+    treeState.setProperty("treble_slider", treble_slider, nullptr);
 
     std::unique_ptr<XmlElement> xml = treeState.createXml();
     copyXmlToBinary(*xml, destData);
 }
 
-
-void StateManagement::setStateInformation(const void* data, int sizeInBytes, ValueTree& treeState, bool& fw_state, File& folder, File& saved_model, int& current_model_index, bool& cab_state, ProteusAudioProcessorEditor* getActiveEditor)
+void StateManagement::setStateInformation(const void* data, int sizeInBytes, ValueTree& treeState, bool& fw_state, File& folder, File& saved_model, int& current_model_index, bool& cab_state, float& bass_slider, float& mid_slider, float& treble_slider, ProteusAudioProcessorEditor* getActiveEditor)
 {
-    std::unique_ptr<XmlElement> xmlState = getXmlFromBinary(data, sizeInBytes); // Address this function
+    std::unique_ptr<XmlElement> xmlState = getXmlFromBinary(data, sizeInBytes); // TODO: Address this function
 
     if (xmlState != nullptr)
     {
@@ -42,9 +40,11 @@ void StateManagement::setStateInformation(const void* data, int sizeInBytes, Val
             saved_model = File(xmlState->getStringAttribute("saved_model"));
             current_model_index = xmlState->getIntAttribute("current_model_index");
             cab_state = xmlState->getBoolAttribute("cab_state");
+            bass_slider = xmlState->getDoubleAttribute("bass_slider");
+            mid_slider = xmlState->getDoubleAttribute("mid_slider");
+            treble_slider = xmlState->getDoubleAttribute("treble_slider");
 
             if (auto* editor = dynamic_cast<ProteusAudioProcessorEditor*>(getActiveEditor))
-                
                 editor->resetImages();
 
             if (saved_model.existsAsFile()) {
@@ -65,8 +65,8 @@ void StateManagement::set_ampEQ(float bass_slider, float mid_slider, float trebl
 {
     // This is a placeholder. You'll need to replace with the correct filter design.
     auto coefficients = dsp::IIR::Coefficients<float>::makeLowPass(44100, bass_slider); // Example
-    eq4band.setCoefficients(coefficients);
- eq4band2.setCoefficients(coefficients);
+    eq4band.coefficients = coefficients;
+    eq4band2.coefficients = coefficients;
 }
 
 void StateManagement::loadConfig(File configFile, bool& conditioned, bool& model_loaded, void (*suspendProcessingFunc)(bool), int& pauseVolume, RT_LSTM& LSTM, RT_LSTM& LSTM2, const char*& char_filename)
