@@ -17,17 +17,13 @@ StateManagement::~StateManagement()
 
 void StateManagement::getStateInformation(MemoryBlock& destData, ValueTree treeState, bool fw_state, File folder, File saved_model, int current_model_index, bool cab_state)
 {
-    MemoryOutputStream stream;
-    treeState.writeToStream(stream);
-    auto state = ValueTree::fromXmlString(stream.toString());
+    treeState.setProperty("fw_state", fw_state, nullptr);
+    treeState.setProperty("folder", folder.getFullPathName(), nullptr);
+    treeState.setProperty("saved_model", saved_model.getFullPathName(), nullptr);
+    treeState.setProperty("current_model_index", current_model_index, nullptr);
+    treeState.setProperty("cab_state", cab_state, nullptr);
 
-    state.setProperty("fw_state", fw_state, nullptr);
-    state.setProperty("folder", folder.getFullPathName(), nullptr);
-    state.setProperty("saved_model", saved_model.getFullPathName(), nullptr);
-    state.setProperty("current_model_index", current_model_index, nullptr);
-    state.setProperty("cab_state", cab_state, nullptr);
-
-    std::unique_ptr<XmlElement> xml = state.createXml();
+    std::unique_ptr<XmlElement> xml = treeState.createXml();
     copyXmlToBinary(*xml, destData);
 }
 
