@@ -11,6 +11,8 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+// Add at the top
+#include "StateManagement.h"
 
 
 #define GAIN_ID "drive"
@@ -100,7 +102,9 @@ public:
 
     bool model_loaded = false;
 
+// Inside the ProteusAudioProcessor class declaration
 private:
+    StateManagement stateManager;
 
     Eq4Band eq4band; // Amp EQ
     Eq4Band eq4band2; // Amp EQ
