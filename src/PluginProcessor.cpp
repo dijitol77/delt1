@@ -8,8 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-// At the top of PluginProcessor.cpp, include the new header
-#include "StateManagement.h"
+#include "StateManagement.h" // Include the StateManagement header
 
 //==============================================================================
 // 2. CONSTRUCTOR AND DESTRUCTOR
@@ -309,24 +308,32 @@ AudioProcessorEditor* ProteusAudioProcessor::createEditor()
 //==============================================================================
 // 6. STATE MANAGEMENT FUNCTIONS
 
+// 6.1 Store the plugin state.
 void ProteusAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
-    stateManager.getStateInformation(destData);
+    StateManagement stateManager;
+    stateManager.getStateInformation(destData, treeState, fw_state, folder, saved_model, current_model_index, cab_state);
 }
 
+// 6.2 Restore the plugin state.
 void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    stateManager.setStateInformation(data, sizeInBytes);
+    StateManagement stateManager;
+    stateManager.setStateInformation(data, sizeInBytes, treeState, fw_state, saved_model, current_model_index, cab_state, getActiveEditor());
 }
 
+// 6.3 Set the EQ parameters for the amplifier.
 void ProteusAudioProcessor::set_ampEQ(float bass_slider, float mid_slider, float treble_slider)
 {
-    stateManager.set_ampEQ(bass_slider, mid_slider, treble_slider);
+    StateManagement stateManager;
+    stateManager.set_ampEQ(bass_slider, mid_slider, treble_slider, eq4band, eq4band2);
 }
 
+// 6.4 Load the configuration from a file.
 void ProteusAudioProcessor::loadConfig(File configFile)
 {
-    stateManager.loadConfig(configFile);
+    StateManagement stateManager;
+    stateManager.loadConfig(configFile, conditioned, model_loaded, [this](bool shouldSuspend) { this->suspendProcessing(shouldSuspend); }, pauseVolume, LSTM, LSTM2);
 }
 
 // 6.1 Store the plugin state.
