@@ -30,7 +30,7 @@ void StateManagement::getStateInformation(MemoryBlock& destData, ValueTree treeS
 
 void StateManagement::setStateInformation(const void* data, int sizeInBytes, ValueTree& treeState, bool& fw_state, File& folder, File& saved_model, int& current_model_index, bool& cab_state, ProteusAudioProcessorEditor* getActiveEditor)
 {
-    std::unique_ptr<XmlElement> xmlState = getXmlFromBinary(data, sizeInBytes); // TODO: Address this function
+    std::unique_ptr<XmlElement> xmlState = getXmlFromBinary(data, sizeInBytes); // Address this function
 
     if (xmlState != nullptr)
     {
@@ -65,8 +65,8 @@ void StateManagement::set_ampEQ(float bass_slider, float mid_slider, float trebl
 {
     // This is a placeholder. You'll need to replace with the correct filter design.
     auto coefficients = dsp::IIR::Coefficients<float>::makeLowPass(44100, bass_slider); // Example
-    eq4band.coefficients = coefficients;
-    eq4band2.coefficients = coefficients;
+    eq4band.setCoefficients(coefficients);
+ eq4band2.setCoefficients(coefficients);
 }
 
 void StateManagement::loadConfig(File configFile, bool& conditioned, bool& model_loaded, void (*suspendProcessingFunc)(bool), int& pauseVolume, RT_LSTM& LSTM, RT_LSTM& LSTM2, const char*& char_filename)
