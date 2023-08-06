@@ -7,10 +7,11 @@
 */
 
 #pragma once
-#include "StateManagement.h" // Include the StateManagement header
+
 #include "RTNeuralLSTM.h"
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "StateManagement.h" // Include the StateManagement header
 
 ProteusAudioProcessor::ProteusAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
