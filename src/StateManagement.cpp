@@ -16,39 +16,48 @@ StateManagement::~StateManagement()
 
 void StateManagement::getStateInformation(MemoryBlock& destData, ValueTree treeState, bool fw_state, File folder, File saved_model, int current_model_index, bool cab_state)
 {
-    auto state = treeState.copyState();
-    std::unique_ptr<XmlElement> xml (state.createXml());
-    xml->setAttribute ("fw_state", fw_state);
-    xml->setAttribute("folder", folder.getFullPathName().toStdString());
-    xml->setAttribute("saved_model", saved_model.getFullPathName().toStdString());
-    xml->setAttribute("current_model_index", current_model_index);
-    xml->setAttribute ("cab_state", cab_state);
-    copyXmlToBinary (*xml, destData);
+    MemoryOutputStream stream;
+    treeState.writeToStream(stream);
+    auto state = ValueTree::fromXmlString(stream.toString());
+    
+    state.setProperty("fw_state", fw_state, nullptr);
+    state.setProperty("folder", folder.getFullPathName(), nullptr);
+    state.setProperty("saved_model", saved_model.getFullPathName(), nullptr);
+    state.setProperty("current_model_index", current_model_index, nullptr);
+    state.setProperty("cab_state", cab_state, nullptr);
+    
+    std::unique_ptr<XmlElement> xml = state.createXml();
+    copyXmlToBinary(*xml, destData);
 }
 
 void StateManagement::setStateInformation(const void* data, int sizeInBytes, ValueTree& treeState, bool& fw_state, File& folder, File& saved_model, int& current_model_index, bool& cab_state, ProteusAudioProcessorEditor* getActiveEditor)
 {
-    std::unique_ptr<juce::XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+    std::unique_ptr<XmlElement> xmlState = getXmlFromBinary(data, sizeInBytes);
 
-    if (xmlState.get() != nullptr)
+    if (xmlState != nullptr)
     {
-        if (xmlState->hasTagName (treeState.state.getType()))
+        if (xmlState->hasTagName(treeState.getType()))
         {
-            treeState.replaceState (juce::ValueTree::fromXml (*xmlState));
-            fw_state = xmlState->getBoolAttribute ("fw_state");
-            File temp_saved_model = xmlState->getStringAttribute("saved_model");
-            saved_model = temp_saved_model;
-            cab_state = xmlState->getBoolAttribute ("cab_state");
-
+            treeState.replaceState(ValueTree::fromXml(*xmlState));
+            fw_state = xmlState->getBoolAttribute("fw_state");
+            folder = File(xmlState->getStringAttribute("folder"));
+            saved_model = File(xmlState->getStringAttribute("saved_model"));
             current_model_index = xmlState->getIntAttribute("current_model_index");
-            File temp = xmlState->getStringAttribute("folder");
-            folder = temp;
-            if (auto* editor = dynamic_cast<ProteusAudioProcessorEditor*> (getActiveEditor()))
+            cab_state = xmlState->getBoolAttribute("cab_state");
+
+            if (auto* editor = dynamic_cast<ProteusAudioProcessorEditor*>(getActiveEditor))
                 editor->resetImages();
 
             if (saved_model.existsAsFile()) {
-                loadConfig(saved_model);
-            }          
+                // Load configuration from the file
+                bool conditioned = false;
+                bool model_loaded = false;
+                int pauseVolume = 0;
+                RT_LSTM LSTM;
+                RT_LSTM LSTM2;
+                const char* char_filename = nullptr;
+                loadConfig(saved_model, conditioned, model_loaded, nullptr, pauseVolume, LSTM, LSTM2, char_filename);
+            }
         }
     }
 }
@@ -59,12 +68,14 @@ void StateManagement::set_ampEQ(float bass_slider, float mid_slider, float trebl
     eq4band2.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
 }
 
-void StateManagement::loadConfig(File configFile, bool& conditioned, bool& model_loaded, void (*suspendProcessingFunc)(bool), int& pauseVolume, LSTMClass& LSTM, LSTMClass& LSTM2, const char* char_filename)
+void StateManagement::loadConfig(File configFile, bool& conditioned, bool& model_loaded, void (*suspendProcessingFunc)(bool), int& pauseVolume, RT_LSTM& LSTM, RT_LSTM& LSTM2, const char*& char_filename)
 {
-    suspendProcessingFunc(true);
+    if (suspendProcessingFunc)
+        suspendProcessingFunc(true);
+
     pauseVolume = 3;
     String path = configFile.getFullPathName();
-    char_filename = path.toUTF8();
+    char_filename = path.toRawUTF8();
 
     LSTM.reset();
     LSTM2.reset();
@@ -72,12 +83,9 @@ void StateManagement::loadConfig(File configFile, bool& conditioned, bool& model
     LSTM.load_json(char_filename);
     LSTM2.load_json(char_filename);
 
-    if (LSTM.input_size == 1) {
-        conditioned = false;
-    } else {
-        conditioned = true;
-    }
-
+    conditioned = (LSTM.input_size != 1);
     model_loaded = true;
-    suspendProcessingFunc(false);
+
+    if (suspendProcessingFunc)
+        suspendProcessingFunc(false);
 }
