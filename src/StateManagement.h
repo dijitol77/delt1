@@ -1,17 +1,8 @@
 #pragma once
 
 #include "JuceHeader.h"
-
-// Include the headers for ProteusAudioProcessorEditor and RTNeuralLSTM
-#include "PluginEditor.h"
-#include "RTNeuralLSTM.h"
-
-
-// Forward declaration for the editor class, assuming it's defined elsewhere.
-class ProteusAudioProcessorEditor;
-
-// Assuming you have a class or struct for LSTM operations.
-class LSTMClass;
+#include "PluginEditor.h"  // Include the header for ProteusAudioProcessorEditor
+#include "RTNeuralLSTM.h"  // Include the header for RT_LSTM
 
 class StateManagement
 {
@@ -25,7 +16,7 @@ public:
     
     void set_ampEQ(float bass_slider, float mid_slider, float treble_slider, dsp::IIR::Filter<float>& eq4band, dsp::IIR::Filter<float>& eq4band2);
     
-    void loadConfig(File configFile, bool& conditioned, bool& model_loaded, void (*suspendProcessingFunc)(bool), int& pauseVolume, LSTMClass& LSTM, LSTMClass& LSTM2);
+    void loadConfig(File configFile, bool& conditioned, bool& model_loaded, void (*suspendProcessingFunc)(bool), int& pauseVolume, RT_LSTM& LSTM, RT_LSTM& LSTM2);  // <-- Updated this line
 
 private:
     // Add private member variables and methods here if any
