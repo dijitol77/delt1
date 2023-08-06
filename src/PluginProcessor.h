@@ -1,7 +1,9 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "StateManagement.h"
+// #include "StateManagement.h"
+
+class StateManagement;
 
 //==============================================================================
 /**
