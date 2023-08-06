@@ -9,6 +9,10 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "StateManagement.h" // Include the StateManagement header
+#include "RTNeuralLSTM.h"
+
+// ... [rest of the file remains unchanged]
+
 
 //==============================================================================
 // 2. CONSTRUCTOR AND DESTRUCTOR
