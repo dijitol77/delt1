@@ -1,17 +1,20 @@
+// StateManagement.h
+
 #pragma once
 
-// Forward declaration of ProteusAudioProcessor
-class ProteusAudioProcessor;
-
-#include "PluginProcessor.h"
-#include <JuceHeader.h>
+#include "JuceHeader.h"
 
 class StateManagement
 {
 public:
-    StateManagement(ProteusAudioProcessor& p) : processor(p) {}
-    void getStateInformation(juce::MemoryBlock& destData);
+    StateManagement();
+    ~StateManagement();
+
+    void getStateInformation(MemoryBlock& destData);
     void setStateInformation(const void* data, int sizeInBytes);
+    void set_ampEQ(float bass_slider, float mid_slider, float treble_slider);
+    void loadConfig(File configFile);
+
 private:
-    ProteusAudioProcessor& processor;
+    // Add private member variables and methods here if any
 };
