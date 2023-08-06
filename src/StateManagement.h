@@ -2,7 +2,7 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include "RT_LSTM.h" // Change LSTMClass to RT_LSTM
+#include "RTNeuralLSTM.h" // Change LSTMClass to RT_LSTM
 
 class StateManagement
 {
