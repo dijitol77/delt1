@@ -3,6 +3,8 @@
 #include <JuceHeader.h>
 #include "RTNeuralLSTM.h"
 
+class ProteusAudioProcessorEditor;
+
 class StateManagement
 {
 public:
