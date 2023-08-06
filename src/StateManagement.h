@@ -1,8 +1,11 @@
-// StateManagement.h
-
 #pragma once
 
 #include "JuceHeader.h"
+
+// Include the headers for ProteusAudioProcessorEditor and RTNeuralLSTM
+#include "PluginEditor.h"
+#include "RTNeuralLSTM.h"
+
 
 // Forward declaration for the editor class, assuming it's defined elsewhere.
 class ProteusAudioProcessorEditor;
