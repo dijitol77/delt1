@@ -65,8 +65,10 @@ void StateManagement::setStateInformation(const void* data, int sizeInBytes, Val
 
 void StateManagement::set_ampEQ(float bass_slider, float mid_slider, float treble_slider, dsp::IIR::Filter<float>& eq4band, dsp::IIR::Filter<float>& eq4band2)
 {
-    eq4band.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
-    eq4band2.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
+    // This is a placeholder. You'll need to replace with the correct filter design.
+    auto coefficients = dsp::IIR::Coefficients<float>::makeLowPass(44100, bass_slider); // Example
+    eq4band.setCoefficients(coefficients);
+    eq4band2.setCoefficients(coefficients);
 }
 
 void StateManagement::loadConfig(File configFile, bool& conditioned, bool& model_loaded, void (*suspendProcessingFunc)(bool), int& pauseVolume, RT_LSTM& LSTM, RT_LSTM& LSTM2, const char*& char_filename)
