@@ -20,13 +20,13 @@ void StateManagement::getStateInformation(MemoryBlock& destData, ValueTree treeS
     MemoryOutputStream stream;
     treeState.writeToStream(stream);
     auto state = ValueTree::fromXmlString(stream.toString());
-    
+
     state.setProperty("fw_state", fw_state, nullptr);
     state.setProperty("folder", folder.getFullPathName(), nullptr);
     state.setProperty("saved_model", saved_model.getFullPathName(), nullptr);
     state.setProperty("current_model_index", current_model_index, nullptr);
     state.setProperty("cab_state", cab_state, nullptr);
-    
+
     std::unique_ptr<XmlElement> xml = state.createXml();
     copyXmlToBinary(*xml, destData);
 }
@@ -46,7 +46,7 @@ void StateManagement::setStateInformation(const void* data, int sizeInBytes, Val
             current_model_index = xmlState->getIntAttribute("current_model_index");
             cab_state = xmlState->getBoolAttribute("cab_state");
 
-            if (auto* editor = dynamic_cast<ProteusAudioProcessorEditor*>(getActiveEditor))
+            if (auto* editor = dynamic_cast<PluginEditor*>(getActiveEditor))
                 editor->resetImages();
 
             if (saved_model.existsAsFile()) {
