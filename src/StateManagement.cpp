@@ -30,7 +30,7 @@ void StateManagement::getStateInformation(MemoryBlock& destData, ValueTree treeS
 
 void StateManagement::setStateInformation(const void* data, int sizeInBytes, ValueTree& treeState, bool& fw_state, File& folder, File& saved_model, int& current_model_index, bool& cab_state, ProteusAudioProcessorEditor* getActiveEditor)
 {
-    std::unique_ptr<XmlElement> xmlState = getXmlFromBinary(data, sizeInBytes);
+    std::unique_ptr<XmlElement> xmlState = getXmlFromBinary(data, sizeInBytes); // TODO: Address this function
 
     if (xmlState != nullptr)
     {
@@ -43,7 +43,7 @@ void StateManagement::setStateInformation(const void* data, int sizeInBytes, Val
             current_model_index = xmlState->getIntAttribute("current_model_index");
             cab_state = xmlState->getBoolAttribute("cab_state");
 
-            if (auto* editor = dynamic_cast<PluginEditor*>(getActiveEditor))
+            if (auto* editor = dynamic_cast<ProteusAudioProcessorEditor*>(getActiveEditor))
                 editor->resetImages();
 
             if (saved_model.existsAsFile()) {
