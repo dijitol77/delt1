@@ -1,7 +1,7 @@
 // StateManagement.cpp
 
-#include "StateManagement.h"
 #include "PluginEditor.h"
+#include "StateManagement.h"
 
 StateManagement::StateManagement()
 {
