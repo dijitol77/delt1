@@ -36,7 +36,7 @@ void StateManagement::setStateInformation(const void* data, int sizeInBytes, Val
     {
         if (xmlState->hasTagName(treeState.getType()))
         {
-            treeState.replaceState(ValueTree::fromXml(*xmlState));
+            treeState = ValueTree::fromXml(*xmlState);
             fw_state = xmlState->getBoolAttribute("fw_state");
             folder = File(xmlState->getStringAttribute("folder"));
             saved_model = File(xmlState->getStringAttribute("saved_model"));
