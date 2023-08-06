@@ -4,6 +4,8 @@
 #include <JuceHeader.h>
 #include "RTNeuralLSTM.h" // Change LSTMClass to RT_LSTM
 
+class ProteusAudioProcessorEditor;
+
 class StateManagement
 {
 public:
