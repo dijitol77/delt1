@@ -2,6 +2,7 @@
 
 #include <JuceHeader.h>
 #include "RTNeuralLSTM.h"
+#include "../JuceLibraryCode/JuceHeader.h"
 
 class ProteusAudioProcessorEditor;
 
