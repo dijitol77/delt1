@@ -315,8 +315,8 @@ AudioProcessorEditor* ProteusAudioProcessor::createEditor()
 // 6.1 Store the plugin state.
 void ProteusAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
-    StateManagement stateManager;
     stateManager.getStateInformation(destData, treeState, fw_state, folder, saved_model, current_model_index, cab_state);
+
 }
 
 // 6.2 Restore the plugin state.
