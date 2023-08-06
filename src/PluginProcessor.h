@@ -1,41 +1,23 @@
 #pragma once
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include <JuceHeader.h>
 #include "StateManagement.h"
+#include "RTNeural.h"
 
-#define GAIN_ID "drive"
-#define GAIN_NAME "Drive"
-#define MASTER_ID "level"
-#define MASTER_NAME "Level"
-#define BASS_ID "bass"
-#define BASS_NAME "Bass"
-#define MID_ID "mid"
-#define MID_NAME "Mid"
-#define TREBLE_ID "treble"
-#define TREBLE_NAME "Treble"
-
-#include <nlohmann/json.hpp>
-#include "RTNeuralLSTM.h"
-#include "Eq4Band.h"
-#include "CabSim.h"
-
-class ProteusAudioProcessor : public AudioProcessor
+class ProteusAudioProcessor  : public juce::AudioProcessor
 {
 public:
     ProteusAudioProcessor();
-    ~ProteusAudioProcessor();
+    ~ProteusAudioProcessor() override;
 
-    void prepareToPlay(double sampleRate, int samplesPerBlock) override;
+    void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
-#ifndef JucePlugin_PreferredChannelConfigurations
-    bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
-#endif
-    void processBlock(AudioBuffer<float>&, MidiBuffer&) override;
+    void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
 
-    AudioProcessorEditor* createEditor() override;
+    juce::AudioProcessorEditor* createEditor() override;
     bool hasEditor() const override;
 
-    const String getName() const override;
+    const juce::String getName() const override;
 
     bool acceptsMidi() const override;
     bool producesMidi() const override;
@@ -44,66 +26,29 @@ public:
 
     int getNumPrograms() override;
     int getCurrentProgram() override;
-    void setCurrentProgram(int index) override;
-    const String getProgramName(int index) override;
-    void changeProgramName(int index, const String& newName) override;
+    void setCurrentProgram (int index) override;
+    const juce::String getProgramName (int index) override;
+    void changeProgramName (int index, const juce::String& newName) override;
 
-    void getStateInformation(MemoryBlock& destData) override;
-    void setStateInformation(const void* data, int sizeInBytes) override;
+    void getStateInformation (juce::MemoryBlock& destData) override;
+    void setStateInformation (const void* data, int sizeInBytes) override;
+
+    // Additional member variables and functions from Proteus
+    dsp::IIR::Filter<float> eq4band, eq4band2;
+    RTNeural::RTModel<float> LSTM, LSTM2;
+    bool fw_state, cab_state;
+    juce::AudioParameterFloat* driveParam;
+    juce::AudioParameterFloat* masterParam;
+    // ... add other parameters as needed
 
     void set_ampEQ(float bass_slider, float mid_slider, float treble_slider);
+    void loadConfig(const juce::File& configFile);
 
-    // Files and configuration
-    void loadConfig(File configFile);
-
-    // Pedal/amp states
-    int fw_state = 1;       // 0 = off, 1 = on
-    int cab_state = 1; // 0 = off, 1 = on
-
-    File currentDirectory = File::getCurrentWorkingDirectory().getFullPathName();
-    int current_model_index = 0;
-
-    Array<File> fileArray;
-    std::vector<File> jsonFiles;
-    int num_models = 0;
-    File folder = File::getSpecialLocation(File::userDesktopDirectory);
-    File saved_model;
-
-    AudioProcessorValueTreeState treeState;
-
-    bool conditioned = false;
-
-    const char* char_filename = "";
-
-    int pauseVolume = 3;
-
-    bool model_loaded = false;
+    // IR Processing
+    juce::dsp::Convolution cabSimIRa;
 
 private:
+    StateManagement stateManager;
 
-    Eq4Band eq4band; // Amp EQ
-    Eq4Band eq4band2; // Amp EQ
-
-    std::atomic<float>* driveParam = nullptr;
-    std::atomic<float>* masterParam = nullptr;
-    std::atomic<float>* bassParam = nullptr;
-    std::atomic<float>* midParam = nullptr;
-    std::atomic<float>* trebleParam = nullptr;
-
-    float previousDriveValue = 0.5;
-    float previousMasterValue = 0.5;
-
-    RT_LSTM LSTM;
-    RT_LSTM LSTM2;
-
-    dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> dcBlocker;
-
-    chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>> resampler;
-
-    // IR processing
-    CabSim cabSimIRa;
-
-    StateManagement stateManagement; // Added StateManagement instance
-
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProteusAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessor)
 };
