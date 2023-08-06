@@ -336,8 +336,10 @@ void ProteusAudioProcessor::set_ampEQ(float bass_slider, float mid_slider, float
 // 6.4 Load the configuration from a file.
 void ProteusAudioProcessor::loadConfig(File configFile)
 {
-    StateManagement stateManager;
-    stateManager.loadConfig(configFile, conditioned, model_loaded, [this](bool shouldSuspend) { this->suspendProcessing(shouldSuspend); }, pauseVolume, LSTM, LSTM2);
+   // Somewhere in the ProteusAudioProcessor class or its methods:
+
+   StateManagement stateManager;
+stateManager.loadConfig(configFile, conditioned, model_loaded, &suspendProcessing, pauseVolume, LSTM, LSTM2);
 }
 
 // 6.1 Store the plugin state.
