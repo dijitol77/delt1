@@ -4,8 +4,7 @@
 #include "StateManagement.h"
 
 //==============================================================================
-/**
-*/
+
 class ProteusAudioProcessor  : public AudioProcessor
 {
 public:
