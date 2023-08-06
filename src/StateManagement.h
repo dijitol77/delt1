@@ -1,8 +1,8 @@
 #pragma once
 
-#include "JuceHeader.h"
-#include "PluginEditor.h"  // Include the header for ProteusAudioProcessorEditor
-#include "RTNeuralLSTM.h"  // Include the header for RT_LSTM
+#include <JuceHeader.h>
+#include "PluginProcessor.h"
+#include "RT_LSTM.h" // Change LSTMClass to RT_LSTM
 
 class StateManagement
 {
@@ -11,14 +11,14 @@ public:
     ~StateManagement();
 
     void getStateInformation(MemoryBlock& destData, ValueTree treeState, bool fw_state, File folder, File saved_model, int current_model_index, bool cab_state);
-    
-    void setStateInformation(const void* data, int sizeInBytes, ValueTree& treeState, bool& fw_state, File& saved_model, int& current_model_index, bool& cab_state, ProteusAudioProcessorEditor* getActiveEditor);
-    
+    void setStateInformation(const void* data, int sizeInBytes, ValueTree& treeState, bool& fw_state, File& folder, File& saved_model, int& current_model_index, bool& cab_state, ProteusAudioProcessorEditor* getActiveEditor);
+
     void set_ampEQ(float bass_slider, float mid_slider, float treble_slider, dsp::IIR::Filter<float>& eq4band, dsp::IIR::Filter<float>& eq4band2);
-    
-    void loadConfig(File configFile, bool& conditioned, bool& model_loaded, void (*suspendProcessingFunc)(bool), int& pauseVolume, RT_LSTM& LSTM, RT_LSTM& LSTM2);  // <-- Updated this line
+
+    void loadConfig(File configFile, bool& conditioned, bool& model_loaded, void (*suspendProcessingFunc)(bool), int& pauseVolume, RT_LSTM& LSTM, RT_LSTM& LSTM2, const char* &char_filename); // pass 'char_filename' as a reference
 
 private:
-    // Add private member variables and methods here if any
+    // Add any private members if needed
 };
+
 
