@@ -312,35 +312,32 @@ AudioProcessorEditor* ProteusAudioProcessor::createEditor()
 //==============================================================================
 // 6. STATE MANAGEMENT FUNCTIONS
 
+// 6. STATE MANAGEMENT FUNCTIONS
+
 // 6.1 Store the plugin state.
 void ProteusAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
     stateManager.getStateInformation(destData, treeState, fw_state, folder, saved_model, current_model_index, cab_state);
-
 }
 
 // 6.2 Restore the plugin state.
 void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    StateManagement stateManager;
     stateManager.setStateInformation(data, sizeInBytes, treeState, fw_state, saved_model, current_model_index, cab_state, getActiveEditor());
 }
 
 // 6.3 Set the EQ parameters for the amplifier.
 void ProteusAudioProcessor::set_ampEQ(float bass_slider, float mid_slider, float treble_slider)
 {
-    StateManagement stateManager;
     stateManager.set_ampEQ(bass_slider, mid_slider, treble_slider, eq4band, eq4band2);
 }
 
 // 6.4 Load the configuration from a file.
 void ProteusAudioProcessor::loadConfig(File configFile)
 {
-   // Somewhere in the ProteusAudioProcessor class or its methods:
-
-   StateManagement stateManager;
-stateManager.loadConfig(configFile, conditioned, model_loaded, &suspendProcessing, pauseVolume, LSTM, LSTM2);
+    stateManager.loadConfig(configFile, conditioned, model_loaded, &suspendProcessing, pauseVolume, LSTM, LSTM2);
 }
+
 
 // 6.1 Store the plugin state.
 // void ProteusAudioProcessor::getStateInformation (MemoryBlock& destData)
