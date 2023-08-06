@@ -27,6 +27,7 @@ void StateManagement::getStateInformation(MemoryBlock& destData, ValueTree treeS
     copyXmlToBinary(*xml, destData);
 }
 
+
 void StateManagement::setStateInformation(const void* data, int sizeInBytes, ValueTree& treeState, bool& fw_state, File& folder, File& saved_model, int& current_model_index, bool& cab_state, ProteusAudioProcessorEditor* getActiveEditor)
 {
     std::unique_ptr<XmlElement> xmlState = getXmlFromBinary(data, sizeInBytes);
