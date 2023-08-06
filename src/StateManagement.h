@@ -3,7 +3,7 @@
 #include "PluginProcessor.h"
 #include <JuceHeader.h>
 #include "RTNeuralLSTM.h" // Change LSTMClass to RT_LSTM
-#include "PluginEditor.h" // Include the header that declares ProteusAudioProcessorEditor
+#include "PluginEditor.h"
 
 class StateManagement
 {
