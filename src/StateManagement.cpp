@@ -44,6 +44,7 @@ void StateManagement::setStateInformation(const void* data, int sizeInBytes, Val
             cab_state = xmlState->getBoolAttribute("cab_state");
 
             if (auto* editor = dynamic_cast<ProteusAudioProcessorEditor*>(getActiveEditor))
+                
                 editor->resetImages();
 
             if (saved_model.existsAsFile()) {
