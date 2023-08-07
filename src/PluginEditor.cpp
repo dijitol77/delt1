@@ -219,7 +219,7 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
     // Assuming bigKnobLAF is an image:
     // int knobXPosition = /* X position relative to the right container */;
     // int knobYPosition = /* Y position relative to the right container */;
-    g.drawImageAt(bigKnobLAF, knobXPosition, knobYPosition);
+    // g.drawImageAt(bigKnobLAF, knobXPosition, knobYPosition);
 
     // If bigKnobLAF is a component or LookAndFeel object, you'll need to adjust its position and bounds accordingly.
 }
