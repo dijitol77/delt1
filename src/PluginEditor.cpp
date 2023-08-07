@@ -23,6 +23,10 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     loadButton.setButtonText("LOAD MODEL");
     loadButton.addListener(this);
 
+  addAndMakeVisible(loadButton2);
+  loadButton2.setButtonText("LOAD MODEL");
+  loadButton2.addListener(this);
+
     addAndMakeVisible(modelSelect);
     modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
     modelSelect.setScrollWheelEnabled(true);
@@ -31,7 +35,17 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
         modelSelect.addItem(jsonFile.getFileName(), c);
         c += 1;
     }
+  
     modelSelect.onChange = [this] {modelSelectChanged();};
+  addAndMakeVisible(modelSelect2);
+modelSelect2.setColour(juce::Label::textColourId, juce::Colours::black);
+modelSelect2.setScrollWheelEnabled(true);
+int c2 = 1;
+for (const auto& jsonFile : processor.jsonFiles) {
+    modelSelect2.addItem(jsonFile.getFileName(), c2);
+    c2 += 1;
+}
+modelSelect2.onChange = [this] {modelSelectChanged2();}; // Assuming you have a separate callback for the duplicate
 
     auto font = modelLabel.getFont();
     float height = font.getHeight();
