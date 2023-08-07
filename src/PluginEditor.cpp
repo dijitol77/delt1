@@ -226,6 +226,9 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
 
 #else
 
+#endif  // <-- This was missing
+}
+
 // Redraw only the clipped part of the background image
 
     juce::Rectangle<int> ClipRect = g.getClipBounds();
