@@ -256,6 +256,7 @@ ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
     ampTrebleKnob2.setLookAndFeel(nullptr);
 }
 
+//==============================================================================
 void ProteusAudioProcessorEditor::paint (Graphics& g)
 {
     // Workaround for graphics on Windows builds (clipping code doesn't work correctly on Windows)
@@ -273,13 +274,16 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
 
     // Redraw only the clipped part of the background image
     juce::Rectangle<int> ClipRect = g.getClipBounds();
+    //if (processor.fw_state == 0) {
+    //    g.drawImage(background_off, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
     if (processor.fw_state == 1 && processor.conditioned == true) {
         g.drawImage(background_on, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
-    } else if (processor.fw_state == 1 && processor.conditioned == false) {
+    } else if (processor.fw_state == 1 && processor.conditioned == false)
         g.drawImage(background_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
     }
 #endif
 }
+
 void ProteusAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
