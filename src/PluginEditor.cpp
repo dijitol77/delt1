@@ -37,7 +37,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
         c += 1;
     }
     modelSelect.onChange = [this] {modelSelectChanged();};
-  
+
     auto font = modelLabel.getFont();
     float height = font.getHeight();
     font.setHeight(height);
@@ -112,6 +112,12 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     versionLabel.setJustificationType(juce::Justification::left);
     versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     versionLabel.setFont(font);
+
+   // Size of plugin GUI
+    setSize (1000, 650);
+
+
+
 
      cabOnButton2.setImages(true, true, true,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
