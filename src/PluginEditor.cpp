@@ -222,12 +222,9 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
     // g.drawImageAt(bigKnobLAF, knobXPosition, knobYPosition);
 
     // If bigKnobLAF is a component or LookAndFeel object, you'll need to adjust its position and bounds accordingly.
-}
 
 #else
 
-#endif  // <-- This was missing
-}
 
 // Redraw only the clipped part of the background image
 
