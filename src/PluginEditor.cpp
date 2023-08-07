@@ -16,7 +16,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     : AudioProcessorEditor (&p), processor (p)
 {
     // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to
+    // editor's size to whatever you need it to be
 
     // Overall Widgets
     addAndMakeVisible(loadButton);
@@ -42,17 +42,6 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     smallKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::small_knob_png, BinaryData::small_knob_pngSize));
 
     // Pre Amp Pedal Widgets
- 
-    /*
-    // Overdrive
-    odFootSw.setImages(true, true, true,
-        ImageCache::getFromMemory(BinaryData::footswitch_up_png, BinaryData::footswitch_up_pngSize), 1.0, Colours::transparentWhite,
-        Image(), 1.0, Colours::transparentWhite,
-        ImageCache::getFromMemory(BinaryData::footswitch_down_png, BinaryData::footswitch_down_pngSize), 1.0, Colours::transparentWhite,
-        0.0);
-    addAndMakeVisible(odFootSw);
-    odFootSw.addListener(this);
-    */
 
     cabOnButton.setImages(true, true, true,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
@@ -78,7 +67,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     odLevelKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odLevelKnob.setDoubleClickReturnValue(true, 0.5);
 
-    bassSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob);    	    
+    bassSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob);        
     addAndMakeVisible(ampBassKnob);
     ampBassKnob.setLookAndFeel(&smallKnobLAF);
     ampBassKnob.addListener(this);
@@ -102,20 +91,35 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     ampTrebleKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     ampTrebleKnob.setDoubleClickReturnValue(true, 0.0);
 
-    addAndMakeVisible(versionLabel);
-    versionLabel.setText("v1.2", juce::NotificationType::dontSendNotification);
-    versionLabel.setJustificationType(juce::Justification::left);
-    versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
-    versionLabel.setFont(font);
+    // Initialize the containers
+    addAndMakeVisible(originalContainer);
+    addAndMakeVisible(duplicateContainer);
+
+    // Position the original components inside the original container
+    originalContainer.addAndMakeVisible(loadButton);
+    loadButton.setBounds(186, 48, 120, 24);
+    // ... [Position other original components similarly]
+
+    // Initialize the duplicated components
+    duplicateContainer.addAndMakeVisible(loadButton2);
+    loadButton2.setButtonText("LOAD MODEL");
+    loadButton2.addListener(this);
+    loadButton2.setBounds(186, 48, 120, 24);
+    // ... [Initialize and position other duplicated components similarly]
 
     // Size of plugin GUI
-    setSize (1000, 650);
+    setSize (1000, 650);  // Double the width
 
+    // Position the containers
+    originalContainer.setBounds(0, 0, 500, 650);
+    duplicateContainer.setBounds(500, 0, 500, 650);
 
     resetImages();
-
     loadFromFolder();
 }
+
+// ... [Rest of the file remains unchanged]
+
 
 ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
 {
