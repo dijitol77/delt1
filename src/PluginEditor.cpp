@@ -15,6 +15,9 @@
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p)
 {
+    // This is where our plugin's editor size is set.
+    setSize (400, 300);
+
 
   
     // Make sure that before the constructor has finished, you've set the
@@ -141,16 +144,7 @@ font2.setHeight(height2);
     // auto font2 = modelLabel.getFont();
     versionLabel.setFont(font2);
 
-// Add these method definitions in your PluginEditor.cpp file:
-void ProteusAudioProcessorEditor::loadButton2Clicked()
-{
-    // Implement the functionality for loadButton2 here
-}
 
-void ProteusAudioProcessorEditor::cabOnButton2Clicked()
-{
-    // Implement the functionality for cabOnButton2 here
-}
 
 
    // Size of plugin GUI
@@ -246,9 +240,16 @@ ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
 }
 
 //==============================================================================
+void ProteusAudioProcessorEditor::paint (Graphics& g)
+{
+    g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
 
+    g.setColour (Colours::white);
+    g.setFont (15.0f);
+    g.drawFittedText ("Hello World!", getLocalBounds(), Justification::centred, 1);
+}
 
-void ProteusAudioProcessorEditor::resized()
+void ProteusAudioProcessorEditor::resized() void ProteusAudioProcessorEditor::resized()
 {
     // Original Widgets
     loadButton.setBounds(186, 48, 120, 24);
@@ -298,8 +299,8 @@ void ProteusAudioProcessorEditor::resized()
 }
 
 // Correct the nested paint function
-void ProteusAudioProcessorEditor::paint (Graphics& g)
-{
+
+  
     // Workaround for graphics on Windows builds (clipping code doesn't work correctly on Windows)
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
     //if (processor.fw_state == 0) {
