@@ -371,7 +371,7 @@ void ProteusAudioProcessorEditor::loadButtonClicked()
  
     auto folderChooserFlags = FileBrowserComponent::openMode | FileBrowserComponent::canSelectDirectories | FileBrowserComponent::canSelectFiles;
  
-    myChooser->launchAsync (folderChooserFlags, [this] (const FileChooser& chooser)                
+    myChooser.launchAsync (folderChooserFlags, [this] (const FileChooser& chooser)                
     {
         if (!chooser.getResult().exists()) {
                 return;
