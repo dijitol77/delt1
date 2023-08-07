@@ -117,7 +117,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
         Image(), 1.0, Colours::transparentWhite,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
         0.0);
-    addAndMakeVisible(cabOnButton);
+    addAndMakeVisible(cabOnButton2);
     cabOnButton2.addListener(this);
 
     driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
