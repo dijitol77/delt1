@@ -19,6 +19,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     // editor's size to whatever you need it to
 
     // Overall Widgets
+  
     addAndMakeVisible(loadButton);
     loadButton.setButtonText("LOAD MODEL");
     loadButton.addListener(this);
@@ -166,15 +167,6 @@ versionLabel2.setJustificationType(juce::Justification::left);
 versionLabel2.setColour(juce::Label::textColourId, juce::Colours::white);
 versionLabel2.setFont(font);
 
-// Size of plugin GUI
-setSize (1000, 650);  // Double the width
-
-// Position the containers
-originalContainer.setBounds(0, 0, 500, 650);
-duplicateContainer.setBounds(500, 0, getWidth() - 500, getHeight());
-
-addAndMakeVisible(duplicateContainer);
-
 
     resetImages();
 
@@ -247,6 +239,16 @@ void ProteusAudioProcessorEditor::resized()
     ampMidKnob.setBounds(227, 131, 62, 62);
     ampTrebleKnob.setBounds(340, 131, 62, 62);
 
+  // Size of plugin GUI
+    setSize (1000, 650);  // Double the width
+
+   // Position the containers
+    originalContainer.setBounds(0, 0, 500, 650);
+    duplicateContainer.setBounds(500, 0, getWidth() - 500, getHeight());
+
+    // Add and make visible the duplicate container
+    addAndMakeVisible(duplicateContainer);
+
      //Overall Widgets2
     loadButton2.setBounds(186, 48, 120, 24);
     modelSelect2.setBounds(52, 11, 400, 28);
@@ -263,8 +265,9 @@ void ProteusAudioProcessorEditor::resized()
     ampMidKnob2.setBounds(227, 131, 62, 62);
     ampTrebleKnob2.setBounds(340, 131, 62, 62);
 
-  duplicateContainer.toFront(false);
-  duplicateContainer.repaint();
+   // Bring the duplicate container to the front and repaint
+    duplicateContainer.toFront(false);
+    duplicateContainer.repaint();
 }
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
