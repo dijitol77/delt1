@@ -118,7 +118,40 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     loadFromFolder();
 }
 
-// ... [Rest of the file remains unchanged]
+    // Add the duplicated components
+    addAndMakeVisible(leftContainer);
+    leftContainer.setBounds(0, 0, 250, 650);
+    leftContainer.addAndMakeVisible(loadButton);
+    leftContainer.addAndMakeVisible(modelSelect);
+    leftContainer.addAndMakeVisible(cabOnButton);
+    leftContainer.addAndMakeVisible(odDriveKnob);
+    leftContainer.addAndMakeVisible(odLevelKnob);
+    leftContainer.addAndMakeVisible(ampBassKnob);
+    leftContainer.addAndMakeVisible(ampMidKnob);
+    leftContainer.addAndMakeVisible(ampTrebleKnob);
+    leftContainer.addAndMakeVisible(versionLabel);
+
+    addAndMakeVisible(rightContainer);
+    rightContainer.setBounds(250, 0, 250, 650);
+    rightContainer.addAndMakeVisible(loadButton2);
+    rightContainer.addAndMakeVisible(modelSelect2);
+    rightContainer.addAndMakeVisible(cabOnButton2);
+    rightContainer.addAndMakeVisible(odDriveKnob2);
+    rightContainer.addAndMakeVisible(odLevelKnob2);
+    rightContainer.addAndMakeVisible(ampBassKnob2);
+    rightContainer.addAndMakeVisible(ampMidKnob2);
+    rightContainer.addAndMakeVisible(ampTrebleKnob2);
+    rightContainer.addAndMakeVisible(versionLabel2);
+    leftContainer.setBounds(0, 0, 250, 650);
+    leftContainer.addAndMakeVisible(loadButton);
+    leftContainer.addAndMakeVisible(modelSelect);
+    leftContainer.addAndMakeVisible(cabOnButton);
+    leftContainer.addAndMakeVisible(odDriveKnob);
+    leftContainer.addAndMakeVisible(odLevelKnob);
+    leftContainer.addAndMakeVisible(ampBassKnob);
+    leftContainer.addAndMakeVisible(ampMidKnob);
+    leftContainer.addAndMakeVisible(ampTrebleKnob);
+    leftContainer.addAndMakeVisible(versionLabel);
 
 
 ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
@@ -175,6 +208,20 @@ void ProteusAudioProcessorEditor::resized()
     ampBassKnob.setBounds(113, 131, 62, 62);
     ampMidKnob.setBounds(227, 131, 62, 62);
     ampTrebleKnob.setBounds(340, 131, 62, 62);
+
+    // Position the duplicated components
+    rightContainer.setBounds(250, 0, 250, 650);
+    loadButton2.setBounds(186, 48, 120, 24);
+    modelSelect2.setBounds(52, 11, 400, 28);
+    cabOnButton2.setBounds(115, 233, 53, 39);
+    odDriveKnob2.setBounds(168, 242, 190, 190);
+    odLevelKnob2.setBounds(340, 225, 62, 62);
+    ampBassKnob2.setBounds(113, 131, 62, 62);
+    ampMidKnob2.setBounds(227, 131, 62, 62);
+    ampTrebleKnob2.setBounds(340, 131, 62, 62);
+    versionLabel2.setBounds(462, 632, 60, 10);
+
+
 }
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
