@@ -132,9 +132,16 @@ font2.setHeight(height2);
     versionLabel.setJustificationType(juce::Justification::left);
     versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
 
-  // For the left container:
-auto font1 = modelLabel.getFont();
-versionLabel.setFont(font1);
+    // For the left container:
+    auto font1 = modelLabel.getFont();
+    versionLabel.setFont(font1);
+
+
+    // For the right container:
+    auto font2 = modelLabel.getFont();
+
+
+
 
 
    // Size of plugin GUI
@@ -200,7 +207,13 @@ versionLabel2.setColour(juce::Label::textColourId, juce::Colours::white);
   auto font2 = modelLabel.getFont();
     versionLabel2.setFont(font2);
 
+    // Add and make visible the duplicate container
+    addAndMakeVisible(duplicateContainer);
 
+    // Add and make visible the second version label
+    addAndMakeVisible(versionLabel2);
+
+    // ... [Rest of the initialization code remains unchanged]
     resetImages();
 
     loadFromFolder();
@@ -226,7 +239,60 @@ ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
 }
 
 //==============================================================================
+
+
+void ProteusAudioProcessorEditor::resized()
+{
+    // Original Widgets
+    loadButton.setBounds(186, 48, 120, 24);
+    modelSelect.setBounds(52, 11, 400, 28);
+    //modelLabel.setBounds(197, 2, 90, 25);
+    versionLabel.setBounds(462, 632, 60, 10);
+    cabOnButton.setBounds(115, 233, 53, 39);
+
+    // Overdrive Widgets
+    odDriveKnob.setBounds(168, 242, 190, 190);
+    odLevelKnob.setBounds(340, 225, 62, 62);
+    //odFootSw.setBounds(185, 416, 175, 160);
+
+    ampBassKnob.setBounds(113, 131, 62, 62);
+    ampMidKnob.setBounds(227, 131, 62, 62);
+    ampTrebleKnob.setBounds(340, 131, 62, 62);
+
+
+   // Position the containers
+    originalContainer.setBounds(0, 0, 500, 650);
+    duplicateContainer.setBounds(500, 0, getWidth() - 500, getHeight());
+
+    // Add and make visible the duplicate container
+    addAndMakeVisible(duplicateContainer);
+
+    // ... [Rest of the original widget bounds]
+
+    // Duplicate Widgets (assuming they should be positioned similarly but shifted to the right)
+    loadButton2.setBounds(686, 48, 120, 24);  // 500 units to the right
+    modelSelect2.setBounds(552, 11, 400, 28);
+    versionLabel2.setBounds(962, 632, 60, 10);
+    cabOnButton2.setBounds(615, 233, 53, 39);
+    // ... [Rest of the duplicate widget bounds]
+
+    // Overdrive Widgets2
+    odDriveKnob2.setBounds(168, 242, 190, 190);
+    odLevelKnob2.setBounds(340, 225, 62, 62);
+    //odFootSw.setBounds(185, 416, 175, 160);
+
+    ampBassKnob2.setBounds(113, 131, 62, 62);
+    ampMidKnob2.setBounds(227, 131, 62, 62);
+    ampTrebleKnob2.setBounds(340, 131, 62, 62);
+
+   // Bring the duplicate container to the front and repaint
+    duplicateContainer.toFront(false);
+    duplicateContainer.repaint();
+}
+
 void ProteusAudioProcessorEditor::paint (Graphics& g)
+{
+   void ProteusAudioProcessorEditor::paint (Graphics& g)
 {
     // Workaround for graphics on Windows builds (clipping code doesn't work correctly on Windows)
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
@@ -256,55 +322,11 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
 #endif
 }
 
-void ProteusAudioProcessorEditor::resized()
-{
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
-
-    //Overall Widgets
-    loadButton.setBounds(186, 48, 120, 24);
-    modelSelect.setBounds(52, 11, 400, 28);
-    //modelLabel.setBounds(197, 2, 90, 25);
-    versionLabel.setBounds(462, 632, 60, 10);
-    cabOnButton.setBounds(115, 233, 53, 39);
-
-    // Overdrive Widgets
-    odDriveKnob.setBounds(168, 242, 190, 190);
-    odLevelKnob.setBounds(340, 225, 62, 62);
-    //odFootSw.setBounds(185, 416, 175, 160);
-
-    ampBassKnob.setBounds(113, 131, 62, 62);
-    ampMidKnob.setBounds(227, 131, 62, 62);
-    ampTrebleKnob.setBounds(340, 131, 62, 62);
-
-
-   // Position the containers
-    originalContainer.setBounds(0, 0, 500, 650);
-    duplicateContainer.setBounds(500, 0, getWidth() - 500, getHeight());
-
-    // Add and make visible the duplicate container
-    addAndMakeVisible(duplicateContainer);
-
-     //Overall Widgets2
-    loadButton2.setBounds(186, 48, 120, 24);
-    modelSelect2.setBounds(52, 11, 400, 28);
-    //modelLabel.setBounds(197, 2, 90, 25);
-    versionLabel2.setBounds(462, 632, 60, 10);
-    cabOnButton2.setBounds(115, 233, 53, 39);
-
-    // Overdrive Widgets2
-    odDriveKnob2.setBounds(168, 242, 190, 190);
-    odLevelKnob2.setBounds(340, 225, 62, 62);
-    //odFootSw.setBounds(185, 416, 175, 160);
-
-    ampBassKnob2.setBounds(113, 131, 62, 62);
-    ampMidKnob2.setBounds(227, 131, 62, 62);
-    ampTrebleKnob2.setBounds(340, 131, 62, 62);
-
-   // Bring the duplicate container to the front and repaint
-    duplicateContainer.toFront(false);
-    duplicateContainer.repaint();
+    // Draw the background for the duplicate container
+    g.setOrigin(500, 0);  // Shift the origin to the start of the duplicate container
+    g.drawImageAt(background_on, 0, 0);  // Draw the different background image
 }
+
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
 {
@@ -442,33 +464,10 @@ void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
         loadButtonClicked();
     } else if (button == &cabOnButton) {
         cabOnButtonClicked();
-    }
-}
-
-void ProteusAudioProcessorEditor::odFootSwClicked() {
-    //if (processor.fw_state == 0)
-    //    processor.fw_state = 1;
-    //else
-    //    processor.fw_state = 0;
-    //resetImages();
-}
-
-void ProteusAudioProcessorEditor::cabOnButtonClicked() {
-    if (processor.cab_state == 0) {
-        processor.cab_state = 1;
-    }
-    else {
-        processor.cab_state = 0;
-    }
-    resetImages();
-    repaint();
-}
-
-void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
-{
-    // Amp
-    if (slider == &ampBassKnob || slider == &ampMidKnob || slider == &ampTrebleKnob) {
-        processor.set_ampEQ(ampBassKnob.getValue(), ampMidKnob.getValue(), ampTrebleKnob.getValue());
+    } else if (button == &loadButton2) {
+        loadButton2Clicked();  // Assuming you have a separate function for this
+    } else if (button == &cabOnButton2) {
+        cabOnButton2Clicked();  // Assuming you have a separate function for this
     }
 }
 
