@@ -267,12 +267,13 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
     } else if (processor.fw_state == 1 && processor.conditioned == false) {
         g.drawImageAt(background_on_blue, 0, 0);  // Debug Line: Redraw entire background image
     }
-
+    
     // Draw the background for the duplicate container
     g.setOrigin(500, 0);  // Shift the origin to the start of the duplicate container
     g.drawImageAt(background_on, 0, 0);  // Draw the different background image
+#else
+// Redraw only the clipped part of the background image
 
-    // Redraw only the clipped part of the background image
     juce::Rectangle<int> ClipRect = g.getClipBounds();
     //if (processor.fw_state == 0) {
     //    g.drawImage(background_off, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
@@ -280,9 +281,8 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
         g.drawImage(background_on, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
     } else if (processor.fw_state == 1 && processor.conditioned == false)
         g.drawImage(background_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
-    }
 #endif
-
+}
 
 void ProteusAudioProcessorEditor::resized()
 {
