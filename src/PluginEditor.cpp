@@ -16,8 +16,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     : AudioProcessorEditor (&p), processor (p)
 {
 
-  auto font1 = modelLabel.getFont();
-    auto font2 = modelLabel.getFont();
+  
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to
 
@@ -137,6 +136,7 @@ font2.setHeight(height2);
 auto font1 = modelLabel.getFont();
 versionLabel.setFont(font1);
 
+
    // Size of plugin GUI
     setSize (1000, 650);
 
@@ -196,8 +196,9 @@ versionLabel2.setText("v1.2", juce::NotificationType::dontSendNotification);
 versionLabel2.setJustificationType(juce::Justification::left);
 versionLabel2.setColour(juce::Label::textColourId, juce::Colours::white);
 // For the right container:
-auto font2 = modelLabel.getFont();
-versionLabel2.setFont(font2);
+
+  auto font2 = modelLabel.getFont();
+    versionLabel2.setFont(font2);
 
 
     resetImages();
