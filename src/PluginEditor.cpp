@@ -129,7 +129,10 @@ font2.setHeight(height2);
     versionLabel.setText("v1.2", juce::NotificationType::dontSendNotification);
     versionLabel.setJustificationType(juce::Justification::left);
     versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
-    versionLabel.setFont(font);
+
+  // For the left container:
+auto font1 = modelLabel.getFont();
+versionLabel.setFont(font1);
 
    // Size of plugin GUI
     setSize (1000, 650);
@@ -189,6 +192,8 @@ font2.setHeight(height2);
 versionLabel2.setText("v1.2", juce::NotificationType::dontSendNotification);
 versionLabel2.setJustificationType(juce::Justification::left);
 versionLabel2.setColour(juce::Label::textColourId, juce::Colours::white);
+// For the right container:
+auto font2 = modelLabel.getFont();
 versionLabel2.setFont(font2);
 
 
