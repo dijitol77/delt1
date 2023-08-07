@@ -1,6 +1,6 @@
 juce_add_binary_data(BinaryData SOURCES
     background_on.jpg
-    background_on2.jpg
+    background_2on.jpg
     background_on_blue.jpg
     default_ir.wav
     cab_switch_off.png
