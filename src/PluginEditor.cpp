@@ -173,6 +173,64 @@ versionLabel2.setJustificationType(juce::Justification::left);
 versionLabel2.setColour(juce::Label::textColourId, juce::Colours::white);
 versionLabel2.setFont(font);
 
+  // Inside the ProteusAudioProcessorEditor::ProteusAudioProcessorEditor() constructor in PluginEditor.cpp
+
+// ... [Other initialization code]
+
+// Duplicated Components Initialization:
+
+// 1. loadButton2
+loadButton2.setBounds(520, 10, 80, 30);
+loadButton2.setButtonText("Load");
+duplicateContainer.addAndMakeVisible(loadButton2);  // Add the button to the duplicateContainer
+
+// 2. modelLabel2
+modelLabel2.setBounds(520, 50, 100, 20);
+modelLabel2.setText("Model:", dontSendNotification);
+duplicateContainer.addAndMakeVisible(modelLabel2);
+
+// 3. versionLabel2
+versionLabel2.setBounds(520, 80, 100, 20);
+versionLabel2.setText("Version:", dontSendNotification);
+duplicateContainer.addAndMakeVisible(versionLabel2);
+
+// 4. modelSelect2
+modelSelect2.setBounds(520, 110, 150, 30);
+// Add items to the combo box if needed
+duplicateContainer.addAndMakeVisible(modelSelect2);
+
+// 5. ampBassKnob2
+ampBassKnob2.setBounds(520, 150, 60, 60);
+// Set properties like slider style, range, and initial value here
+duplicateContainer.addAndMakeVisible(ampBassKnob2);
+
+// 6. ampMidKnob2
+ampMidKnob2.setBounds(590, 150, 60, 60);
+// Set properties like slider style, range, and initial value here
+duplicateContainer.addAndMakeVisible(ampMidKnob2);
+
+// 7. ampTrebleKnob2
+ampTrebleKnob2.setBounds(660, 150, 60, 60);
+// Set properties like slider style, range, and initial value here
+duplicateContainer.addAndMakeVisible(ampTrebleKnob2);
+
+// 8. odDriveKnob2
+odDriveKnob2.setBounds(520, 220, 60, 60);
+// Set properties like slider style, range, and initial value here
+duplicateContainer.addAndMakeVisible(odDriveKnob2);
+
+// 9. odLevelKnob2
+odLevelKnob2.setBounds(590, 220, 60, 60);
+// Set properties like slider style, range, and initial value here
+duplicateContainer.addAndMakeVisible(odLevelKnob2);
+
+// 10. cabOnButton2
+cabOnButton2.setBounds(520, 290, 60, 60);
+// Set properties like button image, toggle state, etc. here
+duplicateContainer.addAndMakeVisible(cabOnButton2);
+
+// ... [Rest of the constructor code]
+
 
     resetImages();
 
