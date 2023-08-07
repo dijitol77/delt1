@@ -45,7 +45,7 @@ for (const auto& jsonFile : processor.jsonFiles) {
     modelSelect2.addItem(jsonFile.getFileName(), c2);
     c2 += 1;
 }
-modelSelect2.onChange = [this] {modelSelectChanged2();}; // Assuming you have a separate callback for the duplicate
+modelSelect2.onChange = [this] {modelSelectChanged();}; // Assuming you have a separate callback for the duplicate
 
     auto font = modelLabel.getFont();
     float height = font.getHeight();
