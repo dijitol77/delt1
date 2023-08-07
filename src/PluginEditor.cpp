@@ -258,6 +258,8 @@ void ProteusAudioProcessorEditor::resized()
     ampBassKnob2.setBounds(113, 131, 62, 62);
     ampMidKnob2.setBounds(227, 131, 62, 62);
     ampTrebleKnob2.setBounds(340, 131, 62, 62);
+
+  duplicateContainer.toFront(false);
 }
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
