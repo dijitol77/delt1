@@ -158,8 +158,8 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     setSize (1000, 650);  // Double the width
 
     // Position the containers
-    originalContainer.setBounds(0, 0, 500, 650);
-    duplicateContainer.setBounds(500, 0, 500, 650);
+originalContainer.setBounds(0, 0, 500, 650);
+duplicateContainer.setBounds(500, 0, getWidth() - 500, getHeight());
 
     resetImages();
 
