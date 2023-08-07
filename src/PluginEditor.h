@@ -102,7 +102,7 @@ private:
     void odFootSwClicked();
     void modelSelectChanged();
     void cabOnButtonClicked();
-    void loadButton2Clicked();
+    // void loadButton2Clicked();
     void cabOnButton2Clicked();
 
     bool model_loaded = false;
