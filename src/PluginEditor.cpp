@@ -161,17 +161,20 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     ampTrebleKnob2.setDoubleClickReturnValue(true, 0.0);
 
     addAndMakeVisible(versionLabel);
-    versionLabel2.setText("v1.3", juce::NotificationType::dontSendNotification);
-    versionLabel2.setJustificationType(juce::Justification::left);
-    versionLabel2.setColour(juce::Label::textColourId, juce::Colours::white);
-    versionLabel2.setFont(font);
+versionLabel2.setText("v1.2", juce::NotificationType::dontSendNotification);
+versionLabel2.setJustificationType(juce::Justification::left);
+versionLabel2.setColour(juce::Label::textColourId, juce::Colours::white);
+versionLabel2.setFont(font);
 
-    // Size of plugin GUI
-    setSize (1000, 650);  // Double the width
+// Size of plugin GUI
+setSize (1000, 650);  // Double the width
 
-    // Position the containers
+// Position the containers
 originalContainer.setBounds(0, 0, 500, 650);
 duplicateContainer.setBounds(500, 0, getWidth() - 500, getHeight());
+
+addAndMakeVisible(duplicateContainer);
+duplicateContainer.setColour(juce::Component::backgroundColourId, juce::Colours::cyan);
 
     resetImages();
 
