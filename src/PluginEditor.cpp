@@ -141,7 +141,16 @@ font2.setHeight(height2);
     // auto font2 = modelLabel.getFont();
     versionLabel.setFont(font2);
 
+// Add these method definitions in your PluginEditor.cpp file:
+void ProteusAudioProcessorEditor::loadButton2Clicked()
+{
+    // Implement the functionality for loadButton2 here
+}
 
+void ProteusAudioProcessorEditor::cabOnButton2Clicked()
+{
+    // Implement the functionality for cabOnButton2 here
+}
 
 
    // Size of plugin GUI
