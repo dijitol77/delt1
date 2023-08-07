@@ -133,13 +133,13 @@ font2.setHeight(height2);
     versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
 
     // For the left container:
-    auto font1 = modelLabel.getFont();
+    // auto font1 = modelLabel.getFont();
     versionLabel.setFont(font1);
 
 
     // For the right container:
-    auto font2 = modelLabel.getFont();
-
+    // auto font2 = modelLabel.getFont();
+    versionLabel.setFont(font2);
 
 
 
@@ -290,9 +290,8 @@ void ProteusAudioProcessorEditor::resized()
     duplicateContainer.repaint();
 }
 
+// Correct the nested paint function
 void ProteusAudioProcessorEditor::paint (Graphics& g)
-{
-   void ProteusAudioProcessorEditor::paint (Graphics& g)
 {
     // Workaround for graphics on Windows builds (clipping code doesn't work correctly on Windows)
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
@@ -320,12 +319,33 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
     } else if (processor.fw_state == 1 && processor.conditioned == false)
         g.drawImage(background_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
 #endif
-}
+
 
     // Draw the background for the duplicate container
     g.setOrigin(500, 0);  // Shift the origin to the start of the duplicate container
     g.drawImageAt(background_on, 0, 0);  // Draw the different background image
 }
+
+// ... [Rest of the code]
+
+// Add the missing functions or remove the calls if they are not needed
+void ProteusAudioProcessorEditor::loadButton2Clicked()
+{
+    // Implementation for loadButton2Clicked
+}
+
+void ProteusAudioProcessorEditor::cabOnButton2Clicked()
+{
+    // Implementation for cabOnButton2Clicked
+}
+
+// ... [Rest of the code]
+
+
+
+
+
+
 
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
@@ -422,6 +442,18 @@ void ProteusAudioProcessorEditor::loadButtonClicked()
     
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
 void ProteusAudioProcessorEditor::loadFromFolder()
 {
     processor.model_loaded = false;
@@ -458,6 +490,8 @@ void ProteusAudioProcessorEditor::loadFromFolder()
 
 void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
 {
+    
+    
     //if (button == &odFootSw) {
     //    odFootSwClicked();
     if (button == &loadButton) {
