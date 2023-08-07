@@ -73,15 +73,19 @@ private:
     ImageButton cabOnButton;
 
     // Duplicated Components
-    TextButton loadButton2;
+    
     Label modelLabel2;
     Label versionLabel2;
+
     ComboBox modelSelect2;
+
     Slider ampBassKnob2;
     Slider ampMidKnob2;
     Slider ampTrebleKnob2;
     Slider odDriveKnob2;
     Slider odLevelKnob2;
+
+    
     ImageButton cabOnButton2;
 
     // LookandFeels 
