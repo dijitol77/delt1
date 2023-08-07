@@ -298,8 +298,12 @@ void ProteusAudioProcessorEditor::resized()
     cabOnButton.setBounds(115, 233, 53, 39);
 
     // Overdrive Widgets
+    // odDriveKnob.setBounds(168, 242, 190, 190);
+    // odLevelKnob.setBounds(340, 225, 62, 62);
+  // Set bounds for original components
     odDriveKnob.setBounds(168, 242, 190, 190);
     odLevelKnob.setBounds(340, 225, 62, 62);
+    // ... other component bounds ...
     //odFootSw.setBounds(185, 416, 175, 160);
 
     ampBassKnob.setBounds(113, 131, 62, 62);
@@ -324,8 +328,14 @@ void ProteusAudioProcessorEditor::resized()
     cabOnButton2.setBounds(115, 233, 53, 39);
 
     // Overdrive Widgets2
-    odDriveKnob2.setBounds(168, 242, 190, 190);
-    odLevelKnob2.setBounds(340, 225, 62, 62);
+    // odDriveKnob2.setBounds(168, 242, 190, 190);
+    // odLevelKnob2.setBounds(340, 225, 62, 62);
+
+  // Set bounds for duplicate components
+    odDriveKnob2.setBounds(668, 242, 190, 190);  // Adjusted for the right container
+    odLevelKnob2.setBounds(840, 225, 62, 62);   // Adjusted for the right container
+    // ... other duplicate component bounds ..
+  
     //odFootSw.setBounds(185, 416, 175, 160);
 
     ampBassKnob2.setBounds(113, 131, 62, 62);
