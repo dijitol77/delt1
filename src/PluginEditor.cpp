@@ -200,10 +200,9 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
     //if (processor.fw_state == 0) {
     //    g.drawImageAt(background_off, 0, 0);  // Debug Line: Redraw entire background image
     if (processor.fw_state == 1 && processor.conditioned == true) {
-       g.drawImage(background_on, 0, 0, originalContainer.getWidth(), originalContainer.getHeight(), 0, 0, background_on.getWidth(), background_on.getHeight());
+        g.drawImageAt(background_on, 0, 0);  // Debug Line: Redraw entire background image
     } else if (processor.fw_state == 1 && processor.conditioned == false) {
-// g.drawImageAt(background_on_blue, 0, 0);  // Debug Line: Redraw entire background image
-      g.drawImage(background_on_blue, 0, 0, originalContainer.getWidth(), originalContainer.getHeight(), 0, 0, background_on_blue.getWidth(), background_on_blue.getHeight());
+        g.drawImageAt(background_on_blue, 0, 0);  // Debug Line: Redraw entire background image
     }
 #else
 // Redraw only the clipped part of the background image
