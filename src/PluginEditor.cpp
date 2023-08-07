@@ -45,10 +45,6 @@ font1.setHeight(height1);
 
 // Right handside
 
-addAndMakeVisible(loadButton2);
-loadButton2.setButtonText("LOAD MODEL");
-loadButton2.addListener(this);
-
 addAndMakeVisible(modelSelect2);
 modelSelect2.setColour(juce::Label::textColourId, juce::Colours::black);
 modelSelect2.setScrollWheelEnabled(true);
@@ -278,7 +274,7 @@ void ProteusAudioProcessorEditor::resized() void ProteusAudioProcessorEditor::re
     // ... [Rest of the original widget bounds]
 
     // Duplicate Widgets (assuming they should be positioned similarly but shifted to the right)
-    loadButton2.setBounds(686, 48, 120, 24);  // 500 units to the right
+    // loadButton2.setBounds(686, 48, 120, 24);  // 500 units to the right
     modelSelect2.setBounds(552, 11, 400, 28);
     versionLabel2.setBounds(962, 632, 60, 10);
     cabOnButton2.setBounds(615, 233, 53, 39);
