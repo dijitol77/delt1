@@ -260,6 +260,7 @@ void ProteusAudioProcessorEditor::resized()
     ampTrebleKnob2.setBounds(340, 131, 62, 62);
 
   duplicateContainer.toFront(false);
+  duplicateContainer.repaint();
 }
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
