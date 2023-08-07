@@ -372,7 +372,7 @@ void ProteusAudioProcessorEditor::resetImages()
     }
     */
     // Set On/Off cab graphic
-    if (processor.stateManagement.cab_state == 0) {
+    if (processor.cab_state == 0) {
         cabOnButton.setImages(true, true, true,
             ImageCache::getFromMemory(BinaryData::cab_switch_off_png, BinaryData::cab_switch_off_pngSize), 1.0, Colours::transparentWhite,
             Image(), 1.0, Colours::transparentWhite,
