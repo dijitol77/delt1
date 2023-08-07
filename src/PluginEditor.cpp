@@ -203,14 +203,20 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
 {
     // Workaround for graphics on Windows builds (clipping code doesn't work correctly on Windows)
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
-    //if (processor.fw_state == 0) {
-    //    g.drawImageAt(background_off, 0, 0);  // Debug Line: Redraw entire background image
+    // Draw the background for the original container
     if (processor.fw_state == 1 && processor.conditioned == true) {
         g.drawImageAt(background_on, 0, 0);  // Debug Line: Redraw entire background image
     } else if (processor.fw_state == 1 && processor.conditioned == false) {
         g.drawImageAt(background_on_blue, 0, 0);  // Debug Line: Redraw entire background image
     }
+
+    // Draw the background for the duplicate container
+    g.setOrigin(500, 0);  // Shift the origin to the start of the duplicate container
+    g.drawImageAt(background_on2, 0, 0);  // Draw the different background image
 #else
+    // Similar code for non-Windows platforms...
+#endif
+}
 // Redraw only the clipped part of the background image
 
     juce::Rectangle<int> ClipRect = g.getClipBounds();
