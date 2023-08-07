@@ -204,8 +204,6 @@ versionLabel2.setJustificationType(juce::Justification::left);
 versionLabel2.setColour(juce::Label::textColourId, juce::Colours::white);
 // For the right container:
 
-  auto font2 = modelLabel.getFont();
-    versionLabel2.setFont(font2);
 
     // Add and make visible the duplicate container
     addAndMakeVisible(duplicateContainer);
@@ -325,27 +323,6 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
     g.setOrigin(500, 0);  // Shift the origin to the start of the duplicate container
     g.drawImageAt(background_on, 0, 0);  // Draw the different background image
 }
-
-// ... [Rest of the code]
-
-// Add the missing functions or remove the calls if they are not needed
-void ProteusAudioProcessorEditor::loadButton2Clicked()
-{
-    // Implementation for loadButton2Clicked
-}
-
-void ProteusAudioProcessorEditor::cabOnButton2Clicked()
-{
-    // Implementation for cabOnButton2Clicked
-}
-
-// ... [Rest of the code]
-
-
-
-
-
-
 
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
