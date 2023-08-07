@@ -498,10 +498,6 @@ void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
         loadButtonClicked();
     } else if (button == &cabOnButton) {
         cabOnButtonClicked();
-    } else if (button == &loadButton2) {
-        loadButton2Clicked();  // Assuming you have a separate function for this
-    } else if (button == &cabOnButton2) {
-        cabOnButton2Clicked();  // Assuming you have a separate function for this
     }
 }
 
