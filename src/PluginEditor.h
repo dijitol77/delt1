@@ -66,8 +66,8 @@ private:
     Slider ampBassKnob;
     Slider ampMidKnob;
     Slider ampTrebleKnob;
-    // Slider odDriveKnob;
-    // Slider odLevelKnob;
+    Slider odDriveKnob;
+    Slider odLevelKnob;
 // In the constructor
 // Initialize original components
 odDriveKnob.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
@@ -91,8 +91,8 @@ addAndMakeVisible(&odLevelKnob);
     Slider ampBassKnob2;
     Slider ampMidKnob2;
     Slider ampTrebleKnob2;
-    // Slider odDriveKnob2;
-    // Slider odLevelKnob2;
+    Slider odDriveKnob2;
+    Slider odLevelKnob2;
 // ... other component initializations ...
 
 // Initialize duplicate components for the right container
