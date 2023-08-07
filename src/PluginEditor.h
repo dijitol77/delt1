@@ -68,17 +68,7 @@ private:
     Slider ampTrebleKnob;
     Slider odDriveKnob;
     Slider odLevelKnob;
-// In the constructor
-// Initialize original components
-odDriveKnob.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-odDriveKnob.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
-addAndMakeVisible(&odDriveKnob);
 
-odLevelKnob.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-odLevelKnob.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
-addAndMakeVisible(&odLevelKnob);
-
-// ... other component initializations .
     //ImageButton odFootSw;
     //ImageButton odLED;
     ImageButton cabOnButton;
@@ -95,16 +85,7 @@ addAndMakeVisible(&odLevelKnob);
     Slider odLevelKnob2;
 // ... other component initializations ...
 
-// Initialize duplicate components for the right container
-odDriveKnob2.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-odDriveKnob2.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
-duplicateContainer.addAndMakeVisible(&odDriveKnob2);
 
-odLevelKnob2.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-odLevelKnob2.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
-duplicateContainer.addAndMakeVisible(&odLevelKnob2);
-
-// ... other duplicate component initializations ...
     ImageButton cabOnButton2;
 
     // LookandFeels 
