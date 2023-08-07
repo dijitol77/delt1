@@ -24,39 +24,39 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     loadButton.setButtonText("LOAD MODEL");
     loadButton.addListener(this);
 
-    addAndMakeVisible(modelSelect);
+       addAndMakeVisible(modelSelect);
     modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
     modelSelect.setScrollWheelEnabled(true);
-    int c = 1;
+    int c1 = 1;  // Renamed to c1
     for (const auto& jsonFile : processor.jsonFiles) {
-        modelSelect.addItem(jsonFile.getFileName(), c);
-        c += 1;
+        modelSelect.addItem(jsonFile.getFileName(), c1);
+        c1 += 1;
     }
     modelSelect.onChange = [this] {modelSelectChanged();};
 
-    auto font = modelLabel.getFont();
-    float height = font.getHeight();
-    font.setHeight(height);
+    auto font1 = modelLabel.getFont();  // Renamed to font1
+    float height1 = font1.getHeight();  // Renamed to height1
+    font1.setHeight(height1);
 
     // right handside
 
     addAndMakeVisible(loadButton2);
-  loadButton2.setButtonText("LOAD MODEL");
-  loadButton2.addListener(this);
+    loadButton2.setButtonText("LOAD MODEL");
+    loadButton2.addListener(this);
 
-    addAndMakeVisible(modelSelect);
+    addAndMakeVisible(modelSelect2);
     modelSelect2.setColour(juce::Label::textColourId, juce::Colours::black);
     modelSelect2.setScrollWheelEnabled(true);
-    int c = 1;
+    int c2 = 1;  // Renamed to c2
     for (const auto& jsonFile : processor.jsonFiles) {
-        modelSelect.addItem(jsonFile.getFileName(), c);
-        c += 1;
+        modelSelect2.addItem(jsonFile.getFileName(), c2);  // Changed to modelSelect2
+        c2 += 1;
     }
-    modelSelect.onChange = [this] {modelSelectChanged();};
+    modelSelect2.onChange = [this] {modelSelectChanged();};  // Changed to modelSelect2
 
-    auto font = modelLabel.getFont();
-    float height = font.getHeight();
-    font.setHeight(height);
+    auto font2 = modelLabel.getFont();  // Renamed to font2
+    float height2 = font2.getHeight();  // Renamed to height2
+    font2.setHeight(height2);
 
     // Set Widget Graphics
     bigKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::big_knob_png, BinaryData::big_knob_pngSize));
