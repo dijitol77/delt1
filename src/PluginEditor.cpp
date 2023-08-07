@@ -174,7 +174,7 @@ originalContainer.setBounds(0, 0, 500, 650);
 duplicateContainer.setBounds(500, 0, getWidth() - 500, getHeight());
 
 addAndMakeVisible(duplicateContainer);
-duplicateContainer.setColour(juce::Component::ColourIds::backgroundColourId, juce::Colours::cyan);
+
 
     resetImages();
 
