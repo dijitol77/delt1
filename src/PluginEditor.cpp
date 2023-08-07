@@ -279,7 +279,7 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
         g.drawImage(background_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
     }
 #endif
-
+}
 void ProteusAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
