@@ -189,7 +189,7 @@ font2.setHeight(height2);
 versionLabel2.setText("v1.2", juce::NotificationType::dontSendNotification);
 versionLabel2.setJustificationType(juce::Justification::left);
 versionLabel2.setColour(juce::Label::textColourId, juce::Colours::white);
-versionLabel2.setFont(font);
+versionLabel2.setFont(font2);
 
 
     resetImages();
