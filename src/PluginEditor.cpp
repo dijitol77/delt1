@@ -108,6 +108,14 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     versionLabel.setFont(font);
 
+     cabOnButton2.setImages(true, true, true,
+        ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
+        Image(), 1.0, Colours::transparentWhite,
+        ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
+        0.0);
+    addAndMakeVisible(cabOnButton);
+    cabOnButton2.addListener(this);
+
     driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
     addAndMakeVisible(odDriveKnob);
     odDriveKnob2.setLookAndFeel(&bigKnobLAF);
