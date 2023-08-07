@@ -214,17 +214,7 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
     // Draw the background for the duplicate container
     g.setOrigin(500, 0);  // Shift the origin to the start of the duplicate container
    g.drawImageAt(background_on, 0, 0);  // Draw the different background image
-
-    // Draw the bigKnobLAF for the right container
-    // Assuming bigKnobLAF is an image:
-    // int knobXPosition = /* X position relative to the right container */;
-    // int knobYPosition = /* Y position relative to the right container */;
-    // g.drawImageAt(bigKnobLAF, knobXPosition, knobYPosition);
-
-    // If bigKnobLAF is a component or LookAndFeel object, you'll need to adjust its position and bounds accordingly.
-
-#else
-
+  
 
 // Redraw only the clipped part of the background image
 
