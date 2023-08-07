@@ -89,6 +89,8 @@ private:
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
 
+
+
     virtual void sliderValueChanged(Slider* slider) override;
 
     AudioProcessorParameter* getParameter(const String& paramId);
@@ -96,6 +98,8 @@ private:
     void odFootSwClicked();
     void modelSelectChanged();
     void cabOnButtonClicked();
+    void loadButton2Clicked();
+    void cabOnButton2Clicked();
 
     bool model_loaded = false;
 
