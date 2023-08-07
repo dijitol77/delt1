@@ -53,6 +53,7 @@ private:
     // LookandFeels and Graphics
     Image background_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
     Image background_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
+     background_2on = ImageCache::getFromMemory(BinaryData::background_on_png, BinaryData::background_2on_pngSize);
     //Image background_off = ImageCache::getFromMemory(BinaryData::background_off_jpg, BinaryData::background_off_jpgSize);
 
     // Global Widgets
