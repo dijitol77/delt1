@@ -1,4 +1,12 @@
+/*
+  ==============================================================================
 
+    This file was auto-generated!
+
+    It contains the basic framework code for a JUCE plugin editor.
+
+  ==============================================================================
+*/
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
@@ -285,47 +293,6 @@ void ProteusAudioProcessorEditor::resized();
     duplicateContainer.repaint();
 }
 
-// Correct the nested paint function
-
-  
-// Workaround for graphics on Windows builds (clipping code doesn't work correctly on Windows)
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
-    // Windows-specific code
-    //if (processor.fw_state == 0) {
-    //    g.drawImageAt(background_off, 0, 0);  // Debug Line: Redraw entire background image
-    if (processor.fw_state == 1 && processor.conditioned == true) {
-        g.drawImageAt(background_on, 0, 0);  // Debug Line: Redraw entire background image
-    } else if (processor.fw_state == 1 && processor.conditioned == false) {
-        g.drawImageAt(background_on_blue, 0, 0);  // Debug Line: Redraw entire background image
-    }
-
-    {
-        juce::AffineTransform transform = juce::AffineTransform::translation(500, 0);
-        g.addTransform(transform);
-        g.drawImageAt(background_on, 0, 0);  // Draw the different background image with the shifted origin
-        g.restoreState();  // Reset the transformation
-    }
-
-#else
-    // Non-Windows code
-    // Redraw only the clipped part of the background image
-    juce::Rectangle<int> ClipRect = g.getClipBounds();
-
-    if (processor.fw_state == 1 && processor.conditioned == true) {
-        g.drawImage(background_on, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
-    } else if (processor.fw_state == 1 && processor.conditioned == false) {
-        g.drawImage(background_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
-    }
-
-   {
-        juce::AffineTransform transform = juce::AffineTransform::translation(500, 0);
-        g.addTransform(transform);
-        g.drawImageAt(background_on, 0, 0);  // Draw the different background image with the shifted origin
-        g.restoreState();  // Reset the transformation
-    }
-#endif
-
-
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
 {
@@ -423,6 +390,70 @@ void ProteusAudioProcessorEditor::loadButton1Clicked()
     
 }
 
+void ProteusAudioProcessorEditor::loadButton2Clicked()
+{ 
+    myChooser = std::make_unique<FileChooser> ("Select a folder to load models from",
+                                               processor.folder,
+                                               "*.json");
+ 
+    auto folderChooserFlags = FileBrowserComponent::openMode | FileBrowserComponent::canSelectDirectories | FileBrowserComponent::canSelectFiles;
+ 
+    myChooser->launchAsync (folderChooserFlags, [this] (const FileChooser& chooser)                
+    {
+        if (!chooser.getResult().exists()) {
+                return;
+        }
+        processor.model_loaded = false;
+        Array<File> files;
+        if (chooser.getResult().existsAsFile()) { // If a file is selected
+
+            if (isValidFormat(chooser.getResult())) {
+                processor.saved_model = chooser.getResult();
+            }
+
+            files = chooser.getResult().getParentDirectory().findChildFiles(2, false, "*.json");
+            processor.folder = chooser.getResult().getParentDirectory();
+
+        } else if (chooser.getResult().isDirectory()){ // Else folder is selected
+            files = chooser.getResult().findChildFiles(2, false, "*.json");
+            processor.folder = chooser.getResult();
+        }
+        
+        processor.jsonFiles.clear();
+
+        modelSelect1.clear();
+
+    
+        if (files.size() > 0) {
+            for (auto file : files) {
+
+                if (isValidFormat(file)) {
+                    modelSelect2.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
+                    processor.jsonFiles.push_back(file);
+                    processor.num_models += 1;
+                }
+            }
+            if (chooser.getResult().existsAsFile()) {
+                
+                if (isValidFormat(chooser.getResult()) == true) {
+                    modelSelect2.setText(processor.saved_model.getFileNameWithoutExtension());
+                    processor.loadConfig(processor.saved_model);
+                }
+            }
+            else {
+                if (!processor.jsonFiles.empty()) {
+                    modelSelect2.setSelectedItemIndex(0, juce::NotificationType::dontSendNotification);
+                    modelSelect2Changed();
+                }
+            }
+        } else {
+            processor.saved_model = ""; // Clear the saved model since there's nothing in the dropdown
+        }
+
+    });
+    
+}
+
 void ProteusAudioProcessorEditor::loadFromFolder1()
 {
     processor.model_loaded = false;
@@ -456,7 +487,6 @@ void ProteusAudioProcessorEditor::loadFromFolder1()
     }
     
 }
-
 
 void ProteusAudioProcessorEditor::loadFromFolder2()
 {
@@ -493,7 +523,7 @@ void ProteusAudioProcessorEditor::loadFromFolder2()
 }
 
 
-void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
+void ProteusAudioProcessorEditor::buttonClicked1(juce::Button* button)
 {
     //if (button == &odFootSw) {
     //    odFootSwClicked();
@@ -502,6 +532,20 @@ void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
     } else if (button == &cabOnButton) {
         cabOnButton1Clicked();
     }
+
+}
+
+void ProteusAudioProcessorEditor::buttonClicked2(juce::Button* button)
+{
+    //if (button == &odFootSw) {
+    //    odFootSwClicked();
+    if (button == &loadButton) {
+        loadButton2Clicked();
+    } else if (button == &cabOnButton) {
+        cabOnButton2Clicked();
+    }
+
+}
 
 void ProteusAudioProcessorEditor::odFootSw1Clicked() 
 {
@@ -513,6 +557,7 @@ void ProteusAudioProcessorEditor::odFootSw1Clicked()
 }
 
 void ProteusAudioProcessorEditor::odFootSw2Clicked() {
+
     //if (processor.fw_state == 0)
     //    processor.fw_state = 1;
     //else
@@ -544,39 +589,18 @@ void ProteusAudioProcessorEditor::cabOnButton2Clicked()
     repaint();
 }
 
-
-
-void ProteusAudioProcessorEditor::cabOnButton2Clicked() 
-{
-    if (processor.cab_state == 0) {
-        processor.cab_state = 1;
-    }
-    else {
-        processor.cab_state = 0;
-    }
-    resetImages();
-    repaint();
-}
-
-void ProteusAudioProcessorEditor::cabOnButton2Clicked() 
-{
-    if (processor.cab_state == 0) {
-        processor.cab_state = 1;
-    }
-    else {
-        processor.cab_state = 0;
-    }
-    resetImages();
-    repaint();
-}
-
-void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
+void ProteusAudioProcessorEditor::sliderValue1Changed(Slider* slider)
 {
     // Amp "1"
     if (slider == &ampBassKnob1 || slider == &ampMidKnob || slider == &ampTrebleKnob) {
         processor.set_ampEQ(ampBassKnob1.getValue(), ampMidKnob.getValue(), ampTrebleKnob.getValue());
     }
 
+}
+
+void ProteusAudioProcessorEditor::sliderValue2Changed(Slider* slider)
+{
+   
     // Amp "2"
     if (slider == &ampBassKnob2 || slider == &ampMidKnob || slider == &ampTrebleKnob) {
         processor.set_ampEQ(ampBassKnob2.getValue(), ampMidKnob.getValue(), ampTrebleKnob.getValue());
@@ -586,7 +610,7 @@ void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
 
 void ProteusAudioProcessorEditor::modelSelect1Changed()
 {
-    const int selectedFileIndex = modelSelect.getSelectedItemIndex();
+    const int selectedFileIndex = modelSelect1.getSelectedItemIndex();
     if (selectedFileIndex >= 0 && selectedFileIndex < processor.jsonFiles.size() && processor.jsonFiles.empty() == false) { //check if correct 
         if (processor.jsonFiles[selectedFileIndex].existsAsFile() && isValidFormat(processor.jsonFiles[selectedFileIndex])) {
             processor.loadConfig(processor.jsonFiles[selectedFileIndex]);
@@ -596,11 +620,10 @@ void ProteusAudioProcessorEditor::modelSelect1Changed()
     }
     repaint();
 }
-
 
 void ProteusAudioProcessorEditor::modelSelect2Changed()
 {
-    const int selectedFileIndex = modelSelect.getSelectedItemIndex();
+    const int selectedFileIndex = modelSelect2.getSelectedItemIndex();
     if (selectedFileIndex >= 0 && selectedFileIndex < processor.jsonFiles.size() && processor.jsonFiles.empty() == false) { //check if correct 
         if (processor.jsonFiles[selectedFileIndex].existsAsFile() && isValidFormat(processor.jsonFiles[selectedFileIndex])) {
             processor.loadConfig(processor.jsonFiles[selectedFileIndex]);
@@ -610,14 +633,13 @@ void ProteusAudioProcessorEditor::modelSelect2Changed()
     }
     repaint();
 }
-
 
 void ProteusAudioProcessorEditor::resetImages1()
 {
     // ... [resetImages function remains unchanged]
 
     repaint();
-   
+    /*
     if (processor.fw_state == 0) {
         odFootSw.setImages(true, true, true,
             ImageCache::getFromMemory(BinaryData::footswitch_up_png, BinaryData::footswitch_up_pngSize), 1.0, Colours::transparentWhite,
@@ -632,7 +654,7 @@ void ProteusAudioProcessorEditor::resetImages1()
             ImageCache::getFromMemory(BinaryData::footswitch_down_png, BinaryData::footswitch_down_pngSize), 1.0, Colours::transparentWhite,
             0.0);
     }
-   
+    */
     // Set On/Off cab graphic "1"
     if (processor.cab_state == 0) {
         cabOnButton1.setImages(true, true, true,
@@ -650,11 +672,12 @@ void ProteusAudioProcessorEditor::resetImages1()
     }
 }
    
-}
+void ProteusAudioProcessorEditor::resetImages2()
+{
+    // ... [resetImages function remains unchanged]
 
-    void ProteusAudioProcessorEditor::resetImages2(){
     repaint();
-   
+    /*
     if (processor.fw_state == 0) {
         odFootSw.setImages(true, true, true,
             ImageCache::getFromMemory(BinaryData::footswitch_up_png, BinaryData::footswitch_up_pngSize), 1.0, Colours::transparentWhite,
@@ -669,8 +692,8 @@ void ProteusAudioProcessorEditor::resetImages1()
             ImageCache::getFromMemory(BinaryData::footswitch_down_png, BinaryData::footswitch_down_pngSize), 1.0, Colours::transparentWhite,
             0.0);
     }
-    
-    // Set On/Off cab graphic "1"
+    */
+    // Set On/Off cab graphic "2"
     if (processor.cab_state == 0) {
         cabOnButton2.setImages(true, true, true,
             ImageCache::getFromMemory(BinaryData::cab_switch_off_png, BinaryData::cab_switch_off_pngSize), 1.0, Colours::transparentWhite,
@@ -684,8 +707,5 @@ void ProteusAudioProcessorEditor::resetImages1()
             Image(), 1.0, Colours::transparentWhite,
             ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
             0.0);
-        }
-       
-      }
     }
 }
