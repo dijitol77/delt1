@@ -1,8 +1,11 @@
 /*
-  =============================================================================
+  ==============================================================================
+
     This file was auto-generated!
+
     It contains the basic framework code for a JUCE plugin editor.
-  =============================================================================
+
+  ==============================================================================
 */
 
 #pragma once
@@ -15,8 +18,8 @@
 /**
 */
 class ProteusAudioProcessorEditor  : public AudioProcessorEditor,
-                                     private Button::Listener,
-                                     private Slider::Listener                  
+                                       private Button::Listener,
+                                       private Slider::Listener                  
 {
 public:
     ProteusAudioProcessorEditor (ProteusAudioProcessor&);
@@ -31,6 +34,8 @@ public:
     void resetImages();
 
 private:
+    // This reference is provided as a quick way for your editor to
+    // access the processor object that created it.
     ProteusAudioProcessor& processor;
 
     // Containers
@@ -65,6 +70,8 @@ private:
     Slider ampTrebleKnob1;
     Slider odDriveKnob1;
     Slider odLevelKnob1;
+    //ImageButton odFootSw;
+    //ImageButton odLED;
     ImageButton cabOnButton1;
 
     // Duplicated Components
@@ -79,6 +86,7 @@ private:
     ImageButton cabOnButton2;
 
     // LookandFeels 
+    //myLookAndFeel blackHexKnobLAF;
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
 
@@ -90,6 +98,7 @@ private:
     void odFootSw1Clicked();
     void modelSelect1Changed();
     void cabOnButton1Clicked();
+
     void odFootSw2Clicked();
     void modelSelect2Changed();
     void cabOnButton2Clicked();
@@ -109,4 +118,6 @@ public:
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> trebleSlider2Attach;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSlider2Attach;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSlider2Attach;
+    
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
 };
