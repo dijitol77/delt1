@@ -245,7 +245,7 @@ ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
 //    g.drawFittedText ("Hello World!", getLocalBounds(), Justification::centred, 1);
 // }
 
-void ProteusAudioProcessorEditor::resized() void ProteusAudioProcessorEditor::resized()
+void ProteusAudioProcessorEditor::resized()
 {
     // Original Widgets
     loadButton.setBounds(186, 48, 120, 24);
