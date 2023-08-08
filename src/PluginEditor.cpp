@@ -326,8 +326,8 @@ void ProteusAudioProcessorEditor::resized() void ProteusAudioProcessorEditor::re
 
 
     // Draw the background for the duplicate container
-    g.setOrigin(500, 0);  // Shift the origin to the start of the duplicate container
-    g.drawImageAt(background_on, 0, 0);  // Draw the different background image
+   // g.setOrigin(500, 0);  // Shift the origin to the start of the duplicate container
+   // g.drawImageAt(background_on, 0, 0);  // Draw the different background image
 }
 
 
