@@ -337,7 +337,7 @@ void ProteusAudioProcessorEditor::resized()
 
 
 
-void ProteusAudioProcessorEditor::updateWidgets()
+bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
 {
     // Read in the JSON file
     String path = configFile.getFullPathName();
@@ -546,7 +546,7 @@ void ProteusAudioProcessorEditor::loadFromFolder()
         for (auto file : files) {
             
             if (isValidFormat(file)) {
-                modelSelect1.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
+                modelSelect2.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
                 processor.jsonFiles.push_back(file);
                 processor.num_models += 1;
             }
@@ -555,11 +555,11 @@ void ProteusAudioProcessorEditor::loadFromFolder()
         if (!processor.jsonFiles.empty()) {
             if (processor.saved_model.existsAsFile() && isValidFormat(processor.saved_model)) {
                 processor.loadConfig(processor.saved_model);
-                modelSelect1.setText(processor.saved_model.getFileNameWithoutExtension(), juce::NotificationType::dontSendNotification);
+                modelSelect2.setText(processor.saved_model.getFileNameWithoutExtension(), juce::NotificationType::dontSendNotification);
             } else {
                 if (processor.jsonFiles[0].existsAsFile() && isValidFormat(processor.jsonFiles[0])) {
                     processor.loadConfig(processor.jsonFiles[0]);
-                    modelSelect1.setText(processor.jsonFiles[0].getFileNameWithoutExtension(), juce::NotificationType::dontSendNotification);
+                    modelSelect2.setText(processor.jsonFiles[0].getFileNameWithoutExtension(), juce::NotificationType::dontSendNotification);
                 }
             }
         }
