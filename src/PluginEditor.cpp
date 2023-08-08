@@ -182,10 +182,11 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     ampTrebleKnob2.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     ampTrebleKnob2.setDoubleClickReturnValue(true, 0.0);
 // versionLabel2
-    addAndMakeVisible(versionLabel);
+    addAndMakeVisible(versionLabel2);
     versionLabel2.setText("v1.2", juce::NotificationType::dontSendNotification);
     versionLabel2.setJustificationType(juce::Justification::left);
     versionLabel2.setColour(juce::Label::textColourId, juce::Colours::white);
+    versionLabel2.setFont(font2);
 
 // Add and make visible the duplicate container
     addAndMakeVisible(duplicateContainer);
