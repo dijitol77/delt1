@@ -30,7 +30,8 @@ public:
     void resized();
     std::unique_ptr<FileChooser> myChooser;
 
-    void loadFromFolder();
+    void loadFromFolder1();
+    void loadFromFolder2();
     void resetImages();
 
 private:
@@ -78,11 +79,13 @@ private:
     Label modelLabel2;
     Label versionLabel2;
     ComboBox modelSelect2;
+
     Slider ampBassKnob2;
     Slider ampMidKnob2;
     Slider ampTrebleKnob2;
     Slider odDriveKnob2;
     Slider odLevelKnob2;
+
     ImageButton cabOnButton2;
 
     // LookandFeels 
