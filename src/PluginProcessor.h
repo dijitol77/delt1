@@ -102,21 +102,22 @@ public:
 
 private:
 
-    Eq4Band eq4band; // Amp EQ
-    Eq4Band eq4band2; // Amp EQ
+// Renamed variables for Container 1
 
-    std::atomic<float>* driveParam = nullptr;
-    std::atomic<float>* masterParam = nullptr;
-    std::atomic<float>* bassParam = nullptr;
-    std::atomic<float>* midParam = nullptr;
-    std::atomic<float>* trebleParam = nullptr;
+    std::atomic<float>* driveParam1 = nullptr;
+    std::atomic<float>* masterParam1 = nullptr;
+    std::atomic<float>* bassParam1 = nullptr;
+    std::atomic<float>* midParam1 = nullptr;
+    std::atomic<float>* trebleParam1 = nullptr;
 
     float previousDriveValue = 0.5;
     float previousMasterValue = 0.5;
     //float steppedValue1 = 0.0;
 
-    RT_LSTM LSTM;
-    RT_LSTM LSTM2;
+// Renamed LSTM for Container 1
+
+    RT_LSTM LSTM1;
+    RT_LSTM LSTM2_1;
 
     dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> dcBlocker;
 
