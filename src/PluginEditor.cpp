@@ -243,7 +243,7 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
 }
 
 
-void ProteusAudioProcessorEditor::resized()
+void ProteusAudioProcessorEditor::resized();
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
