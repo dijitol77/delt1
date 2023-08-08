@@ -181,11 +181,11 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
 {
     ScopedNoDenormals noDenormals;
 
-    auto driveValue = static_cast<float> (driveParam->load());
-    auto masterValue = static_cast<float> (masterParam->load());
-    auto bassValue = static_cast<float> (bassParam->load());
-    auto midValue = static_cast<float> (midParam->load());
-    auto trebleValue = static_cast<float> (trebleParam->load());
+    auto driveValue = static_cast<float> (driveParam1->load());
+    auto masterValue = static_cast<float> (masterParam1->load());
+    auto bassValue = static_cast<float> (bassParam1->load());
+    auto midValue = static_cast<float> (midParam1->load());
+    auto trebleValue = static_cast<float> (trebleParam1->load());
 
     // Setup Audio Data
     const int numSamples = buffer.getNumSamples();
