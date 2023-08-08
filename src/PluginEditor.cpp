@@ -629,7 +629,7 @@ void ProteusAudioProcessorEditor::modelSelect2Changed()
     repaint();
 }
 
-void ProteusAudioProcessorEditor::resetImages1()
+void ProteusAudioProcessorEditor::resetImages()
 {
     // ... [resetImages function remains unchanged]
 
@@ -666,9 +666,7 @@ void ProteusAudioProcessorEditor::resetImages1()
             0.0);
     }
 }
-   
-void ProteusAudioProcessorEditor::resetImages2()
-{
+
     // ... [resetImages function remains unchanged]
 
     repaint();
