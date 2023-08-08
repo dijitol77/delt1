@@ -307,9 +307,12 @@ void ProteusAudioProcessorEditor::resized() void ProteusAudioProcessorEditor::re
         g.drawImageAt(background_on_blue, 0, 0);  // Debug Line: Redraw entire background image
     }
 
-    // Draw the background for the duplicate container
-    g.setOrigin(500, 0);  // Shift the origin to the start of the duplicate container
-    g.drawImageAt(background_on, 0, 0);  // Draw the different background image
+    {
+    juce::AffineTransform transform = juce::AffineTransform::translation(500, 0);
+    g.addTransform(transform);
+    g.drawImageAt(background_on, 0, 0);  // Draw the different background image with the shifted origin
+    g.restoreState();  // Reset the transformation
+}
 
 #else
 
