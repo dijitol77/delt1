@@ -1,12 +1,4 @@
-/*
-  ==============================================================================
 
-    This file was auto-generated!
-
-    It contains the basic framework code for a JUCE plugin editor.
-
-  ==============================================================================
-*/
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
@@ -625,7 +617,7 @@ void ProteusAudioProcessorEditor::resetImages1()
     // ... [resetImages function remains unchanged]
 
     repaint();
-    /*
+   
     if (processor.fw_state == 0) {
         odFootSw.setImages(true, true, true,
             ImageCache::getFromMemory(BinaryData::footswitch_up_png, BinaryData::footswitch_up_pngSize), 1.0, Colours::transparentWhite,
@@ -640,7 +632,7 @@ void ProteusAudioProcessorEditor::resetImages1()
             ImageCache::getFromMemory(BinaryData::footswitch_down_png, BinaryData::footswitch_down_pngSize), 1.0, Colours::transparentWhite,
             0.0);
     }
-    */
+   
     // Set On/Off cab graphic "1"
     if (processor.cab_state == 0) {
         cabOnButton1.setImages(true, true, true,
@@ -662,7 +654,7 @@ void ProteusAudioProcessorEditor::resetImages1()
 
     void ProteusAudioProcessorEditor::resetImages2(){
     repaint();
-    /*
+   
     if (processor.fw_state == 0) {
         odFootSw.setImages(true, true, true,
             ImageCache::getFromMemory(BinaryData::footswitch_up_png, BinaryData::footswitch_up_pngSize), 1.0, Colours::transparentWhite,
@@ -677,7 +669,7 @@ void ProteusAudioProcessorEditor::resetImages1()
             ImageCache::getFromMemory(BinaryData::footswitch_down_png, BinaryData::footswitch_down_pngSize), 1.0, Colours::transparentWhite,
             0.0);
     }
-    */
+    
     // Set On/Off cab graphic "1"
     if (processor.cab_state == 0) {
         cabOnButton2.setImages(true, true, true,
@@ -692,6 +684,7 @@ void ProteusAudioProcessorEditor::resetImages1()
             Image(), 1.0, Colours::transparentWhite,
             ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
             0.0);
-    }
+        }
        
   }
+}
