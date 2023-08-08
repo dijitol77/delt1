@@ -86,7 +86,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     cabOnButton1.addListener(this);
 
 // odDriveKnob1
-    driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob1);
+    driveSlider1Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob1);
     addAndMakeVisible(odDriveKnob1);
     odDriveKnob1.setLookAndFeel(&bigKnobLAF);
     odDriveKnob1.addListener(this);
@@ -94,7 +94,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     odDriveKnob1.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odDriveKnob1.setDoubleClickReturnValue(true, 0.5);
 // odLevelKnob1
-    masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob1);
+    masterSlider1Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob1);
     addAndMakeVisible(odLevelKnob1);
     odLevelKnob1.setLookAndFeel(&smallKnobLAF);
     odLevelKnob1.addListener(this);
@@ -102,7 +102,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     odLevelKnob1.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odLevelKnob1.setDoubleClickReturnValue(true, 0.5);
 // ampBassKnob1
-    bassSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob1);    	    
+    bassSlider1Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob1);    	    
     addAndMakeVisible(ampBassKnob1);
     ampBassKnob1.setLookAndFeel(&smallKnobLAF);
     ampBassKnob1.addListener(this);
@@ -110,7 +110,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     ampBassKnob1.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     ampBassKnob1.setDoubleClickReturnValue(true, 0.0);
 // ampMidKnob1
-    midSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MID_ID, ampMidKnob1);    
+    midSlider1Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MID_ID, ampMidKnob1);    
     addAndMakeVisible(ampMidKnob1);
     ampMidKnob1.setLookAndFeel(&smallKnobLAF);
     ampMidKnob1.addListener(this);
@@ -118,7 +118,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     ampMidKnob1.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     ampMidKnob1.setDoubleClickReturnValue(true, 0.0);
 // ampTrebleKnob1
-    trebleSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, TREBLE_ID, ampTrebleKnob1);
+    trebleSlider1Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, TREBLE_ID, ampTrebleKnob1);
     addAndMakeVisible(ampTrebleKnob1);
     ampTrebleKnob1.setLookAndFeel(&smallKnobLAF);
     ampTrebleKnob1.addListener(this);
@@ -142,7 +142,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     addAndMakeVisible(cabOnButton2);
     cabOnButton2.addListener(this);
 // odDriveKnob2
-    driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob2);
+    driveSlider2Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob2);
     addAndMakeVisible(odDriveKnob2);
     odDriveKnob2.setLookAndFeel(&bigKnobLAF);
     odDriveKnob2.addListener(this);
@@ -150,7 +150,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     odDriveKnob2.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odDriveKnob2.setDoubleClickReturnValue(true, 0.5);
 // odLevelKnob2
-    masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob2);
+    masterSlider2Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob2);
     addAndMakeVisible(odLevelKnob2);
     odLevelKnob2.setLookAndFeel(&smallKnobLAF);
     odLevelKnob2.addListener(this);
@@ -158,7 +158,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     odLevelKnob2.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odLevelKnob2.setDoubleClickReturnValue(true, 0.5);
 // ampBassKnob2
-    bassSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob2);    	    
+    bassSlider2Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob2);    	    
     addAndMakeVisible(ampBassKnob2);
     ampBassKnob2.setLookAndFeel(&smallKnobLAF);
     ampBassKnob2.addListener(this);
@@ -166,7 +166,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     ampBassKnob2.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     ampBassKnob2.setDoubleClickReturnValue(true, 0.0);
 // ampMidKnob2
-    midSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MID_ID, ampMidKnob2);    
+    midSlider2Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MID_ID, ampMidKnob2);    
     addAndMakeVisible(ampMidKnob2);
     ampMidKnob2.setLookAndFeel(&smallKnobLAF);
     ampMidKnob2.addListener(this);
@@ -174,7 +174,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     ampMidKnob2.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     ampMidKnob2.setDoubleClickReturnValue(true, 0.0);
 // ampTrebleKnob2
-    trebleSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, TREBLE_ID, ampTrebleKnob2);
+    trebleSlider2Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, TREBLE_ID, ampTrebleKnob2);
     addAndMakeVisible(ampTrebleKnob2);
     ampTrebleKnob2.setLookAndFeel(&smallKnobLAF);
     ampTrebleKnob2.addListener(this);
