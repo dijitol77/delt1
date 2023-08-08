@@ -124,7 +124,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     ampTrebleKnob1.addListener(this);
     ampTrebleKnob1.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     ampTrebleKnob1.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    ampTrebleKnob.setDoubleClickReturnValue(true, 0.0);
+    ampTrebleKnob1.setDoubleClickReturnValue(true, 0.0);
 //versionLabel1
     addAndMakeVisible(versionLabel1);
     versionLabel1.setText("v1.2", juce::NotificationType::dontSendNotification);
