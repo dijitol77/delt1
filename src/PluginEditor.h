@@ -1,11 +1,8 @@
 /*
-  ==============================================================================
-
+  =============================================================================
     This file was auto-generated!
-
     It contains the basic framework code for a JUCE plugin editor.
-
-  ==============================================================================
+  =============================================================================
 */
 
 #pragma once
@@ -34,38 +31,32 @@ public:
     void resetImages();
 
 private:
-    // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
     ProteusAudioProcessor& processor;
 
     // Containers
     Component originalContainer;
     Component duplicateContainer;
 
-// Components
-TextButton loadButton1;
-TextButton loadButton2;
+    // Components
+    TextButton loadButton1;
+    TextButton loadButton2;
 
-// Event handlers
-virtual void buttonClicked1(Button* button) override;    
-virtual void buttonClicked2(Button* button) override;
+    // Event handlers
+    virtual void buttonClicked1(Button* button) override;    
+    virtual void buttonClicked2(Button* button) override;
 
-// Utility functions
-bool isValidFormat(File configFile);
-void loadButton1Clicked();
-void loadButton2Clicked();
+    // Utility functions
+    bool isValidFormat(File configFile);
+    void loadButton1Clicked();
+    void loadButton2Clicked();
 
-    //Image background = ImageCache::getFromMemory(BinaryData::smart_pedal_jpg, BinaryData::smart_pedal_jpgSize);
     // LookandFeels and Graphics
     Image background_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
     Image background_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
-    // Image background_2on = ImageCache::getFromMemory(BinaryData::background_on_png, BinaryData::background_2on_pngSize);
-    //Image background_off = ImageCache::getFromMemory(BinaryData::background_off_jpg, BinaryData::background_off_jpgSize);
 
     // Global Widgets
     Label modelLabel1;
     Label versionLabel1;
-
     ComboBox modelSelect1;
 
     // Overdrive Widgets
@@ -74,54 +65,35 @@ void loadButton2Clicked();
     Slider ampTrebleKnob1;
     Slider odDriveKnob1;
     Slider odLevelKnob1;
-    //ImageButton odFootSw;
-    //ImageButton odLED;
     ImageButton cabOnButton1;
 
     // Duplicated Components
-    
     Label modelLabel2;
     Label versionLabel2;
-
     ComboBox modelSelect2;
-
     Slider ampBassKnob2;
     Slider ampMidKnob2;
     Slider ampTrebleKnob2;
     Slider odDriveKnob2;
     Slider odLevelKnob2;
-
-    
     ImageButton cabOnButton2;
-    // same for both for now
+
     // LookandFeels 
-    //myLookAndFeel blackHexKnobLAF;
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
 
-
-  virtual void slider1ValueChanged(Slider* slider) override;
+    virtual void slider1ValueChanged(Slider* slider) override;
+    virtual void slider2ValueChanged(Slider* slider) override;
 
     AudioProcessorParameter* getParameter(const String& paramId);
- 
+
     void odFootSw1Clicked();
     void modelSelect1Changed();
     void cabOnButton1Clicked();
     void odFootSw2Clicked();
     void modelSelect2Changed();
     void cabOnButton2Clicked();
-    bool model_loaded = false;
 
-    virtual void slider2ValueChanged(Slider* slider) override;
-
-    AudioProcessorParameter* getParameter(const String& paramId);
- 
-    void odFootSw2Clicked();
-    void modelSelect2Changed();
-    void cabOnButton2Clicked();
-    void odFootSw2Clicked();
-    void modelSelect2Changed();
-    void cabOnButton2Clicked();
     bool model_loaded = false;
 
 public:
@@ -137,3 +109,4 @@ public:
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> trebleSlider2Attach;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSlider2Attach;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSlider2Attach;
+};
