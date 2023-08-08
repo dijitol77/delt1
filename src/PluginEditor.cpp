@@ -15,52 +15,50 @@
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p)
 {
-    // This is where our plugin's editor size is set.
-    setSize (400, 300);
-
-
-  
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to
-
+   
     // Left handside
 
-addAndMakeVisible(loadButton);
-loadButton.setButtonText("LOAD MODEL");
-loadButton.addListener(this);
+    
+    addAndMakeVisible(loadButton1);
+    loadButton1.setButtonText("LOAD MODEL");
+    loadButton1.addListener(this);
 
-addAndMakeVisible(modelSelect);
-modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
-modelSelect.setScrollWheelEnabled(true);
-int c1 = 1;  // Renamed to c1
-for (const auto& jsonFile : processor.jsonFiles) {
-    modelSelect.addItem(jsonFile.getFileName(), c1);
-    c1 += 1;
-}
-modelSelect.onChange = [this] {modelSelectChanged();};
+    addAndMakeVisible(modelSelect1);
+    modelSelect1.setColour(juce::Label::textColourId, juce::Colours::black);
+    modelSelect1.setScrollWheelEnabled(true);
+    int c1 = 1;  // Renamed to c1
+    for (const auto& jsonFile : processor.jsonFiles) {
+        modelSelect1.addItem(jsonFile.getFileName(), c1);
+        c1 += 1;
+    }
+    modelSelect.onChange = [this] {modelSelectChanged();};
 
-auto font1 = modelLabel.getFont();  // Renamed to font1
-float height1 = font1.getHeight();  // Renamed to height1
-font1.setHeight(height1);
+    auto font1 = modelLabel.getFont();  // Renamed to font1
+    float height1 = font1.getHeight();  // Renamed to height1
+    font1.setHeight(height1);
 
-// Right handside
+    // Right handside
 
-addAndMakeVisible(modelSelect2);
-modelSelect2.setColour(juce::Label::textColourId, juce::Colours::black);
-modelSelect2.setScrollWheelEnabled(true);
-int c2 = 1;  // Renamed to c2
-for (const auto& jsonFile : processor.jsonFiles) {
-    modelSelect2.addItem(jsonFile.getFileName(), c2);  // Changed to modelSelect2
-    c2 += 1;
-}
-modelSelect2.onChange = [this] {modelSelectChanged();};  // Changed to modelSelect2
+     addAndMakeVisible(loadButton);
+    loadButton2.setButtonText("LOAD MODEL");
+    loadButton2.addListener(this);
 
-auto font2 = modelLabel.getFont();  // Renamed to font2
-float height2 = font2.getHeight();  // Renamed to height2
-font2.setHeight(height2);
+    addAndMakeVisible(modelSelect2);
+    modelSelect2.setColour(juce::Label::textColourId, juce::Colours::black);
+    modelSelect2.setScrollWheelEnabled(true);
+    int c2 = 1;  // Renamed to c2
+    for (const auto& jsonFile : processor.jsonFiles) {
+        modelSelect2.addItem(jsonFile.getFileName(), c2);  // Changed to modelSelect2
+        c2 += 1;
+    }
+    modelSelect2.onChange = [this] {modelSelectChanged();};  // Changed to modelSelect2
+
+    auto font2 = modelLabel.getFont();  // Renamed to font2
+    float height2 = font2.getHeight();  // Renamed to height2
+    font2.setHeight(height2);
 
 
-
+// currently for both
     // Set Widget Graphics
     bigKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::big_knob_png, BinaryData::big_knob_pngSize));
     smallKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::small_knob_png, BinaryData::small_knob_pngSize));
@@ -77,79 +75,64 @@ font2.setHeight(height2);
     addAndMakeVisible(odFootSw);
     odFootSw.addListener(this);
     */
-
-    cabOnButton.setImages(true, true, true,
+//left hanf container "1"
+    cabOnButton1.setImages(true, true, true,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
         Image(), 1.0, Colours::transparentWhite,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
         0.0);
     addAndMakeVisible(cabOnButton);
-    cabOnButton.addListener(this);
+    cabOnButton1.addListener(this);
 
     driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
     addAndMakeVisible(odDriveKnob);
-    odDriveKnob.setLookAndFeel(&bigKnobLAF);
-    odDriveKnob.addListener(this);
-    odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    odDriveKnob.setDoubleClickReturnValue(true, 0.5);
+    odDriveKnob1.setLookAndFeel(&bigKnobLAF);
+    odDriveKnob1.addListener(this);
+    odDriveKnob1.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    odDriveKnob1.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
+    odDriveKnob1.setDoubleClickReturnValue(true, 0.5);
 
     masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
     addAndMakeVisible(odLevelKnob);
-    odLevelKnob.setLookAndFeel(&smallKnobLAF);
-    odLevelKnob.addListener(this);
-    odLevelKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    odLevelKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    odLevelKnob.setDoubleClickReturnValue(true, 0.5);
+    odLevelKnob1.setLookAndFeel(&smallKnobLAF);
+    odLevelKnob1.addListener(this);
+    odLevelKnob1.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    odLevelKnob1.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
+    odLevelKnob1.setDoubleClickReturnValue(true, 0.5);
 
     bassSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob);    	    
     addAndMakeVisible(ampBassKnob);
-    ampBassKnob.setLookAndFeel(&smallKnobLAF);
-    ampBassKnob.addListener(this);
-    ampBassKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    ampBassKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    ampBassKnob.setDoubleClickReturnValue(true, 0.0);
+    ampBassKnob1.setLookAndFeel(&smallKnobLAF);
+    ampBassKnob1.addListener(this);
+    ampBassKnob1.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    ampBassKnob1.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
+    ampBassKnob1.setDoubleClickReturnValue(true, 0.0);
 
     midSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MID_ID, ampMidKnob);    
     addAndMakeVisible(ampMidKnob);
-    ampMidKnob.setLookAndFeel(&smallKnobLAF);
-    ampMidKnob.addListener(this);
-    ampMidKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    ampMidKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    ampMidKnob.setDoubleClickReturnValue(true, 0.0);
+    ampMidKnob1.setLookAndFeel(&smallKnobLAF);
+    ampMidKnob1.addListener(this);
+    ampMidKnob1.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    ampMidKnob1.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
+    ampMidKnob1.setDoubleClickReturnValue(true, 0.0);
 
     trebleSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, TREBLE_ID, ampTrebleKnob);
     addAndMakeVisible(ampTrebleKnob);
-    ampTrebleKnob.setLookAndFeel(&smallKnobLAF);
-    ampTrebleKnob.addListener(this);
-    ampTrebleKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    ampTrebleKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
+    ampTrebleKnob1.setLookAndFeel(&smallKnobLAF);
+    ampTrebleKnob1.addListener(this);
+    ampTrebleKnob1.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    ampTrebleKnob1.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     ampTrebleKnob.setDoubleClickReturnValue(true, 0.0);
 
     addAndMakeVisible(versionLabel);
-    versionLabel.setText("v1.2", juce::NotificationType::dontSendNotification);
-    versionLabel.setJustificationType(juce::Justification::left);
-    versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
-
-    // For the left container:
-    // auto font1 = modelLabel.getFont();
-    versionLabel.setFont(font1);
+    versionLabel1.setText("v1.2", juce::NotificationType::dontSendNotification);
+    versionLabel1.setJustificationType(juce::Justification::left);
+    versionLabel1.setColour(juce::Label::textColourId, juce::Colours::white);
+    versionLabel1.setFont(font1);
 
 
-    // For the right container:
-    // auto font2 = modelLabel.getFont();
-    versionLabel.setFont(font2);
-
-
-
-
-   // Size of plugin GUI
-    setSize (1000, 650);
-
-
-
-
-     cabOnButton2.setImages(true, true, true,
+    // right  hanf container "2"
+    cabOnButton2.setImages(true, true, true,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
         Image(), 1.0, Colours::transparentWhite,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
@@ -207,8 +190,8 @@ versionLabel2.setColour(juce::Label::textColourId, juce::Colours::white);
     // Add and make visible the duplicate container
     addAndMakeVisible(duplicateContainer);
 
-    // Add and make visible the second version label
-    addAndMakeVisible(versionLabel2);
+    // Size of plugin GUI
+    setSize (1000, 650);
 
     // ... [Rest of the initialization code remains unchanged]
     resetImages();
@@ -216,43 +199,68 @@ versionLabel2.setColour(juce::Label::textColourId, juce::Colours::white);
     loadFromFolder();
 }
 
-// ... [Rest of the file remains unchanged]
-
-
 ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
 {
-    odDriveKnob.setLookAndFeel(nullptr);
-    odLevelKnob.setLookAndFeel(nullptr);
-    ampBassKnob.setLookAndFeel(nullptr);
-    ampMidKnob.setLookAndFeel(nullptr);
-    ampTrebleKnob.setLookAndFeel(nullptr);
+    
+    odDriveKnob1.setLookAndFeel(nullptr);
+    odLevelKnob1.setLookAndFeel(nullptr);
+    ampBassKnob1.setLookAndFeel(nullptr);
+    ampMidKnob1.setLookAndFeel(nullptr);
+    ampTrebleKnob1.setLookAndFeel(nullptr);
 
-
-     odDriveKnob2.setLookAndFeel(nullptr);
+    odDriveKnob2.setLookAndFeel(nullptr);
     odLevelKnob2.setLookAndFeel(nullptr);
     ampBassKnob2.setLookAndFeel(nullptr);
     ampMidKnob2.setLookAndFeel(nullptr);
     ampTrebleKnob2.setLookAndFeel(nullptr);
 }
 
+//==============================================================================
+void ProteusAudioProcessorEditor::paint (Graphics& g)
+{
+    // Workaround for graphics on Windows builds (clipping code doesn't work correctly on Windows)
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+    //if (processor.fw_state == 0) {
+    //    g.drawImageAt(background_off, 0, 0);  // Debug Line: Redraw entire background image
+    if (processor.fw_state == 1 && processor.conditioned == true) {
+        g.drawImageAt(background_on, 0, 0);  // Debug Line: Redraw entire background image
+    } else if (processor.fw_state == 1 && processor.conditioned == false) {
+        g.drawImageAt(background_on_blue, 0, 0);  // Debug Line: Redraw entire background image
+    }
+#else
+// Redraw only the clipped part of the background image
+
+    juce::Rectangle<int> ClipRect = g.getClipBounds();
+    //if (processor.fw_state == 0) {
+    //    g.drawImage(background_off, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
+    if (processor.fw_state == 1 && processor.conditioned == true) {
+        g.drawImage(background_on, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
+    } else if (processor.fw_state == 1 && processor.conditioned == false)
+        g.drawImage(background_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
+#endif
+}
+
 
 void ProteusAudioProcessorEditor::resized()
 {
-    // Original Widgets
-    loadButton.setBounds(186, 48, 120, 24);
-    modelSelect.setBounds(52, 11, 400, 28);
+    // This is generally where you'll want to lay out the positions of any
+    // subcomponents in your editor..
+
+    //Overall Widgets
+    loadButton1.setBounds(186, 48, 120, 24);
+    modelSelect1.setBounds(52, 11, 400, 28);
     //modelLabel.setBounds(197, 2, 90, 25);
-    versionLabel.setBounds(462, 632, 60, 10);
-    cabOnButton.setBounds(115, 233, 53, 39);
+    versionLabel1.setBounds(462, 632, 60, 10);
+    cabOnButton1.setBounds(115, 233, 53, 39);
 
     // Overdrive Widgets
-    odDriveKnob.setBounds(168, 242, 190, 190);
-    odLevelKnob.setBounds(340, 225, 62, 62);
+    odDriveKnob1.setBounds(168, 242, 190, 190);
+    odLevelKnob1.setBounds(340, 225, 62, 62);
     //odFootSw.setBounds(185, 416, 175, 160);
 
-    ampBassKnob.setBounds(113, 131, 62, 62);
-    ampMidKnob.setBounds(227, 131, 62, 62);
-    ampTrebleKnob.setBounds(340, 131, 62, 62);
+    ampBassKnob1.setBounds(113, 131, 62, 62);
+    ampMidKnob1.setBounds(227, 131, 62, 62);
+    ampTrebleKnob1.setBounds(340, 131, 62, 62);
 
 
    // Position the containers
@@ -262,19 +270,21 @@ void ProteusAudioProcessorEditor::resized()
     // Add and make visible the duplicate container
     addAndMakeVisible(duplicateContainer);
 
-    // ... [Rest of the original widget bounds]
+    //Overall Widgets
+    loadButton2.setBounds(186, 48, 120, 24);
+    modelSelect2.setBounds(52, 11, 400, 28);
+    //modelLabel.setBounds(197, 2, 90, 25);
+    versionLabe2.setBounds(462, 632, 60, 10);
+    cabOnButton2.setBounds(115, 233, 53, 39);
 
-    // Duplicate Widgets (assuming they should be positioned similarly but shifted to the right)
-    // loadButton2.setBounds(686, 48, 120, 24);  // 500 units to the right
-    modelSelect2.setBounds(552, 11, 400, 28);
-    versionLabel2.setBounds(962, 632, 60, 10);
-    cabOnButton2.setBounds(615, 233, 53, 39);
-    // ... [Rest of the duplicate widget bounds]
-
-    // Overdrive Widgets2
+    // Overdrive Widgets
     odDriveKnob2.setBounds(168, 242, 190, 190);
     odLevelKnob2.setBounds(340, 225, 62, 62);
     //odFootSw.setBounds(185, 416, 175, 160);
+
+    ampBassKnob2.setBounds(113, 131, 62, 62);
+    ampMidKnob2.setBounds(227, 131, 62, 62);
+    ampTrebleKnob2.setBounds(340, 131, 62, 62);
 
     ampBassKnob2.setBounds(113, 131, 62, 62);
     ampMidKnob2.setBounds(227, 131, 62, 62);
@@ -326,12 +336,8 @@ void ProteusAudioProcessorEditor::resized()
 #endif
 
 
-// Draw the background for the duplicate container
-// g.setOrigin(500, 0);  // Shift the origin to the start of the duplicate container
-// g.drawImageAt(background_on, 0, 0);  // Draw the different background image
-}
 
-bool ProteusAudioProcessorEditor::isValidFormat(File configFile) {
+void ProteusAudioProcessorEditor::updateWidgets()
 {
     // Read in the JSON file
     String path = configFile.getFullPathName();
@@ -394,13 +400,14 @@ void ProteusAudioProcessorEditor::loadButtonClicked()
         
         processor.jsonFiles.clear();
 
-        modelSelect.clear();
+        modelSelect1.clear();
+        
 
         if (files.size() > 0) {
             for (auto file : files) {
 
                 if (isValidFormat(file)) {
-                    modelSelect.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
+                    modelSelect1.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
                     processor.jsonFiles.push_back(file);
                     processor.num_models += 1;
                 }
@@ -408,14 +415,93 @@ void ProteusAudioProcessorEditor::loadButtonClicked()
             if (chooser.getResult().existsAsFile()) {
                 
                 if (isValidFormat(chooser.getResult()) == true) {
-                    modelSelect.setText(processor.saved_model.getFileNameWithoutExtension());
+                    modelSelect1.setText(processor.saved_model.getFileNameWithoutExtension());
                     processor.loadConfig(processor.saved_model);
                 }
             }
             else {
                 if (!processor.jsonFiles.empty()) {
-                    modelSelect.setSelectedItemIndex(0, juce::NotificationType::dontSendNotification);
-                    modelSelectChanged();
+                    modelSelect1.setSelectedItemIndex(0, juce::NotificationType::dontSendNotification);
+                    modelSelect1Changed();
+                }
+            }
+        } else {
+            processor.saved_model = ""; // Clear the saved model since there's nothing in the dropdown
+        }
+
+        modelSelect2.clear();
+
+        if (files.size() > 0) {
+            for (auto file : files) {
+
+                if (isValidFormat(file)) {
+                    modelSelect2.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
+                    processor.jsonFiles.push_back(file);
+                    processor.num_models += 1;
+                }
+            }
+            if (chooser.getResult().existsAsFile()) {
+                
+                if (isValidFormat(chooser.getResult()) == true) {
+                    modelSelect2.setText(processor.saved_model.getFileNameWithoutExtension());
+                    processor.loadConfig(processor.saved_model);
+                }
+            }
+            else {
+                if (!processor.jsonFiles.empty()) {
+                    modelSelect2.setSelectedItemIndex(0, juce::NotificationType::dontSendNotification);
+                    modelSelect2Changed();
+                }
+            }
+        } else {
+            processor.saved_model = ""; // Clear the saved model since there's nothing in the dropdown
+        }
+        if (files.size() > 0) {
+            for (auto file : files) {
+
+                if (isValidFormat(file)) {
+                    modelSelect1.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
+                    processor.jsonFiles.push_back(file);
+                    processor.num_models += 1;
+                }
+            }
+            if (chooser.getResult().existsAsFile()) {
+                
+                if (isValidFormat(chooser.getResult()) == true) {
+                    modelSelect1.setText(processor.saved_model.getFileNameWithoutExtension());
+                    processor.loadConfig(processor.saved_model);
+                }
+            }
+            else {
+                if (!processor.jsonFiles.empty()) {
+                    modelSelect1.setSelectedItemIndex(0, juce::NotificationType::dontSendNotification);
+                    modelSelect1Changed();
+                }
+            }
+        } else {
+            processor.saved_model = ""; // Clear the saved model since there's nothing in the dropdown
+        }
+
+        if (files.size() > 0) {
+            for (auto file : files) {
+
+                if (isValidFormat(file)) {
+                    modelSelect2.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
+                    processor.jsonFiles.push_back(file);
+                    processor.num_models += 1;
+                }
+            }
+            if (chooser.getResult().existsAsFile()) {
+                
+                if (isValidFormat(chooser.getResult()) == true) {
+                    modelSelect2.setText(processor.saved_model.getFileNameWithoutExtension());
+                    processor.loadConfig(processor.saved_model);
+                }
+            }
+            else {
+                if (!processor.jsonFiles.empty()) {
+                    modelSelect2.setSelectedItemIndex(0, juce::NotificationType::dontSendNotification);
+                    modelSelect2Changed();
                 }
             }
         } else {
@@ -424,18 +510,6 @@ void ProteusAudioProcessorEditor::loadButtonClicked()
     });
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 void ProteusAudioProcessorEditor::loadFromFolder()
 {
@@ -450,7 +524,7 @@ void ProteusAudioProcessorEditor::loadFromFolder()
         for (auto file : files) {
             
             if (isValidFormat(file)) {
-                modelSelect.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
+                modelSelect1.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
                 processor.jsonFiles.push_back(file);
                 processor.num_models += 1;
             }
@@ -459,11 +533,33 @@ void ProteusAudioProcessorEditor::loadFromFolder()
         if (!processor.jsonFiles.empty()) {
             if (processor.saved_model.existsAsFile() && isValidFormat(processor.saved_model)) {
                 processor.loadConfig(processor.saved_model);
-                modelSelect.setText(processor.saved_model.getFileNameWithoutExtension(), juce::NotificationType::dontSendNotification);
+                modelSelect1.setText(processor.saved_model.getFileNameWithoutExtension(), juce::NotificationType::dontSendNotification);
             } else {
                 if (processor.jsonFiles[0].existsAsFile() && isValidFormat(processor.jsonFiles[0])) {
                     processor.loadConfig(processor.jsonFiles[0]);
-                    modelSelect.setText(processor.jsonFiles[0].getFileNameWithoutExtension(), juce::NotificationType::dontSendNotification);
+                    modelSelect1.setText(processor.jsonFiles[0].getFileNameWithoutExtension(), juce::NotificationType::dontSendNotification);
+                }
+            }
+        }
+    }
+    if (files.size() > 0) {
+        for (auto file : files) {
+            
+            if (isValidFormat(file)) {
+                modelSelect1.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
+                processor.jsonFiles.push_back(file);
+                processor.num_models += 1;
+            }
+        }
+        // Try to load model from saved_model, if it doesnt exist and jsonFiles is not empty, load the first model (if it exists and is valid format)
+        if (!processor.jsonFiles.empty()) {
+            if (processor.saved_model.existsAsFile() && isValidFormat(processor.saved_model)) {
+                processor.loadConfig(processor.saved_model);
+                modelSelect1.setText(processor.saved_model.getFileNameWithoutExtension(), juce::NotificationType::dontSendNotification);
+            } else {
+                if (processor.jsonFiles[0].existsAsFile() && isValidFormat(processor.jsonFiles[0])) {
+                    processor.loadConfig(processor.jsonFiles[0]);
+                    modelSelect1.setText(processor.jsonFiles[0].getFileNameWithoutExtension(), juce::NotificationType::dontSendNotification);
                 }
             }
         }
@@ -482,6 +578,39 @@ void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
     } else if (button == &cabOnButton) {
         cabOnButtonClicked();
     }
+}
+
+void ProteusAudioProcessorEditor::odFootSwClicked() {
+    //if (processor.fw_state == 0)
+    //    processor.fw_state = 1;
+    //else
+    //    processor.fw_state = 0;
+    //resetImages();
+}
+
+void ProteusAudioProcessorEditor::cabOnButtonClicked() {
+    if (processor.cab_state == 0) {
+        processor.cab_state = 1;
+    }
+    else {
+        processor.cab_state = 0;
+    }
+    resetImages();
+    repaint();
+}
+
+void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
+{
+    // Amp "1"
+    if (slider == &ampBassKnob1 || slider == &ampMidKnob || slider == &ampTrebleKnob) {
+        processor.set_ampEQ(ampBassKnob1.getValue(), ampMidKnob.getValue(), ampTrebleKnob.getValue());
+    }
+
+    // Amp "2"
+    if (slider == &ampBassKnob2 || slider == &ampMidKnob || slider == &ampTrebleKnob) {
+        processor.set_ampEQ(ampBassKnob2.getValue(), ampMidKnob.getValue(), ampTrebleKnob.getValue());
+    }
+
 }
 
 void ProteusAudioProcessorEditor::modelSelectChanged()
@@ -517,16 +646,32 @@ void ProteusAudioProcessorEditor::resetImages()
             0.0);
     }
     */
-    // Set On/Off cab graphic
+    // Set On/Off cab graphic "1"
     if (processor.cab_state == 0) {
-        cabOnButton.setImages(true, true, true,
+        cabOnButton1.setImages(true, true, true,
             ImageCache::getFromMemory(BinaryData::cab_switch_off_png, BinaryData::cab_switch_off_pngSize), 1.0, Colours::transparentWhite,
             Image(), 1.0, Colours::transparentWhite,
             ImageCache::getFromMemory(BinaryData::cab_switch_off_png, BinaryData::cab_switch_off_pngSize), 1.0, Colours::transparentWhite,
             0.0);
     }
     else {
-        cabOnButton.setImages(true, true, true,
+        cabOnButton1.setImages(true, true, true,
+            ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
+            Image(), 1.0, Colours::transparentWhite,
+            ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
+            0.0);
+    }
+
+    // Set On/Off cab graphic "2"
+    if (processor.cab_state == 0) {
+        cabOnButton2.setImages(true, true, true,
+            ImageCache::getFromMemory(BinaryData::cab_switch_off_png, BinaryData::cab_switch_off_pngSize), 1.0, Colours::transparentWhite,
+            Image(), 1.0, Colours::transparentWhite,
+            ImageCache::getFromMemory(BinaryData::cab_switch_off_png, BinaryData::cab_switch_off_pngSize), 1.0, Colours::transparentWhite,
+            0.0);
+    }
+    else {
+        cabOnButton2.setImages(true, true, true,
             ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
             Image(), 1.0, Colours::transparentWhite,
             ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
