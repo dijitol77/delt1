@@ -138,8 +138,8 @@ void ProteusAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBloc
 
     dcBlocker.prepare (spec); 
 
-    LSTM.reset();
-    LSTM2.reset();
+    LSTM1.reset();
+    LSTM2_1.reset();
 
     // Set up IR
     cabSimIRa.prepare(spec);
