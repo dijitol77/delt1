@@ -1,4 +1,4 @@
-*
+/*
   ==============================================================================
 
     This file was auto-generated!
@@ -80,7 +80,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
         Image(), 1.0, Colours::transparentWhite,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
         0.0);
-    addAndMakeVisible(cabOnButton);
+    addAndMakeVisible(cabOnButton1);
     cabOnButton1.addListener(this);
 
     driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
@@ -192,13 +192,8 @@ versionLabel2.setColour(juce::Label::textColourId, juce::Colours::white);
     // Size of plugin GUI
     setSize (1000, 650);
 
-    // ... [Rest of the initialization code remains unchanged]
-    // ... [rest of the constructor remains unchanged]
-
-    resetImages1();
-    resetImages();
-    loadFromFolder1();
-    loadFromFolder2();
+    resetImages();  
+    loadFromFolder();
 }
 
 ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
@@ -242,8 +237,7 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
 #endif
 }
 
-
-void ProteusAudioProcessorEditor::resized();
+void ProteusAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
@@ -422,6 +416,70 @@ void ProteusAudioProcessorEditor::loadButton1Clicked()
                 if (!processor.jsonFiles.empty()) {
                     modelSelect1.setSelectedItemIndex(0, juce::NotificationType::dontSendNotification);
                     modelSelect1Changed();
+                }
+            }
+        } else {
+            processor.saved_model = ""; // Clear the saved model since there's nothing in the dropdown
+        }
+
+    });
+    
+}
+
+void ProteusAudioProcessorEditor::loadButton1Clicked()
+{ 
+    myChooser = std::make_unique<FileChooser> ("Select a folder to load models from",
+                                               processor.folder,
+                                               "*.json");
+ 
+    auto folderChooserFlags = FileBrowserComponent::openMode | FileBrowserComponent::canSelectDirectories | FileBrowserComponent::canSelectFiles;
+ 
+    myChooser->launchAsync (folderChooserFlags, [this] (const FileChooser& chooser)                
+    {
+        if (!chooser.getResult().exists()) {
+                return;
+        }
+        processor.model_loaded = false;
+        Array<File> files;
+        if (chooser.getResult().existsAsFile()) { // If a file is selected
+
+            if (isValidFormat(chooser.getResult())) {
+                processor.saved_model = chooser.getResult();
+            }
+
+            files = chooser.getResult().getParentDirectory().findChildFiles(2, false, "*.json");
+            processor.folder = chooser.getResult().getParentDirectory();
+
+        } else if (chooser.getResult().isDirectory()){ // Else folder is selected
+            files = chooser.getResult().findChildFiles(2, false, "*.json");
+            processor.folder = chooser.getResult();
+        }
+        
+        processor.jsonFiles.clear();
+
+        modelSelect2.clear();
+
+    
+        if (files.size() > 0) {
+            for (auto file : files) {
+
+                if (isValidFormat(file)) {
+                    modelSelect2.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
+                    processor.jsonFiles.push_back(file);
+                    processor.num_models += 1;
+                }
+            }
+            if (chooser.getResult().existsAsFile()) {
+                
+                if (isValidFormat(chooser.getResult()) == true) {
+                    modelSelect2.setText(processor.saved_model.getFileNameWithoutExtension());
+                    processor.loadConfig(processor.saved_model);
+                }
+            }
+            else {
+                if (!processor.jsonFiles.empty()) {
+                    modelSelect2.setSelectedItemIndex(0, juce::NotificationType::dontSendNotification);
+                    modelSelect2Changed();
                 }
             }
         } else {
@@ -696,4 +754,3 @@ void ProteusAudioProcessorEditor::resetImages1()
     }
        
   }
-}
