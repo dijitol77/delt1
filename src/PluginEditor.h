@@ -42,15 +42,18 @@ private:
     Component originalContainer;
     Component duplicateContainer;
 
-    // Original Components
-    TextButton loadButton;
-    virtual void buttonClicked1(Button* button) override;
-    bool isValidFormat(File configFile);
-    void loadButton1Clicked();
+// Components
+TextButton loadButton1;
+TextButton loadButton2;
 
-    virtual void buttonClicked2(Button* button) override;
-    bool isValidFormat(File configFile);
-    void loadButton2Clicked();
+// Event handlers
+virtual void buttonClicked1(Button* button) override;    
+virtual void buttonClicked2(Button* button) override;
+
+// Utility functions
+bool isValidFormat(File configFile);
+void loadButton1Clicked();
+void loadButton2Clicked();
 
     //Image background = ImageCache::getFromMemory(BinaryData::smart_pedal_jpg, BinaryData::smart_pedal_jpgSize);
     // LookandFeels and Graphics
@@ -97,14 +100,25 @@ private:
     myLookAndFeel smallKnobLAF;
 
 
-
-    virtual void sliderValueChanged(Slider* slider) override;
+  virtual void slider1ValueChanged(Slider* slider) override;
 
     AudioProcessorParameter* getParameter(const String& paramId);
  
     void odFootSw1Clicked();
     void modelSelect1Changed();
     void cabOnButton1Clicked();
+    void odFootSw2Clicked();
+    void modelSelect2Changed();
+    void cabOnButton2Clicked();
+    bool model_loaded = false;
+
+    virtual void slider2ValueChanged(Slider* slider) override;
+
+    AudioProcessorParameter* getParameter(const String& paramId);
+ 
+    void odFootSw2Clicked();
+    void modelSelect2Changed();
+    void cabOnButton2Clicked();
     void odFootSw2Clicked();
     void modelSelect2Changed();
     void cabOnButton2Clicked();
