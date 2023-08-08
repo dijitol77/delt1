@@ -33,11 +33,11 @@ ProteusAudioProcessor::ProteusAudioProcessor()
 #endif
 {
    // Renamed parameter assignments for Container 1
-    driveParam1 = treeState.getRawParameterValue(GAIN_ID);
-    masterParam1 = treeState.getRawParameterValue(MASTER_ID);
-    bassParam1 = treeState.getRawParameterValue(BASS_ID);
-    midParam1 = treeState.getRawParameterValue(MID_ID);
-    trebleParam1 = treeState.getRawParameterValue(TREBLE_ID);
+    driveParam1 = treeState.getRawParameterValue(GAIN1_ID);
+    masterParam1 = treeState.getRawParameterValue(MASTER1_ID);
+    bassParam1 = treeState.getRawParameterValue(BASS1_ID);
+    midParam1 = treeState.getRawParameterValue(MID1_ID);
+    trebleParam1 = treeState.getRawParameterValue(TREBLE1_ID);
 
     auto bassValue1 = static_cast<float> (bassParam1->load());
     auto midValue1 = static_cast<float> (midParam1->load());
@@ -55,11 +55,11 @@ ProteusAudioProcessor::ProteusAudioProcessor()
 
 {
    // Renamed parameter assignments for Container 1
-    driveParam2 = treeState.getRawParameterValue(GAIN_ID);
-    masterParam2 = treeState.getRawParameterValue(MASTER_ID);
-    bassParam2 = treeState.getRawParameterValue(BASS_ID);
-    midParam2 = treeState.getRawParameterValue(MID_ID);
-    trebleParam2 = treeState.getRawParameterValue(TREBLE_ID);
+    driveParam2 = treeState.getRawParameterValue(GAIN2_ID);
+    masterParam2 = treeState.getRawParameterValue(MASTER2_ID);
+    bassParam2 = treeState.getRawParameterValue(BASS2_ID);
+    midParam2 = treeState.getRawParameterValue(MID2_ID);
+    trebleParam2 = treeState.getRawParameterValue(TREBLE2_ID);
 
     auto bassValue2 = static_cast<float> (bassParam2->load());
     auto midValue2 = static_cast<float> (midParam2->load());
