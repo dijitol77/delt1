@@ -457,7 +457,7 @@ void ProteusAudioProcessorEditor::loadFromFolder1()
     files = processor.folder.findChildFiles(2, false, "*.json");
 
     processor.jsonFiles.clear();
-    modelSelect.clear();
+    modelSelect1.clear();
 
     if (files.size() > 0) {
         for (auto file : files) {
@@ -491,7 +491,7 @@ void ProteusAudioProcessorEditor::loadFromFolder2()
     files = processor.folder.findChildFiles(2, false, "*.json");
 
     processor.jsonFiles.clear();
-    modelSelect.clear();
+    modelSelect2.clear();
 
     if (files.size() > 0) {
         for (auto file : files) {
