@@ -44,10 +44,13 @@ private:
 
     // Original Components
     TextButton loadButton;
-    virtual void buttonClicked(Button* button) override;
-
+    virtual void buttonClicked1(Button* button) override;
     bool isValidFormat(File configFile);
-    void loadButtonClicked();
+    void loadButton1Clicked();
+
+    virtual void buttonClicked2(Button* button) override;
+    bool isValidFormat(File configFile);
+    void loadButton2Clicked();
 
     //Image background = ImageCache::getFromMemory(BinaryData::smart_pedal_jpg, BinaryData::smart_pedal_jpgSize);
     // LookandFeels and Graphics
@@ -57,20 +60,20 @@ private:
     //Image background_off = ImageCache::getFromMemory(BinaryData::background_off_jpg, BinaryData::background_off_jpgSize);
 
     // Global Widgets
-    Label modelLabel;
-    Label versionLabel;
+    Label modelLabel1;
+    Label versionLabel1;
 
-    ComboBox modelSelect;
+    ComboBox modelSelect1;
 
     // Overdrive Widgets
-    Slider ampBassKnob;
-    Slider ampMidKnob;
-    Slider ampTrebleKnob;
-    Slider odDriveKnob;
-    Slider odLevelKnob;
+    Slider ampBassKnob1;
+    Slider ampMidKnob1;
+    Slider ampTrebleKnob1;
+    Slider odDriveKnob1;
+    Slider odLevelKnob1;
     //ImageButton odFootSw;
     //ImageButton odLED;
-    ImageButton cabOnButton;
+    ImageButton cabOnButton1;
 
     // Duplicated Components
     
@@ -87,7 +90,7 @@ private:
 
     
     ImageButton cabOnButton2;
-
+    // same for both for now
     // LookandFeels 
     //myLookAndFeel blackHexKnobLAF;
     myLookAndFeel bigKnobLAF;
@@ -99,27 +102,24 @@ private:
 
     AudioProcessorParameter* getParameter(const String& paramId);
  
-    void odFootSwClicked();
-    void modelSelectChanged();
-    void cabOnButtonClicked();
-    // void loadButton2Clicked();
+    void odFootSw1Clicked();
+    void modelSelect1Changed();
+    void cabOnButton1Clicked();
+    void odFootSw2Clicked();
+    void modelSelect2Changed();
     void cabOnButton2Clicked();
-
     bool model_loaded = false;
 
 public:
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> midSliderAttach;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> bassSlider1Attach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> midSlider1Attach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> trebleSlider1Attach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSlider1Attach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSlider1Attach;
 
     // Duplicated Slider Attachments
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach2;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> midSliderAttach2;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach2;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach2;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach2;
-
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
-};
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> bassSlider2Attach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> midSlider2Attach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> trebleSlider2Attach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSlider2Attach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSlider2Attach;
