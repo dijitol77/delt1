@@ -26,8 +26,8 @@ public:
     ~ProteusAudioProcessorEditor();
 
     //==============================================================================
-    void paint (Graphics&) override;
-    void resized() override;
+    void paint (Graphics&);
+    void resized();
     std::unique_ptr<FileChooser> myChooser;
 
     void loadFromFolder();
@@ -47,8 +47,8 @@ private:
     TextButton loadButton2;
 
     // Event handlers
-    virtual void buttonClicked1(Button* button) override;    
-    virtual void buttonClicked2(Button* button) override;
+    virtual void buttonClicked1(Button* button);    
+    virtual void buttonClicked2(Button* button);
 
     // Utility functions
     bool isValidFormat(File configFile);
@@ -90,8 +90,8 @@ private:
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
 
-    virtual void slider1ValueChanged(Slider* slider) override;
-    virtual void slider2ValueChanged(Slider* slider) override;
+    virtual void slider1ValueChanged(Slider* slider);
+    virtual void slider2ValueChanged(Slider* slider);
 
     AudioProcessorParameter* getParameter(const String& paramId);
 
