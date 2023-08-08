@@ -695,4 +695,5 @@ void ProteusAudioProcessorEditor::resetImages1()
             0.0);
     }
        
+  }
 }
