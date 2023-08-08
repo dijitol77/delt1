@@ -236,14 +236,14 @@ ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
 }
 
 //==============================================================================
-void ProteusAudioProcessorEditor::paint (Graphics& g)
-{
-    g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
+// void ProteusAudioProcessorEditor::paint (Graphics& g)
+// {
+//    g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
 
-    g.setColour (Colours::white);
-    g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), Justification::centred, 1);
-}
+//    g.setColour (Colours::white);
+//    g.setFont (15.0f);
+//    g.drawFittedText ("Hello World!", getLocalBounds(), Justification::centred, 1);
+// }
 
 void ProteusAudioProcessorEditor::resized() void ProteusAudioProcessorEditor::resized()
 {
