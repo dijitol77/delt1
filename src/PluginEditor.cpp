@@ -30,9 +30,9 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
         modelSelect1.addItem(jsonFile.getFileName(), c1);
         c1 += 1;
     }
-    modelSelect.onChange = [this] {modelSelectChanged();};
+    modelSelect1.onChange = [this] {modelSelect1Changed();};
 
-    auto font1 = modelLabel.getFont();  // Renamed to font1
+    auto font1 = modelLabel1.getFont();  // Renamed to font1
     float height1 = font1.getHeight();  // Renamed to height1
     font1.setHeight(height1);
 
@@ -50,9 +50,9 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
         modelSelect2.addItem(jsonFile.getFileName(), c2);  // Changed to modelSelect2
         c2 += 1;
     }
-    modelSelect2.onChange = [this] {modelSelectChanged();};  // Changed to modelSelect2
+    modelSelect2.onChange = [this] {modelSelect2Changed();};  // Changed to modelSelect2
 
-    auto font2 = modelLabel.getFont();  // Renamed to font2
+    auto font2 = modelLabel2.getFont();  // Renamed to font2
     float height2 = font2.getHeight();  // Renamed to height2
     font2.setHeight(height2);
 
@@ -82,7 +82,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
         Image(), 1.0, Colours::transparentWhite,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
         0.0);
-    addAndMakeVisible(cabOnButton);
+    addAndMakeVisible(cabOnButton1);
     cabOnButton1.addListener(this);
 
 // odDriveKnob1
@@ -524,7 +524,7 @@ void ProteusAudioProcessorEditor::button1Clicked(juce::Button* button)
     //    odFootSwClicked();
     if (button == &loadButton) {
         loadButton1Clicked();
-    } else if (button == &cabOnButton) {
+    } else if (button == &cabOnButton1) {
         cabOnButton1Clicked();
     }
 
@@ -536,7 +536,7 @@ void ProteusAudioProcessorEditor::button2Clicked(juce::Button* button)
     //    odFootSwClicked();
     if (button == &loadButton) {
         loadButton2Clicked();
-    } else if (button == &cabOnButton) {
+    } else if (button == &cabOnButton2) {
         cabOnButton2Clicked();
     }
 
@@ -587,8 +587,8 @@ void ProteusAudioProcessorEditor::cabOnButton2Clicked()
 void ProteusAudioProcessorEditor::sliderValue1Changed(Slider* slider)
 {
     // Amp "1"
-    if (slider == &ampBassKnob1 || slider == &ampMidKnob || slider == &ampTrebleKnob) {
-        processor.set_ampEQ(ampBassKnob1.getValue(), ampMidKnob.getValue(), ampTrebleKnob.getValue());
+    if (slider == &ampBassKnob1 || slider == &ampMidKnob || slider == &ampTrebleKnob1) {
+        processor.set_ampEQ(ampBassKnob1.getValue(), ampMidKnob.getValue(), ampTrebleKnob1.getValue());
     }
 
 }
@@ -597,8 +597,8 @@ void ProteusAudioProcessorEditor::sliderValue2Changed(Slider* slider)
 {
    
     // Amp "2"
-    if (slider == &ampBassKnob2 || slider == &ampMidKnob || slider == &ampTrebleKnob) {
-        processor.set_ampEQ(ampBassKnob2.getValue(), ampMidKnob.getValue(), ampTrebleKnob.getValue());
+    if (slider == &ampBassKnob2 || slider == &ampMidKnob || slider == &ampTrebleKnob2) {
+        processor.set_ampEQ(ampBassKnob2.getValue(), ampMidKnob.getValue(), ampTrebleKnob2.getValue());
     }
 
 }
