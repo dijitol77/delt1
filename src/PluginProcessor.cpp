@@ -244,11 +244,11 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
         {
             // Apply EQ
             if (ch == 0) {
-                eq4band.process(buffer.getReadPointer(0), buffer.getWritePointer(0), midiMessages, numSamples, numInputChannels, sampleRate);
+                eq4band1.process(buffer.getReadPointer(0), buffer.getWritePointer(0), midiMessages, numSamples, numInputChannels, sampleRate);
             
             }
             else if (ch == 1) {
-                eq4band2.process(buffer.getReadPointer(1), buffer.getWritePointer(1), midiMessages, numSamples, numInputChannels, sampleRate);
+                eq4band2_1.process(buffer.getReadPointer(1), buffer.getWritePointer(1), midiMessages, numSamples, numInputChannels, sampleRate);
             }
         }
 
@@ -345,8 +345,8 @@ void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInByt
 
 void ProteusAudioProcessor::set_ampEQ(float bass_slider, float mid_slider, float treble_slider)
 {
-    eq4band.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
-    eq4band2.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
+    eq4band1.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
+    eq4band2_1.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
 }
 
 void ProteusAudioProcessor::loadConfig(File configFile)
