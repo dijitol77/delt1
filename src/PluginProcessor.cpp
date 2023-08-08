@@ -32,18 +32,20 @@ ProteusAudioProcessor::ProteusAudioProcessor()
     
 #endif
 {
-    driveParam = treeState.getRawParameterValue (GAIN_ID);
-    masterParam = treeState.getRawParameterValue (MASTER_ID);
-    bassParam = treeState.getRawParameterValue (BASS_ID);
-    midParam = treeState.getRawParameterValue (MID_ID);
-    trebleParam = treeState.getRawParameterValue (TREBLE_ID);
+   // Renamed parameter assignments for Container 1
+    driveParam1 = treeState.getRawParameterValue(GAIN_ID);
+    masterParam1 = treeState.getRawParameterValue(MASTER_ID);
+    bassParam1 = treeState.getRawParameterValue(BASS_ID);
+    midParam1 = treeState.getRawParameterValue(MID_ID);
+    trebleParam1 = treeState.getRawParameterValue(TREBLE_ID);
 
     auto bassValue = static_cast<float> (bassParam->load());
     auto midValue = static_cast<float> (midParam->load());
     auto trebleValue = static_cast<float> (trebleParam->load());
 
-    eq4band.setParameters(bassValue, midValue, trebleValue, 0.0);
-    eq4band2.setParameters(bassValue, midValue, trebleValue, 0.0);
+    // Updated EQ band parameters for Container 1
+    eq4band1.setParameters(bassValue, midValue, trebleValue, 0.0);
+    eq4band2_1.setParameters(bassValue, midValue, trebleValue, 0.0);
 
     pauseVolume = 3;
 
@@ -225,12 +227,12 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
             auto block44k = resampler.processIn(block);
             for (int ch = 0; ch < buffer.getNumChannels(); ++ch)
             {
-                // Apply LSTM model
+                // Apply LSTM model -Updated LSTM processing for Container 1
                 if (ch == 0) {
-                    LSTM.process(block44k.getChannelPointer(0), driveValue, block44k.getChannelPointer(0), (int)block44k.getNumSamples());
+              LSTM1.process(block44k.getChannelPointer(0), block44k.getChannelPointer(0), (int)block44k.getNumSamples());
                 }
                 else if (ch == 1) {
-                    LSTM2.process(block44k.getChannelPointer(1), driveValue, block44k.getChannelPointer(1), (int)block44k.getNumSamples());
+                    LSTM2_1.process(block44k.getChannelPointer(1), block44k.getChannelPointer(1), (int)block44k.getNumSamples());
                 }
             }
             resampler.processOut(block44k, block);
