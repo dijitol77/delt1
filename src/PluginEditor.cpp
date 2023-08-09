@@ -619,8 +619,8 @@ void ProteusAudioProcessorEditor::cabOnButton2Clicked()
 void ProteusAudioProcessorEditor::sliderValue1Changed(Slider* slider)
 {
     // Amp "1"
-    if (slider == &ampBassKnob1 || slider == &ampMidKnob || slider == &ampTrebleKnob1) {
-        processor.set_ampEQ(ampBassKnob1.getValue(), ampMidKnob.getValue(), ampTrebleKnob1.getValue());
+    if (slider == &ampBassKnob1 || slider == &ampMidKnob1 || slider == &ampTrebleKnob1) {
+        processor.set_ampEQ(ampBassKnob1.getValue(), ampMidKnob1.getValue(), ampTrebleKnob1.getValue());
     }
 
 }
@@ -629,8 +629,8 @@ void ProteusAudioProcessorEditor::sliderValue2Changed(Slider* slider)
 {
    
     // Amp "2"
-    if (slider == &ampBassKnob2 || slider == &ampMidKnob || slider == &ampTrebleKnob2) {
-        processor.set_ampEQ(ampBassKnob2.getValue(), ampMidKnob.getValue(), ampTrebleKnob2.getValue());
+    if (slider == &ampBassKnob2 || slider == &ampMidKnob2 || slider == &ampTrebleKnob2) {
+        processor.set_ampEQ(ampBassKnob2.getValue(), ampMidKnob2.getValue(), ampTrebleKnob2.getValue());
     }
 
 }
