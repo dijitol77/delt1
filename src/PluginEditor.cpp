@@ -16,13 +16,13 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
      // Drive Slider a1
-    driveSlider.setSliderStyle(juce::Slider::LinearVertical);
-    driveSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
-    driveSlider.setPopupDisplayEnabled(true, false, this);
-    driveSlider.setTextValueSuffix(" Drive");
-    driveSlider.setValue(1.0);
+    driveSlider1.setSliderStyle(juce::Slider::LinearVertical);
+    driveSlider1.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
+    driveSlider1.setPopupDisplayEnabled(true, false, this);
+    driveSlider1.setTextValueSuffix(" Drive");
+    driveSlider1.setValue(1.0);
     addAndMakeVisible(&driveSlider);
-    driveSlider.addListener(this);
+    driveSlider1.addListener(this);
 
     // Drive Slider a2
     driveSlider2.setSliderStyle(juce::Slider::LinearVertical);
@@ -152,7 +152,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     ampTrebleKnob1.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     ampTrebleKnob1.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     ampTrebleKnob1.setDoubleClickReturnValue(true, 0.0);
-//versionLabel1
+// versionLabel1
     addAndMakeVisible(versionLabel1);
     versionLabel1.setText("v1.2", juce::NotificationType::dontSendNotification);
     versionLabel1.setJustificationType(juce::Justification::left);
