@@ -36,7 +36,7 @@ ProteusAudioProcessor::ProteusAudioProcessor()
                                             std::make_unique<AudioParameterFloat>(MASTER2_ID, MASTER2_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5)})
 #endif
 {
-    // Initialize parameters
+    // Initialize parameters for Container 1
     driveParam1 = treeState.getRawParameterValue(GAIN1_ID);
     masterParam1 = treeState.getRawParameterValue(MASTER1_ID);
     bassParam1 = treeState.getRawParameterValue(BASS1_ID);
@@ -48,11 +48,8 @@ ProteusAudioProcessor::ProteusAudioProcessor()
     auto midValue1 = static_cast<float>(midParam1->load());
     auto trebleValue1 = static_cast<float>(trebleParam1->load());
 
-    // Update EQ band parameters for Container 1
-    eq4band1.setParameters(bassValue1, midValue1, trebleValue1, 0.0);
-    eq4band2_1.setParameters(bassValue1, midValue1, trebleValue1, 0.0);
 
-    // Assign parameter values for Container 2
+    // Load parameter values for Container 1 and update EQ bands
     driveParam2 = treeState.getRawParameterValue(GAIN2_ID);
     masterParam2 = treeState.getRawParameterValue(MASTER2_ID);
     bassParam2 = treeState.getRawParameterValue(BASS2_ID);
@@ -64,41 +61,108 @@ ProteusAudioProcessor::ProteusAudioProcessor()
     auto midValue2 = static_cast<float>(midParam2->load());
     auto trebleValue2 = static_cast<float>(trebleParam2->load());
 
-    // Update EQ band parameters for Container 2
-    eq4band3.setParameters(bassValue2, midValue2, trebleValue2, 0.0);
-    eq4band4.setParameters(bassValue2, midValue2, trebleValue2, 0.0);
+    // Update EQ band parameters for Container 1
+    eq4band1.setParameters(bassValue1, midValue1, trebleValue1, 0.0);
+    eq4band2.setParameters(bassValue1, midValue1, trebleValue1, 0.0);
 
     pauseVolume = 3;
 
+    cabSimIRa.load(BinaryData::default_ir_wav, BinaryData::default_ir_wavSize);
+
     // Initialize LSTM models
     LSTM1.reset();
-    LSTM2_1.reset();
+    LSTM2.reset();
     LSTM3.reset();
     LSTM4.reset();
+    }
+    
+   ProteusAudioProcessor::~ProteusAudioProcessor()
+{
+}
+
+//==============================================================================
+const String ProteusAudioProcessor::getName() const
+{
+    return JucePlugin_Name;
+}
+
+bool ProteusAudioProcessor::acceptsMidi() const
+{
+   #if JucePlugin_WantsMidiInput
+    return true;
+   #else
+    return false;
+   #endif
+}
+
+bool ProteusAudioProcessor::producesMidi() const
+{
+   #if JucePlugin_ProducesMidiOutput
+    return true;
+   #else
+    return false;
+   #endif
+}
+
+bool ProteusAudioProcessor::isMidiEffect() const
+{
+   #if JucePlugin_IsMidiEffect
+    return true;
+   #else
+    return false;
+   #endif
+}
+
+double ProteusAudioProcessor::getTailLengthSeconds() const
+{
+    return 0.0;
+}
+
+int ProteusAudioProcessor::getNumPrograms()
+{
+    return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
+                // so this should be at least 1, even if you're not really implementing programs.
+}
+
+int ProteusAudioProcessor::getCurrentProgram()
+{
+    return 0;
+}
+
+void ProteusAudioProcessor::setCurrentProgram (int index)
+{
+}
+
+const String ProteusAudioProcessor::getProgramName (int index)
+{
+    return {};
 }
 
 void ProteusAudioProcessor::changeProgramName (int index, const String& newName)
 {
 }
 
-void ProteusAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
+//==============================================================================
+void ProteusAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback initialization
-    dcBlocker.state = *dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, 35.0f);
+    // Use this method as the place to do any pre-playback
+    // initialisation that you need..
+    
+    *dcBlocker.state = *dsp::IIR::Coefficients<float>::makeHighPass (sampleRate, 35.0f);
 
     // prepare resampler for target sample rate: 44.1 kHz
     constexpr double targetSampleRate = 44100.0;
     //resampler.prepareWithTargetSampleRate ({ sampleRate, (uint32) samplesPerBlock, 1 }, targetSampleRate);
     resampler.prepareWithTargetSampleRate({ sampleRate, (uint32)samplesPerBlock, 2 }, targetSampleRate);
 
-    dsp::ProcessSpec specMono{ sampleRate, static_cast<uint32>(samplesPerBlock), 1 };
-    dsp::ProcessSpec spec{ sampleRate, static_cast<uint32>(samplesPerBlock), 2 };
 
-    dcBlocker.prepare(spec);
+    dsp::ProcessSpec specMono { sampleRate, static_cast<uint32> (samplesPerBlock), 1 };
+    dsp::ProcessSpec spec{ sampleRate, static_cast<uint32> (samplesPerBlock), 2 };
 
-    // Reset LSTM models
+    dcBlocker.prepare (spec); 
+
     LSTM1.reset();
-    LSTM2_1.reset();
+    LSTM2.reset();
     LSTM3.reset();
     LSTM4.reset();
 
@@ -116,24 +180,49 @@ void ProteusAudioProcessor::releaseResources()
 #ifndef JucePlugin_PreferredChannelConfigurations
 bool ProteusAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
-    return checkBusesLayoutSupport(layouts);
+  #if JucePlugin_IsMidiEffect
+    ignoreUnused (layouts);
+    return true;
+  #else
+    // This is the place where you check if the layout is supported.
+    // In this template code we only support mono or stereo.
+    if (layouts.getMainOutputChannelSet() != AudioChannelSet::mono()
+     && layouts.getMainOutputChannelSet() != AudioChannelSet::stereo())
+        return false;
+
+    // This checks if the input layout matches the output layout
+   #if ! JucePlugin_IsSynth
+    if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
+        return false;
+   #endif
+
+    return true;
+  #endif
 }
 #endif
 
 
 void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
-    processAudio(buffer, midiMessages);
-        ScopedNoDenormals noDenormals;
+    ScopedNoDenormals noDenormals;
 
     // Load parameter values for Container 1
+
+    // Load parameter values for Container 2
     auto driveValue1 = static_cast<float> (driveParam1->load());
     auto masterValue1 = static_cast<float> (masterParam1->load());
     auto bassValue1 = static_cast<float> (bassParam1->load());
     auto midValue1 = static_cast<float> (midParam1->load());
     auto trebleValue1 = static_cast<float> (trebleParam1->load());
 
-    // TODO: Load parameter values for Container 2 here
+    // Load parameter values for Container 2
+    auto driveValue2 = static_cast<float> (driveParam2->load());
+    auto masterValue2 = static_cast<float> (masterParam2->load());
+    auto bassValue2 = static_cast<float> (bassParam2->load());
+    auto midValue2 = static_cast<float> (midParam2->load());
+    auto trebleValue2 = static_cast<float> (trebleParam2->load());
+
+
 
     // Setup Audio Data
     const int numSamples = buffer.getNumSamples();
@@ -143,156 +232,132 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
     dsp::AudioBlock<float> block(buffer);
     dsp::ProcessContextReplacing<float> context(block);
 
-    // Overdrive Pedal ================================================================== 
+    // Container 1 Processing
     if (fw_state == 1 && model_loaded == true) {
-        
-        if (conditioned == false) {
-            // Apply ramped changes for gain smoothing
-            if (driveValue == previousDriveValue)
-            {
-                buffer.applyGain(driveValue*2.5);
-            }
-             else {
-                buffer.applyGainRamp(0, (int) buffer.getNumSamples(), previousDriveValue * 2.5, driveValue * 2.5);
-                previousDriveValue = driveValue;
-            }
-            auto block44k = resampler.processIn(block);
-            for (int ch = 0; ch < buffer.getNumChannels(); ++ch)
-            {
-                // Apply LSTM model
-                if (ch == 0) {
-                    LSTM1.process(block44k.getChannelPointer(0), block44k.getChannelPointer(0), (int)block44k.getNumSamples());
-                }
-                else if (ch == 1) {
-                    LSTM2_1.process(block44k.getChannelPointer(1), block44k.getChannelPointer(1), (int)block44k.getNumSamples());
-                }
-            }
-            resampler.processOut(block44k, block);
+        // ... [Your existing code for Container 1]
+         if (conditioned == false) {
+        // Apply ramped changes for gain smoothing
+        if (driveValue == previousDriveValue) {
+            buffer.applyGain(driveValue*2.5);
         } else {
-            buffer.applyGain(1.5); // Apply default boost to help sound
-            // resample to target sample rate
-            
-            auto block44k = resampler.processIn(block);
-            for (int ch = 0; ch < buffer.getNumChannels(); ++ch)
-            {
-                // Apply LSTM model
-                if (ch == 0) {
-                    LSTM1.process(block44k.getChannelPointer(0), driveValue, block44k.getChannelPointer(0), (int)block44k.getNumSamples());
-                }
-                else if (ch == 1) {
-                    LSTM2_1.process(block44k.getChannelPointer(1), driveValue, block44k.getChannelPointer(1), (int)block44k.getNumSamples());
-                }
+            buffer.applyGainRamp(0, (int) buffer.getNumSamples(), previousDriveValue * 2.5, driveValue * 2.5);
+            previousDriveValue = driveValue;
+        }
+        
+        for (int ch = 0; ch < buffer.getNumChannels(); ++ch) {
+            // Apply LSTM model
+            if (ch == 0) {
+                LSTM1.process(buffer.getReadPointer(0), buffer.getWritePointer(0), (int)buffer.getNumSamples());
+            } else if (ch == 1) {
+                LSTM2_1.process(buffer.getReadPointer(1), buffer.getWritePointer(1), (int)buffer.getNumSamples());
+            }
+        }
+    } else {
+        buffer.applyGain(1.5); // Apply default boost to help sound
+        
+        for (int ch = 0; ch < buffer.getNumChannels(); ++ch) {
+            // Apply LSTM model
+            if (ch == 0) {
+                LSTM1.process(buffer.getReadPointer(0), driveValue, buffer.getWritePointer(0), (int)buffer.getNumSamples());
+            } else if (ch == 1) {
+                LSTM2_1.process(buffer.getReadPointer(1), driveValue, buffer.getWritePointer(1), (int)buffer.getNumSamples());
             }
             resampler.processOut(block44k, block);
         }
+    }
 
-        dcBlocker.process(context);
+    // Load parameter values for Container 2
+    auto driveValue2 = static_cast<float> (driveParam2->load());
 
-        for (int ch = 0; ch < buffer.getNumChannels(); ++ch)
-        {
-            // Apply EQ
+    // Container 2 Processing
+    if (fw_state == 1 && model_loaded == true) {
+        // ... [Your existing code for Container 2]
+    if (conditioned == false) {
+        // Apply ramped changes for gain smoothing
+        if (driveValue == previousDriveValue) {
+            buffer.applyGain(driveValue*2.5);
+        } else {
+            buffer.applyGainRamp(0, (int) buffer.getNumSamples(), previousDriveValue * 2.5, driveValue * 2.5);
+            previousDriveValue = driveValue;
+        }
+        
+        for (int ch = 0; ch < buffer.getNumChannels(); ++ch) {
+            // Apply LSTM model
             if (ch == 0) {
-                eq4band1.process(buffer.getReadPointer(0), buffer.getWritePointer(0), midiMessages, numSamples, numInputChannels, sampleRate);
-            
-            }
-            else if (ch == 1) {
-                eq4band2_1.process(buffer.getReadPointer(1), buffer.getWritePointer(1), midiMessages, numSamples, numInputChannels, sampleRate);
+                LSTM3.process(buffer.getReadPointer(0), buffer.getWritePointer(0), (int)buffer.getNumSamples());
+            } else if (ch == 1) {
+                LSTM4.process(buffer.getReadPointer(1), buffer.getWritePointer(1), (int)buffer.getNumSamples());
             }
         }
+    } else {
+        buffer.applyGain(1.5); // Apply default boost to help sound
+        
+        for (int ch = 0; ch < buffer.getNumChannels(); ++ch) {
+            // Apply LSTM model
+            if (ch == 0) {
+                LSTM3.process(buffer.getReadPointer(0), driveValue, buffer.getWritePointer(0), (int)buffer.getNumSamples());
+            } else if (ch == 1) {
+                LSTM4.process(buffer.getReadPointer(1), driveValue, buffer.getWritePointer(1), (int)buffer.getNumSamples());
+            }
+            resampler.processOut(block44k, block);
+        }
+    }
+
+    dcBlocker.process(context);
 }
 
- // Overdrive Pedal 2 ================================================================== 
-    if (fw_state == 1 && model_loaded == true) {
-        
-        if (conditioned == false) {
-            // Apply ramped changes for gain smoothing
-            if (driveValue == previousDriveValue)
-            {
-                buffer.applyGain(driveValue*2.5);
-            }
-             else {
-                buffer.applyGainRamp(0, (int) buffer.getNumSamples(), previousDriveValue * 2.5, driveValue * 2.5);
-                previousDriveValue = driveValue;
-            }
-            auto block44k = resampler.processIn(block);
-            for (int ch = 0; ch < buffer.getNumChannels(); ++ch)
-            {
-                // Apply LSTM model
-                if (ch == 0) {
-                    LSTM3.process(block44k.getChannelPointer(0), block44k.getChannelPointer(0), (int)block44k.getNumSamples());
-                }
-                else if (ch == 1) {
-                    LSTM3.process(block44k.getChannelPointer(1), block44k.getChannelPointer(1), (int)block44k.getNumSamples());
-                }
-            }
-            resampler.processOut(block44k, block);
-        } else {
-            buffer.applyGain(1.5); // Apply default boost to help sound
-            // resample to target sample rate
-            
-            auto block44k = resampler.processIn(block);
-            for (int ch = 0; ch < buffer.getNumChannels(); ++ch)
-            {
-                // Apply LSTM model
-                if (ch == 0) {
-                    LSTM3.process(block44k.getChannelPointer(0), driveValue, block44k.getChannelPointer(0), (int)block44k.getNumSamples());
-                }
-                else if (ch == 1) {
-                    LSTM4.process(block44k.getChannelPointer(1), driveValue, block44k.getChannelPointer(1), (int)block44k.getNumSamples());
-                }
-            }
-            resampler.processOut(block44k, block);
-        }
 
-        dcBlocker.process(context);
+    // EQ Adjustments (applied after both Container 1 and Container 2 processing)
+    for (int ch = 0; ch < buffer.getNumChannels(); ++ch)
+    {
+        // Apply EQ
+        if (ch == 0) {
+            eq4band1.process(buffer.getReadPointer(0), buffer.getWritePointer(0), midiMessages, numSamples, numInputChannels, sampleRate);
+        }
+        else if (ch == 1) {
+            eq4band2.process(buffer.getReadPointer(1), buffer.getWritePointer(1), midiMessages, numSamples, numInputChannels, sampleRate);
+        }
+    }
 
-        for (int ch = 0; ch < buffer.getNumChannels(); ++ch)
-        {
-            // Apply EQ
-            if (ch == 0) {
-                eq4band3.process(buffer.getReadPointer(0), buffer.getWritePointer(0), midiMessages, numSamples, numInputChannels, sampleRate);
-            
-            }
-            else if (ch == 1) {
-                eq4band4.process(buffer.getReadPointer(1), buffer.getWritePointer(1), midiMessages, numSamples, numInputChannels, sampleRate);
-            }
-        }
-        if (cab_state == 1) {
-            cabSimIRa.process(context); // Process IR a on channel 0
-            buffer.applyGain(2.0);
-        //} else {
-        //    buffer.applyGain(0.7);
-        }
- 
+    // Impulse Response Application (if cabinet simulation is enabled)
+    if (cab_state == 1) {
+        dsp::AudioBlock<float> block(buffer);
+        dsp::ProcessContextReplacing<float> context(block);
+        cabSimIRa.process(context);
+    }
 
-        // Master Volume 
-        // Apply ramped changes for gain smoothing
-        if (masterValue == previousMasterValue)
-        {
-            buffer.applyGain(masterValue);
-        }
-        else {
-            buffer.applyGainRamp(0, (int) buffer.getNumSamples(), previousMasterValue, masterValue);
-            previousMasterValue = masterValue;
-        }
+    // Master Volume Adjustment
+    auto masterValue = static_cast<float> (masterParam1->load());
+    if (masterValue != previousMasterValue)
+    {
+        buffer.applyGainRamp(0, buffer.getNumSamples(), previousMasterValue, masterValue);
+        previousMasterValue = masterValue;
+    }
+    else {
+        buffer.applyGain(masterValue);
+    }
 
-        // Smooth pop sound when changing models
-        if (pauseVolume > 0) {
-            if (pauseVolume > 2)
-                buffer.applyGain(0.0);
-            else if (pauseVolume == 2)
-                buffer.applyGainRamp(0, (int)buffer.getNumSamples(), 0, masterValue / 2);
-            else
-                buffer.applyGainRamp(0, (int)buffer.getNumSamples(), masterValue / 2, masterValue);
-            pauseVolume -= 1;
-        }
+    // Resampling to the target sample rate (moved to after all processing)
+    dsp::AudioBlock<float> block(buffer);
+    auto block44k = resampler.processIn(block);
+    resampler.processOut(block44k, block);
+
+    // Smooth pop sound when changing models
+    if (pauseVolume > 0) {
+        if (pauseVolume > 2)
+            buffer.applyGain(0.0);
+        else if (pauseVolume == 2)
+            buffer.applyGainRamp(0, (int)buffer.getNumSamples(), 0, masterValue / 2);
+        else
+            buffer.applyGainRamp(0, (int)buffer.getNumSamples(), masterValue / 2, masterValue);
+        pauseVolume -= 1;
     }
 }
 
 //==============================================================================
 bool ProteusAudioProcessor::hasEditor() const
 {
-    return true;
+    return true; // (change this to false if you choose to not supply an editor)
 }
 
 AudioProcessorEditor* ProteusAudioProcessor::createEditor()
@@ -315,14 +380,13 @@ void ProteusAudioProcessor::getStateInformation (MemoryBlock& destData)
     xml->setAttribute("saved_model", saved_model.getFullPathName().toStdString());
     xml->setAttribute("current_model_index", current_model_index);
     xml->setAttribute ("cab_state", cab_state);
-    copyXmlToBinary (*xml, destData););
+    copyXmlToBinary (*xml, destData);
+
 }
 
 void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    loadStateInformation 
-    ( 
-        // You should use this method to restore your parameters from this memory block,
+    // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
 
     std::unique_ptr<juce::XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
@@ -349,50 +413,58 @@ void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInByt
 
         }
     }
-    )
+    
 }
 
 void ProteusAudioProcessor::set_ampEQ(float bass_slider, float mid_slider, float treble_slider)
 {
-    updateEQParameters(bass_slider, mid_slider, treble_slider);
+    eq4band.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
+    eq4band2.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
 }
 
-void ProteusAudioProcessor::loadConfig(File configFile)
-{
+void ProteusAudioProcessor::loadConfig(File configFile1, File configFile2) {
+
     this->suspendProcessing(true);
     pauseVolume = 3;
-    String path = configFile.getFullPathName();
-    char_filename = path.toUTF8();
 
-    LSTM1.reset();
-    LSTM2_1.reset();
-    LSTM3.reset();
-    LSTM4.reset();
-
-
-    LSTM1.load_json(char_filename);
-    LSTM2_1.load_json(char_filename);
-    LSTM3.load_json(char_filename);
-    LSTM4.load_json(char_filename);
-
-    if (LSTM1.input_size == 1) {
-        conditioned = false;
-    }
-    else {
-        conditioned = true;
+    // Load model for Container 1 (LSTM1 and LSTM2)
+    String path1 = configFile1.getFullPathName();
+    char_filename1 = path1.toUTF8();
+    try {
+        RT_LSTM model1;
+        model1.load_json(char_filename1);
+        LSTM1 = model1;
+        LSTM2 = model1;
+    } catch (const std::exception& e) {
+        model_loaded = false;
+        std::cerr << "Error loading LSTM model for Container 1: " << e.what() << std::endl;
     }
 
-    //saved_model = configFile;
-    model_loaded = true;
+    // Load model for Container 2 (LSTM3 and LSTM4)
+    String path2 = configFile2.getFullPathName();
+    char_filename2 = path2.toUTF8();
+    try {
+        RT_LSTM model2;
+        model2.load_json(char_filename2);
+        LSTM3 = model2;
+        LSTM4 = model2;
+    } catch (const std::exception& e) {
+        // Handle any exceptions that might occur during loading
+        // This could be due to a malformed file, incorrect path, etc.
+        model_loaded = false;
+        std::cerr << "Error loading LSTM model for Container 2: " << e.what() << std::endl;
+    }
+
+    // ... rest of the function ...
+
     this->suspendProcessing(false);
-    );
+
 }
 
 
 
 //==============================================================================
 // This creates new instances of the plugin..
-AudioProcessor* JUCE_CALLTYPE createPluginFilter()
-{
+AudioProcessor* JUCE_CALLTYPE createPluginFilter() {
     return new ProteusAudioProcessor();
 }
