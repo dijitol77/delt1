@@ -13,38 +13,10 @@
 
 //==============================================================================
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+    : AudioProcessorEditor (&p), processor (p)
 {
-     // Drive Slider a1
-    driveSlider1.setSliderStyle(juce::Slider::LinearVertical);
-    driveSlider1.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
-    driveSlider1.setPopupDisplayEnabled(true, false, this);
-    driveSlider1.setTextValueSuffix(" Drive");
-    driveSlider1.setValue(1.0);
-    addAndMakeVisible(&driveSlider);
-    driveSlider1.addListener(this);
 
-    // Drive Slider a2
-    driveSlider2.setSliderStyle(juce::Slider::LinearVertical);
-    driveSlider2.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
-    driveSlider2.setPopupDisplayEnabled(true, false, this);
-    driveSlider2.setTextValueSuffix(" Drive");
-    driveSlider2.setValue(1.0);
-    addAndMakeVisible(&driveSlider2);
-    driveSlider2.addListener(this);
-
-    // Master Slider
-    masterSlider.setSliderStyle(juce::Slider::LinearVertical);
-    masterSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
-    masterSlider.setPopupDisplayEnabled(true, false, this);
-    masterSlider.setTextValueSuffix(" Master");
-    masterSlider.setValue(1.0);
-    addAndMakeVisible(&masterSlider);
-    masterSlider.addListener(this);
-
-    // ... [rest of the constructor remains unchanged]
-
-    // Overall Widgets for Container 1
+// Container 1 widgets
     addAndMakeVisible(loadButton1);
     loadButton1.setButtonText("LOAD MODEL");
     loadButton1.addListener(this);
@@ -62,9 +34,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     auto font1 = modelLabel1.getFont();  // Renamed to font1
     float height1 = font1.getHeight();  // Renamed to height1
     font1.setHeight(height1);
-
-    // Right handside
-
+// Container 2 widgets
      addAndMakeVisible(loadButton2);
     loadButton2.setButtonText("LOAD MODEL");
     loadButton2.addListener(this);
@@ -78,12 +48,9 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
         c2 += 1;
     }
     modelSelect2.onChange = [this] {modelSelect2Changed();};  // Changed to modelSelect2
-
-    auto font2 = modelLabel2.getFont();  // Renamed to font2
+auto font2 = modelLabel2.getFont();  // Renamed to font2
     float height2 = font2.getHeight();  // Renamed to height2
     font2.setHeight(height2);
-
-
 // currently for both
     // Set Widget Graphics
     bigKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::big_knob_png, BinaryData::big_knob_pngSize));
@@ -101,9 +68,9 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     addAndMakeVisible(odFootSw);
     odFootSw.addListener(this);
     */
-//left hanf container "1"
+// Container 1 
+// cab 1
 
-// cab1
     cabOnButton1.setImages(true, true, true,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
         Image(), 1.0, Colours::transparentWhite,
@@ -113,8 +80,8 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     cabOnButton1.addListener(this);
 
 // odDriveKnob1
-    driveSlider1Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN1_ID, odDriveKnob1);
-    addAndMakeVisible(odDriveKnob1);
+    driveSlider1Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
+    addAndMakeVisible(odDriveKnob);
     odDriveKnob1.setLookAndFeel(&bigKnobLAF);
     odDriveKnob1.addListener(this);
     odDriveKnob1.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
@@ -159,7 +126,8 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     versionLabel1.setColour(juce::Label::textColourId, juce::Colours::white);
     versionLabel1.setFont(font1);
 //
-// right hand container "2"
+
+// Container 2 
 // cab2  
     cabOnButton2.setImages(true, true, true,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
@@ -221,6 +189,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
 // Size of plugin GUI
     setSize (1000, 650);
     resetImages();
+
     loadFromFolder();
 }
 
@@ -265,13 +234,12 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
 #endif
 }
 
-void ProteusAudioProcessorEditor::resized();
+void ProteusAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
 
 //Overall Widgets 1
-driveSlider.setBounds(10, 10, 90, 90);
     loadButton1.setBounds(186, 48, 120, 24);
     modelSelect1.setBounds(52, 11, 400, 28);
     //modelLabel.setBounds(197, 2, 90, 25);
@@ -296,7 +264,6 @@ driveSlider.setBounds(10, 10, 90, 90);
     addAndMakeVisible(duplicateContainer);
 
 //Overall Widgets 2
-driveSlider2.setBounds(110, 10, 90, 90);
     loadButton2.setBounds(186, 48, 120, 24);
     modelSelect2.setBounds(52, 11, 400, 28);
     //modelLabel.setBounds(197, 2, 90, 25);
@@ -312,7 +279,6 @@ driveSlider2.setBounds(110, 10, 90, 90);
     ampMidKnob2.setBounds(227, 131, 62, 62);
     ampTrebleKnob2.setBounds(340, 131, 62, 62);
 
-    masterSlider.setBounds(410, 10, 90, 90);
 
 
 // Bring the duplicate container to the front and repaint
@@ -352,7 +318,7 @@ bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
         return false;
     }
 }
-// load button 1
+
 void ProteusAudioProcessorEditor::loadButton1Clicked()
 { 
     myChooser = std::make_unique<FileChooser> ("Select a folder to load models from",
@@ -386,7 +352,6 @@ void ProteusAudioProcessorEditor::loadButton1Clicked()
 
         modelSelect1.clear();
 
-    
         if (files.size() > 0) {
             for (auto file : files) {
 
@@ -416,7 +381,7 @@ void ProteusAudioProcessorEditor::loadButton1Clicked()
     });
     
 }
-// load button 2
+
 void ProteusAudioProcessorEditor::loadButton2Clicked()
 { 
     myChooser = std::make_unique<FileChooser> ("Select a folder to load models from",
@@ -450,7 +415,6 @@ void ProteusAudioProcessorEditor::loadButton2Clicked()
 
         modelSelect1.clear();
 
-    
         if (files.size() > 0) {
             for (auto file : files) {
 
@@ -470,7 +434,7 @@ void ProteusAudioProcessorEditor::loadButton2Clicked()
             else {
                 if (!processor.jsonFiles.empty()) {
                     modelSelect2.setSelectedItemIndex(0, juce::NotificationType::dontSendNotification);
-                    modelSelect2Changed();
+                    modelSelect1Changed();
                 }
             }
         } else {
@@ -480,6 +444,7 @@ void ProteusAudioProcessorEditor::loadButton2Clicked()
     });
     
 }
+
 // load from folder 1
 void ProteusAudioProcessorEditor::loadFromFolder1()
 {
@@ -512,9 +477,9 @@ void ProteusAudioProcessorEditor::loadFromFolder1()
             }
         }
     }
-    
+ // load button 2   
 }
-// load from folder 2
+// load from folder 1
 void ProteusAudioProcessorEditor::loadFromFolder2()
 {
     processor.model_loaded = false;
@@ -546,8 +511,9 @@ void ProteusAudioProcessorEditor::loadFromFolder2()
             }
         }
     }
-    
+ // load button 2   
 }
+
 
 // buttonClicked1
 void ProteusAudioProcessorEditor::button1Clicked(juce::Button* button)
@@ -620,7 +586,7 @@ void ProteusAudioProcessorEditor::sliderValue1Changed(Slider* slider)
 {
     // Amp "1"
     if (slider == &ampBassKnob1 || slider == &ampMidKnob1 || slider == &ampTrebleKnob1) {
-        processor.set_ampEQ(ampBassKnob1.getValue(), ampMidKnob1.getValue(), ampTrebleKnob1.getValue());
+        processor.set_ampEQ(ampBassKnob1.getValue(), 1.getValue(), ampTrebleKnob1.getValue());
     }
 
 }
@@ -629,7 +595,7 @@ void ProteusAudioProcessorEditor::sliderValue2Changed(Slider* slider)
 {
    
     // Amp "2"
-    if (slider == &ampBassKnob2 || slider == &ampMidKnob2 || slider == &ampTrebleKnob2) {
+    if (slider == &ampBassKnob2 || slider == &2 || slider == &ampTrebleKnob2) {
         processor.set_ampEQ(ampBassKnob2.getValue(), ampMidKnob2.getValue(), ampTrebleKnob2.getValue());
     }
 
@@ -692,6 +658,22 @@ void ProteusAudioProcessorEditor::resetImages()
     }
     else {
         cabOnButton1.setImages(true, true, true,
+            ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
+            Image(), 1.0, Colours::transparentWhite,
+            ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
+            0.0);
+    }
+
+     // Set On/Off cab graphic "2"
+    if (processor.cab_state == 0) {
+        cabOnButton2.setImages(true, true, true,
+            ImageCache::getFromMemory(BinaryData::cab_switch_off_png, BinaryData::cab_switch_off_pngSize), 1.0, Colours::transparentWhite,
+            Image(), 1.0, Colours::transparentWhite,
+            ImageCache::getFromMemory(BinaryData::cab_switch_off_png, BinaryData::cab_switch_off_pngSize), 1.0, Colours::transparentWhite,
+            0.0);
+    }
+    else {
+        cabOnButton2.setImages(true, true, true,
             ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
             Image(), 1.0, Colours::transparentWhite,
             ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
