@@ -73,7 +73,7 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
-    void set_ampEQ(float bass_slider, float mid_slider, float treble_slider);
+    void set_ampEQ1(float bass_slider1, float mid_slider1, float treble_slider1);
 
     // Files and configuration
     void loadConfig(File configFile);
@@ -119,7 +119,8 @@ private:
 
     RT_LSTM LSTM1;
     RT_LSTM LSTM2_1;
-
+    RT_LSTM LSTM3;
+    RT_LSTM LSTM4;
     dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> dcBlocker;
 
     chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>> resampler;
