@@ -1,3 +1,4 @@
+
 /*
   ==============================================================================
 
@@ -22,21 +23,20 @@ ProteusAudioProcessor::ProteusAudioProcessor()
         .withOutput("Output", AudioChannelSet::stereo(), true)
 #endif
     ),
-    // Initialize the treeState with the audio parameters for Container 1 
+    // Initialize the treeState with the audio parameters
     treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN1_ID, GAIN1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
-                        std::make_unique<AudioParameterFloat>(BASS1_ID, BASS1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                        std::make_unique<AudioParameterFloat>(MID1_ID, MID1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                        std::make_unique<AudioParameterFloat>(TREBLE1_ID, TREBLE1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                        std::make_unique<AudioParameterFloat>(MASTER1_ID, MASTER1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5) })
-                        
-    treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN1_ID, GAIN1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
-                        std::make_unique<AudioParameterFloat>(BASS1_ID, BASS1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                        std::make_unique<AudioParameterFloat>(MID1_ID, MID1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                        std::make_unique<AudioParameterFloat>(TREBLE1_ID, TREBLE1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                        std::make_unique<AudioParameterFloat>(MASTER1_ID, MASTER1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5) })
+                                            std::make_unique<AudioParameterFloat>(BASS1_ID, BASS1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                                            std::make_unique<AudioParameterFloat>(MID1_ID, MID1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                                            std::make_unique<AudioParameterFloat>(TREBLE1_ID, TREBLE1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                                            std::make_unique<AudioParameterFloat>(MASTER1_ID, MASTER1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5),
+                                            std::make_unique<AudioParameterFloat>(GAIN2_ID, GAIN2_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
+                                            std::make_unique<AudioParameterFloat>(BASS2_ID, BASS2_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                                            std::make_unique<AudioParameterFloat>(MID2_ID, MID2_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                                            std::make_unique<AudioParameterFloat>(TREBLE2_ID, TREBLE2_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                                            std::make_unique<AudioParameterFloat>(MASTER2_ID, MASTER2_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5)})
 #endif
 {
-   // Assign parameter values for Container 1
+    // Initialize parameters
     driveParam1 = treeState.getRawParameterValue(GAIN1_ID);
     masterParam1 = treeState.getRawParameterValue(MASTER1_ID);
     bassParam1 = treeState.getRawParameterValue(BASS1_ID);
@@ -44,9 +44,9 @@ ProteusAudioProcessor::ProteusAudioProcessor()
     trebleParam1 = treeState.getRawParameterValue(TREBLE1_ID);
 
     // Load parameter values for Container 1
-    auto bassValue1 = static_cast<float> (bassParam1->load());
-    auto midValue1 = static_cast<float> (midParam1->load());
-    auto trebleValue1 = static_cast<float> (trebleParam1->load());
+    auto bassValue1 = static_cast<float>(bassParam1->load());
+    auto midValue1 = static_cast<float>(midParam1->load());
+    auto trebleValue1 = static_cast<float>(trebleParam1->load());
 
     // Update EQ band parameters for Container 1
     eq4band1.setParameters(bassValue1, midValue1, trebleValue1, 0.0);
@@ -60,112 +60,43 @@ ProteusAudioProcessor::ProteusAudioProcessor()
     trebleParam2 = treeState.getRawParameterValue(TREBLE2_ID);
 
     // Load parameter values for Container 2
-    auto bassValue2 = static_cast<float> (bassParam2->load());
-    auto midValue2 = static_cast<float> (midParam2->load());
-    auto trebleValue2 = static_cast<float> (trebleParam2->load());
+    auto bassValue2 = static_cast<float>(bassParam2->load());
+    auto midValue2 = static_cast<float>(midParam2->load());
+    auto trebleValue2 = static_cast<float>(trebleParam2->load());
 
     // Update EQ band parameters for Container 2
     eq4band3.setParameters(bassValue2, midValue2, trebleValue2, 0.0);
     eq4band4.setParameters(bassValue2, midValue2, trebleValue2, 0.0);
+
     pauseVolume = 3;
 
-    // Load the default impulse response for the cabinet simulator for Container 1
-    cabSimIRa.load(BinaryData::default_ir_wav, BinaryData::default_ir_wavSize);
-
-    // Initialize LSTM models for Container 1
+    // Initialize LSTM models
     LSTM1.reset();
     LSTM2_1.reset();
     LSTM3.reset();
     LSTM4.reset();
-
-}
-
-ProteusAudioProcessor::~ProteusAudioProcessor()
-{
-    // Destructor for the audio processor
-}
-
-//==============================================================================
-const String ProteusAudioProcessor::getName() const
-{
-    return JucePlugin_Name;
-}
-
-bool ProteusAudioProcessor::acceptsMidi() const
-{
-   #if JucePlugin_WantsMidiInput
-    return true;
-   #else
-    return false;
-   #endif
-}
-
-bool ProteusAudioProcessor::producesMidi() const
-{
-   #if JucePlugin_ProducesMidiOutput
-    return true;
-   #else
-    return false;
-   #endif
-}
-
-bool ProteusAudioProcessor::isMidiEffect() const
-{
-   #if JucePlugin_IsMidiEffect
-    return true;
-   #else
-    return false;
-   #endif
-}
-
-double ProteusAudioProcessor::getTailLengthSeconds() const
-{
-    return 0.0;
-}
-
-int ProteusAudioProcessor::getNumPrograms()
-{
-    return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
-                // so this should be at least 1, even if you're not really implementing programs.
-}
-
-int ProteusAudioProcessor::getCurrentProgram()
-{
-    return 0;
-}
-
-void ProteusAudioProcessor::setCurrentProgram (int index)
-{
-}
-
-const String ProteusAudioProcessor::getProgramName (int index)
-{
-    return {};
 }
 
 void ProteusAudioProcessor::changeProgramName (int index, const String& newName)
 {
 }
 
-//==============================================================================
-void ProteusAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void ProteusAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
-    
-    *dcBlocker.state = *dsp::IIR::Coefficients<float>::makeHighPass (sampleRate, 35.0f);
+    // Use this method as the place to do any pre-playback initialization
+    dcBlocker.state = *dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, 35.0f);
 
     // prepare resampler for target sample rate: 44.1 kHz
     constexpr double targetSampleRate = 44100.0;
     //resampler.prepareWithTargetSampleRate ({ sampleRate, (uint32) samplesPerBlock, 1 }, targetSampleRate);
     resampler.prepareWithTargetSampleRate({ sampleRate, (uint32)samplesPerBlock, 2 }, targetSampleRate);
 
+    dsp::ProcessSpec specMono{ sampleRate, static_cast<uint32>(samplesPerBlock), 1 };
+    dsp::ProcessSpec spec{ sampleRate, static_cast<uint32>(samplesPerBlock), 2 };
 
-    dsp::ProcessSpec specMono { sampleRate, static_cast<uint32> (samplesPerBlock), 1 };
-    dsp::ProcessSpec spec{ sampleRate, static_cast<uint32> (samplesPerBlock), 2 };
+    dcBlocker.prepare(spec);
 
-    dcBlocker.prepare (spec); 
-
+    // Reset LSTM models
     LSTM1.reset();
     LSTM2_1.reset();
     LSTM3.reset();
@@ -185,31 +116,15 @@ void ProteusAudioProcessor::releaseResources()
 #ifndef JucePlugin_PreferredChannelConfigurations
 bool ProteusAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
-  #if JucePlugin_IsMidiEffect
-    ignoreUnused (layouts);
-    return true;
-  #else
-    // This is the place where you check if the layout is supported.
-    // In this template code we only support mono or stereo.
-    if (layouts.getMainOutputChannelSet() != AudioChannelSet::mono()
-     && layouts.getMainOutputChannelSet() != AudioChannelSet::stereo())
-        return false;
-
-    // This checks if the input layout matches the output layout
-   #if ! JucePlugin_IsSynth
-    if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
-        return false;
-   #endif
-
-    return true;
-  #endif
+    return checkBusesLayoutSupport(layouts);
 }
 #endif
 
 
 void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
-    ScopedNoDenormals noDenormals;
+    processAudio(buffer, midiMessages);
+        ScopedNoDenormals noDenormals;
 
     // Load parameter values for Container 1
     auto driveValue1 = static_cast<float> (driveParam1->load());
@@ -219,12 +134,6 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
     auto trebleValue1 = static_cast<float> (trebleParam1->load());
 
     // TODO: Load parameter values for Container 2 here
-
-      auto driveValue2 = static_cast<float> (driveParam2->load());
-    auto masterValue2 = static_cast<float> (masterParam2->load());
-    auto bassValue2 = static_cast<float> (bassParam2->load());
-    auto midValue2 = static_cast<float> (midParam2->load());
-    auto trebleValue2 = static_cast<float> (trebleParam2->load());
 
     // Setup Audio Data
     const int numSamples = buffer.getNumSamples();
@@ -383,7 +292,7 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
 //==============================================================================
 bool ProteusAudioProcessor::hasEditor() const
 {
-    return true; // (change this to false if you choose to not supply an editor)
+    return true;
 }
 
 AudioProcessorEditor* ProteusAudioProcessor::createEditor()
@@ -394,6 +303,7 @@ AudioProcessorEditor* ProteusAudioProcessor::createEditor()
 //==============================================================================
 void ProteusAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
+    saveStateInformation( 
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
@@ -405,13 +315,14 @@ void ProteusAudioProcessor::getStateInformation (MemoryBlock& destData)
     xml->setAttribute("saved_model", saved_model.getFullPathName().toStdString());
     xml->setAttribute("current_model_index", current_model_index);
     xml->setAttribute ("cab_state", cab_state);
-    copyXmlToBinary (*xml, destData);
-
+    copyXmlToBinary (*xml, destData););
 }
 
 void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
+    loadStateInformation 
+    ( 
+        // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
 
     std::unique_ptr<juce::XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
@@ -438,15 +349,12 @@ void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInByt
 
         }
     }
+    )
 }
 
 void ProteusAudioProcessor::set_ampEQ(float bass_slider, float mid_slider, float treble_slider)
 {
-    eq4band1.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
-    eq4band2_1.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
-    eq4band3.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
-    eq4band4.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
-
+    updateEQParameters(bass_slider, mid_slider, treble_slider);
 }
 
 void ProteusAudioProcessor::loadConfig(File configFile)
@@ -467,15 +375,17 @@ void ProteusAudioProcessor::loadConfig(File configFile)
     LSTM3.load_json(char_filename);
     LSTM4.load_json(char_filename);
 
-    if (LSTM.input_size == 1) {
+    if (LSTM1.input_size == 1) {
         conditioned = false;
-    } else {
+    }
+    else {
         conditioned = true;
     }
 
     //saved_model = configFile;
     model_loaded = true;
     this->suspendProcessing(false);
+    );
 }
 
 
