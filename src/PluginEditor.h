@@ -48,8 +48,8 @@ private:
     TextButton loadButton2;
 
     // Event handlers
-    virtual void buttonClicked1(Button* button);    
-    virtual void buttonClicked2(Button* button);
+    virtual void button1Clicked(Button* button);    
+    virtual void button2Clicked(Button* button);
 
     // Utility functions
     bool isValidFormat(File configFile);
