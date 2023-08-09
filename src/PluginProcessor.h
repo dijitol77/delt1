@@ -85,6 +85,7 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
     void set_ampEQ1(float bass_slider1, float mid_slider1, float treble_slider1);
+     void set_ampEQ2(float bass_slider2, float mid_slider2, float treble_slider2);
 
     // Files and configuration
     void loadConfig(File configFile);
@@ -114,13 +115,20 @@ public:
 
 private:
 
-// Renamed variables for Container 1
+    Eq4Band eq4band; // Amp EQ
+    Eq4Band eq4band2; // Amp EQ
 
     std::atomic<float>* driveParam1 = nullptr;
     std::atomic<float>* masterParam1 = nullptr;
     std::atomic<float>* bassParam1 = nullptr;
     std::atomic<float>* midParam1 = nullptr;
     std::atomic<float>* trebleParam1 = nullptr;
+
+    std::atomic<float>* driveParam2 = nullptr;
+    std::atomic<float>* masterParam2 = nullptr;
+    std::atomic<float>* bassParam2 = nullptr;
+    std::atomic<float>* midParam2 = nullptr;
+    std::atomic<float>* trebleParam2 = nullptr;
 
     float previousDriveValue = 0.5;
     float previousMasterValue = 0.5;
@@ -142,3 +150,4 @@ private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessor)
 };
+
