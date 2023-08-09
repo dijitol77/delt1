@@ -361,13 +361,13 @@ void ProteusAudioProcessor::loadConfig(File configFile)
     String path = configFile.getFullPathName();
     char_filename = path.toUTF8();
 
-    LSTM.reset();
-    LSTM2.reset();
+    LSTM1.reset();
+    LSTM2_1.reset();
 
-    LSTM.load_json(char_filename);
-    LSTM2.load_json(char_filename);
+    LSTM1.load_json(char_filename);
+    LSTM2_1.load_json(char_filename);
 
-    if (LSTM.input_size == 1) {
+    if (LSTM1.input_size == 1) {
         conditioned = false;
     } else {
         conditioned = true;
