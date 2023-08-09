@@ -75,6 +75,7 @@ private:
     //ImageButton odLED;
     ImageButton cabOnButton1;
 
+
     // Duplicated Components
     Label modelLabel2;
     Label versionLabel2;
@@ -85,8 +86,8 @@ private:
     Slider ampTrebleKnob2;
     Slider odDriveKnob2;
     Slider odLevelKnob2;
-Slider driveSlider2'
-Slider masterSlider
+Slider driveSlider2;
+Slider masterSlider;
 
     ImageButton cabOnButton2;
 
