@@ -93,8 +93,8 @@ private:
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
 
-    virtual void slider1ValueChanged(Slider* slider);
-    virtual void slider2ValueChanged(Slider* slider);
+    virtual void sliderValue1Changed(Slider* slider);
+    virtual void sliderValue2Changed(Slider* slider);
 
     AudioProcessorParameter* getParameter(const String& paramId);
 
