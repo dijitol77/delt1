@@ -65,7 +65,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
 
     // Right handside
 
-     addAndMakeVisible(loadButton);
+     addAndMakeVisible(loadButton2);
     loadButton2.setButtonText("LOAD MODEL");
     loadButton2.addListener(this);
 
@@ -554,7 +554,7 @@ void ProteusAudioProcessorEditor::button1Clicked(juce::Button* button)
 {
     //if (button == &odFootSw) {
     //    odFootSwClicked();
-    if (button == &loadButton) {
+    if (button == &loadButton1) {
         loadButton1Clicked();
     } else if (button == &cabOnButton1) {
         cabOnButton1Clicked();
@@ -566,7 +566,7 @@ void ProteusAudioProcessorEditor::button2Clicked(juce::Button* button)
 {
     //if (button == &odFootSw) {
     //    odFootSwClicked();
-    if (button == &loadButton) {
+    if (button == &loadButton2) {
         loadButton2Clicked();
     } else if (button == &cabOnButton2) {
         cabOnButton2Clicked();
