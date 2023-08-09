@@ -15,6 +15,33 @@
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
+     // Drive Slider a1
+    driveSlider.setSliderStyle(juce::Slider::LinearVertical);
+    driveSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
+    driveSlider.setPopupDisplayEnabled(true, false, this);
+    driveSlider.setTextValueSuffix(" Drive");
+    driveSlider.setValue(1.0);
+    addAndMakeVisible(&driveSlider);
+    driveSlider.addListener(this);
+
+    // Drive Slider a2
+    driveSlider2.setSliderStyle(juce::Slider::LinearVertical);
+    driveSlider2.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
+    driveSlider2.setPopupDisplayEnabled(true, false, this);
+    driveSlider2.setTextValueSuffix(" Drive");
+    driveSlider2.setValue(1.0);
+    addAndMakeVisible(&driveSlider2);
+    driveSlider2.addListener(this);
+
+    // Master Slider
+    masterSlider.setSliderStyle(juce::Slider::LinearVertical);
+    masterSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
+    masterSlider.setPopupDisplayEnabled(true, false, this);
+    masterSlider.setTextValueSuffix(" Master");
+    masterSlider.setValue(1.0);
+    addAndMakeVisible(&masterSlider);
+    masterSlider.addListener(this);
+
     // ... [rest of the constructor remains unchanged]
 
     // Overall Widgets for Container 1
@@ -244,6 +271,7 @@ void ProteusAudioProcessorEditor::resized();
     // subcomponents in your editor..
 
 //Overall Widgets 1
+driveSlider.setBounds(10, 10, 90, 90);
     loadButton1.setBounds(186, 48, 120, 24);
     modelSelect1.setBounds(52, 11, 400, 28);
     //modelLabel.setBounds(197, 2, 90, 25);
@@ -268,6 +296,7 @@ void ProteusAudioProcessorEditor::resized();
     addAndMakeVisible(duplicateContainer);
 
 //Overall Widgets 2
+driveSlider2.setBounds(110, 10, 90, 90);
     loadButton2.setBounds(186, 48, 120, 24);
     modelSelect2.setBounds(52, 11, 400, 28);
     //modelLabel.setBounds(197, 2, 90, 25);
@@ -282,6 +311,8 @@ void ProteusAudioProcessorEditor::resized();
     ampBassKnob2.setBounds(113, 131, 62, 62);
     ampMidKnob2.setBounds(227, 131, 62, 62);
     ampTrebleKnob2.setBounds(340, 131, 62, 62);
+
+    masterSlider.setBounds(410, 10, 90, 90);
 
 
 // Bring the duplicate container to the front and repaint
@@ -666,40 +697,4 @@ void ProteusAudioProcessorEditor::resetImages()
             ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
             0.0);
     }
-}
-
-    // ... [resetImages function remains unchanged]
-
-    repaint();
-    /*
-    if (processor.fw_state == 0) {
-        odFootSw.setImages(true, true, true,
-            ImageCache::getFromMemory(BinaryData::footswitch_up_png, BinaryData::footswitch_up_pngSize), 1.0, Colours::transparentWhite,
-            Image(), 1.0, Colours::transparentWhite,
-            ImageCache::getFromMemory(BinaryData::footswitch_up_png, BinaryData::footswitch_up_pngSize), 1.0, Colours::transparentWhite,
-            0.0);
-    }
-    else {
-        odFootSw.setImages(true, true, true,
-            ImageCache::getFromMemory(BinaryData::footswitch_down_png, BinaryData::footswitch_down_pngSize), 1.0, Colours::transparentWhite,
-            Image(), 1.0, Colours::transparentWhite,
-            ImageCache::getFromMemory(BinaryData::footswitch_down_png, BinaryData::footswitch_down_pngSize), 1.0, Colours::transparentWhite,
-            0.0);
-    }
-    */
-    // Set On/Off cab graphic "2"
-    if(processor.cab_state == 0){
-        cabOnButton2.setImages(true, true, true,
-            ImageCache::getFromMemory(BinaryData::cab_switch_off_png, BinaryData::cab_switch_off_pngSize), 1.0, Colours::transparentWhite,
-            Image(), 1.0, Colours::transparentWhite,
-            ImageCache::getFromMemory(BinaryData::cab_switch_off_png, BinaryData::cab_switch_off_pngSize), 1.0, Colours::transparentWhite,
-            0.0);
-    }
-    else{
-        cabOnButton2.setImages(true, true, true,
-            ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-            Image(), 1.0, Colours::transparentWhite,
-            ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-            0.0);
-        }
 }
