@@ -30,14 +30,18 @@
 #define MASTER2_ID "level"
 #define MASTER1_NAME "Level"
 
-//EQ
-
 #define BASS_ID "bass"
 #define BASS_NAME "Bass"
 #define MID_ID "mid"
 #define MID_NAME "Mid"
 #define TREBLE_ID "treble"
 #define TREBLE_NAME "Treble"
+
+
+#include <nlohmann/json.hpp>
+#include "RTNeuralLSTM.h"
+#include "Eq4Band.h"
+#include "CabSim.h"
 
 //==============================================================================
 /**
@@ -52,6 +56,10 @@ public:
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
+
+    #ifndef JucePlugin_PreferredChannelConfigurations
+    bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
+    #endif
 
     void processBlock (AudioBuffer<float>&, MidiBuffer&) override;
 
@@ -78,7 +86,7 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
-    //==============================================================================
+    // Additional methods
     void set_ampEQ(float bass_slider, float mid_slider, float treble_slider);
      // Files and configuration
     void loadConfig(File configFile1, File configFile2);
@@ -99,15 +107,12 @@ public:
 
 private:
     //==============================================================================
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessor)
+
+    // Your member variables here
     AudioProcessorValueTreeState treeState;
 
-    bool conditioned = false;
-    const char* char_filename = "";
-    int pauseVolume = 3;
-    bool model_loaded = false;
-
-private:
-
+    // Parameters for Container 1
     std::atomic<float>* driveParam1;
     std::atomic<float>* masterParam1;
     std::atomic<float>* bassParam1;
@@ -121,6 +126,10 @@ private:
     std::atomic<float>* midParam2;
     std::atomic<float>* trebleParam2;
 
+    // EQ
+    EQ4Band eq4band1;
+    EQ4Band eq4band2;
+    
     float previousDriveValue = 0.5;
     float previousMasterValue = 0.5;
     //float steppedValue1 = 0.0;
@@ -131,8 +140,15 @@ private:
     RT_LSTM LSTM2;
     RT_LSTM LSTM3;
     RT_LSTM LSTM4;
-  
-   // Other members (based on the provided .cpp file)
+
+    // Other member variables
+    bool conditioned = false;
+    const char* char_filename1 = "";
+    const char* char_filename2 = "";
+    int pauseVolume = 3;
+    bool model_loaded = false;
+
+   // Other members 
     // ... (e.g., eq4band, eq4band2, cabSimIRa, dcBlocker, resampler, etc.  
     // dcBlocker
 
