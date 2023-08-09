@@ -26,8 +26,8 @@ public:
     ~ProteusAudioProcessorEditor();
 
     //==============================================================================
-    void paint (Graphics&);
-    void resized();
+    void paint (Graphics&) override;
+    void resized() override;
     std::unique_ptr<FileChooser> myChooser;
 
     void loadFromFolder1();
@@ -39,17 +39,16 @@ private:
     // access the processor object that created it.
     ProteusAudioProcessor& processor;
 
+    TextButton loadButton1;
+    TextButton loadButton2;
+    virtual void button1Clicked(Button* button) override;
+    virtual void button2Clicked(Button* button) override;
+    
     // Containers
+
     Component originalContainer;
     Component duplicateContainer;
 
-    // Components
-    TextButton loadButton1;
-    TextButton loadButton2;
-
-    // Event handlers
-    virtual void button1Clicked(Button* button);    
-    virtual void button2Clicked(Button* button);
 
     // Utility functions
     bool isValidFormat(File configFile);
@@ -63,6 +62,7 @@ private:
     // Global Widgets
     Label modelLabel1;
     Label versionLabel1;
+    
     ComboBox modelSelect1;
 
     // Overdrive Widgets
@@ -89,6 +89,7 @@ private:
 Slider driveSlider2;
 Slider driveSlider1;
 Slider masterSlider;
+juce::Slider driveSlider;
 
     ImageButton cabOnButton2;
 
@@ -97,8 +98,8 @@ Slider masterSlider;
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
 
-    virtual void sliderValue1Changed(Slider* slider);
-    virtual void sliderValue2Changed(Slider* slider);
+    virtual void sliderValue1Changed(Slider* slider) override;
+    virtual void sliderValue1Changed(Slider* slider) override;
 
     AudioProcessorParameter* getParameter(const String& paramId);
 
