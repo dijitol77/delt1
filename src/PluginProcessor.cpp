@@ -22,7 +22,13 @@ ProteusAudioProcessor::ProteusAudioProcessor()
         .withOutput("Output", AudioChannelSet::stereo(), true)
 #endif
     ),
-    // Initialize the treeState with the audio parameters for Container 1
+    // Initialize the treeState with the audio parameters for Container 1 
+    treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN1_ID, GAIN1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
+                        std::make_unique<AudioParameterFloat>(BASS1_ID, BASS1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                        std::make_unique<AudioParameterFloat>(MID1_ID, MID1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                        std::make_unique<AudioParameterFloat>(TREBLE1_ID, TREBLE1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                        std::make_unique<AudioParameterFloat>(MASTER1_ID, MASTER1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5) })
+                        
     treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN1_ID, GAIN1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
                         std::make_unique<AudioParameterFloat>(BASS1_ID, BASS1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
                         std::make_unique<AudioParameterFloat>(MID1_ID, MID1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
@@ -213,6 +219,12 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
     auto trebleValue1 = static_cast<float> (trebleParam1->load());
 
     // TODO: Load parameter values for Container 2 here
+
+      auto driveValue2 = static_cast<float> (driveParam2->load());
+    auto masterValue2 = static_cast<float> (masterParam2->load());
+    auto bassValue2 = static_cast<float> (bassParam2->load());
+    auto midValue2 = static_cast<float> (midParam2->load());
+    auto trebleValue2 = static_cast<float> (trebleParam2->load());
 
     // Setup Audio Data
     const int numSamples = buffer.getNumSamples();
@@ -432,6 +444,9 @@ void ProteusAudioProcessor::set_ampEQ(float bass_slider, float mid_slider, float
 {
     eq4band1.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
     eq4band2_1.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
+    eq4band3.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
+    eq4band4.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
+
 }
 
 void ProteusAudioProcessor::loadConfig(File configFile)
@@ -452,7 +467,7 @@ void ProteusAudioProcessor::loadConfig(File configFile)
     LSTM3.load_json(char_filename);
     LSTM4.load_json(char_filename);
 
-    if (LSTM1.input_size == 1) {
+    if (LSTM.input_size == 1) {
         conditioned = false;
     } else {
         conditioned = true;
