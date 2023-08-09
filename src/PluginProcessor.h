@@ -37,15 +37,6 @@
 #define TREBLE_ID "treble"
 #define TREBLE_NAME "Treble"
 
-
-#include <nlohmann/json.hpp>
-#include "RTNeuralLSTM.h"
-#include "Eq4Band.h"
-#include "CabSim.h"
-
-//==============================================================================
-/**
-*/
 class ProteusAudioProcessor  : public AudioProcessor
 {
 public:
