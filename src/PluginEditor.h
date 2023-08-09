@@ -87,6 +87,7 @@ private:
     Slider odDriveKnob2;
     Slider odLevelKnob2;
 Slider driveSlider2;
+Slider driveSlider;
 Slider masterSlider;
 
     ImageButton cabOnButton2;
