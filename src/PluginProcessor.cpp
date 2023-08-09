@@ -24,7 +24,7 @@ ProteusAudioProcessor::ProteusAudioProcessor()
     ),
     // Initialize the treeState with the audio parameters for Container 1
     treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN1_ID, GAIN1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
-                        std::make_unique<AudioParameterFloat>(BASS1_ID, BASS_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                        std::make_unique<AudioParameterFloat>(BASS1_ID, BASS1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
                         std::make_unique<AudioParameterFloat>(MID1_ID, MID1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
                         std::make_unique<AudioParameterFloat>(TREBLE1_ID, TREBLE1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
                         std::make_unique<AudioParameterFloat>(MASTER1_ID, MASTER1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5) })
