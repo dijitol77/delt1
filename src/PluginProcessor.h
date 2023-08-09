@@ -11,29 +11,31 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include <nlohmann/json.hpp>
+#include "RTNeuralLSTM.h"
+#include "Eq4Band.h"
+#include "CabSim.h"
 
+//  MODEL 1
 
 #define GAIN1_ID "drive"
 #define GAIN1_NAME "Drive"
 #define MASTER1_ID "level"
 #define MASTER1_NAME "Level"
-#define BASS1_ID "bass"
-#define BASS1_NAME "Bass"
-#define MID1_ID "mid"
-#define MID1_NAME "Mid"
-#define TREBLE1_ID "treble"
-#define TREBLE1_NAME "Treble"
+
+//  MODEL 2  
 
 #define GAIN2_ID "drive"
 #define GAIN2_NAME "Drive"
 #define MASTER2_ID "level"
 #define MASTER1_NAME "Level"
-#define BASS2_ID "bass"
-#define BASS2_NAME "Bass"
-#define MID2_ID "mid"
-#define MID2_NAME "Mid"
-#define TREBLE2_ID "treble"
-#define TREBLE2_NAME "Treble"
+
+#define BASS_ID "bass"
+#define BASS_NAME "Bass"
+#define MID_ID "mid"
+#define MID_NAME "Mid"
+#define TREBLE_ID "treble"
+#define TREBLE_NAME "Treble"
 
 
 #include <nlohmann/json.hpp>
@@ -54,10 +56,6 @@ public:
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
-
-   #ifndef JucePlugin_PreferredChannelConfigurations
-    bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
-   #endif
 
     void processBlock (AudioBuffer<float>&, MidiBuffer&) override;
 
@@ -84,11 +82,11 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
-    void set_ampEQ1(float bass_slider1, float mid_slider1, float treble_slider1);
-     void set_ampEQ2(float bass_slider2, float mid_slider2, float treble_slider2);
-
+    //==============================================================================
+    void set_ampEQ(float bass_slider, float mid_slider, float treble_slider);
+     // Files and configuration
+    void loadConfig(File configFile1, File configFile2);
     // Files and configuration
-    void loadConfig(File configFile);
 
     // Pedal/amp states
     int fw_state = 1;       // 0 = off, 1 = on
@@ -103,53 +101,58 @@ public:
     File folder = File::getSpecialLocation(File::userDesktopDirectory);
     File saved_model;
 
+private:
+    //==============================================================================
     AudioProcessorValueTreeState treeState;
 
     bool conditioned = false;
-
     const char* char_filename = "";
-
     int pauseVolume = 3;
-
     bool model_loaded = false;
 
 private:
 
-    Eq4Band eq4band1; // Amp EQ
-    Eq4Band eq4band2_1; // Amp EQ
-    Eq4Band eq4band3; // Amp EQ
-    Eq4Band eq4band4; // Amp EQ
+    std::atomic<float>* driveParam1;
+    std::atomic<float>* masterParam1;
+    std::atomic<float>* bassParam1;
+    std::atomic<float>* midParam1;
+    std::atomic<float>* trebleParam1;
 
-    std::atomic<float>* driveParam1 = nullptr;
-    std::atomic<float>* masterParam1 = nullptr;
-    std::atomic<float>* bassParam1 = nullptr;
-    std::atomic<float>* midParam1 = nullptr;
-    std::atomic<float>* trebleParam1 = nullptr;
-
-    std::atomic<float>* driveParam2 = nullptr;
-    std::atomic<float>* masterParam2 = nullptr;
-    std::atomic<float>* bassParam2 = nullptr;
-    std::atomic<float>* midParam2 = nullptr;
-    std::atomic<float>* trebleParam2 = nullptr;
+    // Parameters for Container 2
+    std::atomic<float>* driveParam2;
+    std::atomic<float>* masterParam2;
+    std::atomic<float>* bassParam2;
+    std::atomic<float>* midParam2;
+    std::atomic<float>* trebleParam2;
 
     float previousDriveValue = 0.5;
     float previousMasterValue = 0.5;
     //float steppedValue1 = 0.0;
 
-// Renamed LSTM for Container 1
 
+    // LSTM models
     RT_LSTM LSTM1;
-    RT_LSTM LSTM2_1;
+    RT_LSTM LSTM2;
     RT_LSTM LSTM3;
     RT_LSTM LSTM4;
+  
+   // Other members (based on the provided .cpp file)
+    // ... (e.g., eq4band, eq4band2, cabSimIRa, dcBlocker, resampler, etc.  
+    // dcBlocker
+
     dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> dcBlocker;
 
+    // resampler
     chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>> resampler;
 
     // IR processing
     CabSim cabSimIRa;
 
+   // EQ  processing
+    Eq4Band eq4band1; // Amp EQ
+    Eq4Band eq4band2; // Amp EQ
+
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessor)
 };
-
