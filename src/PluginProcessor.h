@@ -30,18 +30,14 @@
 #define MASTER2_ID "level"
 #define MASTER1_NAME "Level"
 
+//EQ
+
 #define BASS_ID "bass"
 #define BASS_NAME "Bass"
 #define MID_ID "mid"
 #define MID_NAME "Mid"
 #define TREBLE_ID "treble"
 #define TREBLE_NAME "Treble"
-
-
-#include <nlohmann/json.hpp>
-#include "RTNeuralLSTM.h"
-#include "Eq4Band.h"
-#include "CabSim.h"
 
 //==============================================================================
 /**
