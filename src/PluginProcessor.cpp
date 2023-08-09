@@ -32,42 +32,18 @@ ProteusAudioProcessor::ProteusAudioProcessor()
     
 #endif
 {
-   // Renamed parameter assignments for Container 1
-    driveParam1 = treeState.getRawParameterValue(GAIN1_ID);
-    masterParam1 = treeState.getRawParameterValue(MASTER1_ID);
-    bassParam1 = treeState.getRawParameterValue(BASS1_ID);
-    midParam1 = treeState.getRawParameterValue(MID1_ID);
-    trebleParam1 = treeState.getRawParameterValue(TREBLE1_ID);
+    driveParam = treeState.getRawParameterValue (GAIN_ID);
+    masterParam = treeState.getRawParameterValue (MASTER_ID);
+    bassParam = treeState.getRawParameterValue (BASS_ID);
+    midParam = treeState.getRawParameterValue (MID_ID);
+    trebleParam = treeState.getRawParameterValue (TREBLE_ID);
 
-    auto bassValue1 = static_cast<float> (bassParam1->load());
-    auto midValue1 = static_cast<float> (midParam1->load());
-    auto trebleValue1 = static_cast<float> (trebleParam->load());
+    auto bassValue = static_cast<float> (bassParam->load());
+    auto midValue = static_cast<float> (midParam->load());
+    auto trebleValue = static_cast<float> (trebleParam->load());
 
-    // Updated EQ band parameters for Container 1
-    eq4band1.setParameters(bassValue1, midValue1, trebleValue1, 0.0);
-    eq4band2_1.setParameters(bassValue1, midValue1, trebleValue1, 0.0);
-
-    pauseVolume = 3;
-
-    cabSimIRa.load(BinaryData::default_ir_wav, BinaryData::default_ir_wavSize);
-
-}
-
-{
-   // Renamed parameter assignments for Container 1
-    driveParam2 = treeState.getRawParameterValue(GAIN2_ID);
-    masterParam2 = treeState.getRawParameterValue(MASTER2_ID);
-    bassParam2 = treeState.getRawParameterValue(BASS2_ID);
-    midParam2 = treeState.getRawParameterValue(MID2_ID);
-    trebleParam2 = treeState.getRawParameterValue(TREBLE2_ID);
-
-    auto bassValue2 = static_cast<float> (bassParam2->load());
-    auto midValue2 = static_cast<float> (midParam2->load());
-    auto trebleValue2 = static_cast<float> (trebleParam->load());
-
-    // Updated EQ band parameters for Container 2
-    eq4band1.setParameters(bassValue2, midValue2, trebleValue2, 0.0);
-    eq4band2_1.setParameters(bassValue2, midValue2, trebleValue2, 0.0);
+    eq4band.setParameters(bassValue, midValue, trebleValue, 0.0);
+    eq4band2.setParameters(bassValue, midValue, trebleValue, 0.0);
 
     pauseVolume = 3;
 
@@ -160,8 +136,8 @@ void ProteusAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBloc
 
     dcBlocker.prepare (spec); 
 
-    LSTM1.reset();
-    LSTM2_1.reset();
+    LSTM.reset();
+    LSTM2.reset();
 
     // Set up IR
     cabSimIRa.prepare(spec);
@@ -203,11 +179,11 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
 {
     ScopedNoDenormals noDenormals;
 
-    auto driveValue1 = static_cast<float> (driveParam1->load());
-    auto masterValue1 = static_cast<float> (masterParam1->load());
-    auto bassValue1 = static_cast<float> (bassParam1->load());
-    auto midValue1 = static_cast<float> (midParam1->load());
-    auto trebleValue1 = static_cast<float> (trebleParam1->load());
+    auto driveValue = static_cast<float> (driveParam->load());
+    auto masterValue = static_cast<float> (masterParam->load());
+    auto bassValue = static_cast<float> (bassParam->load());
+    auto midValue = static_cast<float> (midParam->load());
+    auto trebleValue = static_cast<float> (trebleParam->load());
 
     // Setup Audio Data
     const int numSamples = buffer.getNumSamples();
@@ -235,10 +211,10 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
             {
                 // Apply LSTM model
                 if (ch == 0) {
-                    LSTM1.process(block44k.getChannelPointer(0), block44k.getChannelPointer(0), (int)block44k.getNumSamples());
+                    LSTM.process(block44k.getChannelPointer(0), block44k.getChannelPointer(0), (int)block44k.getNumSamples());
                 }
                 else if (ch == 1) {
-                    LSTM2_1.process(block44k.getChannelPointer(1), block44k.getChannelPointer(1), (int)block44k.getNumSamples());
+                    LSTM2.process(block44k.getChannelPointer(1), block44k.getChannelPointer(1), (int)block44k.getNumSamples());
                 }
             }
             resampler.processOut(block44k, block);
@@ -249,12 +225,12 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
             auto block44k = resampler.processIn(block);
             for (int ch = 0; ch < buffer.getNumChannels(); ++ch)
             {
-                // Apply LSTM model -Updated LSTM processing for Container 1
+                // Apply LSTM model
                 if (ch == 0) {
-              LSTM1.process(block44k.getChannelPointer(0), block44k.getChannelPointer(0), (int)block44k.getNumSamples());
+                    LSTM.process(block44k.getChannelPointer(0), driveValue, block44k.getChannelPointer(0), (int)block44k.getNumSamples());
                 }
                 else if (ch == 1) {
-                    LSTM2_1.process(block44k.getChannelPointer(1), block44k.getChannelPointer(1), (int)block44k.getNumSamples());
+                    LSTM2.process(block44k.getChannelPointer(1), driveValue, block44k.getChannelPointer(1), (int)block44k.getNumSamples());
                 }
             }
             resampler.processOut(block44k, block);
@@ -266,11 +242,11 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
         {
             // Apply EQ
             if (ch == 0) {
-                eq4band1.process(buffer.getReadPointer(0), buffer.getWritePointer(0), midiMessages, numSamples, numInputChannels, sampleRate);
+                eq4band.process(buffer.getReadPointer(0), buffer.getWritePointer(0), midiMessages, numSamples, numInputChannels, sampleRate);
             
             }
             else if (ch == 1) {
-                eq4band2_1.process(buffer.getReadPointer(1), buffer.getWritePointer(1), midiMessages, numSamples, numInputChannels, sampleRate);
+                eq4band2.process(buffer.getReadPointer(1), buffer.getWritePointer(1), midiMessages, numSamples, numInputChannels, sampleRate);
             }
         }
 
@@ -367,8 +343,8 @@ void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInByt
 
 void ProteusAudioProcessor::set_ampEQ(float bass_slider, float mid_slider, float treble_slider)
 {
-    eq4band1.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
-    eq4band2_1.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
+    eq4band.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
+    eq4band2.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
 }
 
 void ProteusAudioProcessor::loadConfig(File configFile)
@@ -378,13 +354,13 @@ void ProteusAudioProcessor::loadConfig(File configFile)
     String path = configFile.getFullPathName();
     char_filename = path.toUTF8();
 
-    LSTM1.reset();
-    LSTM2_1.reset();
+    LSTM.reset();
+    LSTM2.reset();
 
-    LSTM1.load_json(char_filename);
-    LSTM2_1.load_json(char_filename);
+    LSTM.load_json(char_filename);
+    LSTM2.load_json(char_filename);
 
-    if (LSTM1.input_size == 1) {
+    if (LSTM.input_size == 1) {
         conditioned = false;
     } else {
         conditioned = true;
