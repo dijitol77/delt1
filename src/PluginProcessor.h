@@ -24,6 +24,17 @@
 #define TREBLE1_ID "treble"
 #define TREBLE1_NAME "Treble"
 
+#define GAIN2_ID "drive"
+#define GAIN2_NAME "Drive"
+#define MASTER2_ID "level"
+#define MASTER1_NAME "Level"
+#define BASS2_ID "bass"
+#define BASS2_NAME "Bass"
+#define MID2_ID "mid"
+#define MID2_NAME "Mid"
+#define TREBLE2_ID "treble"
+#define TREBLE2_NAME "Treble"
+
 
 #include <nlohmann/json.hpp>
 #include "RTNeuralLSTM.h"
