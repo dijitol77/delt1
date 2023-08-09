@@ -117,8 +117,8 @@ private:
 
     Eq4Band eq4band1; // Amp EQ
     Eq4Band eq4band2_1; // Amp EQ
-    // Eq4Band eq4band; // Amp EQ
-    // Eq4Band eq4band2; // Amp EQ
+    Eq4Band eq4band3; // Amp EQ
+    Eq4Band eq4band4; // Amp EQ
 
     std::atomic<float>* driveParam1 = nullptr;
     std::atomic<float>* masterParam1 = nullptr;
