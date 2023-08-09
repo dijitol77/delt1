@@ -22,37 +22,43 @@ ProteusAudioProcessor::ProteusAudioProcessor()
         .withOutput("Output", AudioChannelSet::stereo(), true)
 #endif
     ),
-
-    treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN_ID, GAIN_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
-                        std::make_unique<AudioParameterFloat>(BASS_ID, BASS_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                        std::make_unique<AudioParameterFloat>(MID_ID, MID_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                        std::make_unique<AudioParameterFloat>(TREBLE_ID, TREBLE_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                        std::make_unique<AudioParameterFloat>(MASTER_ID, MASTER_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5) })
-
-    
+    // Initialize the treeState with the audio parameters for Container 1
+    treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN1_ID, GAIN1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
+                        std::make_unique<AudioParameterFloat>(BASS1_ID, BASS_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                        std::make_unique<AudioParameterFloat>(MID1_ID, MID1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                        std::make_unique<AudioParameterFloat>(TREBLE1_ID, TREBLE1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                        std::make_unique<AudioParameterFloat>(MASTER1_ID, MASTER1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5) })
 #endif
 {
-    driveParam = treeState.getRawParameterValue (GAIN_ID);
-    masterParam = treeState.getRawParameterValue (MASTER_ID);
-    bassParam = treeState.getRawParameterValue (BASS_ID);
-    midParam = treeState.getRawParameterValue (MID_ID);
-    trebleParam = treeState.getRawParameterValue (TREBLE_ID);
+   // Assign parameter values for Container 1
+    driveParam1 = treeState.getRawParameterValue(GAIN1_ID);
+    masterParam1 = treeState.getRawParameterValue(MASTER1_ID);
+    bassParam1 = treeState.getRawParameterValue(BASS1_ID);
+    midParam1 = treeState.getRawParameterValue(MID1_ID);
+    trebleParam1 = treeState.getRawParameterValue(TREBLE1_ID);
 
-    auto bassValue = static_cast<float> (bassParam->load());
-    auto midValue = static_cast<float> (midParam->load());
-    auto trebleValue = static_cast<float> (trebleParam->load());
+    // Load parameter values for Container 1
+    auto bassValue1 = static_cast<float> (bassParam1->load());
+    auto midValue1 = static_cast<float> (midParam1->load());
+    auto trebleValue1 = static_cast<float> (trebleParam1->load());
 
-    eq4band.setParameters(bassValue, midValue, trebleValue, 0.0);
-    eq4band2.setParameters(bassValue, midValue, trebleValue, 0.0);
+    // Update EQ band parameters for Container 1
+    eq4band1.setParameters(bassValue1, midValue1, trebleValue1, 0.0);
+    eq4band2_1.setParameters(bassValue1, midValue1, trebleValue1, 0.0);
 
     pauseVolume = 3;
 
+    // Load the default impulse response for the cabinet simulator for Container 1
     cabSimIRa.load(BinaryData::default_ir_wav, BinaryData::default_ir_wavSize);
 
+    // Initialize LSTM models for Container 1
+    LSTM1.reset();
+    LSTM2_1.reset();
 }
 
 ProteusAudioProcessor::~ProteusAudioProcessor()
 {
+    // Destructor for the audio processor
 }
 
 //==============================================================================
@@ -179,11 +185,12 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
 {
     ScopedNoDenormals noDenormals;
 
-    auto driveValue = static_cast<float> (driveParam->load());
-    auto masterValue = static_cast<float> (masterParam->load());
-    auto bassValue = static_cast<float> (bassParam->load());
-    auto midValue = static_cast<float> (midParam->load());
-    auto trebleValue = static_cast<float> (trebleParam->load());
+    // Load parameter values for Container 1
+    auto driveValue1 = static_cast<float> (driveParam1->load());
+    auto masterValue1 = static_cast<float> (masterParam1->load());
+    auto bassValue1 = static_cast<float> (bassParam1->load());
+    auto midValue1 = static_cast<float> (midParam1->load());
+    auto trebleValue1 = static_cast<float> (trebleParam1->load());
 
     // Setup Audio Data
     const int numSamples = buffer.getNumSamples();
@@ -211,10 +218,10 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
             {
                 // Apply LSTM model
                 if (ch == 0) {
-                    LSTM.process(block44k.getChannelPointer(0), block44k.getChannelPointer(0), (int)block44k.getNumSamples());
+                    LSTM1.process(block44k.getChannelPointer(0), block44k.getChannelPointer(0), (int)block44k.getNumSamples());
                 }
                 else if (ch == 1) {
-                    LSTM2.process(block44k.getChannelPointer(1), block44k.getChannelPointer(1), (int)block44k.getNumSamples());
+                    LSTM2_1.process(block44k.getChannelPointer(1), block44k.getChannelPointer(1), (int)block44k.getNumSamples());
                 }
             }
             resampler.processOut(block44k, block);
@@ -227,10 +234,10 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
             {
                 // Apply LSTM model
                 if (ch == 0) {
-                    LSTM.process(block44k.getChannelPointer(0), driveValue, block44k.getChannelPointer(0), (int)block44k.getNumSamples());
+                    LSTM1.process(block44k.getChannelPointer(0), driveValue, block44k.getChannelPointer(0), (int)block44k.getNumSamples());
                 }
                 else if (ch == 1) {
-                    LSTM2.process(block44k.getChannelPointer(1), driveValue, block44k.getChannelPointer(1), (int)block44k.getNumSamples());
+                    LSTM2_1.process(block44k.getChannelPointer(1), driveValue, block44k.getChannelPointer(1), (int)block44k.getNumSamples());
                 }
             }
             resampler.processOut(block44k, block);
