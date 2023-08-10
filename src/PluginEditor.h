@@ -62,6 +62,9 @@ public:
     void modelSelect1Changed();
     void modelSelect2Changed();
 
+    // In the header file
+      void loadFromFolder();
+
 
     // Slider Value Changed Functions
     virtual void sliderValue1Changed(Slider* slider) override;
