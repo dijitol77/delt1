@@ -61,6 +61,7 @@ private:
 // Image rightBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
 
 Image rightBackgroundImage;
+ImageComponent rightBackground;
 
     
 
