@@ -55,6 +55,7 @@ rightContainer.addAndMakeVisible(rightBackground);
     rightContainer.addAndMakeVisible(loadButtonRight);
     loadButtonRight.setButtonText("LOAD MODEL RIGHT");
     loadButtonRight.addListener(this);
+    rightContainer.repaint();
 
   
 rightContainer.addAndMakeVisible(modelSelectRight);
