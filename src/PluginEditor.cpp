@@ -89,6 +89,21 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     odLevelKnob2.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odLevelKnob2.setDoubleClickReturnValue(true, 0.5);
 
+  
+// Ensure the tree object contains the "gain" parameter
+    if (tree.getParameter("gain") == nullptr)
+    {
+        jassertfalse; // This will trigger an assertion if the "gain" parameter is not found
+        return;
+    }
+
+    gainSlider.setSliderStyle(Slider::LinearVertical);
+    gainSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 20);
+    addAndMakeVisible(gainSlider);
+
+    gainAttachment = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(tree, "gain", gainSlider);
+
+    setSize (200, 300);
 
   
 
