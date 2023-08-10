@@ -38,20 +38,21 @@ private:
     ProteusAudioProcessor& processor;
 
     // Declare the left container 
+
     Component leftContainer;
+    TextButton loadButton;
 
     // Declare the right container
-    Component rightContainer;
 
-    TextButton loadButton;
+    Component rightContainer;   
     TextButton loadButtonRight;
 
     virtual void buttonClicked(Button* button) override;
 
     bool isValidFormat(File configFile);
-    void loadButtonClicked();
     void loadButtonRightClicked();
-
+    void loadButtonClicked();
+    
 
 
 ImageComponent leftBackground;  // For displaying the image in the left container
