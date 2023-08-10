@@ -116,6 +116,10 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     addAndMakeVisible(leftContainer);
     leftContainer.setBounds(0, 0, 500, 650);
 
+    // Set bounds and add the right container to the main component
+    addAndMakeVisible(rightContainer);
+    rightContainer.setBounds(500, 0, 500, 650);
+
   // Load the background image for the left container
     leftBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
     leftBackground.setImage(leftBackgroundImage);
@@ -123,9 +127,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     leftContainer.addAndMakeVisible(leftBackground);
     
 
-  // Set bounds and add the right container to the main component
-    addAndMakeVisible(rightContainer);
-    rightContainer.setBounds(500, 0, 500, 650);
+
   
   // Load the background image for the right container
     rightBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
