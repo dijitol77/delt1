@@ -49,6 +49,14 @@ rightContainer.addAndMakeVisible(rightBackground);
     modelSelect.onChange = [this] {modelSelectChanged();};
 
   // Initialize and configure modelSelectRight for the right container
+
+  
+// Initialize and configure loadButtonRight for the right container
+    rightContainer.addAndMakeVisible(loadButtonRight);
+    loadButtonRight.setButtonText("LOAD MODEL RIGHT");
+    loadButtonRight.addListener(this);
+
+  
 rightContainer.addAndMakeVisible(modelSelectRight);
 modelSelectRight.setColour(juce::Label::textColourId, juce::Colours::black);
 modelSelectRight.setScrollWheelEnabled(true);
