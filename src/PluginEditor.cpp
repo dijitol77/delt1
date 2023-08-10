@@ -129,7 +129,7 @@ rightContainer.addAndMakeVisible(rightBackground);
   odDriveKnobRight.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
   odDriveKnobRight.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
   odDriveKnobRight.setDoubleClickReturnValue(true, 0.5);
-  rightContainer.addAndMakeVisible(odDriveKnobRight)
+  rightContainer.addAndMakeVisible(odDriveKnobRight);
 
     // Size of plugin GUI
     setSize (1000, 650);  // Double the width
