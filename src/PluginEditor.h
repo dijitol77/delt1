@@ -59,8 +59,11 @@ ImageComponent rightBackground; // For displaying the image in the right contain
 Image rightBackgroundImage;     // The actual image data for the right container
 
 
-Image background_on;
-Image background_on_blue;
+Image leftBackground_on;
+Image leftBackground_on_blue;
+Image rightBackground_on;
+Image rightBackground_on_blue;
+
 
 
 
