@@ -45,6 +45,7 @@ private:
     Component rightContainer;
 
     TextButton loadButton;
+    TextButton loadButtonRight;
     virtual void buttonClicked(Button* button) override;
 
     bool isValidFormat(File configFile);
