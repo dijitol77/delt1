@@ -111,10 +111,13 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     // Size of plugin GUI
     setSize (1000, 650);  // Double the width
     
-    // Create left and right containers
+    // Set bounds and add the left container to the main component
     addAndMakeVisible(leftContainer);
-    addAndMakeVisible(rightContainer);
     leftContainer.setBounds(0, 0, 500, 650);
+    
+
+  // Set bounds and add the right container to the main component
+    addAndMakeVisible(rightContainer);
     rightContainer.setBounds(500, 0, 500, 650);
 
     resetImages();
