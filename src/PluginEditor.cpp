@@ -161,7 +161,7 @@ rightBackground_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, Bi
 rightBackground_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
 
 
-repaint();
+     repaint();
 
     resetImages();
 
