@@ -42,14 +42,15 @@ private:
     Component leftContainer;
     TextButton loadButton;
     virtual void buttonClicked(Button* button) override;
+    bool isValidFormat(File configFile);
+    void loadButtonClicked();
 
     // Declare the right container
       Component rightContainer;
       TextButton loadButtonRight;
-    virtual void ButtonRightClicked(Button* button) override;
-
+    virtual void buttonRightClicked(Button* button) override;
     bool isValidFormat(File configFile);
-    void loadButtonClicked();
+    void loadButtonRightClicked();
 
 
 
