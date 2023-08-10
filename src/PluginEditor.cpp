@@ -233,7 +233,8 @@ void ProteusAudioProcessorEditor::resized()
   // right bounds
 
   odDriveKnobRight.setBounds(168, 242, 190, 190); // You can adjust these values as needed
-  modelSelectRight.setBounds(52, 11, 400, 28);
+    loadButton.setBounds(186, 48, 120, 24);
+    modelSelectRight.setBounds(52, 11, 400, 28);
 
 }
 
