@@ -144,10 +144,10 @@ modelSelect.setScrollWheelEnabled(true);
 
 
 // Populate the ComboBox with the list of models
-int c = 1;
+int counter = 1;
 for (const auto& jsonFile : processor.jsonFiles) {
     modelSelect.addItem(jsonFile.getFileName(), c);
-    c += 1;
+    counter += 1;
 }
 modelSelect.onChange = [this] { modelSelectChanged(); };
 
