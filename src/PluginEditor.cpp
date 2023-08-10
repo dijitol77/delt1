@@ -124,19 +124,16 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
   rightContainer.toFront();
 
   // Load the background image for the left container
-    leftBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
-    leftBackground.setImage(leftBackgroundImage);
-    leftBackground.setBounds(leftContainer.getBounds());
-    leftContainer.addAndMakeVisible(leftBackground);
-    
+leftBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
+leftBackground.setImage(leftBackgroundImage);
+leftBackground.setBounds(leftContainer.getBounds());
+leftContainer.addAndMakeVisible(leftBackground);
 
-
-  
-  // Load the background image for the right container
-    rightBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
-    rightBackground.setImage(rightBackgroundImage);
-    rightBackground.setBounds(rightContainer.getBounds());
-    rightContainer.addAndMakeVisible(rightBackground);
+// Load the background image for the right container
+rightBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
+rightBackground.setImage(rightBackgroundImage);
+rightBackground.setBounds(rightContainer.getBounds());
+rightContainer.addAndMakeVisible(rightBackground);
 
 
 leftBackground_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
