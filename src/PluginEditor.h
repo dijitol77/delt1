@@ -22,10 +22,8 @@ class ProteusAudioProcessorEditor  : public AudioProcessorEditor,
                                        private Slider::Listener                  
 {
 public:
-public:
-    ProteusAudioProcessorEditor (ProteusAudioProcessor&, AudioProcessorValueTreeState&);
-    ~ProteusAudioProcessorEditor(); // Added destructor
-
+    ProteusAudioProcessorEditor (ProteusAudioProcessor&);
+    ~ProteusAudioProcessorEditor();
 
     //==============================================================================
     void paint (Graphics&) override;
@@ -35,37 +33,10 @@ public:
     void loadFromFolder();
     void resetImages();
 
-    // Original components
-    juce::TextButton loadButton;
-    juce::ComboBox modelSelect;
-    juce::Label versionLabel;
-    juce::Slider odDriveKnob;
-    juce::Slider odLevelKnob;
-
-    // Duplicated components with "2" prefix
-    juce::TextButton loadButton2;
-    juce::ComboBox modelSelect2;
-    juce::Label versionLabel2;
-    juce::Slider odDriveKnob2;
-    juce::Slider odLevelKnob2;
-
-    // Containers
-    juce::Component leftContainer;
-    juce::Component rightContainer;
-
-    // ... (rest of the class declaration)
-};
-
-
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     ProteusAudioProcessor& processor;
-
-    Slider gainSlider;
-    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> gainAttachment; // Use unique_ptr for automatic memory management
-
-    
 
 
     TextButton loadButton;
@@ -95,17 +66,6 @@ private:
     //ImageButton odFootSw;
     //ImageButton odLED;
     ImageButton cabOnButton;
-
-
-    TextButton loadButton2;
-    ComboBox modelSelect2;
-    Label versionLabel2;
-    Slider odDriveKnob2;
-    Slider odLevelKnob2;
-
-    // Containers
-    Component leftContainer;
-    Component rightContainer;
 
     
     // LookandFeels 
