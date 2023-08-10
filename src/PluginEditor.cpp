@@ -13,7 +13,7 @@
 
 //==============================================================================
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p)
+    : AudioProcessorEditor (&p), audioProcessor (p), font1(15.0f), font2(15.0f)
 {
 
 // Container 1 widgets
