@@ -38,6 +38,12 @@ rightContainer.addAndMakeVisible(rightBackground);
     loadButton.setButtonText("LOAD MODEL");
     loadButton.addListener(this);
 
+  // Initialize and configure loadButtonRight for the right container
+    rightContainer.addAndMakeVisible(loadButtonRight);
+    loadButtonRight.setButtonText("LOAD MODEL RIGHT");
+    loadButtonRight.addListener(this);
+    rightContainer.repaint();
+
     leftContainer.addAndMakeVisible(modelSelect);
     modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
     modelSelect.setScrollWheelEnabled(true);
@@ -51,11 +57,7 @@ rightContainer.addAndMakeVisible(rightBackground);
   // Initialize and configure modelSelectRight for the right container
 
   
-// Initialize and configure loadButtonRight for the right container
-    rightContainer.addAndMakeVisible(loadButtonRight);
-    loadButtonRight.setButtonText("LOAD MODEL RIGHT");
-    loadButtonRight.addListener(this);
-    rightContainer.repaint();
+
 
   
 rightContainer.addAndMakeVisible(modelSelectRight);
