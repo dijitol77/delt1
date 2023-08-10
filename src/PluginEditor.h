@@ -51,8 +51,14 @@ private:
     void loadButtonClicked();
 
 
-ImageComponent rightBackground; // For displaying the image
-Image rightBackgroundImage;     // The actual image data
+
+ImageComponent leftBackground;  // For displaying the image in the left container
+Image leftBackgroundImage;      // The actual image data for the left container
+
+ImageComponent rightBackground; // For displaying the image in the right container
+Image rightBackgroundImage;     // The actual image data for the right container
+
+
 Image background_on;
 Image background_on_blue;
 
