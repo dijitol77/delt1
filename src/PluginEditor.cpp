@@ -407,6 +407,18 @@ void ProteusAudioProcessorEditor::modelSelectChanged()
     repaint();
 }
 
+void ProteusAudioProcessorEditor::modelSelectChangedRight()
+{
+    const int selectedFileIndex = modelSelectRight.getSelectedItemIndex();
+    if (selectedFileIndex >= 0 && selectedFileIndex < processor.jsonFiles.size() && processor.jsonFiles.empty() == false) {
+        if (processor.jsonFiles[selectedFileIndex].existsAsFile() && isValidFormat(processor.jsonFiles[selectedFileIndex])) {
+            processor.loadConfig(processor.jsonFiles[selectedFileIndex]);
+            // You can add additional logic here if needed for the right container
+        }
+    }
+    repaint();
+}
+
 
 void ProteusAudioProcessorEditor::resetImages()
 {
