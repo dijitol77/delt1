@@ -38,12 +38,8 @@ private:
     // access the processor object that created it.
     ProteusAudioProcessor& processor;
 
-    Slider odDriveKnob2, odLevelKnob2;
 
     TextButton loadButton;
-    //2
-
-    TextButton loadButton2;
     virtual void buttonClicked(Button* button) override;
 
     bool isValidFormat(File configFile);
@@ -60,8 +56,6 @@ private:
     Label versionLabel;
 
     ComboBox modelSelect;
-    //2
-    ComboBox modelSelect2;
 
     // Overdrive Widgets
     Slider ampBassKnob;
@@ -69,15 +63,9 @@ private:
     Slider ampTrebleKnob;
     Slider odDriveKnob;
     Slider odLevelKnob;
- 
     //ImageButton odFootSw;
     //ImageButton odLED;
     ImageButton cabOnButton;
-     
-   // 2
-    Slider odDriveKnob2;
-    Slider odLevelKnob2;
-    ImageButton cabOnButton2;
 
     
     // LookandFeels 
@@ -93,11 +81,6 @@ private:
     void modelSelectChanged();
     void cabOnButtonClicked();
 
-    // 2
-
-    void modelSelect2Changed();
-    void cabOnButton2Clicked();
-
     bool model_loaded = false;
 
 public:
@@ -105,7 +88,6 @@ public:
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> midSliderAttach;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSlider2Attach;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
  
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
