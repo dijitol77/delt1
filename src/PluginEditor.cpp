@@ -392,6 +392,7 @@ void ProteusAudioProcessorEditor::loadButtonRightClicked()
             processor.saved_model = ""; // Clear the saved model since there's nothing in the dropdown
         }
     });
+  rightContainer.repaint();
 }
 
 
