@@ -131,6 +131,19 @@ rightContainer.addAndMakeVisible(rightBackground);
   odDriveKnobRight.setDoubleClickReturnValue(true, 0.5);
   rightContainer.addAndMakeVisible(odDriveKnobRight);
 
+  // Add the loadButton to the right container
+rightContainer.addAndMakeVisible(loadButton);
+loadButton.setButtonText("LOAD MODEL");
+loadButton.addListener(this);
+loadButton.setBounds(/*x, y, width, height*/);  // Set appropriate values for x, y, width, and height
+
+// Add the modelSelect ComboBox to the right container
+rightContainer.addAndMakeVisible(modelSelect);
+modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
+modelSelect.setScrollWheelEnabled(true);
+modelSelect.setBounds(/*x, y, width, height*/);  // Set appropriate values for x, y, width, and height
+
+
     // Size of plugin GUI
     setSize (1000, 650);  // Double the width
     
