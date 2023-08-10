@@ -440,12 +440,13 @@ void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
     if (button == &loadButton) {
         loadButtonClicked();
     } 
-    else if (button == &loadButtonRight) {  // Handle the click event for loadButtonRight
+    else if (button == &loadButtonRight) {
         loadButtonRightClicked();
-    }
+    } 
     else if (button == &cabOnButton) {
         cabOnButtonClicked();
     }
+    // Add more conditions here for other buttons as needed
 }
 
 
