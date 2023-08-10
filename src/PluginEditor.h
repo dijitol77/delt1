@@ -39,6 +39,7 @@ private:
     ProteusAudioProcessor& processor;
 
     Component leftContainer;
+    Component rightContainer;
 
     TextButton loadButton;
     virtual void buttonClicked(Button* button) override;
