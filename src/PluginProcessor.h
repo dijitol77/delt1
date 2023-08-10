@@ -27,8 +27,8 @@
 
 #define GAIN2_ID "drive"
 #define GAIN2_NAME "Drive"
-#define MASTER2_ID "level"
-#define MASTER1_NAME "Level"
+// #define MASTER2_ID "level"
+// #define MASTER2_NAME "Level" // This seems like a typo. Should it be MASTER2_NAME?
 
 #define BASS_ID "bass"
 #define BASS_NAME "Bass"
@@ -119,7 +119,7 @@ private:
 
     // EQ
     EQ4Band eq4band1;
-    EQ4Band eq4band2;
+    EQ4Band eq4band2; // This is declared twice. Commenting out the second one.
     
     float previousDriveValue = 0.5;
     float previousMasterValue = 0.5;
@@ -151,10 +151,7 @@ private:
     // IR processing
     CabSim cabSimIRa;
 
-   // EQ  processing
-    Eq4Band eq4band1; // Amp EQ
-    Eq4Band eq4band2; // Amp EQ
-
+  
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessor)
