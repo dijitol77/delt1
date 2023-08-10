@@ -97,6 +97,10 @@ private:
     Slider ampBassKnob;
     Slider ampMidKnob;
     Slider ampTrebleKnob;
+
+    SliderAttachment bassSliderAttach;
+    SliderAttachment midSliderAttach;
+    SliderAttachment trebleSliderAttach;
    
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
