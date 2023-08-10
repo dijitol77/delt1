@@ -209,6 +209,11 @@ void ProteusAudioProcessorEditor::resized()
     ampBassKnob.setBounds(113, 131, 62, 62);
     ampMidKnob.setBounds(227, 131, 62, 62);
     ampTrebleKnob.setBounds(340, 131, 62, 62);
+
+  // right bounds
+
+  odDriveKnobRight.setBounds(168, 242, 190, 190); // You can adjust these values as needed
+
 }
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
