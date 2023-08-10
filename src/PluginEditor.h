@@ -40,17 +40,15 @@ private:
 
     // Declare the left container 
     Component leftContainer;
-    TextButton loadButton;
-    void buttonClicked(Button* button) override;
-   
 
     // Declare the right container
-      Component rightContainer;
-      TextButton loadButtonRight;
-    
+    Component rightContainer;
+
+    TextButton loadButton;
+    virtual void buttonClicked(Button* button) override;
 
     bool isValidFormat(File configFile);
-
+    void loadButtonClicked();
 
 
 
@@ -77,7 +75,6 @@ Image rightBackground_on_blue;
     Label versionLabel;
 
     ComboBox modelSelect;
-    ComboBox modelSelectRight;
 
     // Overdrive Widgets
     Slider ampBassKnob;
@@ -102,7 +99,6 @@ Image rightBackground_on_blue;
  
     void odFootSwClicked();
     void modelSelectChanged();
-    void modelSelectChangedRight();
     void cabOnButtonClicked();
 
     bool model_loaded = false;
