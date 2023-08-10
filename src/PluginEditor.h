@@ -91,6 +91,8 @@ public:
 private:
     // Reference to the processor
     ProteusAudioProcessor& processor;
+    Font font1;
+    Font font2;
    
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
