@@ -38,7 +38,10 @@ private:
     // access the processor object that created it.
     ProteusAudioProcessor& processor;
 
+    // Declare the left container 
     Component leftContainer;
+
+    // Declare the right container
     Component rightContainer;
 
     TextButton loadButton;
