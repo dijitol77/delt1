@@ -22,8 +22,10 @@ class ProteusAudioProcessorEditor  : public AudioProcessorEditor,
                                        private Slider::Listener                  
 {
 public:
-    ProteusAudioProcessorEditor (ProteusAudioProcessor&);
-    ~ProteusAudioProcessorEditor();
+public:
+    ProteusAudioProcessorEditor (ProteusAudioProcessor&, AudioProcessorValueTreeState&);
+    ~ProteusAudioProcessorEditor(); // Added destructor
+
 
     //==============================================================================
     void paint (Graphics&) override;
@@ -59,6 +61,9 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     ProteusAudioProcessor& processor;
+
+    Slider gainSlider;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> gainAttachment; // Use unique_ptr for automatic memory management
 
     
 
