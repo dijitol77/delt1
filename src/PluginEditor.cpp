@@ -16,19 +16,6 @@
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p)
 {
-
-  editorBase = std::make_unique<EditorBase>(p);
-	editorBase->setBounds(0, 0, editorBase->backgroundSize.getX(), editorBase->backgroundSize.getY());
-.
-	// Aspect ratio stuff...
-	sizeRatio = (float)editorBase->backgroundSize.getX() / (float)(editorBase->backgroundSize.getY());
-	getConstrainer()->setFixedAspectRatio(sizeRatio);
-.
-    // Set this parent's size...
-  setSize(backgroundSize.getX() / 2, backgroundSize.getY() / 2);
-	setResizable(true, true);
-	setResizeLimits(256, 256, editorBase->backgroundSize.getX() , editorBase->backgroundSize.getY());
-	addAndMakeVisible(editorBase.get());
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to
 
@@ -227,11 +214,6 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
 
 void ProteusAudioProcessorEditor::resized()
 {
-
-  auto area = getLocalBounds();
-	float sc = (float)area.getWidth() / editorBase->backgroundSize.getX();
-	editorBase->setTransform(AffineTransform::scale(sc));
-  
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
 
