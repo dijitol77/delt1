@@ -57,7 +57,7 @@ private:
     //Image background_off = ImageCache::getFromMemory(BinaryData::background_off_jpg, BinaryData::background_off_jpgSize);
 
 // Right container background
-Image rightBackgroundImage;
+ImageComponent rightBackground;
 
     // Image rightBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
 
