@@ -100,7 +100,7 @@ Image rightBackground_on_blue;
  
     void odFootSwClicked();
     void modelSelectChanged();
-    void modelSelectChangedRigh();
+    void modelSelectChangedRight();
     void cabOnButtonClicked();
 
     bool model_loaded = false;
