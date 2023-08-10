@@ -15,6 +15,8 @@
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p), font1(15.0f), font2(15.0f)
 {
+    // Make sure that before the constructor has finished, you've set the
+    // editor's size to whatever you need it to
 
 // Container 1 widgets
     addAndMakeVisible(loadButton1);
@@ -71,72 +73,69 @@ auto font2 = modelLabel2.getFont();  // Renamed to font2
 // Container 1 
 // cab 1
 
-    cabOnButton1.setImages(true, true, true,
+    cabOnButton.setImages(true, true, true,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
         Image(), 1.0, Colours::transparentWhite,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
         0.0);
-    addAndMakeVisible(cabOnButton1);
-    cabOnButton1.addListener(this);
+    addAndMakeVisible(cabOnButton);
+    cabOnButton.addListener(this);
 
-// odDriveKnob1
-    driveSlider1Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
+// odDriveKnob
+    driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
     addAndMakeVisible(odDriveKnob);
-    odDriveKnob1.setLookAndFeel(&bigKnobLAF);
-    odDriveKnob1.addListener(this);
-    odDriveKnob1.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    odDriveKnob1.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    odDriveKnob1.setDoubleClickReturnValue(true, 0.5);
+    odDriveKnob.setLookAndFeel(&bigKnobLAF);
+    odDriveKnob.addListener(this);
+    odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
+    odDriveKnob.setDoubleClickReturnValue(true, 0.5);
 // odLevelKnob1
-    masterSlider1Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER1_ID, odLevelKnob1);
+    masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
     addAndMakeVisible(odLevelKnob1);
-    odLevelKnob1.setLookAndFeel(&smallKnobLAF);
-    odLevelKnob1.addListener(this);
-    odLevelKnob1.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    odLevelKnob1.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    odLevelKnob1.setDoubleClickReturnValue(true, 0.5);
+    odLevelKnob.setLookAndFeel(&smallKnobLAF);
+    odLevelKnob.addListener(this);
+    odLevelKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    odLevelKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
+    odLevelKnob.setDoubleClickReturnValue(true, 0.5);
 // ampBassKnob
     bassSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob);    	    
-    addAndMakeVisible(ampBassKnob1);
+    addAndMakeVisible(ampBassKnob);
     ampBassKnob.setLookAndFeel(&smallKnobLAF);
     ampBassKnob.addListener(this);
     ampBassKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     ampBassKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     ampBassKnob.setDoubleClickReturnValue(true, 0.0);
-// ampMidKnob
-    midSlider1Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MID_ID, ampMidKnob);    
-    addAndMakeVisible(ampMidKnob1);
+
+    midSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MID_ID, ampMidKnob);    
+    addAndMakeVisible(ampMidKnob);
     ampMidKnob.setLookAndFeel(&smallKnobLAF);
     ampMidKnob.addListener(this);
     ampMidKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     ampMidKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     ampMidKnob.setDoubleClickReturnValue(true, 0.0);
-// ampTrebleKnob
-    trebleSlider1Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, TREBLE_ID, ampTrebleKnob);
+
+    trebleSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, TREBLE_ID, ampTrebleKnob);
     addAndMakeVisible(ampTrebleKnob);
     ampTrebleKnob.setLookAndFeel(&smallKnobLAF);
     ampTrebleKnob.addListener(this);
     ampTrebleKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     ampTrebleKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     ampTrebleKnob.setDoubleClickReturnValue(true, 0.0);
-// versionLabel1
-    addAndMakeVisible(versionLabel1);
-    versionLabel1.setText("v1.2", juce::NotificationType::dontSendNotification);
-    versionLabel1.setJustificationType(juce::Justification::left);
-    versionLabel1.setColour(juce::Label::textColourId, juce::Colours::white);
-    versionLabel1.setFont(font1);
-//
+// versionLabel
+    addAndMakeVisible(versionLabel);
+    versionLabel.setText("v1.2", juce::NotificationType::dontSendNotification);
+    versionLabel.setJustificationType(juce::Justification::left);
+    versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
+    versionLabel.setFont(font);
 
-// Container 2 
-// cab2  
-    cabOnButton2.setImages(true, true, true,
+        cabOnButton2.setImages(true, true, true,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
         Image(), 1.0, Colours::transparentWhite,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
         0.0);
-    addAndMakeVisible(cabOnButton2);
+    addAndMakeVisible(cabOnButton1);
     cabOnButton2.addListener(this);
-// odDriveKnob2
+    // odDriveKnob2
     driveSlider2Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN2_ID, odDriveKnob2);
     addAndMakeVisible(odDriveKnob2);
     odDriveKnob2.setLookAndFeel(&bigKnobLAF);
@@ -167,8 +166,9 @@ auto font2 = modelLabel2.getFont();  // Renamed to font2
 // Add and make visible the duplicate container
     addAndMakeVisible(duplicateContainer);
 
-// Size of plugin GUI
-    setSize (1000, 650);
+    // Size of plugin GUI
+    setSize (500, 650);
+
     resetImages();
 
     loadFromFolder();
@@ -176,12 +176,11 @@ auto font2 = modelLabel2.getFont();  // Renamed to font2
 
 ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
 {
-    
-    odDriveKnob1.setLookAndFeel(nullptr);
-    odLevelKnob1.setLookAndFeel(nullptr);
-    ampBassKnob1.setLookAndFeel(nullptr);
-    ampMidKnob1.setLookAndFeel(nullptr);
-    ampTrebleKnob1.setLookAndFeel(nullptr);
+    odDriveKnob.setLookAndFeel(nullptr);
+    odLevelKnob.setLookAndFeel(nullptr);
+    ampBassKnob.setLookAndFeel(nullptr);
+    ampMidKnob.setLookAndFeel(nullptr);
+    ampTrebleKnob.setLookAndFeel(nullptr);
 
     odDriveKnob2.setLookAndFeel(nullptr);
     odLevelKnob2.setLookAndFeel(nullptr);
@@ -218,23 +217,21 @@ void ProteusAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
 
-//Overall Widgets 1
-    loadButton1.setBounds(186, 48, 120, 24);
-    modelSelect1.setBounds(52, 11, 400, 28);
+    //Overall Widgets
+    loadButton.setBounds(186, 48, 120, 24);
+    modelSelect.setBounds(52, 11, 400, 28);
     //modelLabel.setBounds(197, 2, 90, 25);
-    versionLabel1.setBounds(462, 632, 60, 10);
-    cabOnButton1.setBounds(115, 233, 53, 39);
+    versionLabel.setBounds(462, 632, 60, 10);
+    cabOnButton.setBounds(115, 233, 53, 39);
 
     // Overdrive Widgets
-    odDriveKnob1.setBounds(168, 242, 190, 190);
-    odLevelKnob1.setBounds(340, 225, 62, 62);
+    odDriveKnob.setBounds(168, 242, 190, 190);
+    odLevelKnob.setBounds(340, 225, 62, 62);
     //odFootSw.setBounds(185, 416, 175, 160);
 
-    ampBassKnob1.setBounds(113, 131, 62, 62);
-    ampMidKnob1.setBounds(227, 131, 62, 62);
-    ampTrebleKnob1.setBounds(340, 131, 62, 62);
-
-
+    ampBassKnob.setBounds(113, 131, 62, 62);
+    ampMidKnob.setBounds(227, 131, 62, 62);
+    ampTrebleKnob.setBounds(340, 131, 62, 62);
 // Position the containers
     originalContainer.setBounds(0, 0, 500, 650);
     duplicateContainer.setBounds(500, 0, getWidth() - 500, getHeight());
@@ -244,15 +241,16 @@ void ProteusAudioProcessorEditor::resized()
 
 //Overall Widgets 2
     loadButton2.setBounds(186, 48, 120, 24);
+
     modelSelect2.setBounds(52, 11, 400, 28);
-    //modelLabel.setBounds(197, 2, 90, 25);
+
     versionLabe2.setBounds(462, 632, 60, 10);
-    cabOnButton2.setBounds(115, 233, 53, 39);
 
     // Overdrive Widgets
     odDriveKnob2.setBounds(168, 242, 190, 190);
+
     odLevelKnob2.setBounds(340, 225, 62, 62);
-    //odFootSw.setBounds(185, 416, 175, 160);
+
 
 
 
@@ -295,7 +293,7 @@ bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
     }
 }
 
-void ProteusAudioProcessorEditor::loadButton1Clicked()
+void ProteusAudioProcessorEditor::loadButtonClicked()
 { 
     myChooser = std::make_unique<FileChooser> ("Select a folder to load models from",
                                                processor.folder,
@@ -326,13 +324,13 @@ void ProteusAudioProcessorEditor::loadButton1Clicked()
         
         processor.jsonFiles.clear();
 
-        modelSelect1.clear();
+        modelSelect.clear();
 
         if (files.size() > 0) {
             for (auto file : files) {
 
                 if (isValidFormat(file)) {
-                    modelSelect1.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
+                    modelSelect.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
                     processor.jsonFiles.push_back(file);
                     processor.num_models += 1;
                 }
@@ -340,7 +338,7 @@ void ProteusAudioProcessorEditor::loadButton1Clicked()
             if (chooser.getResult().existsAsFile()) {
                 
                 if (isValidFormat(chooser.getResult()) == true) {
-                    modelSelect1.setText(processor.saved_model.getFileNameWithoutExtension());
+                    modelSelect.setText(processor.saved_model.getFileNameWithoutExtension());
                     processor.loadConfig(processor.saved_model);
                 }
             }
@@ -487,20 +485,17 @@ void ProteusAudioProcessorEditor::loadFromFolder2()
             }
         }
     }
- // load button 2   
 }
 
 
-// buttonClicked1
-void ProteusAudioProcessorEditor::button1Clicked(juce::Button* button)
+void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
 {
     //if (button == &odFootSw) {
     //    odFootSwClicked();
-    if (button == &loadButton1) {
-        loadButton1Clicked();
-    } else if (button == &cabOnButton1) {
-        cabOnButton1Clicked();
-    }
+    if (button == &loadButton) {
+        loadButtonClicked();
+    } else if (button == &cabOnButton) {
+        cabOnButtonClicked();}
 
 }
 // buttonClicked2
@@ -515,9 +510,7 @@ void ProteusAudioProcessorEditor::button2Clicked(juce::Button* button)
     }
 
 }
-
-void ProteusAudioProcessorEditor::odFootSw1Clicked() 
-{
+void ProteusAudioProcessorEditor::odFootSwClicked() {
     //if (processor.fw_state == 0)
     //    processor.fw_state = 1;
     //else
@@ -525,18 +518,9 @@ void ProteusAudioProcessorEditor::odFootSw1Clicked()
     //resetImages();
 }
 
-void ProteusAudioProcessorEditor::odFootSw2Clicked() {
-
-    //if (processor.fw_state == 0)
-    //    processor.fw_state = 1;
-    //else
-    //    processor.fw_state = 0;
-    //resetImages();
-}
-
-void ProteusAudioProcessorEditor::cabOnButton1Clicked() 
+void ProteusAudioProcessorEditor::cabOnButtonClicked() 
 {
-    if (processor.cab_state == 0) {
+     if (processor.cab_state == 0) {
         processor.cab_state = 1;
     }
     else {
@@ -558,19 +542,17 @@ void ProteusAudioProcessorEditor::cabOnButton2Clicked()
     repaint();
 }
 
-void ProteusAudioProcessorEditor::sliderValue1Changed(Slider* slider)
+void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
 {
-    // Amp "1"
-    if (slider == &ampBassKnob1 || slider == &ampMidKnob1 || slider == &ampTrebleKnob1) {
-        processor.set_ampEQ(ampBassKnob1.getValue(), 1.getValue(), ampTrebleKnob1.getValue());
+    // Amp
+    if (slider == &ampBassKnob || slider == &ampMidKnob || slider == &ampTrebleKnob) {
+        processor.set_ampEQ(ampBassKnob.getValue(), ampMidKnob.getValue(), ampTrebleKnob.getValue());
     }
-
 }
 
-
-void ProteusAudioProcessorEditor::modelSelect1Changed()
+void ProteusAudioProcessorEditor::modelSelectChanged()
 {
-    const int selectedFileIndex = modelSelect1.getSelectedItemIndex();
+    const int selectedFileIndex = modelSelect.getSelectedItemIndex();
     if (selectedFileIndex >= 0 && selectedFileIndex < processor.jsonFiles.size() && processor.jsonFiles.empty() == false) { //check if correct 
         if (processor.jsonFiles[selectedFileIndex].existsAsFile() && isValidFormat(processor.jsonFiles[selectedFileIndex])) {
             processor.loadConfig(processor.jsonFiles[selectedFileIndex]);
@@ -596,8 +578,6 @@ void ProteusAudioProcessorEditor::modelSelect2Changed()
 
 void ProteusAudioProcessorEditor::resetImages()
 {
-    // ... [resetImages function remains unchanged]
-
     repaint();
     /*
     if (processor.fw_state == 0) {
@@ -615,9 +595,9 @@ void ProteusAudioProcessorEditor::resetImages()
             0.0);
     }
     */
-    // Set On/Off cab graphic "1"
+    // Set On/Off cab graphic
     if (processor.cab_state == 0) {
-        cabOnButton1.setImages(true, true, true,
+        cabOnButton.setImages(true, true, true,
             ImageCache::getFromMemory(BinaryData::cab_switch_off_png, BinaryData::cab_switch_off_pngSize), 1.0, Colours::transparentWhite,
             Image(), 1.0, Colours::transparentWhite,
             ImageCache::getFromMemory(BinaryData::cab_switch_off_png, BinaryData::cab_switch_off_pngSize), 1.0, Colours::transparentWhite,
