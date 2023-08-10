@@ -3,7 +3,7 @@
 
     This file was auto-generated!
 
-    It contains the basic framework code for a JUCE plugin editor.
+    It contains the basic framework code for a JUCE plugin processor.
 
   ==============================================================================
 */
@@ -16,7 +16,6 @@ ProteusAudioProcessor::ProteusAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
     : AudioProcessor(BusesProperties()
 #if ! JucePlugin_IsMidiEffect
-
 #if ! JucePlugin_IsSynth
         .withInput("Input", AudioChannelSet::stereo(), true)
 #endif
@@ -25,7 +24,6 @@ ProteusAudioProcessor::ProteusAudioProcessor()
     ),
 
     treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN_ID, GAIN_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
-                        std::make_unique<AudioParameterFloat>(GAIN2_ID, GAIN2_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
                         std::make_unique<AudioParameterFloat>(BASS_ID, BASS_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
                         std::make_unique<AudioParameterFloat>(MID_ID, MID_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
                         std::make_unique<AudioParameterFloat>(TREBLE_ID, TREBLE_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
@@ -35,7 +33,6 @@ ProteusAudioProcessor::ProteusAudioProcessor()
 #endif
 {
     driveParam = treeState.getRawParameterValue (GAIN_ID);
-    driveParam = treeState.getRawParameterValue (GAIN2_ID);
     masterParam = treeState.getRawParameterValue (MASTER_ID);
     bassParam = treeState.getRawParameterValue (BASS_ID);
     midParam = treeState.getRawParameterValue (MID_ID);
@@ -45,21 +42,17 @@ ProteusAudioProcessor::ProteusAudioProcessor()
     auto midValue = static_cast<float> (midParam->load());
     auto trebleValue = static_cast<float> (trebleParam->load());
 
-
     eq4band.setParameters(bassValue, midValue, trebleValue, 0.0);
     eq4band2.setParameters(bassValue, midValue, trebleValue, 0.0);
 
     pauseVolume = 3;
 
-
     cabSimIRa.load(BinaryData::default_ir_wav, BinaryData::default_ir_wavSize);
-
 
 }
 
 ProteusAudioProcessor::~ProteusAudioProcessor()
 {
-
 }
 
 //==============================================================================
@@ -143,17 +136,11 @@ void ProteusAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBloc
 
     dcBlocker.prepare (spec); 
 
-    LSTM1.reset();
+    LSTM.reset();
     LSTM2.reset();
-    LSTM3.reset();
-    LSTM4.reset();
 
     // Set up IR
     cabSimIRa.prepare(spec);
-
-    // Bring the duplicate container to the front and repaint
-    duplicateContainer.toFront(false);
-    duplicateContainer.repaint();
 
 }
 
@@ -191,9 +178,8 @@ bool ProteusAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) 
 void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
     ScopedNoDenormals noDenormals;
-
+////////////////////////////////////////////////// // 2. Adjusting Audio Buffer's Gain
     auto driveValue = static_cast<float> (driveParam->load());
-    auto drive2Value = static_cast<float> (drive2Param->load());
     auto masterValue = static_cast<float> (masterParam->load());
     auto bassValue = static_cast<float> (bassParam->load());
     auto midValue = static_cast<float> (midParam->load());
@@ -214,6 +200,7 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
             // Apply ramped changes for gain smoothing
             if (driveValue == previousDriveValue)
             {
+////////////////////////////////////////////////////////////// 3. Resampling Audio Data
                 buffer.applyGain(driveValue*2.5);
             }
              else {
@@ -225,12 +212,14 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
             {
                 // Apply LSTM model
                 if (ch == 0) {
-                    LSTM1.process(block44k.getChannelPointer(0), block44k.getChannelPointer(0), (int)block44k.getNumSamples());
+//////////////////////////////////////////////////////// 4. Applying the LSTM Models
+                    LSTM.process(block44k.getChannelPointer(0), block44k.getChannelPointer(0), (int)block44k.getNumSamples());
                 }
                 else if (ch == 1) {
                     LSTM2.process(block44k.getChannelPointer(1), block44k.getChannelPointer(1), (int)block44k.getNumSamples());
                 }
             }
+/////////////////////////////////////////////////// // 5. Resampling Back to Original Sample Rate
             resampler.processOut(block44k, block);
         } else {
             buffer.applyGain(1.5); // Apply default boost to help sound
@@ -241,7 +230,7 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
             {
                 // Apply LSTM model
                 if (ch == 0) {
-                    LSTM1.process(block44k.getChannelPointer(0), driveValue, block44k.getChannelPointer(0), (int)block44k.getNumSamples());
+                    LSTM.process(block44k.getChannelPointer(0), driveValue, block44k.getChannelPointer(0), (int)block44k.getNumSamples());
                 }
                 else if (ch == 1) {
                     LSTM2.process(block44k.getChannelPointer(1), driveValue, block44k.getChannelPointer(1), (int)block44k.getNumSamples());
@@ -293,7 +282,6 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
             pauseVolume -= 1;
         }
     }
- // load button 2   
 }
 
 //==============================================================================
@@ -323,11 +311,6 @@ void ProteusAudioProcessor::getStateInformation (MemoryBlock& destData)
     xml->setAttribute ("cab_state", cab_state);
     copyXmlToBinary (*xml, destData);
 
-    //if (processor.fw_state == 0)
-    //    processor.fw_state = 1;
-    //else
-    //    processor.fw_state = 0;
-    //resetImages();
 }
 
 void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
@@ -357,18 +340,8 @@ void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInByt
                 loadConfig(saved_model);
             }          
 
-
-void ProteusAudioProcessorEditor::modelSelect1Changed()
-{
-    const int selectedFileIndex = modelSelect1.getSelectedItemIndex();
-    if (selectedFileIndex >= 0 && selectedFileIndex < processor.jsonFiles.size() && processor.jsonFiles.empty() == false) { //check if correct 
-        if (processor.jsonFiles[selectedFileIndex].existsAsFile() && isValidFormat(processor.jsonFiles[selectedFileIndex])) {
-            processor.loadConfig(processor.jsonFiles[selectedFileIndex]);
-            processor.current_model_index = selectedFileIndex;
-            processor.saved_model = processor.jsonFiles[selectedFileIndex];
         }
     }
-    repaint();
 }
 
 void ProteusAudioProcessor::set_ampEQ(float bass_slider, float mid_slider, float treble_slider)
@@ -386,21 +359,11 @@ void ProteusAudioProcessor::loadConfig(File configFile)
 
     LSTM.reset();
     LSTM2.reset();
-    LSTM3.reset();
-    LSTM4.reset();
 
-    LSTM1.load_json(char_filename);
+    LSTM.load_json(char_filename);
     LSTM2.load_json(char_filename);
-    LSTM3.load_json(char_filename);
-    LSTM4.load_json(char_filename);
 
-    if (LSTM1.input_size == 1) {
-        conditioned = false;
-    } else {
-        conditioned = true;
-    }
-
-      if (LSTM3.input_size == 1) {
+    if (LSTM.input_size == 1) {
         conditioned = false;
     } else {
         conditioned = true;
