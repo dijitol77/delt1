@@ -25,10 +25,10 @@ ProteusAudioProcessor::ProteusAudioProcessor()
     ),
     // Initialize the treeState with the audio parameters
     treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN1_ID, GAIN1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
-                                            std::make_unique<AudioParameterFloat>(BASS_ID, BASS_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                                            std::make_unique<AudioParameterFloat>(MID_ID, MID_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                                            std::make_unique<AudioParameterFloat>(TREBLE_ID, TREBL1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                                            std::make_unique<AudioParameterFloat>(MASTER_ID, MASTER_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5),
+                                            std::make_unique<AudioParameterFloat>(BASS1_ID, BASS1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                                            std::make_unique<AudioParameterFloat>(MID1_ID, MID1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                                            std::make_unique<AudioParameterFloat>(TREBLE1_ID, TREBLE1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                                            std::make_unique<AudioParameterFloat>(MASTER1_ID, MASTER1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5),
                                             std::make_unique<AudioParameterFloat>(GAIN2_ID, GAIN2_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
 
                             
@@ -37,10 +37,10 @@ ProteusAudioProcessor::ProteusAudioProcessor()
 {
     // Initialize parameters for Container 1
     driveParam1 = treeState.getRawParameterValue(GAIN1_ID);
-    masterParam1 = treeState.getRawParameterValue(MASTER_ID);
-    bassParam1 = treeState.getRawParameterValue(BASS_ID);
-    midParam1 = treeState.getRawParameterValue(MID_ID);
-    trebleParam1 = treeState.getRawParameterValue(TREBLE_ID);
+    masterParam1 = treeState.getRawParameterValue(MASTER1_ID);
+    bassParam1 = treeState.getRawParameterValue(BASS1_ID);
+    midParam1 = treeState.getRawParameterValue(MID1_ID);
+    trebleParam1 = treeState.getRawParameterValue(TREBLE1_ID);
 
     // Load parameter values for Container 1
     auto bassValue1 = static_cast<float>(bassParam1->load());
@@ -191,6 +191,7 @@ bool ProteusAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) 
 
 void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
+    // ... [Your existing code for processBlock]
     ScopedNoDenormals noDenormals;
 
     // Load parameter values for Container 1
@@ -335,9 +336,11 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
 }
 
 //==============================================================================
+}
+
 bool ProteusAudioProcessor::hasEditor() const
 {
-    return true; // (change this to false if you choose to not supply an editor)
+    return true;
 }
 
 AudioProcessorEditor* ProteusAudioProcessor::createEditor()
@@ -348,7 +351,8 @@ AudioProcessorEditor* ProteusAudioProcessor::createEditor()
 //==============================================================================
 void ProteusAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
+    // ... [Your existing code for getStateInformation]   
+     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
     
@@ -360,12 +364,11 @@ void ProteusAudioProcessor::getStateInformation (MemoryBlock& destData)
     xml->setAttribute("current_model_index", current_model_index);
     xml->setAttribute ("cab_state", cab_state);
     copyXmlToBinary (*xml, destData);
-
 }
 
 void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
+    // ... [Your existing code for setStateInformation]    // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
 
     std::unique_ptr<juce::XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
@@ -392,7 +395,6 @@ void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInByt
 
         }
     }
-    
 }
 
 void ProteusAudioProcessor::set_ampEQ(float bass_slider, float mid_slider, float treble_slider)
@@ -401,9 +403,10 @@ void ProteusAudioProcessor::set_ampEQ(float bass_slider, float mid_slider, float
     eq4band2.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
 }
 
-void ProteusAudioProcessor::loadConfig(File configFile1, File configFile2) {
-
-    this->suspendProcessing(true);
+void ProteusAudioProcessor::loadConfig(File configFile1, File configFile2)
+{
+    // ... [Your existing code for loadConfig]
+  this->suspendProcessing(true);
     pauseVolume = 3;
     String path = configFile.getFullPathName();
     char_filename = path.toUTF8();
@@ -442,10 +445,7 @@ void ProteusAudioProcessor::loadConfig(File configFile1, File configFile2) {
 
 }
 
-
-
-//==============================================================================
-// This creates new instances of the plugin..
-AudioProcessor* JUCE_CALLTYPE createPluginFilter() {
+AudioProcessor* JUCE_CALLTYPE createPluginFilter()
+{
     return new ProteusAudioProcessor();
 }
