@@ -332,6 +332,68 @@ void ProteusAudioProcessorEditor::loadButtonClicked()
     
 }
 
+void ProteusAudioProcessorEditor::loadButtonRightClicked()
+{ 
+    myChooser = std::make_unique<FileChooser> ("Select a folder to load models from",
+                                               processor.folder,
+                                               "*.json");
+ 
+    auto folderChooserFlags = FileBrowserComponent::openMode | FileBrowserComponent::canSelectDirectories | FileBrowserComponent::canSelectFiles;
+ 
+    myChooser->launchAsync (folderChooserFlags, [this] (const FileChooser& chooser)                
+    {
+        if (!chooser.getResult().exists()) {
+                return;
+        }
+        processor.model_loaded = false;
+        Array<File> files;
+        if (chooser.getResult().existsAsFile()) { // If a file is selected
+
+            if (isValidFormat(chooser.getResult())) {
+                processor.saved_model = chooser.getResult();
+            }
+
+            files = chooser.getResult().getParentDirectory().findChildFiles(2, false, "*.json");
+            processor.folder = chooser.getResult().getParentDirectory();
+
+        } else if (chooser.getResult().isDirectory()){ // Else folder is selected
+            files = chooser.getResult().findChildFiles(2, false, "*.json");
+            processor.folder = chooser.getResult();
+        }
+        
+        processor.jsonFiles.clear();
+
+        modelSelectRight.clear();  // Use modelSelectRight for the right container
+
+        if (files.size() > 0) {
+            for (auto file : files) {
+
+                if (isValidFormat(file)) {
+                    modelSelectRight.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1); // Use modelSelectRight for the right container
+                    processor.jsonFiles.push_back(file);
+                    processor.num_models += 1;
+                }
+            }
+            if (chooser.getResult().existsAsFile()) {
+                
+                if (isValidFormat(chooser.getResult()) == true) {
+                    modelSelectRight.setText(processor.saved_model.getFileNameWithoutExtension()); // Use modelSelectRight for the right container
+                    processor.loadConfig(processor.saved_model);
+                }
+            }
+            else {
+                if (!processor.jsonFiles.empty()) {
+                    modelSelectRight.setSelectedItemIndex(0, juce::NotificationType::dontSendNotification); // Use modelSelectRight for the right container
+                    modelSelectChangedRight();  // Call the function for the right container
+                }
+            }
+        } else {
+            processor.saved_model = ""; // Clear the saved model since there's nothing in the dropdown
+        }
+    });
+}
+
+
 void ProteusAudioProcessorEditor::loadFromFolder()
 {
     processor.model_loaded = false;
