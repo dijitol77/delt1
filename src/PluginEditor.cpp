@@ -121,11 +121,11 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     rightContainer.setBounds(500, 0, 500, 650);
 
 
-// Load the desired background image for the right container
-  rightBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
+background_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
+background_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
+rightBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
 
-// Set the image as the background for the right container
-rightBackground.setImage(rightBackgroundImage);
+ightBackground.setImage(rightBackgroundImage);
 rightBackground.setBounds(rightContainer.getBounds()); // This will make the image fill the entire right container.
 rightContainer.addAndMakeVisible(rightBackground);
 
