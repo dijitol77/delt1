@@ -115,20 +115,29 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     // Set bounds and add the left container to the main component
     addAndMakeVisible(leftContainer);
     leftContainer.setBounds(0, 0, 500, 650);
+
+  // Load the background image for the left container
+    leftBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
+    leftBackground.setImage(leftBackgroundImage);
+    leftBackground.setBounds(leftContainer.getBounds());
+    leftContainer.addAndMakeVisible(leftBackground);
     
 
   // Set bounds and add the right container to the main component
     addAndMakeVisible(rightContainer);
     rightContainer.setBounds(500, 0, 500, 650);
+  
+  // Load the background image for the right container
+    rightBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
+    rightBackground.setImage(rightBackgroundImage);
+    rightBackground.setBounds(rightContainer.getBounds());
+    rightContainer.addAndMakeVisible(rightBackground);
 
 
 background_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
 background_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
-rightBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
 
-rightBackground.setImage(rightBackgroundImage);
-rightBackground.setBounds(rightContainer.getBounds()); // This will make the image fill the entire right container.
-rightContainer.addAndMakeVisible(rightBackground);
+
 
     resetImages();
 
