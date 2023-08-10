@@ -95,30 +95,30 @@ auto font2 = modelLabel2.getFont();  // Renamed to font2
     odLevelKnob1.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     odLevelKnob1.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odLevelKnob1.setDoubleClickReturnValue(true, 0.5);
-// ampBassKnob1
-    bassSlider1Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS1_ID, ampBassKnob1);    	    
+// ampBassKnob
+    bassSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob);    	    
     addAndMakeVisible(ampBassKnob1);
-    ampBassKnob1.setLookAndFeel(&smallKnobLAF);
-    ampBassKnob1.addListener(this);
-    ampBassKnob1.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    ampBassKnob1.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    ampBassKnob1.setDoubleClickReturnValue(true, 0.0);
-// ampMidKnob1
-    midSlider1Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MID1_ID, ampMidKnob1);    
+    ampBassKnob.setLookAndFeel(&smallKnobLAF);
+    ampBassKnob.addListener(this);
+    ampBassKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    ampBassKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
+    ampBassKnob.setDoubleClickReturnValue(true, 0.0);
+// ampMidKnob
+    midSlider1Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MID_ID, ampMidKnob);    
     addAndMakeVisible(ampMidKnob1);
-    ampMidKnob1.setLookAndFeel(&smallKnobLAF);
-    ampMidKnob1.addListener(this);
-    ampMidKnob1.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    ampMidKnob1.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    ampMidKnob1.setDoubleClickReturnValue(true, 0.0);
-// ampTrebleKnob1
-    trebleSlider1Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, TREBLE1_ID, ampTrebleKnob1);
-    addAndMakeVisible(ampTrebleKnob1);
-    ampTrebleKnob1.setLookAndFeel(&smallKnobLAF);
-    ampTrebleKnob1.addListener(this);
-    ampTrebleKnob1.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    ampTrebleKnob1.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    ampTrebleKnob1.setDoubleClickReturnValue(true, 0.0);
+    ampMidKnob.setLookAndFeel(&smallKnobLAF);
+    ampMidKnob.addListener(this);
+    ampMidKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    ampMidKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
+    ampMidKnob.setDoubleClickReturnValue(true, 0.0);
+// ampTrebleKnob
+    trebleSlider1Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, TREBLE_ID, ampTrebleKnob);
+    addAndMakeVisible(ampTrebleKnob);
+    ampTrebleKnob.setLookAndFeel(&smallKnobLAF);
+    ampTrebleKnob.addListener(this);
+    ampTrebleKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    ampTrebleKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
+    ampTrebleKnob.setDoubleClickReturnValue(true, 0.0);
 // versionLabel1
     addAndMakeVisible(versionLabel1);
     versionLabel1.setText("v1.2", juce::NotificationType::dontSendNotification);
