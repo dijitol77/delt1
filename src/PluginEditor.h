@@ -38,6 +38,7 @@ private:
     // access the processor object that created it.
     ProteusAudioProcessor& processor;
 
+    Component leftContainer;
 
     TextButton loadButton;
     virtual void buttonClicked(Button* button) override;
