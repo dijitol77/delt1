@@ -234,6 +234,8 @@ void ProteusAudioProcessorEditor::resized()
   // right bounds
 
   odDriveKnobRight.setBounds(168, 242, 190, 190); // You can adjust these values as needed
+  loadButtonRight.setBounds(/* appropriate bounds for right container */);
+modelSelectRight.setBounds(/* appropriate bounds for right container */);
 
 }
 
@@ -321,7 +323,7 @@ void ProteusAudioProcessorEditor::loadButtonClicked()
             else {
                 if (!processor.jsonFiles.empty()) {
                     modelSelect.setSelectedItemIndex(0, juce::NotificationType::dontSendNotification);
-                    modelSelectChanged();
+                    modelSelectChangedRight();
                 }
             }
         } else {
@@ -330,6 +332,69 @@ void ProteusAudioProcessorEditor::loadButtonClicked()
     });
     
 }
+
+void ProteusAudioProcessorEditor::loadButtonRightClicked()
+{ 
+    myChooser = std::make_unique<FileChooser> ("Select a folder to load models from",
+                                               processor.folder,
+                                               "*.json");
+ 
+    auto folderChooserFlags = FileBrowserComponent::openMode | FileBrowserComponent::canSelectDirectories | FileBrowserComponent::canSelectFiles;
+ 
+    myChooser->launchAsync (folderChooserFlags, [this] (const FileChooser& chooser)                
+    {
+        if (!chooser.getResult().exists()) {
+                return;
+        }
+        processor.model_loaded = false;
+        Array<File> files;
+        if (chooser.getResult().existsAsFile()) { // If a file is selected
+
+            if (isValidFormat(chooser.getResult())) {
+                processor.saved_model = chooser.getResult();
+            }
+
+            files = chooser.getResult().getParentDirectory().findChildFiles(2, false, "*.json");
+            processor.folder = chooser.getResult().getParentDirectory();
+
+        } else if (chooser.getResult().isDirectory()){ // Else folder is selected
+            files = chooser.getResult().findChildFiles(2, false, "*.json");
+            processor.folder = chooser.getResult();
+        }
+        
+        processor.jsonFiles.clear();
+
+        modelSelect.clear();
+
+        if (files.size() > 0) {
+            for (auto file : files) {
+
+                if (isValidFormat(file)) {
+                    modelSelect.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
+                    processor.jsonFiles.push_back(file);
+                    processor.num_models += 1;
+                }
+            }
+            if (chooser.getResult().existsAsFile()) {
+                
+                if (isValidFormat(chooser.getResult()) == true) {
+                    modelSelect.setText(processor.saved_model.getFileNameWithoutExtension());
+                    processor.loadConfig(processor.saved_model);
+                }
+            }
+            else {
+                if (!processor.jsonFiles.empty()) {
+                    modelSelect.setSelectedItemIndex(0, juce::NotificationType::dontSendNotification);
+                    modelSelectChangedRight();
+                }
+            }
+        } else {
+            processor.saved_model = ""; // Clear the saved model since there's nothing in the dropdown
+        }
+    });
+    
+}
+
 
 void ProteusAudioProcessorEditor::loadFromFolder()
 {
@@ -371,6 +436,17 @@ void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
     //    odFootSwClicked();
     if (button == &loadButton) {
         loadButtonClicked();
+    } else if (button == &cabOnButton) {
+        cabOnButtonClicked();
+    }
+}
+
+void ProteusAudioProcessorEditor::buttonRightClicked(juce::Button* button)
+{
+    //if (button == &odFootSw) {
+    //    odFootSwClicked();
+    if (button == &loadButtonRight) {
+        loadButtonRightClicked();
     } else if (button == &cabOnButton) {
         cabOnButtonClicked();
     }
