@@ -430,25 +430,13 @@ void ProteusAudioProcessorEditor::loadFromFolder()
 }
 
 
-void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
-{
-    //if (button == &odFootSw) {
-    //    odFootSwClicked();
+void ProteusAudioProcessorEditor::buttonClicked(Button* button) {
     if (button == &loadButton) {
-        loadButtonClicked();
-    } else if (button == &cabOnButton) {
-        cabOnButtonClicked();
-    }
-}
-
-void ProteusAudioProcessorEditor::buttonRightClicked(juce::Button* button)
-{
-    //if (button == &odFootSw) {
-    //    odFootSwClicked();
-    if (button == &loadButtonRight) {
-        loadButtonRightClicked();
-    } else if (button == &cabOnButton) {
-        cabOnButtonClicked();
+        // handle left button click
+        loadButtonClicked();  // This calls the method that handles the left button's click
+    } else if (button == &loadButtonRight) {
+        // handle right button click
+        loadButtonRightClicked();  // This calls the method that handles the right button's click
     }
 }
 
