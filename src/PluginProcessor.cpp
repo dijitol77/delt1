@@ -30,10 +30,9 @@ ProteusAudioProcessor::ProteusAudioProcessor()
                                             std::make_unique<AudioParameterFloat>(TREBLE1_ID, TREBLE1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
                                             std::make_unique<AudioParameterFloat>(MASTER1_ID, MASTER1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5),
                                             std::make_unique<AudioParameterFloat>(GAIN2_ID, GAIN2_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
-                                            std::make_unique<AudioParameterFloat>(BASS2_ID, BASS2_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                                            std::make_unique<AudioParameterFloat>(MID2_ID, MID2_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                                            std::make_unique<AudioParameterFloat>(TREBLE2_ID, TREBLE2_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                                            std::make_unique<AudioParameterFloat>(MASTER2_ID, MASTER2_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5)})
+
+                            
+                                })
 #endif
 {
     // Initialize parameters for Container 1
@@ -51,15 +50,8 @@ ProteusAudioProcessor::ProteusAudioProcessor()
 
     // Load parameter values for Container 1 and update EQ bands
     driveParam2 = treeState.getRawParameterValue(GAIN2_ID);
-    masterParam2 = treeState.getRawParameterValue(MASTER2_ID);
-    bassParam2 = treeState.getRawParameterValue(BASS2_ID);
-    midParam2 = treeState.getRawParameterValue(MID2_ID);
-    trebleParam2 = treeState.getRawParameterValue(TREBLE2_ID);
 
-    // Load parameter values for Container 2
-    auto bassValue2 = static_cast<float>(bassParam2->load());
-    auto midValue2 = static_cast<float>(midParam2->load());
-    auto trebleValue2 = static_cast<float>(trebleParam2->load());
+    
 
     // Update EQ band parameters for Container 1
     eq4band1.setParameters(bassValue1, midValue1, trebleValue1, 0.0);
@@ -69,14 +61,9 @@ ProteusAudioProcessor::ProteusAudioProcessor()
 
     cabSimIRa.load(BinaryData::default_ir_wav, BinaryData::default_ir_wavSize);
 
-    // Initialize LSTM models
-    LSTM1.reset();
-    LSTM2.reset();
-    LSTM3.reset();
-    LSTM4.reset();
-    }
-    
-   ProteusAudioProcessor::~ProteusAudioProcessor()
+}
+
+ProteusAudioProcessor::~ProteusAudioProcessor()
 {
 }
 
@@ -217,11 +204,7 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
 
     // Load parameter values for Container 2
     auto driveValue2 = static_cast<float> (driveParam2->load());
-    auto masterValue2 = static_cast<float> (masterParam2->load());
-    auto bassValue2 = static_cast<float> (bassParam2->load());
-    auto midValue2 = static_cast<float> (midParam2->load());
-    auto trebleValue2 = static_cast<float> (trebleParam2->load());
-
+    
 
 
     // Setup Audio Data
@@ -249,7 +232,7 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
             if (ch == 0) {
                 LSTM1.process(buffer.getReadPointer(0), buffer.getWritePointer(0), (int)buffer.getNumSamples());
             } else if (ch == 1) {
-                LSTM2_1.process(buffer.getReadPointer(1), buffer.getWritePointer(1), (int)buffer.getNumSamples());
+                LSTM2.process(buffer.getReadPointer(1), buffer.getWritePointer(1), (int)buffer.getNumSamples());
             }
         }
     } else {
@@ -260,7 +243,7 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
             if (ch == 0) {
                 LSTM1.process(buffer.getReadPointer(0), driveValue, buffer.getWritePointer(0), (int)buffer.getNumSamples());
             } else if (ch == 1) {
-                LSTM2_1.process(buffer.getReadPointer(1), driveValue, buffer.getWritePointer(1), (int)buffer.getNumSamples());
+                LSTM2.process(buffer.getReadPointer(1), driveValue, buffer.getWritePointer(1), (int)buffer.getNumSamples());
             }
             resampler.processOut(block44k, block);
         }
@@ -337,10 +320,7 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
         buffer.applyGain(masterValue);
     }
 
-    // Resampling to the target sample rate (moved to after all processing)
-    dsp::AudioBlock<float> block(buffer);
-    auto block44k = resampler.processIn(block);
-    resampler.processOut(block44k, block);
+   
 
     // Smooth pop sound when changing models
     if (pauseVolume > 0) {
@@ -368,7 +348,6 @@ AudioProcessorEditor* ProteusAudioProcessor::createEditor()
 //==============================================================================
 void ProteusAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
-    saveStateInformation( 
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
@@ -418,7 +397,7 @@ void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInByt
 
 void ProteusAudioProcessor::set_ampEQ(float bass_slider, float mid_slider, float treble_slider)
 {
-    eq4band.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
+    eq4band1.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
     eq4band2.setParameters(bass_slider, mid_slider, treble_slider, 0.0f);
 }
 
@@ -426,6 +405,8 @@ void ProteusAudioProcessor::loadConfig(File configFile1, File configFile2) {
 
     this->suspendProcessing(true);
     pauseVolume = 3;
+    String path = configFile.getFullPathName();
+    char_filename = path.toUTF8();
 
     // Load model for Container 1 (LSTM1 and LSTM2)
     String path1 = configFile1.getFullPathName();
@@ -455,8 +436,8 @@ void ProteusAudioProcessor::loadConfig(File configFile1, File configFile2) {
         std::cerr << "Error loading LSTM model for Container 2: " << e.what() << std::endl;
     }
 
-    // ... rest of the function ...
-
+    //saved_model = configFile;
+    model_loaded = true;
     this->suspendProcessing(false);
 
 }
