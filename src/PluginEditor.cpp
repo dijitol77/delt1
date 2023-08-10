@@ -122,6 +122,14 @@ rightContainer.addAndMakeVisible(rightBackground);
     versionLabel.setJustificationType(juce::Justification::left);
     versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     versionLabel.setFont(font);
+  
+//  rightContainer widgets
+  odDriveKnobRight.setLookAndFeel(&bigKnobLAF);
+  odDriveKnobRight.addListener(this);
+  odDriveKnobRight.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+  odDriveKnobRight.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
+  odDriveKnobRight.setDoubleClickReturnValue(true, 0.5);
+  rightContainer.addAndMakeVisible(odDriveKnobRight)
 
     // Size of plugin GUI
     setSize (1000, 650);  // Double the width
