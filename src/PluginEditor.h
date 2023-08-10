@@ -14,12 +14,11 @@
 #include "PluginProcessor.h"
 #include "myLookAndFeel.h"
 
-//==============================================================================
-/**
-*/
+
 class ProteusAudioProcessorEditor  : public AudioProcessorEditor,
-                                       private Button::Listener,
-                                       private Slider::Listener                  
+                                     public Button::Listener,
+                                     public Slider::Listener,
+                                     public ComboBox::Listener
 {
 public:
     ProteusAudioProcessorEditor (ProteusAudioProcessor&);
@@ -28,32 +27,38 @@ public:
     //==============================================================================
     void paint (Graphics&) override;
     void resized() override;
-    std::unique_ptr<FileChooser> myChooser;
-
+    bool isValidFormat(File configFile);
+    void loadButton1Clicked();
+    void loadButton2Clicked();
     void loadFromFolder1();
     void loadFromFolder2();
+    void button1Clicked(juce::Button* button);
+    void button2Clicked(juce::Button* button);
+    bool isValidFormat(File configFile);
+    void loadButton1Clicked();
+    void loadButton2Clicked();
+    void loadFromFolder1();
+    void loadFromFolder2();
+    void button1Clicked(juce::Button* button);
+    void button2Clicked(juce::Button* button);
     void resetImages();
 
-private:
-    // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
-    ProteusAudioProcessor& processor;
+    // UI Components
+    TextButton loadButton1, loadButton2;
+    ComboBox modelSelect1, modelSelect2;
+    Label versionLabel1, versionLabel2;
+    ImageButton cabOnButton1, cabOnButton2;
+    Slider odDriveKnob1, odLevelKnob1, ampBassKnob1, ampMidKnob1, ampTrebleKnob1;
+    Slider odDriveKnob2, odLevelKnob2, ampBassKnob2, ampMidKnob2, ampTrebleKnob2;
+    Slider driveSlider2, driveSlider1, masterSlider;
+    juce::Slider driveSlider;
 
-    TextButton loadButton1;
-    TextButton loadButton2;
-    virtual void button1Clicked(Button* button) override;
-    virtual void button2Clicked(Button* button) override;
-    
     // Containers
 
     Component originalContainer;
     Component duplicateContainer;
 
 
-    // Utility functions
-    bool isValidFormat(File configFile);
-    void loadButton1Clicked();
-    void loadButton2Clicked();
 
     // LookandFeels and Graphics
     Image background_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
@@ -71,8 +76,7 @@ private:
     Slider ampTrebleKnob1;
     Slider odDriveKnob1;
     Slider odLevelKnob1;
-    //ImageButton odFootSw;
-    //ImageButton odLED;
+    
     ImageButton cabOnButton1;
 
 
@@ -86,10 +90,6 @@ private:
     Slider ampTrebleKnob2;
     Slider odDriveKnob2;
     Slider odLevelKnob2;
-Slider driveSlider2;
-Slider driveSlider1;
-Slider masterSlider;
-juce::Slider driveSlider;
 
     ImageButton cabOnButton2;
 
@@ -98,22 +98,15 @@ juce::Slider driveSlider;
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
 
+ // Slider Value Changed Functions
     virtual void sliderValue1Changed(Slider* slider) override;
     virtual void sliderValue1Changed(Slider* slider) override;
 
     AudioProcessorParameter* getParameter(const String& paramId);
 
-    void odFootSw1Clicked();
-    void modelSelect1Changed();
-    void cabOnButton1Clicked();
-
-    void odFootSw2Clicked();
-    void modelSelect2Changed();
-    void cabOnButton2Clicked();
-
     bool model_loaded = false;
 
-public:
+    // Slider Attachments
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> bassSlider1Attach;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> midSlider1Attach;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> trebleSlider1Attach;
@@ -126,6 +119,13 @@ public:
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> trebleSlider2Attach;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSlider2Attach;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSlider2Attach;
-    
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
+
+private:
+    // Reference to the processor
+    ProteusAudioProcessor& processor;
+
+    // Additional member variables
+    std::unique_ptr<FileChooser> myChooser;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
 };
