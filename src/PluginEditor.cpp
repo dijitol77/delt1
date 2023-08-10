@@ -152,30 +152,11 @@ auto font2 = modelLabel2.getFont();  // Renamed to font2
     odLevelKnob2.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     odLevelKnob2.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odLevelKnob2.setDoubleClickReturnValue(true, 0.5);
-// ampBassKnob2
-    bassSlider2Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS2_ID, ampBassKnob2);    	    
-    addAndMakeVisible(ampBassKnob2);
-    ampBassKnob2.setLookAndFeel(&smallKnobLAF);
-    ampBassKnob2.addListener(this);
-    ampBassKnob2.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    ampBassKnob2.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    ampBassKnob2.setDoubleClickReturnValue(true, 0.0);
-// ampMidKnob2
-    midSlider2Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MID2_ID, ampMidKnob2);    
-    addAndMakeVisible(ampMidKnob2);
-    ampMidKnob2.setLookAndFeel(&smallKnobLAF);
-    ampMidKnob2.addListener(this);
-    ampMidKnob2.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    ampMidKnob2.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    ampMidKnob2.setDoubleClickReturnValue(true, 0.0);
-// ampTrebleKnob2
-    trebleSlider2Attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, TREBLE2_ID, ampTrebleKnob2);
-    addAndMakeVisible(ampTrebleKnob2);
-    ampTrebleKnob2.setLookAndFeel(&smallKnobLAF);
-    ampTrebleKnob2.addListener(this);
-    ampTrebleKnob2.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    ampTrebleKnob2.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    ampTrebleKnob2.setDoubleClickReturnValue(true, 0.0);
+
+
+// no second eq //
+
+
 // versionLabel2
     addAndMakeVisible(versionLabel2);
     versionLabel2.setText("v1.2", juce::NotificationType::dontSendNotification);
@@ -204,9 +185,7 @@ ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
 
     odDriveKnob2.setLookAndFeel(nullptr);
     odLevelKnob2.setLookAndFeel(nullptr);
-    ampBassKnob2.setLookAndFeel(nullptr);
-    ampMidKnob2.setLookAndFeel(nullptr);
-    ampTrebleKnob2.setLookAndFeel(nullptr);
+    
 }
 
 //==============================================================================
@@ -275,9 +254,6 @@ void ProteusAudioProcessorEditor::resized()
     odLevelKnob2.setBounds(340, 225, 62, 62);
     //odFootSw.setBounds(185, 416, 175, 160);
 
-    ampBassKnob2.setBounds(113, 131, 62, 62);
-    ampMidKnob2.setBounds(227, 131, 62, 62);
-    ampTrebleKnob2.setBounds(340, 131, 62, 62);
 
 
 
@@ -591,15 +567,6 @@ void ProteusAudioProcessorEditor::sliderValue1Changed(Slider* slider)
 
 }
 
-void ProteusAudioProcessorEditor::sliderValue2Changed(Slider* slider)
-{
-   
-    // Amp "2"
-    if (slider == &ampBassKnob2 || slider == &2 || slider == &ampTrebleKnob2) {
-        processor.set_ampEQ(ampBassKnob2.getValue(), ampMidKnob2.getValue(), ampTrebleKnob2.getValue());
-    }
-
-}
 
 void ProteusAudioProcessorEditor::modelSelect1Changed()
 {
