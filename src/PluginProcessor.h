@@ -96,30 +96,33 @@ public:
     File folder = File::getSpecialLocation(File::userDesktopDirectory);
     File saved_model;
 
-private:
-    //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessor)
 
-    // Your member variables here
     AudioProcessorValueTreeState treeState;
+    
+    bool conditioned = false;
+    const char* char_filename = "";
 
-    // Parameters for Container 1
-    std::atomic<float>* driveParam1;
-    std::atomic<float>* masterParam1;
-    std::atomic<float>* bassParam1;
-    std::atomic<float>* midParam1;
-    std::atomic<float>* trebleParam1;
+    int pauseVolume = 3;
+
+    bool model_loaded = false;
+
+private:
+    Eq4Band eq4band1; // Amp EQ
+    Eq4Band eq4band2; // Amp EQ
+
+    std::atomic<float>* driveParam1 = nullptr;
+    std::atomic<float>* masterParam = nullptr;
+    std::atomic<float>* bassParam = nullptr;
+    std::atomic<float>* midParam = nullptr;
+    std::atomic<float>* trebleParam = nullptr;
+
+ 
 
     // Parameters for Container 2
-    std::atomic<float>* driveParam2;
-    std::atomic<float>* masterParam2;
-    std::atomic<float>* bassParam2;
-    std::atomic<float>* midParam2;
-    std::atomic<float>* trebleParam2;
+    std::atomic<float>* driveParam2 = nullptr;
 
-    // EQ
-    EQ4Band eq4band1;
-    EQ4Band eq4band2; // This is declared twice. Commenting out the second one.
+
+
     
     float previousDriveValue = 0.5;
     float previousMasterValue = 0.5;
@@ -132,14 +135,8 @@ private:
     RT_LSTM LSTM3;
     RT_LSTM LSTM4;
 
-    // Other member variables
-    bool conditioned = false;
-    const char* char_filename1 = "";
-    const char* char_filename2 = "";
-    int pauseVolume = 3;
-    bool model_loaded = false;
-
-   // Other members 
+ 
+    // Other members 
     // ... (e.g., eq4band, eq4band2, cabSimIRa, dcBlocker, resampler, etc.  
     // dcBlocker
 
