@@ -82,7 +82,7 @@ public:
     myLookAndFeel smallKnobLAF;
 
     // Slider Value Changed Functions
-    virtual void sliderValue1Changed(Slider* slider) override;
+    void sliderValue1Changed(Slider* slider) override;
 
     AudioProcessorParameter* getParameter(const String& paramId);
 
