@@ -50,8 +50,7 @@ private:
     
 
     bool isValidFormat(File configFile);
-    void loadButtonClicked();
-    void loadButtonRightClicked();
+
 
 
 
