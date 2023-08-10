@@ -25,10 +25,10 @@ ProteusAudioProcessor::ProteusAudioProcessor()
     ),
     // Initialize the treeState with the audio parameters
     treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN1_ID, GAIN1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
-                                            std::make_unique<AudioParameterFloat>(BASS1_ID, BASS1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                                            std::make_unique<AudioParameterFloat>(MID1_ID, MID1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                                            std::make_unique<AudioParameterFloat>(TREBLE1_ID, TREBLE1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
-                                            std::make_unique<AudioParameterFloat>(MASTER1_ID, MASTER1_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5),
+                                            std::make_unique<AudioParameterFloat>(BASS_ID, BASS_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                                            std::make_unique<AudioParameterFloat>(MID_ID, MID_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                                            std::make_unique<AudioParameterFloat>(TREBLE_ID, TREBL1_NAME, NormalisableRange<float>(-8.0f, 8.0f, 0.01f), 0.0f),
+                                            std::make_unique<AudioParameterFloat>(MASTER_ID, MASTER_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5),
                                             std::make_unique<AudioParameterFloat>(GAIN2_ID, GAIN2_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
 
                             
@@ -37,10 +37,10 @@ ProteusAudioProcessor::ProteusAudioProcessor()
 {
     // Initialize parameters for Container 1
     driveParam1 = treeState.getRawParameterValue(GAIN1_ID);
-    masterParam1 = treeState.getRawParameterValue(MASTER1_ID);
-    bassParam1 = treeState.getRawParameterValue(BASS1_ID);
-    midParam1 = treeState.getRawParameterValue(MID1_ID);
-    trebleParam1 = treeState.getRawParameterValue(TREBLE1_ID);
+    masterParam1 = treeState.getRawParameterValue(MASTER_ID);
+    bassParam1 = treeState.getRawParameterValue(BASS_ID);
+    midParam1 = treeState.getRawParameterValue(MID_ID);
+    trebleParam1 = treeState.getRawParameterValue(TREBLE_ID);
 
     // Load parameter values for Container 1
     auto bassValue1 = static_cast<float>(bassParam1->load());
