@@ -14,7 +14,6 @@
 #include "PluginProcessor.h"
 #include "myLookAndFeel.h"
 
-
 class ProteusAudioProcessorEditor  : public AudioProcessorEditor,
                                      public Button::Listener,
                                      public Slider::Listener,
@@ -27,13 +26,6 @@ public:
     //==============================================================================
     void paint (Graphics&) override;
     void resized() override;
-    bool isValidFormat(File configFile);
-    void loadButton1Clicked();
-    void loadButton2Clicked();
-    void loadFromFolder1();
-    void loadFromFolder2();
-    void button1Clicked(juce::Button* button);
-    void button2Clicked(juce::Button* button);
     bool isValidFormat(File configFile);
     void loadButton1Clicked();
     void loadButton2Clicked();
@@ -54,11 +46,8 @@ public:
     juce::Slider driveSlider;
 
     // Containers
-
     Component originalContainer;
     Component duplicateContainer;
-
-
 
     // LookandFeels and Graphics
     Image background_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
@@ -67,7 +56,6 @@ public:
     // Global Widgets
     Label modelLabel1;
     Label versionLabel1;
-    
     ComboBox modelSelect1;
 
     // Overdrive Widgets
@@ -76,30 +64,24 @@ public:
     Slider ampTrebleKnob1;
     Slider odDriveKnob1;
     Slider odLevelKnob1;
-    
     ImageButton cabOnButton1;
-
 
     // Duplicated Components
     Label modelLabel2;
     Label versionLabel2;
     ComboBox modelSelect2;
-
     Slider ampBassKnob2;
     Slider ampMidKnob2;
     Slider ampTrebleKnob2;
     Slider odDriveKnob2;
     Slider odLevelKnob2;
-
     ImageButton cabOnButton2;
 
     // LookandFeels 
-    //myLookAndFeel blackHexKnobLAF;
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
 
- // Slider Value Changed Functions
-    virtual void sliderValue1Changed(Slider* slider) override;
+    // Slider Value Changed Functions
     virtual void sliderValue1Changed(Slider* slider) override;
 
     AudioProcessorParameter* getParameter(const String& paramId);
