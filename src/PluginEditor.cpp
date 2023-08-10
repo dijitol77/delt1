@@ -331,30 +331,35 @@ void ProteusAudioProcessorEditor::loadFromFolder()
 
     processor.jsonFiles.clear();
     modelSelect.clear();
+    modelSelectRight.clear(); // Clear the right ComboBox
 
     if (files.size() > 0) {
         for (auto file : files) {
             
             if (isValidFormat(file)) {
                 modelSelect.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
+                modelSelectRight.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1); // Add to the right ComboBox
                 processor.jsonFiles.push_back(file);
                 processor.num_models += 1;
             }
         }
-        // Try to load model from saved_model, if it doesnt exist and jsonFiles is not empty, load the first model (if it exists and is valid format)
-        if (!processor.jsonFiles.empty()) {
-            if (processor.saved_model.existsAsFile() && isValidFormat(processor.saved_model)) {
-                processor.loadConfig(processor.saved_model);
-                modelSelect.setText(processor.saved_model.getFileNameWithoutExtension(), juce::NotificationType::dontSendNotification);
-            } else {
+        // Try to load model from saved_model
+        if (processor.saved_model.existsAsFile() && isValidFormat(processor.saved_model)) {
+            processor.loadConfig(processor.saved_model);
+            modelSelect.setText(processor.saved_model.getFileNameWithoutExtension(), juce::NotificationType::dontSendNotification);
+            modelSelectRight.setText(processor.saved_model.getFileNameWithoutExtension(), juce::NotificationType::dontSendNotification); // Set text for the right ComboBox
+        } else {
+            if (!processor.jsonFiles.empty()) {
                 if (processor.jsonFiles[0].existsAsFile() && isValidFormat(processor.jsonFiles[0])) {
                     processor.loadConfig(processor.jsonFiles[0]);
                     modelSelect.setText(processor.jsonFiles[0].getFileNameWithoutExtension(), juce::NotificationType::dontSendNotification);
+                    modelSelectRight.setText(processor.jsonFiles[0].getFileNameWithoutExtension(), juce::NotificationType::dontSendNotification); // Set text for the right ComboBox
                 }
             }
         }
     }
 }
+
 
 
 void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
