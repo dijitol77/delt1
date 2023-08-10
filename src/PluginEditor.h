@@ -37,16 +37,23 @@ public:
 
     // UI Components
     TextButton loadButton1, loadButton2;
+
     ComboBox modelSelect1, modelSelect2;
+
     Label versionLabel1, versionLabel2;
+
     ImageButton cabOnButton1, cabOnButton2;
+
     Slider odDriveKnob1, odLevelKnob1, ampBassKnob1, ampMidKnob1, ampTrebleKnob1;
+
     Slider odDriveKnob2, odLevelKnob2, ampBassKnob2, ampMidKnob2, ampTrebleKnob2;
-    Slider ampTrebleKnob2, ampBassKnob2, Slider ampMidKnob2;
-    Slider ampTrebleKnob1, ampBassKnob1, Slider ampMidKnob1;
+
     Slider driveSlider2, driveSlider1, masterSlider;
+
     juce::Slider driveSlider;
+
     Component originalContainer, duplicateContainer;
+
     myLookAndFeel bigKnobLAF, smallKnobLAF;
 
     // LookandFeels and Graphics
