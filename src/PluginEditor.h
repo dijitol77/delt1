@@ -50,8 +50,10 @@ private:
     bool isValidFormat(File configFile);
     void loadButtonClicked();
 
-ImageComponent rightBackground;
+ ImageComponent rightBackground; // For displaying the image
+Image rightBackgroundImage;     // The actual image data
 
+//   ImageComponent rightBackground;
     // Image background = ImageCache::getFromMemory(BinaryData::smart_pedal_jpg, BinaryData::smart_pedal_jpgSize);
     // LookandFeels and Graphics
     // Image background_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
@@ -59,8 +61,8 @@ ImageComponent rightBackground;
     // Image background_off = ImageCache::getFromMemory(BinaryData::background_off_jpg, BinaryData::background_off_jpgSize);
 
 // Right container background
-rightBackground.setImage(rightBackgroundImage);
-Image rightBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
+// rightBackground.setImage(rightBackgroundImage);
+// Image rightBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
 
 
 
