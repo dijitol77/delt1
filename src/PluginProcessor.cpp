@@ -178,7 +178,7 @@ bool ProteusAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) 
 void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
     ScopedNoDenormals noDenormals;
-////////////////////////////////////////////////// // 2. Adjusting Audio Buffer's Gain
+
     auto driveValue = static_cast<float> (driveParam->load());
     auto masterValue = static_cast<float> (masterParam->load());
     auto bassValue = static_cast<float> (bassParam->load());
@@ -200,7 +200,6 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
             // Apply ramped changes for gain smoothing
             if (driveValue == previousDriveValue)
             {
-////////////////////////////////////////////////////////////// 3. Resampling Audio Data
                 buffer.applyGain(driveValue*2.5);
             }
              else {
@@ -212,14 +211,12 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
             {
                 // Apply LSTM model
                 if (ch == 0) {
-//////////////////////////////////////////////////////// 4. Applying the LSTM Models
                     LSTM.process(block44k.getChannelPointer(0), block44k.getChannelPointer(0), (int)block44k.getNumSamples());
                 }
                 else if (ch == 1) {
                     LSTM2.process(block44k.getChannelPointer(1), block44k.getChannelPointer(1), (int)block44k.getNumSamples());
                 }
             }
-/////////////////////////////////////////////////// // 5. Resampling Back to Original Sample Rate
             resampler.processOut(block44k, block);
         } else {
             buffer.applyGain(1.5); // Apply default boost to help sound
