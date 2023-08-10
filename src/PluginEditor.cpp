@@ -41,10 +41,10 @@ rightContainer.addAndMakeVisible(rightBackground);
     leftContainer.addAndMakeVisible(modelSelect);
     modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
     modelSelect.setScrollWheelEnabled(true);
-    int c = 1;
+    int c1 = 1;
     for (const auto& jsonFile : processor.jsonFiles) {
         modelSelect.addItem(jsonFile.getFileName(), c);
-        c += 1;
+        c1 += 1;
     }
     modelSelect.onChange = [this] {modelSelectChanged();};
 
