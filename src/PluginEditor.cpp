@@ -19,6 +19,20 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to
 
+
+  // Load the background image for the left container
+leftBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
+leftBackground.setImage(leftBackgroundImage);
+leftBackground.setBounds(leftContainer.getBounds());
+leftContainer.addAndMakeVisible(leftBackground);
+
+// Load the background image for the right container
+rightBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
+rightBackground.setImage(rightBackgroundImage);
+rightBackground.setBounds(rightContainer.getBounds());
+rightContainer.addAndMakeVisible(rightBackground);
+
+
     // Overall Widgets
     leftContainer.addAndMakeVisible(loadButton);
     loadButton.setButtonText("LOAD MODEL");
@@ -119,21 +133,6 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     // Set bounds and add the right container to the main component
     addAndMakeVisible(rightContainer);
     rightContainer.setBounds(500, 0, 500, 650);
-
- // leftContainer.toBack();
- // rightContainer.toFront();
-
-  // Load the background image for the left container
-leftBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
-leftBackground.setImage(leftBackgroundImage);
-leftBackground.setBounds(leftContainer.getBounds());
-leftContainer.addAndMakeVisible(leftBackground);
-
-// Load the background image for the right container
-rightBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
-rightBackground.setImage(rightBackgroundImage);
-rightBackground.setBounds(rightContainer.getBounds());
-rightContainer.addAndMakeVisible(rightBackground);
 
 
 leftBackground_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
