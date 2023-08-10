@@ -109,7 +109,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     versionLabel.setFont(font);
 
     // Size of plugin GUI
-    setSize (500, 650);
+    setSize (1000, 650);  // Double the width
 
     resetImages();
 
