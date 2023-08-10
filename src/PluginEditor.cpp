@@ -18,24 +18,24 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to
 
-// Container 1 widgets
-    addAndMakeVisible(loadButton1);
-    loadButton1.setButtonText("LOAD MODEL");
-    loadButton1.addListener(this);
+    // Overall Widgets
+    addAndMakeVisible(loadButton);
+    loadButton.setButtonText("LOAD MODEL");
+    loadButton.addListener(this);
 
-    addAndMakeVisible(modelSelect1);
-    modelSelect1.setColour(juce::Label::textColourId, juce::Colours::black);
-    modelSelect1.setScrollWheelEnabled(true);
-    int c1 = 1;  // Renamed to c1
+    addAndMakeVisible(modelSelect);
+    modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
+    modelSelect.setScrollWheelEnabled(true);
+    int c1 = 1;
     for (const auto& jsonFile : processor.jsonFiles) {
-        modelSelect1.addItem(jsonFile.getFileName(), c1);
+        modelSelect.addItem(jsonFile.getFileName(), c);
         c1 += 1;
     }
     modelSelect1.onChange = [this] {modelSelect1Changed();};
 
-    auto font1 = modelLabel1.getFont();  // Renamed to font1
-    float height1 = font1.getHeight();  // Renamed to height1
-    font1.setHeight(height1);
+      auto font = modelLabel.getFont();
+    float height = font.getHeight();
+    font.setHeight(height);
 // Container 2 widgets
      addAndMakeVisible(loadButton2);
     loadButton2.setButtonText("LOAD MODEL");
