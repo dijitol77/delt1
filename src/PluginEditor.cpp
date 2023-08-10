@@ -373,14 +373,17 @@ void ProteusAudioProcessorEditor::loadFromFolder()
 
 void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
 {
-    //if (button == &odFootSw) {
-    //    odFootSwClicked();
     if (button == &loadButton) {
         loadButtonClicked();
-    } else if (button == &cabOnButton) {
+    } 
+    else if (button == &loadButtonRight) {  // Handle the click event for loadButtonRight
+        loadButtonRightClicked();
+    }
+    else if (button == &cabOnButton) {
         cabOnButtonClicked();
     }
 }
+
 
 void ProteusAudioProcessorEditor::odFootSwClicked() {
     //if (processor.fw_state == 0)
