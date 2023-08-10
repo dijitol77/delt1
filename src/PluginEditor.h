@@ -15,8 +15,7 @@
 #include "myLookAndFeel.h"
 
 //==============================================================================
-/**
-*/
+
 class ProteusAudioProcessorEditor  : public AudioProcessorEditor,
                                        private Button::Listener,
                                        private Slider::Listener                  
@@ -45,7 +44,7 @@ private:
     Component rightContainer;
 
     TextButton loadButton;
-    TextButton loadButtonRight.setVisible(true);
+    TextButton loadButtonRight;
 
     virtual void buttonClicked(Button* button) override;
 
