@@ -81,6 +81,7 @@ Image rightBackground_on_blue;
     Slider ampMidKnob;
     Slider ampTrebleKnob;
     Slider odDriveKnob;
+    Slider odDriveKnobRight;
     Slider odLevelKnob;
     //ImageButton odFootSw;
     //ImageButton odLED;
