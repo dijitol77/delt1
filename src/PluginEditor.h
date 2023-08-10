@@ -44,13 +44,9 @@ public:
 
     ImageButton cabOnButton1, cabOnButton2;
 
-    Slider odDriveKnob1, odLevelKnob1, ampBassKnob1, ampMidKnob1, ampTrebleKnob1;
+    Slider odDriveKnob1, odLevelKnob1, ampBassKnob, ampMidKnob, ampTrebleKnob;
 
-    Slider odDriveKnob2, odLevelKnob2, ampBassKnob2, ampMidKnob2, ampTrebleKnob2;
-
-    Slider driveSlider2, driveSlider1, masterSlider;
-
-    juce::Slider driveSlider;
+    Slider odDriveKnob2, odLevelKnob2;
 
     Component originalContainer, duplicateContainer;
 
@@ -93,6 +89,11 @@ private:
     ProteusAudioProcessor& processor;
     Font font1;
     Font font2;
+    Slider odDriveKnob;
+    ToggleButton cabOnButton;
+    Slider ampBassKnob;
+    Slider ampMidKnob;
+    Slider ampTrebleKnob;
    
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
