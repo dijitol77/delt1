@@ -50,8 +50,12 @@ private:
     bool isValidFormat(File configFile);
     void loadButtonClicked();
 
- ImageComponent rightBackground; // For displaying the image
+
+ImageComponent rightBackground; // For displaying the image
 Image rightBackgroundImage;     // The actual image data
+Image background_on;
+Image background_on_blue;
+
 
 
 
