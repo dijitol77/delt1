@@ -214,6 +214,8 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
     } else if (processor.fw_state == 1 && processor.conditioned == false)
         g.drawImage(background_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
 #endif
+
+  g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
 }
 
 void ProteusAudioProcessorEditor::resized()
@@ -248,8 +250,9 @@ void ProteusAudioProcessorEditor::resized()
     modelSelect2.setBounds(52, 11, 400, 28);
     // ... (positioning for other duplicated components)
 
-  g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
-}
+  
+   gainSlider.setBounds (getWidth() / 2 - 50, getHeight() / 2 - 75, 100, 150);
+
 }
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
