@@ -125,7 +125,7 @@ background_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryD
 background_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
 rightBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
 
-ightBackground.setImage(rightBackgroundImage);
+rightBackground.setImage(rightBackgroundImage);
 rightBackground.setBounds(rightContainer.getBounds()); // This will make the image fill the entire right container.
 rightContainer.addAndMakeVisible(rightBackground);
 
