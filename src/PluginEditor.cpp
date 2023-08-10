@@ -15,7 +15,6 @@
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p)
 {
-  
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to
 
@@ -41,71 +40,6 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     // Set Widget Graphics
     bigKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::big_knob_png, BinaryData::big_knob_pngSize));
     smallKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::small_knob_png, BinaryData::small_knob_pngSize));
-
-// Initialize and add the containers
-    addAndMakeVisible(leftContainer);
-    leftContainer.setBounds(0, 0, 500, 650);
-
-    addAndMakeVisible(rightContainer);
-    rightContainer.setBounds(500, 0, 500, 650);
-
-    // Original components initialization and addition to leftContainer
-    leftContainer.addAndMakeVisible(loadButton);
-    loadButton.setButtonText("LOAD MODEL");
-    loadButton.addListener(this);
-
-    leftContainer.addAndMakeVisible(modelSelect);
-    modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
-    modelSelect.setScrollWheelEnabled(true);
-
-  // ... (initializations for other original components)
-
-    // Duplicated components initialization and addition to rightContainer
-    rightContainer.addAndMakeVisible(loadButton2);
-    loadButton2.setButtonText("LOAD MODEL");
-    loadButton2.addListener(this);
-
-    rightContainer.addAndMakeVisible(modelSelect2);
-    modelSelect2.setColour(juce::Label::textColourId, juce::Colours::black);
-    modelSelect2.setScrollWheelEnabled(true);
-
-    rightContainer.addAndMakeVisible(versionLabel2);
-    versionLabel2.setText("v1.2", juce::NotificationType::dontSendNotification);
-    versionLabel2.setJustificationType(juce::Justification::left);
-    versionLabel2.setColour(juce::Label::textColourId, juce::Colours::white);
-    versionLabel2.setFont(font);
-
-    rightContainer.addAndMakeVisible(odDriveKnob2);
-    odDriveKnob2.setLookAndFeel(&bigKnobLAF);
-    odDriveKnob2.addListener(this);
-    odDriveKnob2.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    odDriveKnob2.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    odDriveKnob2.setDoubleClickReturnValue(true, 0.5);
-
-    rightContainer.addAndMakeVisible(odLevelKnob2);
-    odLevelKnob2.setLookAndFeel(&smallKnobLAF);
-    odLevelKnob2.addListener(this);
-    odLevelKnob2.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    odLevelKnob2.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    odLevelKnob2.setDoubleClickReturnValue(true, 0.5);
-
-  
-// Ensure the tree object contains the "gain" parameter
-    if (tree.getParameter("gain") == nullptr)
-    {
-        jassertfalse; // This will trigger an assertion if the "gain" parameter is not found
-        return;
-    }
-
-    gainSlider.setSliderStyle(Slider::LinearVertical);
-    gainSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 20);
-    addAndMakeVisible(gainSlider);
-
-    gainAttachment = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(tree, "gain", gainSlider);
-
-    setSize (200, 300);
-
-  
 
     // Pre Amp Pedal Widgets
  
@@ -214,8 +148,6 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
     } else if (processor.fw_state == 1 && processor.conditioned == false)
         g.drawImage(background_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
 #endif
-
-  g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
 }
 
 void ProteusAudioProcessorEditor::resized()
@@ -238,21 +170,6 @@ void ProteusAudioProcessorEditor::resized()
     ampBassKnob.setBounds(113, 131, 62, 62);
     ampMidKnob.setBounds(227, 131, 62, 62);
     ampTrebleKnob.setBounds(340, 131, 62, 62);
-  // ... (other resize code)
-
-    // Original components positioning within leftContainer
-    loadButton.setBounds(186, 48, 120, 24);
-    modelSelect.setBounds(52, 11, 400, 28);
-    // ... (positioning for other original components)
-
-    // Duplicated components positioning within rightContainer
-    loadButton2.setBounds(186, 48, 120, 24);
-    modelSelect2.setBounds(52, 11, 400, 28);
-    // ... (positioning for other duplicated components)
-
-  
-   gainSlider.setBounds (getWidth() / 2 - 50, getHeight() / 2 - 75, 100, 150);
-
 }
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
