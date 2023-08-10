@@ -131,25 +131,24 @@ rightContainer.addAndMakeVisible(rightBackground);
   odDriveKnobRight.setDoubleClickReturnValue(true, 0.5);
   rightContainer.addAndMakeVisible(odDriveKnobRight);
 
-  // Add the loadButton to the right container
-rightContainer.addAndMakeVisible(loadButton);
-loadButton.setButtonText("LOAD MODEL");
-loadButton.addListener(this);
+  // Initialize and configure loadButtonRight
+rightContainer.addAndMakeVisible(loadButtonRight);
+loadButtonRight.setButtonText("LOAD MODEL");
+loadButtonRight.addListener(this);
 
-
-// Add the modelSelect ComboBox to the right container
-rightContainer.addAndMakeVisible(modelSelect);
-modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
-modelSelect.setScrollWheelEnabled(true);
-
-
-// Populate the ComboBox with the list of models
-int counter = 1;
+// Initialize and configure modelSelectRight
+rightContainer.addAndMakeVisible(modelSelectRight);
+modelSelectRight.setColour(juce::Label::textColourId, juce::Colours::black);
+modelSelectRight.setScrollWheelEnabled(true);
+  
+int cRight = 1;
 for (const auto& jsonFile : processor.jsonFiles) {
-    modelSelect.addItem(jsonFile.getFileName(), c);
-    counter += 1;
+    modelSelectRight.addItem(jsonFile.getFileName(), cRight);
+    cRight += 1;
 }
-modelSelect.onChange = [this] { modelSelectChanged(); };
+modelSelectRight.onChange = [this] { modelSelectChangedRight(); };
+
+
 
 
 
