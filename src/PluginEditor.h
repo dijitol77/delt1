@@ -42,47 +42,26 @@ public:
     ImageButton cabOnButton1, cabOnButton2;
     Slider odDriveKnob1, odLevelKnob1, ampBassKnob1, ampMidKnob1, ampTrebleKnob1;
     Slider odDriveKnob2, odLevelKnob2, ampBassKnob2, ampMidKnob2, ampTrebleKnob2;
+    Slider ampTrebleKnob2, ampBassKnob2, Slider ampMidKnob2;
+    Slider ampTrebleKnob1, ampBassKnob1, Slider ampMidKnob1;
     Slider driveSlider2, driveSlider1, masterSlider;
     juce::Slider driveSlider;
-
-    // Containers
-    Component originalContainer;
-    Component duplicateContainer;
+    Component originalContainer, duplicateContainer;
+    myLookAndFeel bigKnobLAF, smallKnobLAF;
 
     // LookandFeels and Graphics
     Image background_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
     Image background_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
 
-    // Global Widgets
-    Label modelLabel1;
-    Label versionLabel1;
-    ComboBox modelSelect1;
+ 
 
-    // Overdrive Widgets
-    Slider ampBassKnob1;
-    Slider ampMidKnob1;
-    Slider ampTrebleKnob1;
-    Slider odDriveKnob1;
-    Slider odLevelKnob1;
-    ImageButton cabOnButton1;
+    // Assuming this is a function you intended to have
+    void modelSelect1Changed();
+    void modelSelect2Changed();
 
-    // Duplicated Components
-    Label modelLabel2;
-    Label versionLabel2;
-    ComboBox modelSelect2;
-    Slider ampBassKnob2;
-    Slider ampMidKnob2;
-    Slider ampTrebleKnob2;
-    Slider odDriveKnob2;
-    Slider odLevelKnob2;
-    ImageButton cabOnButton2;
-
-    // LookandFeels 
-    myLookAndFeel bigKnobLAF;
-    myLookAndFeel smallKnobLAF;
 
     // Slider Value Changed Functions
-    void sliderValue1Changed(Slider* slider) override;
+    virtual void sliderValue1Changed(Slider* slider) override;
 
     AudioProcessorParameter* getParameter(const String& paramId);
 
@@ -105,9 +84,7 @@ public:
 private:
     // Reference to the processor
     ProteusAudioProcessor& processor;
-
-    // Additional member variables
-    std::unique_ptr<FileChooser> myChooser;
+   
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
 };
