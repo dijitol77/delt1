@@ -75,6 +75,7 @@ Image rightBackground_on_blue;
     Label versionLabel;
 
     ComboBox modelSelect;
+    ComboBox modelSelectRight;
 
     // Overdrive Widgets
     Slider ampBassKnob;
