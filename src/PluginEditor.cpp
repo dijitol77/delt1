@@ -247,6 +247,9 @@ void ProteusAudioProcessorEditor::resized()
     loadButton2.setBounds(186, 48, 120, 24);
     modelSelect2.setBounds(52, 11, 400, 28);
     // ... (positioning for other duplicated components)
+
+  g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
+}
 }
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
