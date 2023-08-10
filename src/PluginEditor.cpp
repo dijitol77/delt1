@@ -48,6 +48,18 @@ rightContainer.addAndMakeVisible(rightBackground);
     }
     modelSelect.onChange = [this] {modelSelectChanged();};
 
+  // Initialize and configure modelSelectRight for the right container
+rightContainer.addAndMakeVisible(modelSelectRight);
+modelSelectRight.setColour(juce::Label::textColourId, juce::Colours::black);
+modelSelectRight.setScrollWheelEnabled(true);
+int cRight = 1;
+for (const auto& jsonFile : processor.jsonFiles) {
+    modelSelectRight.addItem(jsonFile.getFileName(), cRight);
+    cRight += 1;
+}
+modelSelectRight.onChange = [this] { modelSelectChangedRight(); };
+
+
     auto font = modelLabel.getFont();
     float height = font.getHeight();
     font.setHeight(height);
