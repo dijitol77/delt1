@@ -9,11 +9,13 @@
 */
 
 #pragma once
+using namespace juce::FlexBox;
 #include <juce_gui_basics/layout/juce_FlexBox.h>
 #include "../JuceLibraryCode/JuceHeader.h"
 
 #include "PluginProcessor.h"
 #include "myLookAndFeel.h"
+
 
 
 //==============================================================================
