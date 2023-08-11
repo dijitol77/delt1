@@ -245,8 +245,17 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
     rightContainerFlexBox.alignItems = juce::FlexBox::AlignItems::center;
 
     // Add components to the leftContainerFlexBox
-    leftContainerFlexBox.items.add(juce::FlexItem(loadButton).withMargin(10));
-    leftContainerFlexBox.items.add(juce::FlexItem(modelSelect).withMargin(10));
+
+  leftContainerFlexBox.items.add(juce::FlexItem(leftBackground).withFlex(1.0));
+  rightContainerFlexBox.items.add(juce::FlexItem(rightBackground).withFlex(1.0));
+
+  // Add components to the leftContainerFlexBox
+leftContainerFlexBox.items.add(juce::FlexItem(loadButton).withMargin(10).withFlex(0.1));
+leftContainerFlexBox.items.add(juce::FlexItem(modelSelect).withMargin(10).withFlex(0.1));
+// ... add other components similarly
+
+  
+ 
     leftContainerFlexBox.items.add(juce::FlexItem(versionLabel).withMargin(10));
     leftContainerFlexBox.items.add(juce::FlexItem(cabOnButton).withMargin(10));
     leftContainerFlexBox.items.add(juce::FlexItem(odDriveKnob).withMargin(10));
@@ -256,11 +265,18 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
     leftContainerFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withMargin(10));
 
     // Add components to the rightContainerFlexBox
-    rightContainerFlexBox.items.add(juce::FlexItem(odDriveKnobRight).withMargin(10));
-    rightContainerFlexBox.items.add(juce::FlexItem(loadButtonRight).withMargin(10));
-    rightContainerFlexBox.items.add(juce::FlexItem(modelSelectRight).withMargin(10));
 
-    // Perform the layout
+  // Add components to the rightContainerFlexBox
+rightContainerFlexBox.items.add(juce::FlexItem(odDriveKnobRight).withMargin(10).withFlex(0.1));
+rightContainerFlexBox.items.add(juce::FlexItem(loadButtonRight).withMargin(10).withFlex(0.1));
+rightContainerFlexBox.items.add(juce::FlexItem(modelSelectRight).withMargin(10).withFlex(0.1));
+// ... add other components similarly
+
+   // rightContainerFlexBox.items.add(juce::FlexItem(odDriveKnobRight).withMargin(10));
+   // rightContainerFlexBox.items.add(juce::FlexItem(loadButtonRight).withMargin(10));
+   // rightContainerFlexBox.items.add(juce::FlexItem(modelSelectRight).withMargin(10));
+
+    // Perform the layout  
     mainFlexBox.performLayout(getLocalBounds().toFloat());
 
 
