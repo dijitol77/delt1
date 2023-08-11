@@ -38,12 +38,6 @@ rightContainer.addAndMakeVisible(rightBackground);
     loadButton.setButtonText("LOAD MODEL");
     loadButton.addListener(this);
 
-  // Initialize and configure loadButtonRight for the right container
-    rightContainer.addAndMakeVisible(loadButtonRight);
-    loadButtonRight.setButtonText("LOAD MODEL RIGHT");
-    loadButtonRight.addListener(this);
-    rightContainer.repaint();
-
     leftContainer.addAndMakeVisible(modelSelect);
     modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
     modelSelect.setScrollWheelEnabled(true);
@@ -57,7 +51,11 @@ rightContainer.addAndMakeVisible(rightBackground);
   // Initialize and configure modelSelectRight for the right container
 
   
-
+// Initialize and configure loadButtonRight for the right container
+    rightContainer.addAndMakeVisible(loadButtonRight);
+    loadButtonRight.setButtonText("LOAD MODEL RIGHT");
+    loadButtonRight.addListener(this);
+    rightContainer.repaint();
 
   
 rightContainer.addAndMakeVisible(modelSelectRight);
@@ -214,49 +212,8 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
 
 void ProteusAudioProcessorEditor::resized()
 {
-
-    // Configure the mainFlexBox properties
-    mainFlexBox.flexDirection = juce::FlexBox::Direction::row; // Horizontal layout
-    mainFlexBox.justifyContent = juce::FlexBox::JustifyContent::center; // Center items horizontally
-    mainFlexBox.alignItems = juce::FlexBox::AlignItems::center; // Center items vertically
-
-  // Configure the leftContainerFlexBox properties
-    leftContainerFlexBox.flexDirection = juce::FlexBox::Direction::column; // Vertical layout
-    leftContainerFlexBox.justifyContent = juce::FlexBox::JustifyContent::flexStart; 
-    leftContainerFlexBox.alignItems = juce::FlexBox::AlignItems::center; 
-
-    // Configure the rightContainerFlexBox properties
-    rightContainerFlexBox.flexDirection = juce::FlexBox::Direction::column; // Vertical layout
-    rightContainerFlexBox.justifyContent = juce::FlexBox::JustifyContent::flexStart;
-    rightContainerFlexBox.alignItems = juce::FlexBox::AlignItems::center;
-
-    // ... rest of the resized code ...
-
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-
-  // Add components to the leftContainerFlexBox
-leftContainerFlexBox.items.add(juce::FlexItem(loadButton).withMargin(10));
-leftContainerFlexBox.items.add(juce::FlexItem(modelSelect).withMargin(10));
-leftContainerFlexBox.items.add(juce::FlexItem(versionLabel).withMargin(10));
-leftContainerFlexBox.items.add(juce::FlexItem(cabOnButton).withMargin(10));
-leftContainerFlexBox.items.add(juce::FlexItem(odDriveKnob).withMargin(10));
-leftContainerFlexBox.items.add(juce::FlexItem(odLevelKnob).withMargin(10));
-leftContainerFlexBox.items.add(juce::FlexItem(ampBassKnob).withMargin(10));
-leftContainerFlexBox.items.add(juce::FlexItem(ampMidKnob).withMargin(10));
-leftContainerFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withMargin(10));
-
-  // Add components to the rightContainerFlexBox
-rightContainerFlexBox.items.add(juce::FlexItem(odDriveKnobRight).withMargin(10));
-rightContainerFlexBox.items.add(juce::FlexItem(loadButtonRight).withMargin(10));
-rightContainerFlexBox.items.add(juce::FlexItem(modelSelectRight).withMargin(10));
-  
-  
-// ... Add other components for the right container ...
-
-
-  
-// ... Add other components for the left container ...
 
     //Overall Widgets
     loadButton.setBounds(186, 48, 120, 24);
@@ -273,17 +230,12 @@ rightContainerFlexBox.items.add(juce::FlexItem(modelSelectRight).withMargin(10))
     ampBassKnob.setBounds(113, 131, 62, 62);
     ampMidKnob.setBounds(227, 131, 62, 62);
     ampTrebleKnob.setBounds(340, 131, 62, 62);
-  
-// ... Add other components for the left container ...
-  // Configure the right
+
   // right bounds
 
-    odDriveKnobRight.setBounds(168, 242, 190, 190); // You can adjust these values as needed
-    loadButtonRight.setBounds(186, 48, 120, 24);
+  odDriveKnobRight.setBounds(168, 242, 190, 190); // You can adjust these values as needed
+    loadButton.setBounds(186, 48, 120, 24);
     modelSelectRight.setBounds(52, 11, 400, 28);
-
-  leftContainerFlexBox.performLayout(leftContainer.getBounds());
-rightContainerFlexBox.performLayout(rightContainer.getBounds());
 
 }
 
