@@ -246,23 +246,19 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
 
     // Add components to the leftContainerFlexBox
 
-  leftContainerFlexBox.items.add(juce::FlexItem(leftBackground).withFlex(1.0));
-  rightContainerFlexBox.items.add(juce::FlexItem(rightBackground).withFlex(1.0));
+  // leftContainerFlexBox.items.add(juce::FlexItem(leftBackground).withFlex(1.0));
+  //rightContainerFlexBox.items.add(juce::FlexItem(rightBackground).withFlex(1.0));
 
   // Add components to the leftContainerFlexBox
 leftContainerFlexBox.items.add(juce::FlexItem(loadButton).withMargin(10).withFlex(0.1));
 leftContainerFlexBox.items.add(juce::FlexItem(modelSelect).withMargin(10).withFlex(0.1));
-// ... add other components similarly
-
-  
- 
-    leftContainerFlexBox.items.add(juce::FlexItem(versionLabel).withMargin(10));
-    leftContainerFlexBox.items.add(juce::FlexItem(cabOnButton).withMargin(10));
-    leftContainerFlexBox.items.add(juce::FlexItem(odDriveKnob).withMargin(10));
-    leftContainerFlexBox.items.add(juce::FlexItem(odLevelKnob).withMargin(10));
-    leftContainerFlexBox.items.add(juce::FlexItem(ampBassKnob).withMargin(10));
-    leftContainerFlexBox.items.add(juce::FlexItem(ampMidKnob).withMargin(10));
-    leftContainerFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withMargin(10));
+    leftContainerFlexBox.items.add(juce::FlexItem(versionLabel).withMargin(10).withFlex(0.1));
+    leftContainerFlexBox.items.add(juce::FlexItem(cabOnButton).withMargin(10).withFlex(0.1));
+    leftContainerFlexBox.items.add(juce::FlexItem(odDriveKnob).withMargin(10).withFlex(0.1));
+    leftContainerFlexBox.items.add(juce::FlexItem(odLevelKnob).withMargin(10).withFlex(0.1));
+    leftContainerFlexBox.items.add(juce::FlexItem(ampBassKnob).withMargin(10).withFlex(0.1));
+    leftContainerFlexBox.items.add(juce::FlexItem(ampMidKnob).withMargin(10).withFlex(0.1));
+    leftContainerFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withMargin(10).withFlex(0.1));
 
     // Add components to the rightContainerFlexBox
 
@@ -286,25 +282,25 @@ rightContainerFlexBox.items.add(juce::FlexItem(modelSelectRight).withMargin(10).
     // subcomponents in your editor..
 
     //Overall Widgets
-    // loadButton.setBounds(186, 48, 120, 24);
-    // modelSelect.setBounds(52, 11, 400, 28);
+     loadButton.setBounds(186, 48, 120, 24);
+     modelSelect.setBounds(52, 11, 400, 28);
         //modelLabel.setBounds(197, 2, 90, 25);
-    // versionLabel.setBounds(462, 632, 60, 10);
-    // cabOnButton.setBounds(115, 233, 53, 39);
+    versionLabel.setBounds(462, 632, 60, 10);
+    cabOnButton.setBounds(115, 233, 53, 39);
 
     // Overdrive Widgets
-    // odDriveKnob.setBounds(168, 242, 190, 190);
-    // odLevelKnob.setBounds(340, 225, 62, 62);
-        //odFootSw.setBounds(185, 416, 175, 160);
+    odDriveKnob.setBounds(168, 242, 190, 190);
+    odLevelKnob.setBounds(340, 225, 62, 62);
+    odFootSw.setBounds(185, 416, 175, 160);
 
-    // ampBassKnob.setBounds(113, 131, 62, 62);
-    //  ampMidKnob.setBounds(227, 131, 62, 62);
-    //  ampTrebleKnob.setBounds(340, 131, 62, 62);
+    ampBassKnob.setBounds(113, 131, 62, 62);
+    ampMidKnob.setBounds(227, 131, 62, 62);
+    ampTrebleKnob.setBounds(340, 131, 62, 62);
 
   // right bounds
 
     odDriveKnobRight.setBounds(168, 242, 190, 190); // You can adjust these values as needed
-     loadButton.setBounds(186, 48, 120, 24);
+     loadButtonRight.setBounds(186, 48, 120, 24);
      modelSelectRight.setBounds(52, 11, 400, 28);
 
 }
