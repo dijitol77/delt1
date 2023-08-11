@@ -11,8 +11,10 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include <juce_gui_basics/layout/juce_FlexBox.h>
 #include "PluginProcessor.h"
 #include "myLookAndFeel.h"
+
 
 //==============================================================================
 
