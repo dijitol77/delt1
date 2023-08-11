@@ -286,7 +286,7 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
     // Add components to the leftContainerFlexBox
 
   // leftContainerFlexBox.items.add(juce::FlexItem(leftBackground).withFlex(1.0));
-  //rightContainerFlexBox.items.add(juce::FlexItem(rightBackground).withFlex(1.0));
+  //  rightContainerFlexBox.items.add(juce::FlexItem(rightBackground).withFlex(1.0));
 
   // Add components to the leftContainerFlexBox
  // leftContainerFlexBox.items.add(juce::FlexItem(loadButton).withMargin(10).withFlex(0.1));
@@ -317,7 +317,7 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
   // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
 
-    //Overall Widgets
+    // Overall Widgets
      loadButton.setBounds(186, 48, 120, 24);
      modelSelect.setBounds(52, 11, 400, 28);
         // modelLabel.setBounds(197, 2, 90, 25);
