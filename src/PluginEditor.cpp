@@ -210,34 +210,43 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
 #endif
 }
 
-void ProteusAudioProcessorEditor::resized()
+ void ProteusAudioProcessorEditor::resized()
 {
     // Configure the mainFlexBox properties
-mainFlexBox.flexDirection = juce::FlexBox::Direction::row;
-mainFlexBox.justifyContent = juce::FlexBox::JustifyContent::center;
-mainFlexBox.alignItems = juce::FlexBox::AlignItems::center;
+    mainFlexBox.flexDirection = juce::FlexBox::Direction::row;
+    mainFlexBox.justifyContent = juce::FlexBox::JustifyContent::center;
+    mainFlexBox.alignItems = juce::FlexBox::AlignItems::center;
 
-  leftContainerFlexBox.items.add(juce::FlexItem(loadButton).withMargin(10));
-// ... add other components similarly
+    // Configure the leftContainerFlexBox properties
+    leftContainerFlexBox.flexDirection = juce::FlexBox::Direction::column;
+    leftContainerFlexBox.justifyContent = juce::FlexBox::JustifyContent::flexStart;
+    leftContainerFlexBox.alignItems = juce::FlexBox::AlignItems::center;
 
-leftContainerFlexBox.items.add(juce::FlexItem(loadButton).withMargin(10));
-leftContainerFlexBox.items.add(juce::FlexItem(modelSelect).withMargin(10));
-leftContainerFlexBox.items.add(juce::FlexItem(versionLabel).withMargin(10));
-leftContainerFlexBox.items.add(juce::FlexItem(cabOnButton).withMargin(10));
-leftContainerFlexBox.items.add(juce::FlexItem(odDriveKnob).withMargin(10));
-leftContainerFlexBox.items.add(juce::FlexItem(odLevelKnob).withMargin(10));
-leftContainerFlexBox.items.add(juce::FlexItem(ampBassKnob).withMargin(10));
-leftContainerFlexBox.items.add(juce::FlexItem(ampMidKnob).withMargin(10));
-leftContainerFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withMargin(10));
+    // Configure the rightContainerFlexBox properties
+    rightContainerFlexBox.flexDirection = juce::FlexBox::Direction::column;
+    rightContainerFlexBox.justifyContent = juce::FlexBox::JustifyContent::flexStart;
+    rightContainerFlexBox.alignItems = juce::FlexBox::AlignItems::center;
 
-rightContainerFlexBox.items.add(juce::FlexItem(odDriveKnobRight).withMargin(10));
-// ... add other components similarly
+    // Add components to the leftContainerFlexBox
+    leftContainerFlexBox.items.add(juce::FlexItem(loadButton).withMargin(10));
+    leftContainerFlexBox.items.add(juce::FlexItem(modelSelect).withMargin(10));
+    leftContainerFlexBox.items.add(juce::FlexItem(versionLabel).withMargin(10));
+    leftContainerFlexBox.items.add(juce::FlexItem(cabOnButton).withMargin(10));
+    leftContainerFlexBox.items.add(juce::FlexItem(odDriveKnob).withMargin(10));
+    leftContainerFlexBox.items.add(juce::FlexItem(odLevelKnob).withMargin(10));
+    leftContainerFlexBox.items.add(juce::FlexItem(ampBassKnob).withMargin(10));
+    leftContainerFlexBox.items.add(juce::FlexItem(ampMidKnob).withMargin(10));
+    leftContainerFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withMargin(10));
 
-rightContainerFlexBox.items.add(juce::FlexItem(odDriveKnobRight).withMargin(10));
-rightContainerFlexBox.items.add(juce::FlexItem(loadButtonRight).withMargin(10));
-rightContainerFlexBox.items.add(juce::FlexItem(modelSelectRight).withMargin(10));
+    // Add components to the rightContainerFlexBox
+    rightContainerFlexBox.items.add(juce::FlexItem(odDriveKnobRight).withMargin(10));
+    rightContainerFlexBox.items.add(juce::FlexItem(loadButtonRight).withMargin(10));
+    rightContainerFlexBox.items.add(juce::FlexItem(modelSelectRight).withMargin(10));
 
-  mainFlexBox.performLayout(getLocalBounds().toFloat());
+    // Perform the layout
+    mainFlexBox.performLayout(getLocalBounds().toFloat());
+}
+
 
 
   
