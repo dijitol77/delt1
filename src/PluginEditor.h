@@ -37,6 +37,12 @@ public:
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
+    // repsonsive layout
+
+    juce::FlexBox mainFlexBox;
+    juce::FlexBox leftContainerFlexBox;
+    juce::FlexBox rightContainerFlexBox;
+
     ProteusAudioProcessor& processor;
 
     // Declare the left container 
