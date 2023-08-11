@@ -215,9 +215,14 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
 void ProteusAudioProcessorEditor::resized()
 {
 
- // using namespace juce::FlexBox;
 
-  FlexBox flexbox;
+Rectangle<int> bounds = getLocalBounds();
+    
+    FlexBox flexbox;
+    flexbox.flexDirection = FlexBox::Direction::column;
+    flexbox.flexWrap = FlexBox::Wrap::wrap;
+    flexbox.alignContent = FlexBox::AlignContent::stretch;
+
 
 // Configure the mainFlexBox properties
 mainFlexBox.flexDirection = Direction::row; // Horizontal layout
