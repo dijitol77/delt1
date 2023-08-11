@@ -1,7 +1,17 @@
-#pragma once
-#include "../JuceLibraryCode/JuceHeader.h"
-#include "JUCE/modules/juce_gui_basics/layout/juce_FlexBox.h"  // Uncommented this line
+/*
+  ==============================================================================
 
+    This file was auto-generated!
+
+    It contains the basic framework code for a JUCE plugin editor.
+
+  ==============================================================================
+*/
+
+#pragma once
+
+#include "../JuceLibraryCode/JuceHeader.h"
+#include <juce_gui_basics/layout/juce_FlexBox.h>
 #include "PluginProcessor.h"
 #include "myLookAndFeel.h"
 
