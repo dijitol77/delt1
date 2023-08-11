@@ -217,6 +217,9 @@ mainFlexBox.flexDirection = juce::FlexBox::Direction::row;
 mainFlexBox.justifyContent = juce::FlexBox::JustifyContent::center;
 mainFlexBox.alignItems = juce::FlexBox::AlignItems::center;
 
+  leftContainerFlexBox.items.add(juce::FlexItem(loadButton).withMargin(10));
+// ... add other components similarly
+
 leftContainerFlexBox.items.add(juce::FlexItem(loadButton).withMargin(10));
 leftContainerFlexBox.items.add(juce::FlexItem(modelSelect).withMargin(10));
 leftContainerFlexBox.items.add(juce::FlexItem(versionLabel).withMargin(10));
@@ -226,6 +229,9 @@ leftContainerFlexBox.items.add(juce::FlexItem(odLevelKnob).withMargin(10));
 leftContainerFlexBox.items.add(juce::FlexItem(ampBassKnob).withMargin(10));
 leftContainerFlexBox.items.add(juce::FlexItem(ampMidKnob).withMargin(10));
 leftContainerFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withMargin(10));
+
+rightContainerFlexBox.items.add(juce::FlexItem(odDriveKnobRight).withMargin(10));
+// ... add other components similarly
 
 rightContainerFlexBox.items.add(juce::FlexItem(odDriveKnobRight).withMargin(10));
 rightContainerFlexBox.items.add(juce::FlexItem(loadButtonRight).withMargin(10));
