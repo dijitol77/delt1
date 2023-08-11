@@ -215,21 +215,22 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
 void ProteusAudioProcessorEditor::resized()
 {
 
-    // Configure the mainFlexBox properties
-    mainFlexBox.flexDirection = juce::FlexBox::Direction::row; // Horizontal layout
-    mainFlexBox.justifyContent = juce::FlexBox::JustifyContent::center; // Center items horizontally
-    mainFlexBox.alignItems = juce::FlexBox::AlignItems::center; // Center items vertically
+  using namespace juce::FlexBox;
 
-  // Configure the leftContainerFlexBox properties
-    leftContainerFlexBox.flexDirection = juce::FlexBox::Direction::column; // Vertical layout
-    leftContainerFlexBox.justifyContent = juce::FlexBox::JustifyContent::flexStart; 
-    leftContainerFlexBox.alignItems = juce::FlexBox::AlignItems::center; 
+// Configure the mainFlexBox properties
+mainFlexBox.flexDirection = Direction::row; // Horizontal layout
+mainFlexBox.justifyContent = JustifyContent::center; // Center items horizontally
+mainFlexBox.alignItems = AlignItems::center; // Center items vertically
 
-    // Configure the rightContainerFlexBox properties
-    rightContainerFlexBox.flexDirection = juce::FlexBox::Direction::column; // Vertical layout
-    rightContainerFlexBox.justifyContent = juce::FlexBox::JustifyContent::flexStart;
-    rightContainerFlexBox.alignItems = juce::FlexBox::AlignItems::center;
+// Configure the leftContainerFlexBox properties
+leftContainerFlexBox.flexDirection = Direction::column; // Vertical layout
+leftContainerFlexBox.justifyContent = JustifyContent::flexStart; 
+leftContainerFlexBox.alignItems = AlignItems::center; 
 
+// Configure the rightContainerFlexBox properties
+rightContainerFlexBox.flexDirection = Direction::column; // Vertical layout
+rightContainerFlexBox.justifyContent = JustifyContent::flexStart;
+rightContainerFlexBox.alignItems = AlignItems::center;
     // ... rest of the resized code ...
 
     // This is generally where you'll want to lay out the positions of any
