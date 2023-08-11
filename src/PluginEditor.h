@@ -9,13 +9,15 @@
 */
 
 #pragma once
-#include <juce_gui_basics/layout/juce_FlexBox.h>
 #include "../JuceLibraryCode/JuceHeader.h"
-
+#include "src/MyFlexBoxWrapper.h"
 #include "PluginProcessor.h"
 #include "myLookAndFeel.h"
 
 
+namespace juce {
+    class FlexBox;
+}
 
 //==============================================================================
 
