@@ -10,7 +10,8 @@
 
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "MyFlexBoxWrapper.h"
+#include "JUCE/modules/juce_gui_basics/layout/juce_FlexBox.h"
+
 #include "PluginProcessor.h"
 #include "myLookAndFeel.h"
 
