@@ -245,7 +245,6 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
 
     // Perform the layout
     mainFlexBox.performLayout(getLocalBounds().toFloat());
-}
 
 
 
