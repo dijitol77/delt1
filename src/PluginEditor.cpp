@@ -102,28 +102,16 @@ modelSelectRight.onChange = [this] { modelSelectChangedRight(); };
 
   // Initialize and set up the odDriveKnob
 driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
-addAndMakeVisible(odDriveKnob);  // Add to the main component
-// ... [rest of the setup for odDriveKnob]
-
-
-
- //   driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
- //   leftContainer.addAndMakeVisible(odDriveKnob);
+    leftContainer.addAndMakeVisible(odDriveKnob);
     odDriveKnob.setLookAndFeel(&bigKnobLAF);
     odDriveKnob.addListener(this);
     odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odDriveKnob.setDoubleClickReturnValue(true, 0.5);
-  rightContainer.addAndMakeVisible(odDriveKnob);
 
   // Initialize and set up the odLevelKnob
-masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
-addAndMakeVisible(odLevelKnob);  // Add to the main component
-// ... [rest of the setup for odLevelKnob]
-
-
-   //  masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
-   // leftContainer.addAndMakeVisible(odLevelKnob);
+    masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
+    leftContainer.addAndMakeVisible(odLevelKnob);  // Add to the main component
     odLevelKnob.setLookAndFeel(&smallKnobLAF);
     odLevelKnob.addListener(this);
     odLevelKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
