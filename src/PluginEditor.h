@@ -15,10 +15,6 @@
 #include "myLookAndFeel.h"
 
 
-namespace juce {
-    class FlexBox;
-}
-
 //==============================================================================
 
 class ProteusAudioProcessorEditor  : public AudioProcessorEditor,
