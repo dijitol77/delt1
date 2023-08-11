@@ -303,9 +303,9 @@ rightContainerFlexBox.items.add(juce::FlexItem(modelSelectRight).withMargin(10).
 
   // right bounds
 
-  // odDriveKnobRight.setBounds(168, 242, 190, 190); // You can adjust these values as needed
-   //  loadButton.setBounds(186, 48, 120, 24);
-   //  modelSelectRight.setBounds(52, 11, 400, 28);
+    odDriveKnobRight.setBounds(168, 242, 190, 190); // You can adjust these values as needed
+     loadButton.setBounds(186, 48, 120, 24);
+     modelSelectRight.setBounds(52, 11, 400, 28);
 
 }
 
