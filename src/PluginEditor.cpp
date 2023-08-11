@@ -291,7 +291,7 @@ rightContainerFlexBox.items.add(juce::FlexItem(modelSelectRight).withMargin(10).
     // Overdrive Widgets
     odDriveKnob.setBounds(168, 242, 190, 190);
     odLevelKnob.setBounds(340, 225, 62, 62);
-    // odFootSw.setBounds(185, 416, 175, 160);
+    
 
     ampBassKnob.setBounds(113, 131, 62, 62);
     ampMidKnob.setBounds(227, 131, 62, 62);
