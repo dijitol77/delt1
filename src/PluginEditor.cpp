@@ -244,9 +244,9 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
     leftContainerFlexBox.items.add(juce::FlexItem(ampMidKnob).withMargin(10).withFlex(0.1));
     leftContainerFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withMargin(10).withFlex(0.1))
 
-    // rightContainerFlexBox.items.add(juce::FlexItem(anotherComponent).withMargin(10));
-    // ... add other components to rightContainerFlexBox ...
-     // Add components to the rightContainerFlexBox#
+    // right Container FlexBox
+   
+     
       
       rightContainerFlexBox.items.add(juce::FlexItem(odDriveKnobRight).withMargin(10).withFlex(0.1));
       rightContainerFlexBox.items.add(juce::FlexItem(loadButtonRight).withMargin(10).withFlex(0.1));
