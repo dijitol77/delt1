@@ -183,6 +183,7 @@ rightBackground_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, Bi
 rightBackground_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
 
   setSize(1000, 650);  // Set initial width and height
+  setResizable(true, true);
 
      repaint();
 
