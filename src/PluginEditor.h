@@ -9,7 +9,7 @@
 */
 
 #pragma once
-
+#include <juce_gui_basics/layout/juce_FlexBox.h>
 #include "../JuceLibraryCode/JuceHeader.h"
 
 #include "PluginProcessor.h"
