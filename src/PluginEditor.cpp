@@ -98,16 +98,29 @@ modelSelectRight.onChange = [this] { modelSelectChangedRight(); };
     leftContainer.addAndMakeVisible(cabOnButton);
     cabOnButton.addListener(this);
 
-    driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
-    leftContainer.addAndMakeVisible(odDriveKnob);
+  // Initialize and set up the odDriveKnob
+driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
+addAndMakeVisible(odDriveKnob);  // Add to the main component
+// ... [rest of the setup for odDriveKnob]
+
+
+
+ //   driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
+ //   leftContainer.addAndMakeVisible(odDriveKnob);
     odDriveKnob.setLookAndFeel(&bigKnobLAF);
     odDriveKnob.addListener(this);
     odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odDriveKnob.setDoubleClickReturnValue(true, 0.5);
 
-    masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
-    leftContainer.addAndMakeVisible(odLevelKnob);
+  // Initialize and set up the odLevelKnob
+masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
+addAndMakeVisible(odLevelKnob);  // Add to the main component
+// ... [rest of the setup for odLevelKnob]
+
+
+   //  masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
+   // leftContainer.addAndMakeVisible(odLevelKnob);
     odLevelKnob.setLookAndFeel(&smallKnobLAF);
     odLevelKnob.addListener(this);
     odLevelKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
@@ -169,6 +182,7 @@ leftBackground_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blu
 rightBackground_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
 rightBackground_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
 
+  setSize(1000, 650);  // Set initial width and height
 
      repaint();
 
