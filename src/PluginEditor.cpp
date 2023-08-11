@@ -242,12 +242,12 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
     leftContainerFlexBox.items.add(juce::FlexItem(odLevelKnob).withMargin(10).withFlex(0.1));
     leftContainerFlexBox.items.add(juce::FlexItem(ampBassKnob).withMargin(10).withFlex(0.1));
     leftContainerFlexBox.items.add(juce::FlexItem(ampMidKnob).withMargin(10).withFlex(0.1));
-    leftContainerFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withMargin(10).withFlex(0.1))
+    leftContainerFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withMargin(10).withFlex(0.1));
 
     // right Container FlexBox
    
      
-      
+ 
       rightContainerFlexBox.items.add(juce::FlexItem(odDriveKnobRight).withMargin(10).withFlex(0.1));
       rightContainerFlexBox.items.add(juce::FlexItem(loadButtonRight).withMargin(10).withFlex(0.1));
       rightContainerFlexBox.items.add(juce::FlexItem(modelSelectRight).withMargin(10).withFlex(0.1));
