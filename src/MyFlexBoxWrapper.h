@@ -4,4 +4,6 @@
 
 #include "../juce_gui_basics/layout/juce_FlexBox.h"
 
-#endif
+// ... rest of the file ...
+
+#endif // MY_JUCE_FLEXBOX_WRAPPER_H
