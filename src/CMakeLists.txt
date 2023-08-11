@@ -3,6 +3,7 @@
 target_sources(Proteus PRIVATE
 	myLookAndFeel.cpp
 	myLookAndFeel.h
+ 	MyFlexBoxWrapper.h
 	PluginEditor.cpp
 	PluginEditor.h
 	PluginProcessor.cpp
