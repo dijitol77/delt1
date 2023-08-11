@@ -218,18 +218,23 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
 #endif
 }
 
- void ProteusAudioProcessorEditor::resized()
+void ProteusAudioProcessorEditor::resized()
 {
+    // Configure the mainFlexBox properties
     mainFlexBox.flexDirection = juce::FlexBox::Direction::row;
 
+    // Configure the leftContainerFlexBox properties
     leftContainerFlexBox.flexDirection = juce::FlexBox::Direction::column;
     leftContainerFlexBox.justifyContent = juce::FlexBox::JustifyContent::flexStart;
     leftContainerFlexBox.alignItems = juce::FlexBox::AlignItems::center;
 
+    // Configure the rightContainerFlexBox properties
     rightContainerFlexBox.flexDirection = juce::FlexBox::Direction::column;
     rightContainerFlexBox.justifyContent = juce::FlexBox::JustifyContent::flexStart;
     rightContainerFlexBox.alignItems = juce::FlexBox::AlignItems::center;
-   
+
+    // Add components to the leftContainerFlexBox
+    leftContainerFlexBox.items.add(juce::FlexItem(leftBackground).withFlex(1.0));
     leftContainerFlexBox.items.add(juce::FlexItem(loadButton).withMargin(10).withFlex(0.1));
     leftContainerFlexBox.items.add(juce::FlexItem(modelSelect).withMargin(10).withFlex(0.1));
     leftContainerFlexBox.items.add(juce::FlexItem(versionLabel).withMargin(10).withFlex(0.1));
@@ -239,11 +244,14 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
     leftContainerFlexBox.items.add(juce::FlexItem(ampBassKnob).withMargin(10).withFlex(0.1));
     leftContainerFlexBox.items.add(juce::FlexItem(ampMidKnob).withMargin(10).withFlex(0.1));
     leftContainerFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withMargin(10).withFlex(0.1));
-   
+
+    // Add components to the rightContainerFlexBox
+    rightContainerFlexBox.items.add(juce::FlexItem(rightBackground).withFlex(1.0));
     rightContainerFlexBox.items.add(juce::FlexItem(odDriveKnobRight).withMargin(10).withFlex(0.1));
     rightContainerFlexBox.items.add(juce::FlexItem(loadButtonRight).withMargin(10).withFlex(0.1));
     rightContainerFlexBox.items.add(juce::FlexItem(modelSelectRight).withMargin(10).withFlex(0.1));
 
+    // Add containers to the mainFlexBox
     juce::FlexItem leftContainerItem(leftContainer);
     leftContainerItem.withFlex(0, 1.0, leftContainer.getWidth());
     mainFlexBox.items.add(leftContainerItem);
@@ -252,6 +260,9 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
     rightContainerItem.withFlex(0, 1.0, rightContainer.getWidth());
     mainFlexBox.items.add(rightContainerItem);
 
+    // Perform the layout
+    leftContainerFlexBox.performLayout(leftContainer.getBounds().toFloat());
+    rightContainerFlexBox.performLayout(rightContainer.getBounds().toFloat());
     mainFlexBox.performLayout(getLocalBounds().toFloat());
 
     // subcomponents in your editor..
