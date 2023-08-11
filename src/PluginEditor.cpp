@@ -25,12 +25,14 @@ leftBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, B
 leftBackground.setImage(leftBackgroundImage);
 leftBackground.setBounds(leftContainer.getBounds());
 leftContainer.addAndMakeVisible(leftBackground);
+  leftBackground.toBack();  // Send the leftBackground to the back of the leftContainer
 
 // Load the background image for the right container
 rightBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
 rightBackground.setImage(rightBackgroundImage);
 rightBackground.setBounds(rightContainer.getBounds());
 rightContainer.addAndMakeVisible(rightBackground);
+  rightBackground.toBack();  // Send the leftBackground to the back of the leftContainer
 
 
     // Overall Widgets
