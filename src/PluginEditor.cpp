@@ -114,6 +114,7 @@ addAndMakeVisible(odDriveKnob);  // Add to the main component
     odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odDriveKnob.setDoubleClickReturnValue(true, 0.5);
+  rightContainer.addAndMakeVisible(odDriveKnob);
 
   // Initialize and set up the odLevelKnob
 masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
