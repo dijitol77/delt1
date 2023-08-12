@@ -23,7 +23,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
   // Load the background image for the left container
 leftBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
 leftBackground.setImage(leftBackgroundImage);
-leftBackground.setBounds(leftContainer.getBounds());
+// leftBackground.setBounds(leftContainer.getBounds());
 leftContainer.addAndMakeVisible(leftBackground);
   leftBackground.toBack();  // Send the leftBackground to the back of the leftContainer
 
@@ -32,7 +32,7 @@ leftContainer.addAndMakeVisible(leftBackground);
 // Load the background image for the right container
 rightBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
 rightBackground.setImage(rightBackgroundImage);
-rightBackground.setBounds(rightContainer.getBounds());
+// rightBackground.setBounds(rightContainer.getBounds());
 rightContainer.addAndMakeVisible(rightBackground);
   rightBackground.toBack();  // Send the leftBackground to the back of the leftContainer
 
@@ -117,7 +117,7 @@ cabOnButton.setImages(true, true, true,
     Image(), 1.0, Colours::transparentWhite,
     ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
     0.0);
-cabOnButton.setBounds(115, 233, 53, 39);  // Set the bounds first
+// cabOnButton.setBounds(115, 233, 53, 39);  // Set the bounds first
 leftContainer.addAndMakeVisible(cabOnButton);  // Then add to the parent
 cabOnButton.toFront(false);  // Finally, bring to the front
 cabOnButton.addListener(this);
@@ -206,7 +206,7 @@ odDriveKnob.toFront(false);  // Finally, bring to the front
 
 // Set bounds and add the right container to the main component
     addAndMakeVisible(rightContainer);
-    rightContainer.setBounds(500, 0, 500, 650);
+   rightContainer.setBounds(500, 0, 500, 650);
 
     leftBackground_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
  //   leftBackground_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
@@ -308,19 +308,19 @@ void ProteusAudioProcessorEditor::resized()
     // left bounds
         // ... [Setting bounds for the left components]
    
-     loadButton.setBounds(186, 48, 120, 24);
-    modelSelect.setBounds(52, 11, 400, 28);
-    versionLabel.setBounds(462, 632, 60, 10);
+  //   loadButton.setBounds(186, 48, 120, 24);
+  //  modelSelect.setBounds(52, 11, 400, 28);
+  //  versionLabel.setBounds(462, 632, 60, 10);
     // cabOnButton.setBounds(115, 233, 53, 39);
 
     // Overdrive Widgets
     // odDriveKnob.setBounds(168, 242, 190, 190);
-    odLevelKnob.setBounds(340, 225, 62, 62);
+ //   odLevelKnob.setBounds(340, 225, 62, 62);
     
     // eq
-    ampBassKnob.setBounds(113, 131, 62, 62);
-    ampMidKnob.setBounds(227, 131, 62, 62);
-    ampTrebleKnob.setBounds(340, 131, 62, 62);
+  //  ampBassKnob.setBounds(113, 131, 62, 62);
+  //  ampMidKnob.setBounds(227, 131, 62, 62);
+//    ampTrebleKnob.setBounds(340, 131, 62, 62);
         // Calculate the bounds based on the current size of the component
     int width = rightContainer.getWidth();
     int height = rightContainer.getHeight();
