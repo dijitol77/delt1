@@ -234,26 +234,26 @@ ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
 
 void ProteusAudioProcessorEditor::paint (Graphics& g)
 {
-    // Workaround for graphics on Windows builds (clipping code doesn't work correctly on Windows)
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
-    if (processor.fw_state == 1 && processor.conditioned == true) {
-        g.drawImage(leftBackground_on, 0, 0, getWidth() / 2, getHeight(), 0, 0, leftBackground_on.getWidth(), leftBackground_on.getHeight());  // Draw for the left container
-        g.drawImage(rightBackground_on, getWidth() / 2, 0, getWidth() / 2, getHeight(), 0, 0, rightBackground_on.getWidth(), rightBackground_on.getHeight());  // Draw for the right container
-    } else if (processor.fw_state == 1 && processor.conditioned == false) {
-        g.drawImage(leftBackground_on_blue, 0, 0, getWidth() / 2, getHeight(), 0, 0, leftBackground_on_blue.getWidth(), leftBackground_on_blue.getHeight());  // Draw for the left container
-        g.drawImage(rightBackground_on_blue, getWidth() / 2, 0, getWidth() / 2, getHeight(), 0, 0, rightBackground_on_blue.getWidth(), rightBackground_on_blue.getHeight());  // Draw for the right container
-    }
-#else
-    // Redraw only the clipped part of the background image
-    juce::Rectangle<int> ClipRect = g.getClipBounds();
-    if (processor.fw_state == 1 && processor.conditioned == true) {
-        g.drawImage(leftBackground_on, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
-        g.drawImage(rightBackground_on, ClipRect.getX() - 500, ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX() - 500, ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
-    } else if (processor.fw_state == 1 && processor.conditioned == false) {
-        g.drawImage(leftBackground_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
-        g.drawImage(rightBackground_on_blue, ClipRect.getX() - 500, ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX() - 500, ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
-    }
-#endif
+//    // Workaround for graphics on Windows builds (clipping code doesn't work correctly on Windows)
+// #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+//     if (processor.fw_state == 1 && processor.conditioned == true) {
+//         g.drawImage(leftBackground_on, 0, 0, getWidth() / 2, getHeight(), 0, 0, leftBackground_on.getWidth(), leftBackground_on.getHeight());  // Draw for the left container
+//        g.drawImage(rightBackground_on, getWidth() / 2, 0, getWidth() / 2, getHeight(), 0, 0, rightBackground_on.getWidth(), rightBackground_on.getHeight());  // Draw for the right container
+//    } else if (processor.fw_state == 1 && processor.conditioned == false) {
+//        g.drawImage(leftBackground_on_blue, 0, 0, getWidth() / 2, getHeight(), 0, 0, leftBackground_on_blue.getWidth(), leftBackground_on_blue.getHeight());  // Draw for the left container
+ //       g.drawImage(rightBackground_on_blue, getWidth() / 2, 0, getWidth() / 2, getHeight(), 0, 0, rightBackground_on_blue.getWidth(), rightBackground_on_blue.getHeight());  // Draw for the right container
+ //   }
+// #else
+//    // Redraw only the clipped part of the background image
+//    juce::Rectangle<int> ClipRect = g.getClipBounds();
+//    if (processor.fw_state == 1 && processor.conditioned == true) {
+ //       g.drawImage(leftBackground_on, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
+ //       g.drawImage(rightBackground_on, ClipRect.getX() - 500, ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX() - 500, ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
+ //   } else if (processor.fw_state == 1 && processor.conditioned == false) {
+ //       g.drawImage(leftBackground_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
+ //       g.drawImage(rightBackground_on_blue, ClipRect.getX() - 500, ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX() - 500, ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
+ //   }
+// #endif
 }
 
 
