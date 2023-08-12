@@ -289,6 +289,18 @@ void ProteusAudioProcessorEditor::resized()
      loadButtonRight.setBounds(186, 48, 120, 24);
      modelSelectRight.setBounds(52, 11, 400, 28);
 
+   // Set the bounds for the background images
+    leftBackground.setBounds(leftContainer.getBounds());
+    rightBackground.setBounds(rightContainer.getBounds());
+
+    // Send the backgrounds to the back
+    leftBackground.toBack();
+    rightBackground.toBack();
+
+    // Repaint the containers to ensure other components are drawn on top
+    leftContainer.repaint();
+    rightContainer.repaint();
+
 }
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
