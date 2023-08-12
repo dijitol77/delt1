@@ -202,11 +202,11 @@ odDriveKnob.toFront(false);  // Finally, bring to the front
 
 // Set bounds and add the left container to the main component
     addAndMakeVisible(leftContainer);
-    leftContainer.setBounds(0, 0, 500, 650);
+ //   leftContainer.setBounds(0, 0, 500, 650);
 
 // Set bounds and add the right container to the main component
     addAndMakeVisible(rightContainer);
-   rightContainer.setBounds(500, 0, 500, 650);
+//   rightContainer.setBounds(500, 0, 500, 650);
 
 //    leftBackground_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
  //   leftBackground_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
@@ -300,8 +300,8 @@ void ProteusAudioProcessorEditor::resized()
     mainFlexBox.items.add(rightContainerItem);
 
     // Perform the layout
-    leftContainerFlexBox.performLayout(leftContainer.getBounds().toFloat());
-    rightContainerFlexBox.performLayout(rightContainer.getBounds().toFloat());
+ //   leftContainerFlexBox.performLayout(leftContainer.getBounds().toFloat());
+ //   rightContainerFlexBox.performLayout(rightContainer.getBounds().toFloat());
     mainFlexBox.performLayout(getLocalBounds().toFloat());
 
     // Set bounds for individual components
@@ -331,8 +331,8 @@ void ProteusAudioProcessorEditor::resized()
     modelSelectRight.setBounds(width * 0.09, height * 0.02, 400, 28);
 
     // Set the bounds for the background images
-    leftBackground.setBounds(leftContainer.getBounds());
-    rightBackground.setBounds(rightContainer.getBounds());
+ //   leftBackground.setBounds(leftContainer.getBounds());
+ //   rightBackground.setBounds(rightContainer.getBounds());
 
     // Send the backgrounds to the back
     leftBackground.toBack();
