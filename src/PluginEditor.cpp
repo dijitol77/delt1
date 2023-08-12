@@ -109,14 +109,16 @@ rightContainer.repaint();
  // Left Container Widgets
 
 // cabOnButton
-    cabOnButton.setImages(true, true, true,
+cabOnButton.setImages(true, true, true,
     ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
     Image(), 1.0, Colours::transparentWhite,
     ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
     0.0);
-    leftContainer.addAndMakeVisible(cabOnButton);
-    cabOnButton.toFront(false);
-    cabOnButton.addListener(this);
+
+cabOnButton.setBounds(115, 233, 53, 39);  // Set the bounds first
+leftContainer.addAndMakeVisible(cabOnButton);  // Then add to the parent
+cabOnButton.toFront(false);  // Finally, bring to the front
+cabOnButton.addListener(this);
 
 // odDriveKnob
     driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
@@ -301,7 +303,7 @@ void ProteusAudioProcessorEditor::resized()
     loadButton.setBounds(186, 48, 120, 24);
     modelSelect.setBounds(52, 11, 400, 28);
     versionLabel.setBounds(462, 632, 60, 10);
-    cabOnButton.setBounds(115, 233, 53, 39);
+    // cabOnButton.setBounds(115, 233, 53, 39);
 
     // Overdrive Widgets
     odDriveKnob.setBounds(168, 242, 190, 190);
