@@ -128,7 +128,7 @@ odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
 odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
 odDriveKnob.setDoubleClickReturnValue(true, 0.5);
 
-odDriveKnob.setBounds(168, 242, 190, 190);  // Set the bounds first (replace x, y, width, height with the actual values)  // Set the bounds first (replace x, y, width, height with the actual values)
+// odDriveKnob.setBounds(168, 242, 190, 190);  // Set the bounds first (replace x, y, width, height with the actual values)  // Set the bounds first (replace x, y, width, height with the actual values)
 
 leftContainer.addAndMakeVisible(odDriveKnob);  // Then add to the parent
 odDriveKnob.toFront(false);  // Finally, bring to the front
