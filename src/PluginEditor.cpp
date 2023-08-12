@@ -200,13 +200,16 @@ odDriveKnob.toFront(false);  // Finally, bring to the front
     setResizable(true, true);
     repaint();
 
+int mainWidth = getWidth();
+int mainHeight = getHeight();
+
 // Set bounds and add the left container to the main component
-    addAndMakeVisible(leftContainer);
- //   leftContainer.setBounds(0, 0, 500, 650);
+addAndMakeVisible(leftContainer);
+leftContainer.setBounds(mainWidth * 0.0, mainHeight * 0.0, mainWidth * 0.5, mainHeight);
 
 // Set bounds and add the right container to the main component
-    addAndMakeVisible(rightContainer);
-//   rightContainer.setBounds(500, 0, 500, 650);
+addAndMakeVisible(rightContainer);
+rightContainer.setBounds(mainWidth * 0.5, mainHeight * 0.0, mainWidth * 0.5, mainHeight);
 
 //    leftBackground_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
  //   leftBackground_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
