@@ -59,6 +59,9 @@ for (const auto& jsonFile : processor.jsonFiles) {
 }
 modelSelect.onChange = [this] {modelSelectChanged();};
 
+  // Repaint the leftContainer to ensure the components are drawn correctly
+leftContainer.repaint();
+
 // Initialize and configure loadButtonRight for the right container
 rightContainer.addAndMakeVisible(loadButtonRight);
 
