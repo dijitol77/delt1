@@ -38,31 +38,39 @@ rightContainer.addAndMakeVisible(rightBackground);
 
 
     // Overall Widgets
-    leftContainer.addAndMakeVisible(loadButton);
-    loadButton.setButtonText("LOAD MODEL");
-    loadButton.addListener(this);
+// Add the loadButton to the leftContainer and make it visible
+leftContainer.addAndMakeVisible(loadButton);
 
-    leftContainer.addAndMakeVisible(modelSelect);
-    modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
-    modelSelect.setScrollWheelEnabled(true);
-    int c = 1;
-    for (const auto& jsonFile : processor.jsonFiles) {
-        modelSelect.addItem(jsonFile.getFileName(), c);
-        c += 1;
-    }
-    modelSelect.onChange = [this] {modelSelectChanged();};
+// Set the properties for the loadButton
+loadButton.setButtonText("LOAD MODEL");
+loadButton.addListener(this);
+loadButton.toFront(false);  // Bring the loadButton to the front of the leftContainer
 
-  // Initialize and configure modelSelectRight for the right container
+// Add the modelSelect to the leftContainer and make it visible
+leftContainer.addAndMakeVisible(modelSelect);
 
-  
+// Set the properties for the modelSelect
+modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
+modelSelect.setScrollWheelEnabled(true);
+int c = 1;
+for (const auto& jsonFile : processor.jsonFiles) {
+    modelSelect.addItem(jsonFile.getFileName(), c);
+    c += 1;
+}
+modelSelect.onChange = [this] {modelSelectChanged();};
+
 // Initialize and configure loadButtonRight for the right container
-    rightContainer.addAndMakeVisible(loadButtonRight);
-    loadButtonRight.setButtonText("LOAD MODEL RIGHT");
-    loadButtonRight.addListener(this);
-    rightContainer.repaint();
+rightContainer.addAndMakeVisible(loadButtonRight);
 
-  
+// Set the properties for the loadButtonRight
+loadButtonRight.setButtonText("LOAD MODEL RIGHT");
+loadButtonRight.addListener(this);
+loadButtonRight.toFront(false);  // Bring the loadButtonRight to the front of the rightContainer
+
+// Add the modelSelectRight to the rightContainer and make it visible
 rightContainer.addAndMakeVisible(modelSelectRight);
+
+// Set the properties for the modelSelectRight
 modelSelectRight.setColour(juce::Label::textColourId, juce::Colours::black);
 modelSelectRight.setScrollWheelEnabled(true);
 int cRight = 1;
@@ -72,6 +80,10 @@ for (const auto& jsonFile : processor.jsonFiles) {
 }
 modelSelectRight.onChange = [this] { modelSelectChangedRight(); };
 
+// Repaint the rightContainer to ensure the components are drawn correctly
+rightContainer.repaint();
+
+ // font stuff
 
     auto font = modelLabel.getFont();
     float height = font.getHeight();
@@ -94,91 +106,109 @@ modelSelectRight.onChange = [this] { modelSelectChangedRight(); };
     odFootSw.addListener(this);
     */
 
+ // Left Container Widgets
+
+// cabOnButton
     cabOnButton.setImages(true, true, true,
-        ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-        Image(), 1.0, Colours::transparentWhite,
-        ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-        0.0);
+    ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
+    Image(), 1.0, Colours::transparentWhite,
+    ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
+    0.0);
     leftContainer.addAndMakeVisible(cabOnButton);
+    cabOnButton.toFront(false);
     cabOnButton.addListener(this);
 
-  // Initialize and set up the odDriveKnob
-driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
+// odDriveKnob
+    driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
     leftContainer.addAndMakeVisible(odDriveKnob);
+    odDriveKnob.toFront(false);
     odDriveKnob.setLookAndFeel(&bigKnobLAF);
     odDriveKnob.addListener(this);
     odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odDriveKnob.setDoubleClickReturnValue(true, 0.5);
 
-  // Initialize and set up the odLevelKnob
+// odLevelKnob
     masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
-    leftContainer.addAndMakeVisible(odLevelKnob);  // Add to the main component
+    leftContainer.addAndMakeVisible(odLevelKnob);
+    odLevelKnob.toFront(false);
     odLevelKnob.setLookAndFeel(&smallKnobLAF);
     odLevelKnob.addListener(this);
     odLevelKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     odLevelKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odLevelKnob.setDoubleClickReturnValue(true, 0.5);
 
+// ampBassKnob
     bassSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob);    	    
     leftContainer.addAndMakeVisible(ampBassKnob);
+    ampBassKnob.toFront(false);
     ampBassKnob.setLookAndFeel(&smallKnobLAF);
     ampBassKnob.addListener(this);
     ampBassKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     ampBassKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     ampBassKnob.setDoubleClickReturnValue(true, 0.0);
 
+// ampMidKnob
     midSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MID_ID, ampMidKnob);    
     leftContainer.addAndMakeVisible(ampMidKnob);
+    ampMidKnob.toFront(false);
     ampMidKnob.setLookAndFeel(&smallKnobLAF);
     ampMidKnob.addListener(this);
     ampMidKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     ampMidKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     ampMidKnob.setDoubleClickReturnValue(true, 0.0);
 
+// ampTrebleKnob
     trebleSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, TREBLE_ID, ampTrebleKnob);
     leftContainer.addAndMakeVisible(ampTrebleKnob);
+    ampTrebleKnob.toFront(false);
     ampTrebleKnob.setLookAndFeel(&smallKnobLAF);
     ampTrebleKnob.addListener(this);
     ampTrebleKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     ampTrebleKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     ampTrebleKnob.setDoubleClickReturnValue(true, 0.0);
 
+// versionLabel
     leftContainer.addAndMakeVisible(versionLabel);
+    versionLabel.toFront(false);
     versionLabel.setText("v1.2", juce::NotificationType::dontSendNotification);
     versionLabel.setJustificationType(juce::Justification::left);
     versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     versionLabel.setFont(font);
-  
-//  rightContainer widgets
-  odDriveKnobRight.setLookAndFeel(&bigKnobLAF);
-  odDriveKnobRight.addListener(this);
-  odDriveKnobRight.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-  odDriveKnobRight.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-  odDriveKnobRight.setDoubleClickReturnValue(true, 0.5);
-  rightContainer.addAndMakeVisible(odDriveKnobRight);
 
-    // Size of plugin GUI
-    setSize (1000, 650);  // Double the width
-    
-    // Set bounds and add the left container to the main component
+// Right Container Widgets
+
+// odDriveKnobRight
+    odDriveKnobRight.setLookAndFeel(&bigKnobLAF);
+    odDriveKnobRight.addListener(this);
+    odDriveKnobRight.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    odDriveKnobRight.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
+    odDriveKnobRight.setDoubleClickReturnValue(true, 0.5);
+    rightContainer.addAndMakeVisible(odDriveKnobRight);
+    odDriveKnobRight.toFront(false);
+
+// Additional settings and configurations
+    setSize(1000, 650);
+    setResizable(true, true);
+    repaint();
+
+// Set bounds and add the left container to the main component
     addAndMakeVisible(leftContainer);
     leftContainer.setBounds(0, 0, 500, 650);
 
-    // Set bounds and add the right container to the main component
+// Set bounds and add the right container to the main component
     addAndMakeVisible(rightContainer);
     rightContainer.setBounds(500, 0, 500, 650);
 
+    leftBackground_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
+    leftBackground_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
+    rightBackground_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
+    rightBackground_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
 
-leftBackground_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
-leftBackground_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
-rightBackground_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
-rightBackground_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
+    setSize(1000, 650);  // Set initial width and height
+    setResizable(true, true);
 
-  setSize(1000, 650);  // Set initial width and height
-  setResizable(true, true);
-
-     repaint();
+    repaint();
 
     resetImages();
 
@@ -266,6 +296,27 @@ void ProteusAudioProcessorEditor::resized()
     rightContainerFlexBox.performLayout(rightContainer.getBounds().toFloat());
     mainFlexBox.performLayout(getLocalBounds().toFloat());
 
+    // Set bounds for individual components
+    // left bounds
+    loadButton.setBounds(186, 48, 120, 24);
+    modelSelect.setBounds(52, 11, 400, 28);
+    versionLabel.setBounds(462, 632, 60, 10);
+    cabOnButton.setBounds(115, 233, 53, 39);
+
+    // Overdrive Widgets
+    odDriveKnob.setBounds(168, 242, 190, 190);
+    odLevelKnob.setBounds(340, 225, 62, 62);
+    
+    // eq
+    ampBassKnob.setBounds(113, 131, 62, 62);
+    ampMidKnob.setBounds(227, 131, 62, 62);
+    ampTrebleKnob.setBounds(340, 131, 62, 62);
+
+    // right bounds
+    odDriveKnobRight.setBounds(168, 242, 190, 190);
+    loadButtonRight.setBounds(186, 48, 120, 24);
+    modelSelectRight.setBounds(52, 11, 400, 28);
+
     // Set the bounds for the background images
     leftBackground.setBounds(leftContainer.getBounds());
     rightBackground.setBounds(rightContainer.getBounds());
@@ -274,38 +325,9 @@ void ProteusAudioProcessorEditor::resized()
     leftBackground.toBack();
     rightBackground.toBack();
 
-    // Bring other components to the front
-    loadButton.toFront(false);
-    modelSelect.toFront(false);
-    versionLabel.toFront(false);
-    cabOnButton.toFront(false);
-    odDriveKnob.toFront(false);
-    odLevelKnob.toFront(false);
-    ampBassKnob.toFront(false);
-    ampMidKnob.toFront(false);
-    ampTrebleKnob.toFront(false);
-    odDriveKnobRight.toFront(false);
-    loadButtonRight.toFront(false);
-    modelSelectRight.toFront(false);
-
-    // Ensure all components are visible
-    loadButton.setVisible(true);
-    modelSelect.setVisible(true);
-    versionLabel.setVisible(true);
-    cabOnButton.setVisible(true);
-    odDriveKnob.setVisible(true);
-    odLevelKnob.setVisible(true);
-    ampBassKnob.setVisible(true);
-    ampMidKnob.setVisible(true);
-    ampTrebleKnob.setVisible(true);
-    odDriveKnobRight.setVisible(true);
-    loadButtonRight.setVisible(true);
-    modelSelectRight.setVisible(true);
-
     // Repaint the containers to ensure other components are drawn on top
     leftContainer.repaint();
     rightContainer.repaint();
-    repaint();  // repaint the main component
 
 }
 
