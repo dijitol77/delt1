@@ -306,6 +306,8 @@ void ProteusAudioProcessorEditor::resized()
 
     // Set bounds for individual components
     // left bounds
+        // ... [Setting bounds for the left components]
+   
      loadButton.setBounds(186, 48, 120, 24);
     modelSelect.setBounds(52, 11, 400, 28);
     versionLabel.setBounds(462, 632, 60, 10);
@@ -319,11 +321,14 @@ void ProteusAudioProcessorEditor::resized()
     ampBassKnob.setBounds(113, 131, 62, 62);
     ampMidKnob.setBounds(227, 131, 62, 62);
     ampTrebleKnob.setBounds(340, 131, 62, 62);
+        // Calculate the bounds based on the current size of the component
+    int width = rightContainer.getWidth();
+    int height = rightContainer.getHeight();
 
     // right bounds
-    odDriveKnobRight.setBounds(168, 242, 190, 190);
-    loadButtonRight.setBounds(186, 48, 120, 24);
-    modelSelectRight.setBounds(52, 11, 400, 28);
+    odDriveKnobRight.setBounds(width * 0.35, height * 0.4, 190, 190);
+    loadButtonRight.setBounds(width * 0.39, height * 0.08, 120, 24);
+    modelSelectRight.setBounds(width * 0.09, height * 0.02, 400, 28);
 
     // Set the bounds for the background images
     leftBackground.setBounds(leftContainer.getBounds());
