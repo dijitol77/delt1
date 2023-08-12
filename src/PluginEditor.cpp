@@ -266,30 +266,7 @@ void ProteusAudioProcessorEditor::resized()
     rightContainerFlexBox.performLayout(rightContainer.getBounds().toFloat());
     mainFlexBox.performLayout(getLocalBounds().toFloat());
 
-    // subcomponents in your editor..
-
-    // left bounds
-    loadButton.setBounds(186, 48, 120, 24);
-    modelSelect.setBounds(52, 11, 400, 28);
-    versionLabel.setBounds(462, 632, 60, 10);
-    cabOnButton.setBounds(115, 233, 53, 39);
-
-    // Overdrive Widgets
-    odDriveKnob.setBounds(168, 242, 190, 190);
-    odLevelKnob.setBounds(340, 225, 62, 62);
-    
-    // eq
-    ampBassKnob.setBounds(113, 131, 62, 62);
-    ampMidKnob.setBounds(227, 131, 62, 62);
-    ampTrebleKnob.setBounds(340, 131, 62, 62);
-
-    // right bounds
-
-    odDriveKnobRight.setBounds(168, 242, 190, 190); // You can adjust these values as needed
-     loadButtonRight.setBounds(186, 48, 120, 24);
-     modelSelectRight.setBounds(52, 11, 400, 28);
-
-   // Set the bounds for the background images
+    // Set the bounds for the background images
     leftBackground.setBounds(leftContainer.getBounds());
     rightBackground.setBounds(rightContainer.getBounds());
 
@@ -297,9 +274,38 @@ void ProteusAudioProcessorEditor::resized()
     leftBackground.toBack();
     rightBackground.toBack();
 
+    // Bring other components to the front
+    loadButton.toFront(false);
+    modelSelect.toFront(false);
+    versionLabel.toFront(false);
+    cabOnButton.toFront(false);
+    odDriveKnob.toFront(false);
+    odLevelKnob.toFront(false);
+    ampBassKnob.toFront(false);
+    ampMidKnob.toFront(false);
+    ampTrebleKnob.toFront(false);
+    odDriveKnobRight.toFront(false);
+    loadButtonRight.toFront(false);
+    modelSelectRight.toFront(false);
+
+    // Ensure all components are visible
+    loadButton.setVisible(true);
+    modelSelect.setVisible(true);
+    versionLabel.setVisible(true);
+    cabOnButton.setVisible(true);
+    odDriveKnob.setVisible(true);
+    odLevelKnob.setVisible(true);
+    ampBassKnob.setVisible(true);
+    ampMidKnob.setVisible(true);
+    ampTrebleKnob.setVisible(true);
+    odDriveKnobRight.setVisible(true);
+    loadButtonRight.setVisible(true);
+    modelSelectRight.setVisible(true);
+
     // Repaint the containers to ensure other components are drawn on top
     leftContainer.repaint();
     rightContainer.repaint();
+    repaint();  // repaint the main component
 
 }
 
