@@ -114,21 +114,24 @@ cabOnButton.setImages(true, true, true,
     Image(), 1.0, Colours::transparentWhite,
     ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
     0.0);
-
 cabOnButton.setBounds(115, 233, 53, 39);  // Set the bounds first
 leftContainer.addAndMakeVisible(cabOnButton);  // Then add to the parent
 cabOnButton.toFront(false);  // Finally, bring to the front
 cabOnButton.addListener(this);
 
 // odDriveKnob
-    driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
-    leftContainer.addAndMakeVisible(odDriveKnob);
-    odDriveKnob.toFront(false);
-    odDriveKnob.setLookAndFeel(&bigKnobLAF);
-    odDriveKnob.addListener(this);
-    odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    odDriveKnob.setDoubleClickReturnValue(true, 0.5);
+driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
+
+odDriveKnob.setLookAndFeel(&bigKnobLAF);
+odDriveKnob.addListener(this);
+odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
+odDriveKnob.setDoubleClickReturnValue(true, 0.5);
+
+odDriveKnob.setBounds(168, 242, 190, 190);  // Set the bounds first (replace x, y, width, height with the actual values)  // Set the bounds first (replace x, y, width, height with the actual values)
+
+leftContainer.addAndMakeVisible(odDriveKnob);  // Then add to the parent
+odDriveKnob.toFront(false);  // Finally, bring to the front
 
 // odLevelKnob
     masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
@@ -300,13 +303,13 @@ void ProteusAudioProcessorEditor::resized()
 
     // Set bounds for individual components
     // left bounds
-    loadButton.setBounds(186, 48, 120, 24);
+     loadButton.setBounds(186, 48, 120, 24);
     modelSelect.setBounds(52, 11, 400, 28);
     versionLabel.setBounds(462, 632, 60, 10);
     // cabOnButton.setBounds(115, 233, 53, 39);
 
     // Overdrive Widgets
-    odDriveKnob.setBounds(168, 242, 190, 190);
+    // odDriveKnob.setBounds(168, 242, 190, 190);
     odLevelKnob.setBounds(340, 225, 62, 62);
     
     // eq
