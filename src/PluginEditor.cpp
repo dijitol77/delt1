@@ -1,22 +1,26 @@
 #pragma once
 
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-
-    It contains the basic framework code for a JUCE plugin editor.
-
-  ==============================================================================
-*/
-
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor(ProteusAudioProcessor& p)
     : AudioProcessorEditor(&p), processor(p)
 {
-    // Overall Widgets
+    initializeWidgets();
+    initializeLookAndFeel();
+    initializeAttachments();
+    setSize(500, 650);
+    loadFromFolder();
+}
+
+ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
+{
+    resetLookAndFeel();
+}
+
+void ProteusAudioProcessorEditor::initializeWidgets()
+{
+    // Initialize and add widgets
     addAndMakeVisible(loadButton);
     loadButton.setButtonText("LOAD MODEL");
     loadButton.addListener(this);
@@ -24,98 +28,50 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor(ProteusAudioProcessor& 
     addAndMakeVisible(modelSelect);
     modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
     modelSelect.setScrollWheelEnabled(true);
-    int c = 1;
-    for (const auto& jsonFile : processor.jsonFiles) {
-        modelSelect.addItem(jsonFile.getFileName(), c);
-        c += 1;
-    }
-    modelSelect.onChange = [this] {modelSelectChanged();};
-
-    auto font = modelLabel.getFont();
-    float height = font.getHeight();
-    font.setHeight(height);
-
-    // Set Widget Graphics
-    bigKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::big_knob_png, BinaryData::big_knob_pngSize));
-    smallKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::small_knob_png, BinaryData::small_knob_pngSize));
-
-    // Pre Amp Pedal Widgets
- 
-    /*
-    // Overdrive
-    odFootSw.setImages(true, true, true,
-        ImageCache::getFromMemory(BinaryData::footswitch_up_png, BinaryData::footswitch_up_pngSize), 1.0, Colours::transparentWhite,
-        Image(), 1.0, Colours::transparentWhite,
-        ImageCache::getFromMemory(BinaryData::footswitch_down_png, BinaryData::footswitch_down_pngSize), 1.0, Colours::transparentWhite,
-        0.0);
-    addAndMakeVisible(odFootSw);
-    odFootSw.addListener(this);
-    */
-
-    cabOnButton.setImages(true, true, true,
-        ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-        Image(), 1.0, Colours::transparentWhite,
-        ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-        0.0);
-    addAndMakeVisible(cabOnButton);
-    cabOnButton.addListener(this);
-
-    driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
-    addAndMakeVisible(odDriveKnob);
-    odDriveKnob.setLookAndFeel(&bigKnobLAF);
-    odDriveKnob.addListener(this);
-    odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    odDriveKnob.setDoubleClickReturnValue(true, 0.5);
-
-    masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
-    addAndMakeVisible(odLevelKnob);
-    odLevelKnob.setLookAndFeel(&smallKnobLAF);
-    odLevelKnob.addListener(this);
-    odLevelKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    odLevelKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    odLevelKnob.setDoubleClickReturnValue(true, 0.5);
-
-    bassSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob);    	    
-    addAndMakeVisible(ampBassKnob);
-    ampBassKnob.setLookAndFeel(&smallKnobLAF);
-    ampBassKnob.addListener(this);
-    ampBassKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    ampBassKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    ampBassKnob.setDoubleClickReturnValue(true, 0.0);
-
-    midSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MID_ID, ampMidKnob);    
-    addAndMakeVisible(ampMidKnob);
-    ampMidKnob.setLookAndFeel(&smallKnobLAF);
-    ampMidKnob.addListener(this);
-    ampMidKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    ampMidKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    ampMidKnob.setDoubleClickReturnValue(true, 0.0);
-
-    trebleSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, TREBLE_ID, ampTrebleKnob);
-    addAndMakeVisible(ampTrebleKnob);
-    ampTrebleKnob.setLookAndFeel(&smallKnobLAF);
-    ampTrebleKnob.addListener(this);
-    ampTrebleKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    ampTrebleKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    ampTrebleKnob.setDoubleClickReturnValue(true, 0.0);
+    populateModelSelect();
 
     addAndMakeVisible(versionLabel);
     versionLabel.setText("v1.2", juce::NotificationType::dontSendNotification);
     versionLabel.setJustificationType(juce::Justification::left);
     versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
-    versionLabel.setFont(font);
+    versionLabel.setFont(modelLabel.getFont());
 
-    // Size of plugin GUI
-    setSize (500, 650);
-
+    addAndMakeVisible(cabOnButton);
+    cabOnButton.addListener(this);
     resetImages();
-
-    loadFromFolder();
 }
 
-ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
+void ProteusAudioProcessorEditor::initializeLookAndFeel()
 {
+    // Initialize LookAndFeel for knobs
+    bigKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::big_knob_png, BinaryData::big_knob_pngSize));
+    smallKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::small_knob_png, BinaryData::small_knob_pngSize));
+}
+
+void ProteusAudioProcessorEditor::initializeAttachments()
+{
+    // Initialize and add attachments
+    initializeSliderAttachment(driveSliderAttach, GAIN_ID, odDriveKnob, bigKnobLAF);
+    initializeSliderAttachment(masterSliderAttach, MASTER_ID, odLevelKnob, smallKnobLAF);
+    initializeSliderAttachment(bassSliderAttach, BASS_ID, ampBassKnob, smallKnobLAF);
+    initializeSliderAttachment(midSliderAttach, MID_ID, ampMidKnob, smallKnobLAF);
+    initializeSliderAttachment(trebleSliderAttach, TREBLE_ID, ampTrebleKnob, smallKnobLAF);
+}
+
+void ProteusAudioProcessorEditor::initializeSliderAttachment(std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment>& attachment, const String& paramID, Slider& slider, LookAndFeel& laf)
+{
+    attachment = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, paramID, slider);
+    addAndMakeVisible(slider);
+    slider.setLookAndFeel(&laf);
+    slider.addListener(this);
+    slider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+    slider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
+    slider.setDoubleClickReturnValue(true, 0.5);
+}
+
+void ProteusAudioProcessorEditor::resetLookAndFeel()
+{
+    // Reset LookAndFeel for all knobs
     odDriveKnob.setLookAndFeel(nullptr);
     odLevelKnob.setLookAndFeel(nullptr);
     ampBassKnob.setLookAndFeel(nullptr);
