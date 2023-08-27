@@ -8,12 +8,12 @@
 /**
 */
 class ProteusAudioProcessorEditor  : public AudioProcessorEditor,
-                                     private Button::Listener,
-                                     private Slider::Listener                  
+                                       private Button::Listener,
+                                       private Slider::Listener                  
 {
 public:
-    ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
-        : AudioProcessorEditor (&p), processor (p)
+    ProteusAudioProcessorEditor (ProteusAudioProcessor&);
+    ~ProteusAudioProcessorEditor() override;
     {
         // Initialize UI components here
         addAndMakeVisible(loadButton);
