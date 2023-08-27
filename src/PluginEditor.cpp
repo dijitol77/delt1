@@ -11,14 +11,11 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-//==============================================================================
-ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p)
+// GUIContainer Implementation
+GUIContainer::GUIContainer(ProteusAudioProcessor& p)
+    : processor(p)
 {
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to
-
-    // Overall Widgets
+    // Initialize all the existing GUI elements here
     addAndMakeVisible(loadButton);
     loadButton.setButtonText("LOAD MODEL");
     loadButton.addListener(this);
@@ -150,12 +147,9 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
 #endif
 }
 
-void ProteusAudioProcessorEditor::resized()
+void GUIContainer::resized()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
-
-    //Overall Widgets
+    // Set the bounds of all the existing GUI elements here
     loadButton.setBounds(186, 48, 120, 24);
     modelSelect.setBounds(52, 11, 400, 28);
     //modelLabel.setBounds(197, 2, 90, 25);
@@ -299,10 +293,9 @@ void ProteusAudioProcessorEditor::loadFromFolder()
     }
 }
 
-
-void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
+void GUIContainer::loadButtonClicked()
 {
-    //if (button == &odFootSw) {
+    // Your existing logic for loadButton    //if (button == &odFootSw) {
     //    odFootSwClicked();
     if (button == &loadButton) {
         loadButtonClicked();
@@ -354,6 +347,7 @@ void ProteusAudioProcessorEditor::modelSelectChanged()
 
 void ProteusAudioProcessorEditor::resetImages()
 {
+  
     repaint();
     /*
     if (processor.fw_state == 0) {
