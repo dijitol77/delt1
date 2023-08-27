@@ -1,4 +1,3 @@
-
 /*
   ==============================================================================
 
@@ -20,11 +19,11 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     // editor's size to whatever you need it to
 
     // Overall Widgets
-    leftContainer.addAndMakeVisible(loadButton);
+    addAndMakeVisible(loadButton);
     loadButton.setButtonText("LOAD MODEL");
     loadButton.addListener(this);
 
-    leftContainer.addAndMakeVisible(modelSelect);
+    addAndMakeVisible(modelSelect);
     modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
     modelSelect.setScrollWheelEnabled(true);
     int c = 1;
@@ -51,7 +50,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
         Image(), 1.0, Colours::transparentWhite,
         ImageCache::getFromMemory(BinaryData::footswitch_down_png, BinaryData::footswitch_down_pngSize), 1.0, Colours::transparentWhite,
         0.0);
-    leftContainer.addAndMakeVisible(odFootSw);
+    addAndMakeVisible(odFootSw);
     odFootSw.addListener(this);
     */
 
@@ -60,11 +59,11 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
         Image(), 1.0, Colours::transparentWhite,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
         0.0);
-    leftContainer.addAndMakeVisible(cabOnButton);
+    addAndMakeVisible(cabOnButton);
     cabOnButton.addListener(this);
 
     driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
-    leftContainer.addAndMakeVisible(odDriveKnob);
+    addAndMakeVisible(odDriveKnob);
     odDriveKnob.setLookAndFeel(&bigKnobLAF);
     odDriveKnob.addListener(this);
     odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
@@ -72,7 +71,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     odDriveKnob.setDoubleClickReturnValue(true, 0.5);
 
     masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
-    leftContainer.addAndMakeVisible(odLevelKnob);
+    addAndMakeVisible(odLevelKnob);
     odLevelKnob.setLookAndFeel(&smallKnobLAF);
     odLevelKnob.addListener(this);
     odLevelKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
@@ -80,7 +79,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     odLevelKnob.setDoubleClickReturnValue(true, 0.5);
 
     bassSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob);    	    
-    leftContainer.addAndMakeVisible(ampBassKnob);
+    addAndMakeVisible(ampBassKnob);
     ampBassKnob.setLookAndFeel(&smallKnobLAF);
     ampBassKnob.addListener(this);
     ampBassKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
@@ -88,7 +87,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     ampBassKnob.setDoubleClickReturnValue(true, 0.0);
 
     midSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MID_ID, ampMidKnob);    
-    leftContainer.addAndMakeVisible(ampMidKnob);
+    addAndMakeVisible(ampMidKnob);
     ampMidKnob.setLookAndFeel(&smallKnobLAF);
     ampMidKnob.addListener(this);
     ampMidKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
@@ -96,53 +95,21 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     ampMidKnob.setDoubleClickReturnValue(true, 0.0);
 
     trebleSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, TREBLE_ID, ampTrebleKnob);
-    leftContainer.addAndMakeVisible(ampTrebleKnob);
+    addAndMakeVisible(ampTrebleKnob);
     ampTrebleKnob.setLookAndFeel(&smallKnobLAF);
     ampTrebleKnob.addListener(this);
     ampTrebleKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     ampTrebleKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     ampTrebleKnob.setDoubleClickReturnValue(true, 0.0);
 
-    leftContainer.addAndMakeVisible(versionLabel);
+    addAndMakeVisible(versionLabel);
     versionLabel.setText("v1.2", juce::NotificationType::dontSendNotification);
     versionLabel.setJustificationType(juce::Justification::left);
     versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     versionLabel.setFont(font);
 
     // Size of plugin GUI
-    setSize (1000, 650);  // Double the width
-    
-    // Set bounds and add the left container to the main component
-    addAndMakeVisible(leftContainer);
-    leftContainer.setBounds(0, 0, 500, 650);
-
-    // Set bounds and add the right container to the main component
-    addAndMakeVisible(rightContainer);
-    rightContainer.setBounds(500, 0, 500, 650);
-
- // leftContainer.toBack();
- // rightContainer.toFront();
-
-  // Load the background image for the left container
-leftBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
-leftBackground.setImage(leftBackgroundImage);
-leftBackground.setBounds(leftContainer.getBounds());
-leftContainer.addAndMakeVisible(leftBackground);
-
-// Load the background image for the right container
-rightBackgroundImage = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
-rightBackground.setImage(rightBackgroundImage);
-rightBackground.setBounds(rightContainer.getBounds());
-rightContainer.addAndMakeVisible(rightBackground);
-
-
-leftBackground_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
-leftBackground_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
-rightBackground_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
-rightBackground_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
-
-
-repaint();
+    setSize (500, 650);
 
     resetImages();
 
@@ -158,27 +125,28 @@ ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
     ampTrebleKnob.setLookAndFeel(nullptr);
 }
 
+//==============================================================================
 void ProteusAudioProcessorEditor::paint (Graphics& g)
 {
     // Workaround for graphics on Windows builds (clipping code doesn't work correctly on Windows)
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+    //if (processor.fw_state == 0) {
+    //    g.drawImageAt(background_off, 0, 0);  // Debug Line: Redraw entire background image
     if (processor.fw_state == 1 && processor.conditioned == true) {
-        g.drawImageAt(leftBackground_on, 0, 0);  // Draw for the left container
-        g.drawImageAt(rightBackground_on, 500, 0);  // Draw for the right container
+        g.drawImageAt(background_on, 0, 0);  // Debug Line: Redraw entire background image
     } else if (processor.fw_state == 1 && processor.conditioned == false) {
-        g.drawImageAt(leftBackground_on_blue, 0, 0);  // Draw for the left container
-        g.drawImageAt(rightBackground_on_blue, 500, 0);  // Draw for the right container
+        g.drawImageAt(background_on_blue, 0, 0);  // Debug Line: Redraw entire background image
     }
 #else
-    // Redraw only the clipped part of the background image
+// Redraw only the clipped part of the background image
+
     juce::Rectangle<int> ClipRect = g.getClipBounds();
+    //if (processor.fw_state == 0) {
+    //    g.drawImage(background_off, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
     if (processor.fw_state == 1 && processor.conditioned == true) {
-        g.drawImage(leftBackground_on, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
-        g.drawImage(rightBackground_on, ClipRect.getX() - 500, ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX() - 500, ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
-    } else if (processor.fw_state == 1 && processor.conditioned == false) {
-        g.drawImage(leftBackground_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
-        g.drawImage(rightBackground_on_blue, ClipRect.getX() - 500, ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX() - 500, ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
-    }
+        g.drawImage(background_on, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
+    } else if (processor.fw_state == 1 && processor.conditioned == false)
+        g.drawImage(background_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
 #endif
 }
 
