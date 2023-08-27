@@ -9,16 +9,14 @@
 */
 
 #pragma once
-// #include <juce_gui_basics/layout/juce_FlexBox.h>
 
 #include "../JuceLibraryCode/JuceHeader.h"
-
 #include "PluginProcessor.h"
 #include "myLookAndFeel.h"
 
-
 //==============================================================================
-
+/**
+*/
 class ProteusAudioProcessorEditor  : public AudioProcessorEditor,
                                        private Button::Listener,
                                        private Slider::Listener                  
@@ -38,30 +36,21 @@ public:
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
-    // repsonsive layout
-
-    juce::FlexBox mainFlexBox;
-    juce::FlexBox leftContainerFlexBox;
-    juce::FlexBox rightContainerFlexBox;
-
     ProteusAudioProcessor& processor;
 
     // Declare the left container 
-
     Component leftContainer;
     TextButton loadButton;
-
-    // Declare the right container
-
-    Component rightContainer;   
-    TextButton loadButtonRight;
-
     virtual void buttonClicked(Button* button) override;
 
+    // Declare the right container
+      Component rightContainer;
+      TextButton loadButtonRight;
+    virtual void ButtonRightClicked(Button* button);
+
     bool isValidFormat(File configFile);
-    void loadButtonRightClicked();
     void loadButtonClicked();
-    
+
 
 
 ImageComponent leftBackground;  // For displaying the image in the left container
@@ -112,7 +101,6 @@ Image rightBackground_on_blue;
  
     void odFootSwClicked();
     void modelSelectChanged();
-    void modelSelectChangedRight();
     void cabOnButtonClicked();
 
     bool model_loaded = false;
