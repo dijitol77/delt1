@@ -38,52 +38,30 @@ private:
     // access the processor object that created it.
     ProteusAudioProcessor& processor;
 
-    // Declare the left container 
-    Component leftContainer;
+
     TextButton loadButton;
     virtual void buttonClicked(Button* button) override;
-
-    // Declare the right container
-      Component rightContainer;
-      TextButton loadButtonRight;
-    // virtual void ButtonRightClicked(Button* button);
 
     bool isValidFormat(File configFile);
     void loadButtonClicked();
 
-
-
-ImageComponent leftBackground;  // For displaying the image in the left container
-Image leftBackgroundImage;      // The actual image data for the left container
-
-ImageComponent rightBackground; // For displaying the image in the right container
-Image rightBackgroundImage;     // The actual image data for the right container
-
-
-Image leftBackground_on;
-Image leftBackground_on_blue;
-Image rightBackground_on;
-Image rightBackground_on_blue;
-
-
-
-
-
-    
+    //Image background = ImageCache::getFromMemory(BinaryData::smart_pedal_jpg, BinaryData::smart_pedal_jpgSize);
+    // LookandFeels and Graphics
+    Image background_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
+    Image background_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
+    //Image background_off = ImageCache::getFromMemory(BinaryData::background_off_jpg, BinaryData::background_off_jpgSize);
 
     // Global Widgets
     Label modelLabel;
     Label versionLabel;
 
     ComboBox modelSelect;
-    ComboBox modelSelectRight;
 
     // Overdrive Widgets
     Slider ampBassKnob;
     Slider ampMidKnob;
     Slider ampTrebleKnob;
     Slider odDriveKnob;
-    Slider odDriveKnobRight;
     Slider odLevelKnob;
     //ImageButton odFootSw;
     //ImageButton odLED;
