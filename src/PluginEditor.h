@@ -77,9 +77,9 @@ private:
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
 
-std::unique_ptr<juce::ResizableCornerComponent> resizableCorner;
-std::unique_ptr<juce::ResizableBorderComponent> resizableBorder;
-juce::ComponentBoundsConstrainer constrainer;
+    std::unique_ptr<juce::ResizableCornerComponent> resizableCorner;
+    std::unique_ptr<juce::ResizableBorderComponent> resizableBorder;
+    juce::ComponentBoundsConstrainer constrainer;
 
 
     virtual void sliderValueChanged(Slider* slider) override;
