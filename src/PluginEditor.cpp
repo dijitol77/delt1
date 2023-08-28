@@ -22,10 +22,6 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     addAndMakeVisible(resizableCorner.get());
     addAndMakeVisible(resizableBorder.get());
 
-    // No need for setConstrainer here as it's set in the constructor
-  
-    // ... (rest of your initialization code)
-
     // Overall Widgets
     addAndMakeVisible(loadButton);
     loadButton.setButtonText("LOAD MODEL");
