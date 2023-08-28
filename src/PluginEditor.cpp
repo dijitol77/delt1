@@ -174,19 +174,19 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
 
 void ProteusAudioProcessorEditor::resized()
 {
-    // Your existing code
+    // Your existing FlexBox code
     mainFlexBox.performLayout(getLocalBounds().toFloat());
 
     // Set the bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     resizableBorder->setBounds(0, 0, getWidth(), getHeight());
 
-    // Update the position of the switch
+    // Update the position of the cabOnButton
     cabOnButton.setBounds(20, 20, 50, 50);  // Adjust these numbers as needed
 
-    // Update the position and size of the Load Model button
+    // Update the position and size of the Load Model button and Model Select dropdown
     loadButton.setBounds(20, getHeight() - 50, 100, 30);  // Adjust these numbers as needed
-
+    modelSelect.setBounds(130, getHeight() - 50, 200, 30);  // Adjust these numbers as needed
 }
 
 
