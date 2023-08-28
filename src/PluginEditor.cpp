@@ -21,6 +21,10 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     addAndMakeVisible(resizableCorner.get());
     addAndMakeVisible(resizableBorder.get());
 
+    constrainer.setFixedAspectRatio(700.0 / 200.0);  // Set the fixed aspect ratio
+    setSize(700, 200);  // Set the initial size
+
+
     // Set the constrainer's minimum and maximum sizes
     constrainer.setSizeLimits(500, 650, 2000, 1300);
     setConstrainer(&constrainer);  // Add this line
