@@ -319,10 +319,10 @@ void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInByt
 
     if (xmlState.get() != nullptr)
     {
-        if (xmlState->hasTagName (treeState.state.getType()))
-        {
-            treeState.replaceState (juce::ValueTree::fromXml (*xmlState));
-            fw_state = xmlState->getBoolAttribute ("fw_state");
+      if (xmlState->hasTagName(treeState.state.getType()))
+{
+    treeState.replaceState(juce::ValueTree::fromXml(*xmlState));
+    fw_state = xmlState->getBoolAttribute("fw_state");
             File temp_saved_model = xmlState->getStringAttribute("saved_model");
             saved_model = temp_saved_model;
             cab_state = xmlState->getBoolAttribute ("cab_state");
@@ -330,8 +330,14 @@ void ProteusAudioProcessor::setStateInformation (const void* data, int sizeInByt
             current_model_index = xmlState->getIntAttribute("current_model_index");
             File temp = xmlState->getStringAttribute("folder");
             folder = temp;
-            if (auto* editor = dynamic_cast<ProteusAudioProcessorEditor*> (getActiveEditor()))
-                editor->resetImages();
+               if (auto* editor = dynamic_cast<ProteusAudioProcessorEditor*>(getActiveEditor())) {
+        DBG("Cast successful");
+        editor->resetImages();
+    } else {
+        DBG("Cast failed");
+    }
+
+          
 
             if (saved_model.existsAsFile()) {
                 loadConfig(saved_model);
