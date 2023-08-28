@@ -13,8 +13,8 @@
 
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p),
-      resizableCorner(),  // Corrected: Initialize without arguments
-      resizableBorder()   // Corrected: Initialize without arguments
+      resizableCorner(),  // Initialize without arguments
+      resizableBorder()   // Initialize without arguments
 {
 
     // ... (Same initialization code)
@@ -104,25 +104,27 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     versionLabel.setFont(font);
 
-
-      // Step 3: Initialize FlexBox Properties
+// === START OF UPDATES ===
+    // Initialize FlexBox Properties
     mainFlexBox.flexDirection = juce::FlexBox::Direction::column;
     mainFlexBox.justifyContent = juce::FlexBox::JustifyContent::flexStart;
 
     controlFlexBox.flexDirection = juce::FlexBox::Direction::row;
     controlFlexBox.justifyContent = juce::FlexBox::JustifyContent::spaceAround;
 
-    // ... (rest of your existing code for adding components and setting properties)
-    mainFlexBox.items.add(FlexItem(modelSelect).withFlex(1));
+    // Add Components to controlFlexBox
+    controlFlexBox.items.add(juce::FlexItem(versionLabel).withFlex(1));
+    controlFlexBox.items.add(juce::FlexItem(cabOnButton).withFlex(1));
+    controlFlexBox.items.add(juce::FlexItem(odDriveKnob).withFlex(1));
+    controlFlexBox.items.add(juce::FlexItem(odLevelKnob).withFlex(1));
+    controlFlexBox.items.add(juce::FlexItem(ampBassKnob).withFlex(1));
+    controlFlexBox.items.add(juce::FlexItem(ampMidKnob).withFlex(1));
+    controlFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withFlex(1));
 
-    controlFlexBox.flexDirection = FlexBox::Direction::row;
-    controlFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1));
-    controlFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1));
-    controlFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1));
-    controlFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
-    controlFlexBox.items.add(FlexItem(odLevelKnob).withFlex(1));
-    controlFlexBox.items.add(FlexItem(cabOnButton).withFlex(1));
-
+    // Add Components to mainFlexBox
+    mainFlexBox.items.add(juce::FlexItem(loadButton).withFlex(1));
+    mainFlexBox.items.add(juce::FlexItem(controlFlexBox).withFlex(4));
+    // === END OF UPDATES ===
  
     // Size of plugin GUI
     setSize(500, 650);
@@ -172,23 +174,6 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
 
 void ProteusAudioProcessorEditor::resized()
 {
-    // Clear existing items from mainFlexBox and controlFlexBox
-    mainFlexBox.items.clear();
-    controlFlexBox.items.clear();
-
-    // Add Components to controlFlexBox
-    controlFlexBox.items.add(juce::FlexItem(versionLabel).withFlex(1));
-    controlFlexBox.items.add(juce::FlexItem(cabOnButton).withFlex(1));
-    controlFlexBox.items.add(juce::FlexItem(odDriveKnob).withFlex(1));
-    controlFlexBox.items.add(juce::FlexItem(odLevelKnob).withFlex(1));
-    controlFlexBox.items.add(juce::FlexItem(ampBassKnob).withFlex(1));
-    controlFlexBox.items.add(juce::FlexItem(ampMidKnob).withFlex(1));
-    controlFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withFlex(1));
-
-    // Add Components to mainFlexBox
-    mainFlexBox.items.add(juce::FlexItem(loadButton).withFlex(1));
-    mainFlexBox.items.add(juce::FlexItem(controlFlexBox).withFlex(4));
-
     // Perform the layout for mainFlexBox
     mainFlexBox.performLayout(getLocalBounds().toFloat());
 
@@ -197,6 +182,7 @@ void ProteusAudioProcessorEditor::resized()
     resizableBorder.setBounds(0, 0, getWidth(), getHeight());  // Set the bounds for the resizable border
     constrainer.setSizeLimits(500, 650, 2000, 1300);  // Set min and max sizes
 }
+
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
 {
