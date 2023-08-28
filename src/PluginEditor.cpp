@@ -14,14 +14,17 @@
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p)
 {
-    // Initialize the resizable corner and border
-    resizableCorner = std::make_unique<juce::ResizableCornerComponent>(this, &constrainer);
-    resizableBorder = std::make_unique<juce::ResizableBorderComponent>(this, &constrainer);
 
-    // Add them to the visible components
-    addAndMakeVisible(resizableCorner.get());  // Use get() here
-    addAndMakeVisible(resizableBorder.get());  // Use get() here
+  // In your constructor
+resizableCorner = std::make_unique<juce::ResizableCornerComponent>(this, &constrainer);
+resizableBorder = std::make_unique<juce::ResizableBorderComponent>(this, &constrainer);
 
+addAndMakeVisible(resizableCorner.get());
+addAndMakeVisible(resizableBorder.get());
+
+// Set the constrainer's minimum and maximum sizes
+constrainer.setSizeLimits(500, 650, 2000, 1300);
+    
 
     // Overall Widgets
     addAndMakeVisible(loadButton);
