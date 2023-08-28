@@ -13,8 +13,8 @@
 
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p),
-      resizableCorner(),  // Initialize without arguments
-      resizableBorder()   // Initialize without arguments
+      resizableCorner(&constrainer),  // Initialize with constrainer
+      resizableBorder(&constrainer)   // Initialize with constrainer
 {
 
     // ... (Same initialization code)
