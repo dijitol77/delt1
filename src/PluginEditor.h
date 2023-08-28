@@ -1,7 +1,8 @@
 #pragma once
 
-#include <JuceHeader.h>
+#include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
+#include "myLookAndFeel.h"
 
 class LeftContainer : public Component
 {
