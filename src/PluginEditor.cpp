@@ -17,7 +17,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     // ... (Same initialization code)
     addAndMakeVisible(resizableCorner);
     constrainer.setSizeLimits(500, 650, 2000, 1300);
-    resizableCorner.setBoundsConstrainer(&constrainer);
+    // resizableCorner.setBoundsConstrainer(&constrainer);
 
     // Overall Widgets
     addAndMakeVisible(loadButton);
@@ -158,7 +158,7 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
   // Add the resizable corner and set its constrainer
     addAndMakeVisible(resizableCorner);
     constrainer.setSizeLimits(500, 650, 2000, 1300);  // Set min and max sizes
-    resizableCorner.setConstrainer(&constrainer);
+    // resizableCorner.setConstrainer(&constrainer);
 }
 
 // In your resized() method
