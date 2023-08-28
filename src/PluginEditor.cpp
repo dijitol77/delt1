@@ -12,9 +12,9 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p)
-{
+ProteusAudioProcessorEditor::ProteusAudioProcessorEditor(ProteusAudioProcessor& p)
+    : AudioProcessorEditor(&p), processor(p) {
+    // ... (existing initialization code)
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to
 
@@ -108,6 +108,15 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     versionLabel.setFont(font);
 
+      // Step 3: Initialize FlexBox Properties
+    mainFlexBox.flexDirection = juce::FlexBox::Direction::column;
+    mainFlexBox.justifyContent = juce::FlexBox::JustifyContent::flexStart;
+
+    controlFlexBox.flexDirection = juce::FlexBox::Direction::row;
+    controlFlexBox.justifyContent = juce::FlexBox::JustifyContent::spaceAround;
+
+    // ... (rest of your existing code for adding components and setting properties)
+
     // Size of plugin GUI
     setSize (500, 650);
 
@@ -152,24 +161,43 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
 
 void ProteusAudioProcessorEditor::resized()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
+    // Add Components to FlexBox
+    mainFlexBox.items.clear();
+    controlFlexBox.items.clear();
+
+    // Add Components to FlexBox
+    mainFlexBox.items.add(juce::FlexItem(loadButton).withFlex(1));
+    mainFlexBox.items.add(juce::FlexItem(controlFlexBox).withFlex(4));
+
+    controlFlexBox.items.add(juce::FlexItem(versionLabel).withFlex(1));
+    controlFlexBox.items.add(juce::FlexItem(cabOnButton).withFlex(1));
+    
+    controlFlexBox.items.add(juce::FlexItem(odDriveKnob).withFlex(1));
+    controlFlexBox.items.add(juce::FlexItem(odLevelKnob).withFlex(1));
+
+    controlFlexBox.items.add(juce::FlexItem(ampBassKnob).withFlex(1));
+    controlFlexBox.items.add(juce::FlexItem(ampMidKnob).withFlex(1));
+    controlFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withFlex(1));
+    // Add more components to controlFlexBox if needed
+
+    // Perform the layout
+    mainFlexBox.performLayout(getLocalBounds());
 
     //Overall Widgets
-    loadButton.setBounds(186, 48, 120, 24);
-    modelSelect.setBounds(52, 11, 400, 28);
+   // loadButton.setBounds(186, 48, 120, 24);
+  //  modelSelect.setBounds(52, 11, 400, 28);
     //modelLabel.setBounds(197, 2, 90, 25);
-    versionLabel.setBounds(462, 632, 60, 10);
-    cabOnButton.setBounds(115, 233, 53, 39);
+   // versionLabel.setBounds(462, 632, 60, 10);
+  // cabOnButton.setBounds(115, 233, 53, 39);
 
     // Overdrive Widgets
-    odDriveKnob.setBounds(168, 242, 190, 190);
-    odLevelKnob.setBounds(340, 225, 62, 62);
+  //  odDriveKnob.setBounds(168, 242, 190, 190);
+  //  odLevelKnob.setBounds(340, 225, 62, 62);
     //odFootSw.setBounds(185, 416, 175, 160);
 
-    ampBassKnob.setBounds(113, 131, 62, 62);
-    ampMidKnob.setBounds(227, 131, 62, 62);
-    ampTrebleKnob.setBounds(340, 131, 62, 62);
+    //ampBassKnob.setBounds(113, 131, 62, 62);
+   // ampMidKnob.setBounds(227, 131, 62, 62);
+   // ampTrebleKnob.setBounds(340, 131, 62, 62);
 }
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
