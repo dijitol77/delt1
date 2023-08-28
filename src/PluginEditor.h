@@ -17,9 +17,9 @@
 //==============================================================================
 /**
 */
-class ProteusAudioProcessorEditor  : public AudioProcessorEditor,
-                                       private Button::Listener,
-                                       private Slider::Listener                  
+class ProteusAudioProcessorEditor : public juce::AudioProcessorEditor,
+                                    public Button::Listener,
+                                    public Slider::Listener                  
 {
 public:
     ProteusAudioProcessorEditor (ProteusAudioProcessor&);
@@ -32,6 +32,12 @@ public:
 
     void loadFromFolder();
     void resetImages();
+
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> midSliderAttach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
+    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
 
 private:
     // This reference is provided as a quick way for your editor to
@@ -63,16 +69,16 @@ private:
     Slider ampTrebleKnob;
     Slider odDriveKnob;
     Slider odLevelKnob;
-    //ImageButton odFootSw;
-    //ImageButton odLED;
+
     ImageButton cabOnButton;
-    juce::FlexBox mainFlexBox; // Declare mainFlexBox
-    juce::FlexBox controlFlexBox; // Declare controlFlexBox
-    
-    // LookandFeels 
-    //myLookAndFeel blackHexKnobLAF;
+    juce::FlexBox mainFlexBox;
+    juce::FlexBox controlFlexBox;
+
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
+
+    juce::ResizableCornerComponent resizableCorner;
+    juce::ComponentBoundsConstrainer constrainer;
 
     virtual void sliderValueChanged(Slider* slider) override;
 
@@ -84,12 +90,5 @@ private:
 
     bool model_loaded = false;
 
-public:
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> midSliderAttach;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
- 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
 };
