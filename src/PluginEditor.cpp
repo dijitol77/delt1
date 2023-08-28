@@ -197,10 +197,11 @@ void ProteusAudioProcessorEditor::resized()
     cabOnButton.setBounds(20, 20, 50, 50);  // Adjust these numbers as needed
 
     // Update the position and size of the Load Model button and Model Select dropdown
+    // They are positioned at the bottom of the plugin window
     loadButton.setBounds(20, getHeight() - 50, 100, 30);  // Adjust these numbers as needed
     modelSelect.setBounds(130, getHeight() - 50, 200, 30);  // Adjust these numbers as needed
 
-    // Set bounds for the loaded model label
+    // Update the position of the loadedModelLabel
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);  // Adjust these numbers as needed
 }
 
