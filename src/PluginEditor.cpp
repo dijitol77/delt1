@@ -18,9 +18,9 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     resizableCorner = std::make_unique<juce::ResizableCornerComponent>(this, &constrainer);
     resizableBorder = std::make_unique<juce::ResizableBorderComponent>(this, &constrainer);
 
-    // Add them to the visible components
-    addAndMakeVisible(resizableCorner.get());
-    addAndMakeVisible(resizableBorder.get());
+// Add them to the visible components
+addAndMakeVisible(resizableCorner.get());
+addAndMakeVisible(resizableBorder.get());
 
     // ... (rest of your initialization code)
 
@@ -176,8 +176,8 @@ void ProteusAudioProcessorEditor::resized()
     mainFlexBox.performLayout(getLocalBounds().toFloat());
 
     // Your existing code for setting the resizable corner
-    resizableCorner.setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
-    resizableBorder.setBounds(0, 0, getWidth(), getHeight());  // Set the bounds for the resizable border
+     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
+    resizableBorder->setBounds(0, 0, getWidth(), getHeight());
     constrainer.setSizeLimits(500, 650, 2000, 1300);  // Set min and max sizes
 }
 
