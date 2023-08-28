@@ -24,13 +24,18 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     // Set the constrainer's minimum and maximum sizes
     constrainer.setSizeLimits(500, 650, 2000, 1300);
     setConstrainer(&constrainer);  // Add this line
-    
 
-    // Overall Widgets
+
+  // Add back the Load Model button and Model Select dropdown
     addAndMakeVisible(loadButton);
     loadButton.setButtonText("LOAD MODEL");
     loadButton.addListener(this);
 
+    addAndMakeVisible(modelSelect);
+    modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
+    modelSelect.setScrollWheelEnabled(true);
+    // ... (populate the dropdown)
+  
     addAndMakeVisible(modelSelect);
     modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
     modelSelect.setScrollWheelEnabled(true);
