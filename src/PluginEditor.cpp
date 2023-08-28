@@ -14,7 +14,7 @@
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p)
 {
-    // Existing code...
+        // Existing code...
     resizableCorner = std::make_unique<juce::ResizableCornerComponent>(this, &constrainer);
     resizableBorder = std::make_unique<juce::ResizableBorderComponent>(this, &constrainer);
 
@@ -24,11 +24,10 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     constrainer.setFixedAspectRatio(700.0 / 200.0);  // Set the fixed aspect ratio
     setSize(700, 200);  // Set the initial size
 
-
     // Set the constrainer's minimum and maximum sizes
+    // Minimum size set to 700x200, maximum size set to 1400x400
     constrainer.setSizeLimits(700, 200, 1400, 400);
     setConstrainer(&constrainer);  // Add this line
-
 
   // Add back the Load Model button and Model Select dropdown
     addAndMakeVisible(loadButton);
