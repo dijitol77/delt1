@@ -79,6 +79,7 @@ private:
 
     juce::ComponentBoundsConstrainer constrainer;
     juce::ResizableCornerComponent resizableCorner;
+    juce::ResizableBorderComponent resizableBorder;  // Add this line
 
     virtual void sliderValueChanged(Slider* slider) override;
 
