@@ -12,13 +12,12 @@
 #include "PluginEditor.h"
 
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p)
-// , resizableCorner(&constrainer)
+    : AudioProcessorEditor (&p), processor (p), resizableBorder(&constrainer)
 {
     // ... (Same initialization code)
     addAndMakeVisible(resizableCorner);
     addAndMakeVisible(resizableBorder);  // Add this line
-    resizableBorder.setConstrainer(&constrainer);  // Set the constrainer here
+    resizableBorder(&constrainer);  // Initialize with constrainer
 
     // ... (rest of your existing code)
 
