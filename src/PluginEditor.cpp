@@ -11,9 +11,15 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-//==============================================================================
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor(ProteusAudioProcessor& p)
-    : AudioProcessorEditor(&p), processor(p) {
+    : AudioProcessorEditor(&p), processor(p)
+{
+    // ... existing initialization code ...
+
+    // Add the resizable corner and set its constrainer
+    addAndMakeVisible(resizableCorner);
+    constrainer.setSizeLimits(500, 650, 2000, 1300);  // Set min and max sizes
+    resizableCorner.setConstrainer(&constrainer);
     // ... (existing initialization code)
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to
@@ -135,9 +141,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor(ProteusAudioProcessor& 
 
  
     // Size of plugin GUI
-    setSize (1000, 650);
-
-    resetImages();
+    setSize(500, 650);
 
     loadFromFolder();
 }
@@ -152,7 +156,7 @@ ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
 }
 
 //==============================================================================
-void ProteusAudioProcessorEditor::paint (Graphics& g)
+void ProteusAudioProcessorEditor::paint(Graphics& g)
 {
     // Workaround for graphics on Windows builds (clipping code doesn't work correctly on Windows)
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
@@ -174,8 +178,13 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
     } else if (processor.fw_state == 1 && processor.conditioned == false)
         g.drawImage(background_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
 #endif
+  // Add the resizable corner and set its constrainer
+    addAndMakeVisible(resizableCorner);
+    constrainer.setSizeLimits(500, 650, 2000, 1300);  // Set min and max sizes
+    resizableCorner.setConstrainer(&constrainer);
 }
 
+// In your resized() method
 void ProteusAudioProcessorEditor::resized()
 {
     // Add Components to FlexBox
@@ -393,9 +402,11 @@ void ProteusAudioProcessorEditor::modelSelectChanged()
             processor.saved_model = processor.jsonFiles[selectedFileIndex];
         }
     }
+    resizableCorner.setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     repaint();
 }
 
+// ... (rest of your existing methods)
 
 void ProteusAudioProcessorEditor::resetImages()
 {
