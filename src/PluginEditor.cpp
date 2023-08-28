@@ -162,29 +162,30 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
 }
 
 // In your resized() method
+
 void ProteusAudioProcessorEditor::resized()
 {
-    // Add Components to FlexBox
-    controlFlexBox.items.clear();  // Fixed the typo here
+    // Clear existing items from mainFlexBox and controlFlexBox
+    mainFlexBox.items.clear();
+    controlFlexBox.items.clear();
 
-    // Add Components to FlexBox
-    mainFlexBox.items.add(juce::FlexItem(loadButton).withFlex(1));
-    mainFlexBox.items.add(juce::FlexItem(controlFlexBox).withFlex(4));
-
+    // Add Components to controlFlexBox
     controlFlexBox.items.add(juce::FlexItem(versionLabel).withFlex(1));
     controlFlexBox.items.add(juce::FlexItem(cabOnButton).withFlex(1));
-    
     controlFlexBox.items.add(juce::FlexItem(odDriveKnob).withFlex(1));
     controlFlexBox.items.add(juce::FlexItem(odLevelKnob).withFlex(1));
-
     controlFlexBox.items.add(juce::FlexItem(ampBassKnob).withFlex(1));
     controlFlexBox.items.add(juce::FlexItem(ampMidKnob).withFlex(1));
     controlFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withFlex(1));
-    // Add more components to controlFlexBox if needed
 
-    // Perform the layout
+    // Add Components to mainFlexBox
+    mainFlexBox.items.add(juce::FlexItem(loadButton).withFlex(1));
+    mainFlexBox.items.add(juce::FlexItem(controlFlexBox).withFlex(4));
+
+    // Perform the layout for mainFlexBox
     mainFlexBox.performLayout(getLocalBounds().toFloat());
 
+    // Your existing code for setting the resizable corner
     resizableCorner.setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     constrainer.setSizeLimits(500, 650, 2000, 1300);  // Set min and max sizes
     resizableCorner.setConstrainer(&constrainer);
