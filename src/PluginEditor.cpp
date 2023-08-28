@@ -196,15 +196,16 @@ void ProteusAudioProcessorEditor::resized()
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     resizableBorder->setBounds(0, 0, getWidth(), getHeight());
 
-    // Update the position of the cabOnButton
-    cabOnButton.setBounds(20, 20, 50, 50);  // Adjust these numbers as needed
+    // Move the cabOnButton to the bottom right corner
+    int cabButtonWidth = 50;
+    int cabButtonHeight = 50;
+    cabOnButton.setBounds(getWidth() - cabButtonWidth - 20, getHeight() - cabButtonHeight - 20, cabButtonWidth, cabButtonHeight);
 
     // Update the position and size of the Load Model button and Model Select dropdown
-    // They are positioned at the bottom of the plugin window
     loadButton.setBounds(20, getHeight() - 50, 100, 30);  // Adjust these numbers as needed
     modelSelect.setBounds(130, getHeight() - 50, 200, 30);  // Adjust these numbers as needed
 
-    // Update the position of the loadedModelLabel
+    // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);  // Adjust these numbers as needed
 }
 
