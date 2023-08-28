@@ -28,7 +28,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
 
     // Set the constrainer's minimum and maximum sizes
     // Minimum size set to 700x200, maximum size set to 1400x400
-    constrainer.setSizeLimits(875, 250, 1050, 300);
+    constrainer.setSizeLimits(875, 250, 1400, 400);
     setConstrainer(&constrainer);  
     // Add this line
 
