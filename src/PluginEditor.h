@@ -11,6 +11,9 @@ public:
     void paint(Graphics& g) override;
     void resized() override;
 
+    void loadFromFolder();
+    void resetImages();
+
 private:
     ProteusAudioProcessor& processor;
     TextButton loadButton;
