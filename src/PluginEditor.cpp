@@ -189,7 +189,7 @@ void ProteusAudioProcessorEditor::resized()
     // Your existing code for setting the resizable corner
     resizableCorner.setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     constrainer.setSizeLimits(500, 650, 2000, 1300);  // Set min and max sizes
-    resizableCorner.setConstrainer(&constrainer);
+    // Removed resizableCorner.setConstrainer(&constrainer);
 }
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
