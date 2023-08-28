@@ -11,7 +11,6 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-// In your constructor
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p)
 {
@@ -23,9 +22,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     addAndMakeVisible(resizableCorner.get());
     addAndMakeVisible(resizableBorder.get());
 
-    // Set the constrainer for resizableCorner and resizableBorder
-    resizableCorner->setConstrainer(&constrainer);
-    resizableBorder->setConstrainer(&constrainer);
+    // No need for setConstrainer here as it's set in the constructor
   
     // ... (rest of your initialization code)
 
