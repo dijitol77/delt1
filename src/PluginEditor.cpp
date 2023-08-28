@@ -199,7 +199,7 @@ void ProteusAudioProcessorEditor::resized()
     // Move the cabOnButton to the bottom right corner
     int cabButtonWidth = 50;
     int cabButtonHeight = 50;
-    cabOnButton.setBounds(getWidth() - cabButtonWidth - 20, getHeight() - cabButtonHeight - 20, cabButtonWidth, cabButtonHeight);
+    cabOnButton.setBounds(getWidth() - 70, getHeight() - 70, 50, 50);
 
     // Update the position and size of the Load Model button and Model Select dropdown
     loadButton.setBounds(20, getHeight() - 50, 100, 30);  // Adjust these numbers as needed
