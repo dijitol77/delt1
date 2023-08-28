@@ -181,10 +181,12 @@ void ProteusAudioProcessorEditor::resized()
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     resizableBorder->setBounds(0, 0, getWidth(), getHeight());
 
-    // Resize the "Load Model" button
-    int buttonWidth = getWidth() * 0.2;  // 20% of the window width
-    int buttonHeight = getHeight() * 0.1;  // 10% of the window height
-    loadButton.setBounds((getWidth() - buttonWidth) / 2, (getHeight() - buttonHeight) / 2, buttonWidth, buttonHeight);
+    // Update the position of the switch
+    cabOnButton.setBounds(20, 20, 50, 50);  // Adjust these numbers as needed
+
+    // Update the position and size of the Load Model button
+    loadButton.setBounds(20, getHeight() - 50, 100, 30);  // Adjust these numbers as needed
+
 }
 
 
