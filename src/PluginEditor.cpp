@@ -12,13 +12,12 @@
 #include "PluginEditor.h"
 
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p), resizableCorner(&constrainer) // <-- Add this
+    : AudioProcessorEditor (&p), processor (p), resizableCorner(&constrainer)
 {
-    // ... existing initialization code ...
-
+    // ... (Same initialization code)
     // Add the resizable corner and set its constrainer
     addAndMakeVisible(resizableCorner);
-    constrainer.setSizeLimits(500, 650, 2000, 1300);  // Set min and max sizes
+    constrainer.setSizeLimits(500, 650, 2000, 1300);
     resizableCorner.setConstrainer(&constrainer);
     // ... (existing initialization code)
     // Make sure that before the constructor has finished, you've set the
@@ -224,6 +223,9 @@ void ProteusAudioProcessorEditor::resized()
     //ampBassKnob.setBounds(113, 131, 62, 62);
    // ampMidKnob.setBounds(227, 131, 62, 62);
    // ampTrebleKnob.setBounds(340, 131, 62, 62);
+
+
+    resizableCorner.setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
 }
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
@@ -402,7 +404,6 @@ void ProteusAudioProcessorEditor::modelSelectChanged()
             processor.saved_model = processor.jsonFiles[selectedFileIndex];
         }
     }
-    resizableCorner.setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     repaint();
 }
 
