@@ -12,16 +12,12 @@
 #include "PluginEditor.h"
 
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p), resizableCorner(&constrainer)
+    : AudioProcessorEditor (&p), processor (p), resizableCorner()
 {
     // ... (Same initialization code)
-    // Add the resizable corner and set its constrainer
     addAndMakeVisible(resizableCorner);
     constrainer.setSizeLimits(500, 650, 2000, 1300);
-    resizableCorner.setConstrainer(&constrainer);
-    // ... (existing initialization code)
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to
+    resizableCorner.setBoundsConstrainer(&constrainer);
 
     // Overall Widgets
     addAndMakeVisible(loadButton);
@@ -46,18 +42,6 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     bigKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::big_knob_png, BinaryData::big_knob_pngSize));
     smallKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::small_knob_png, BinaryData::small_knob_pngSize));
 
-    // Pre Amp Pedal Widgets
- 
-    /*
-    // Overdrive
-    odFootSw.setImages(true, true, true,
-        ImageCache::getFromMemory(BinaryData::footswitch_up_png, BinaryData::footswitch_up_pngSize), 1.0, Colours::transparentWhite,
-        Image(), 1.0, Colours::transparentWhite,
-        ImageCache::getFromMemory(BinaryData::footswitch_down_png, BinaryData::footswitch_down_pngSize), 1.0, Colours::transparentWhite,
-        0.0);
-    addAndMakeVisible(odFootSw);
-    odFootSw.addListener(this);
-    */
 
     cabOnButton.setImages(true, true, true,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
@@ -112,12 +96,6 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     versionLabel.setJustificationType(juce::Justification::left);
     versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     versionLabel.setFont(font);
-
-    
-    // Setup FlexBox
-  //  mainFlexBox.flexDirection = FlexBox::Direction::column;
- //   mainFlexBox.items.add(FlexItem(controlFlexBox).withFlex(1));
-  //  mainFlexBox.items.add(FlexItem(loadButton).withFlex(1));
 
 
       // Step 3: Initialize FlexBox Properties
@@ -187,8 +165,7 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
 void ProteusAudioProcessorEditor::resized()
 {
     // Add Components to FlexBox
- //   mainFlexBox.items.clear();
-    controlFlexBox.items.clear();
+    controlFlexBox.items.clear();  // Fixed the typo here
 
     // Add Components to FlexBox
     mainFlexBox.items.add(juce::FlexItem(loadButton).withFlex(1));
@@ -208,24 +185,9 @@ void ProteusAudioProcessorEditor::resized()
     // Perform the layout
     mainFlexBox.performLayout(getLocalBounds().toFloat());
 
-    //Overall Widgets
-   // loadButton.setBounds(186, 48, 120, 24);
-  //  modelSelect.setBounds(52, 11, 400, 28);
-    //modelLabel.setBounds(197, 2, 90, 25);
-   // versionLabel.setBounds(462, 632, 60, 10);
-  // cabOnButton.setBounds(115, 233, 53, 39);
-
-    // Overdrive Widgets
-  //  odDriveKnob.setBounds(168, 242, 190, 190);
-  //  odLevelKnob.setBounds(340, 225, 62, 62);
-    //odFootSw.setBounds(185, 416, 175, 160);
-
-    //ampBassKnob.setBounds(113, 131, 62, 62);
-   // ampMidKnob.setBounds(227, 131, 62, 62);
-   // ampTrebleKnob.setBounds(340, 131, 62, 62);
-
-
     resizableCorner.setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
+    constrainer.setSizeLimits(500, 650, 2000, 1300);  // Set min and max sizes
+    resizableCorner.setConstrainer(&constrainer);
 }
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
@@ -358,8 +320,7 @@ void ProteusAudioProcessorEditor::loadFromFolder()
 
 void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
 {
-    //if (button == &odFootSw) {
-    //    odFootSwClicked();
+ 
     if (button == &loadButton) {
         loadButtonClicked();
     } else if (button == &cabOnButton) {
@@ -368,11 +329,7 @@ void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
 }
 
 void ProteusAudioProcessorEditor::odFootSwClicked() {
-    //if (processor.fw_state == 0)
-    //    processor.fw_state = 1;
-    //else
-    //    processor.fw_state = 0;
-    //resetImages();
+ 
 }
 
 void ProteusAudioProcessorEditor::cabOnButtonClicked() {
@@ -412,22 +369,7 @@ void ProteusAudioProcessorEditor::modelSelectChanged()
 void ProteusAudioProcessorEditor::resetImages()
 {
     repaint();
-    /*
-    if (processor.fw_state == 0) {
-        odFootSw.setImages(true, true, true,
-            ImageCache::getFromMemory(BinaryData::footswitch_up_png, BinaryData::footswitch_up_pngSize), 1.0, Colours::transparentWhite,
-            Image(), 1.0, Colours::transparentWhite,
-            ImageCache::getFromMemory(BinaryData::footswitch_up_png, BinaryData::footswitch_up_pngSize), 1.0, Colours::transparentWhite,
-            0.0);
-    }
-    else {
-        odFootSw.setImages(true, true, true,
-            ImageCache::getFromMemory(BinaryData::footswitch_down_png, BinaryData::footswitch_down_pngSize), 1.0, Colours::transparentWhite,
-            Image(), 1.0, Colours::transparentWhite,
-            ImageCache::getFromMemory(BinaryData::footswitch_down_png, BinaryData::footswitch_down_pngSize), 1.0, Colours::transparentWhite,
-            0.0);
-    }
-    */
+  
     // Set On/Off cab graphic
     if (processor.cab_state == 0) {
         cabOnButton.setImages(true, true, true,
