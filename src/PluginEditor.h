@@ -14,9 +14,13 @@
 #include "PluginProcessor.h"
 #include "myLookAndFeel.h"
 
-class ProteusAudioProcessorEditor : public AudioProcessorEditor,
-                                    private Button::Listener,
-                                    private Slider::Listener {
+//==============================================================================
+/**
+*/
+class ProteusAudioProcessorEditor  : public AudioProcessorEditor,
+                                       private Button::Listener,
+                                       private Slider::Listener                  
+{
 public:
     ProteusAudioProcessorEditor (ProteusAudioProcessor&);
     ~ProteusAudioProcessorEditor();
@@ -62,16 +66,13 @@ private:
     //ImageButton odFootSw;
     //ImageButton odLED;
     ImageButton cabOnButton;
-
+    juce::FlexBox mainFlexBox; // Declare mainFlexBox
+    juce::FlexBox controlFlexBox; // Declare controlFlexBox
     
     // LookandFeels 
     //myLookAndFeel blackHexKnobLAF;
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
-
-    // Step 2: Declare FlexBox Objects
-    juce::FlexBox mainFlexBox;
-    juce::FlexBox controlFlexBox;
 
     virtual void sliderValueChanged(Slider* slider) override;
 
