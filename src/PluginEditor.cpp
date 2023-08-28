@@ -12,7 +12,8 @@
 #include "PluginEditor.h"
 
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p), resizableCorner(&constrainer)
+    : AudioProcessorEditor (&p), processor (p)
+// , resizableCorner(&constrainer)
 {
     // ... (Same initialization code)
     addAndMakeVisible(resizableCorner);
