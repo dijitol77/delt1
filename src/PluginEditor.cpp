@@ -22,11 +22,11 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     addAndMakeVisible(resizableBorder.get());
 
     constrainer.setFixedAspectRatio(700.0 / 200.0);  // Set the fixed aspect ratio
-    setSize(700, 200);  // Set the initial size
+    setSize(875, 250);  // Set the initial size
 
     // Set the constrainer's minimum and maximum sizes
     // Minimum size set to 700x200, maximum size set to 1400x400
-    constrainer.setSizeLimits(700, 200, 1050, 300);
+    constrainer.setSizeLimits(875, 250, 1050, 300);
     setConstrainer(&constrainer);  // Add this line
 
   // Add back the Load Model button and Model Select dropdown
