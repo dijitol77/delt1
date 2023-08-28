@@ -181,8 +181,10 @@ void ProteusAudioProcessorEditor::resized()
     mainFlexBox.performLayout(getLocalBounds().toFloat());
 
     // Your existing code for setting the resizable corner
-     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
-    resizableBorder->setBounds(0, 0, getWidth(), getHeight());
+
+  // Set the bounds for the resizable corner and border
+    resizableCorner.get()->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
+    resizableBorder.get()->setBounds(0, 0, getWidth(), getHeight());
     constrainer.setSizeLimits(500, 650, 2000, 1300);  // Set min and max sizes
 }
 
