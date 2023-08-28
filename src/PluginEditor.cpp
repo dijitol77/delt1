@@ -149,9 +149,9 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
     //if (processor.fw_state == 0) {
     //    g.drawImageAt(background_off, 0, 0);  // Debug Line: Redraw entire background image
     if (processor.fw_state == 1 && processor.conditioned == true) {
-        g.drawImageAt(background_on, 0, 0);  // Debug Line: Redraw entire background image
+       g.drawImageWithin(background_on, 0, 0);  // Debug Line: Redraw entire background image
     } else if (processor.fw_state == 1 && processor.conditioned == false) {
-        g.drawImageAt(background_on_blue, 0, 0);  // Debug Line: Redraw entire background image
+        g.drawImageWithin(background_on_blue, 0, 0);  // Debug Line: Redraw entire background image
     }
 #else
 // Redraw only the clipped part of the background image
@@ -174,13 +174,17 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
 
 void ProteusAudioProcessorEditor::resized()
 {
-    
-   // Your existing code
+    // Your existing code
     mainFlexBox.performLayout(getLocalBounds().toFloat());
 
     // Set the bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     resizableBorder->setBounds(0, 0, getWidth(), getHeight());
+
+    // Resize the "Load Model" button
+    int buttonWidth = getWidth() * 0.2;  // 20% of the window width
+    int buttonHeight = getHeight() * 0.1;  // 10% of the window height
+    loadButton.setBounds((getWidth() - buttonWidth) / 2, (getHeight() - buttonHeight) / 2, buttonWidth, buttonHeight);
 }
 
 
