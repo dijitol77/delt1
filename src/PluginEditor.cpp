@@ -162,8 +162,8 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
         g.drawImage(background_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
 #endif
   // Add the resizable corner and set its constrainer
-    addAndMakeVisible(resizableCorner);
-    addAndMakeVisible(resizableBorder);  // Add this line
+   // addAndMakeVisible(resizableCorner);
+   // addAndMakeVisible(resizableBorder);  // Add this line
     constrainer.setSizeLimits(500, 650, 2000, 1300);  // Set min and max sizes
 }
 
