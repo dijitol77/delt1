@@ -50,6 +50,10 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     float height = font.getHeight();
     font.setHeight(height);
 
+  addAndMakeVisible(loadedModelLabel);
+  loadedModelLabel.setText("No Model Loaded", juce::NotificationType::dontSendNotification);
+  loadedModelLabel.setJustificationType(juce::Justification::centred);
+
     // Set Widget Graphics
     bigKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::big_knob_png, BinaryData::big_knob_pngSize));
     smallKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::small_knob_png, BinaryData::small_knob_pngSize));
@@ -182,7 +186,7 @@ void ProteusAudioProcessorEditor::resized()
     // Your existing FlexBox code
     mainFlexBox.performLayout(getLocalBounds().toFloat());
 
-    // Set the bounds for the resizable corner and border
+    // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     resizableBorder->setBounds(0, 0, getWidth(), getHeight());
 
@@ -192,6 +196,9 @@ void ProteusAudioProcessorEditor::resized()
     // Update the position and size of the Load Model button and Model Select dropdown
     loadButton.setBounds(20, getHeight() - 50, 100, 30);  // Adjust these numbers as needed
     modelSelect.setBounds(130, getHeight() - 50, 200, 30);  // Adjust these numbers as needed
+
+    // Set bounds for the loaded model label
+    loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);  // Adjust these numbers as needed
 }
 
 
