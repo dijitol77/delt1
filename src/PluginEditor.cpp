@@ -15,8 +15,8 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     : AudioProcessorEditor (&p), processor (p),
       resizableCorner(&constrainer),  // Initialize with constrainer
       resizableBorder(&constrainer)   // Initialize with constrainer
-
 {
+
     // ... (Same initialization code)
     addAndMakeVisible(resizableCorner);
     addAndMakeVisible(resizableBorder);  // Add this line
