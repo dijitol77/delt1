@@ -108,6 +108,13 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor(ProteusAudioProcessor& 
     versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     versionLabel.setFont(font);
 
+    
+    // Setup FlexBox
+  //  mainFlexBox.flexDirection = FlexBox::Direction::column;
+ //   mainFlexBox.items.add(FlexItem(controlFlexBox).withFlex(1));
+  //  mainFlexBox.items.add(FlexItem(loadButton).withFlex(1));
+
+
       // Step 3: Initialize FlexBox Properties
     mainFlexBox.flexDirection = juce::FlexBox::Direction::column;
     mainFlexBox.justifyContent = juce::FlexBox::JustifyContent::flexStart;
@@ -116,7 +123,17 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor(ProteusAudioProcessor& 
     controlFlexBox.justifyContent = juce::FlexBox::JustifyContent::spaceAround;
 
     // ... (rest of your existing code for adding components and setting properties)
+    mainFlexBox.items.add(FlexItem(modelSelect).withFlex(1));
 
+    controlFlexBox.flexDirection = FlexBox::Direction::row;
+    controlFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1));
+    controlFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1));
+    controlFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1));
+    controlFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
+    controlFlexBox.items.add(FlexItem(odLevelKnob).withFlex(1));
+    controlFlexBox.items.add(FlexItem(cabOnButton).withFlex(1));
+
+ 
     // Size of plugin GUI
     setSize (500, 650);
 
@@ -162,7 +179,7 @@ void ProteusAudioProcessorEditor::paint (Graphics& g)
 void ProteusAudioProcessorEditor::resized()
 {
     // Add Components to FlexBox
-    mainFlexBox.items.clear();
+ //   mainFlexBox.items.clear();
     controlFlexBox.items.clear();
 
     // Add Components to FlexBox
@@ -181,7 +198,7 @@ void ProteusAudioProcessorEditor::resized()
     // Add more components to controlFlexBox if needed
 
     // Perform the layout
-    mainFlexBox.performLayout(getLocalBounds());
+    mainFlexBox.performLayout(getLocalBounds().toFloat());
 
     //Overall Widgets
    // loadButton.setBounds(186, 48, 120, 24);
