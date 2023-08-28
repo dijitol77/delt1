@@ -19,7 +19,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor(ProteusAudioProcessor& 
     // Add the resizable corner and set its constrainer
     addAndMakeVisible(resizableCorner);
     constrainer.setSizeLimits(500, 650, 2000, 1300);  // Set min and max sizes
-    resizableCorner.setConstrainer(&constrainer);
+   // resizableCorner.setConstrainer(&constrainer);
     // ... (existing initialization code)
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to
