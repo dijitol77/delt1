@@ -18,7 +18,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     // ... (Same initialization code)
     addAndMakeVisible(resizableCorner);
     constrainer.setSizeLimits(500, 650, 2000, 1300);
-    // resizableCorner.setBoundsConstrainer(&constrainer);
+    // Removed resizableCorner.setBoundsConstrainer(&constrainer);
 
     // Overall Widgets
     addAndMakeVisible(loadButton);
