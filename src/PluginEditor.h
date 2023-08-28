@@ -77,8 +77,9 @@ private:
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
 
-    juce::ResizableCornerComponent resizableCorner;
     juce::ComponentBoundsConstrainer constrainer;
+    juce::ResizableCornerComponent resizableCorner;
+    
 
     virtual void sliderValueChanged(Slider* slider) override;
 
