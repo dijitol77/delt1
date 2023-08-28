@@ -11,6 +11,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+// In your constructor
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p)
 {
@@ -18,10 +19,14 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     resizableCorner = std::make_unique<juce::ResizableCornerComponent>(this, &constrainer);
     resizableBorder = std::make_unique<juce::ResizableBorderComponent>(this, &constrainer);
 
-// Add them to the visible components
-addAndMakeVisible(resizableCorner.get());
-addAndMakeVisible(resizableBorder.get());
+    // Add them to the visible components
+    addAndMakeVisible(resizableCorner.get());
+    addAndMakeVisible(resizableBorder.get());
 
+    // Set the constrainer for resizableCorner and resizableBorder
+    resizableCorner->setConstrainer(&constrainer);
+    resizableBorder->setConstrainer(&constrainer);
+  
     // ... (rest of your initialization code)
 
     // Overall Widgets
