@@ -73,6 +73,7 @@ private:
     ImageButton cabOnButton;
     juce::FlexBox mainFlexBox;
     juce::FlexBox controlFlexBox;
+    juce::Label loadedModelLabel;  // Add this line
 
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
