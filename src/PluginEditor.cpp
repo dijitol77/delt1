@@ -19,8 +19,9 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     resizableBorder = std::make_unique<juce::ResizableBorderComponent>(this, &constrainer);
 
     // Add them to the visible components
-    addAndMakeVisible(resizableCorner.get());
-    addAndMakeVisible(resizableBorder.get());
+    addAndMakeVisible(resizableCorner.get());  // Use get() here
+    addAndMakeVisible(resizableBorder.get());  // Use get() here
+
 
     // Overall Widgets
     addAndMakeVisible(loadButton);
