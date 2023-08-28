@@ -13,16 +13,18 @@
 
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p),
-      resizableCorner(&constrainer),  // Initialize with constrainer
-      resizableBorder(&constrainer)   // Initialize with constrainer
+      resizableCorner(),  // Corrected: Initialize without arguments
+      resizableBorder()   // Corrected: Initialize without arguments
 {
 
     // ... (Same initialization code)
-    addAndMakeVisible(resizableCorner);
-    addAndMakeVisible(resizableBorder);  // Add this line
-    resizableBorder(&constrainer);  // Initialize with constrainer
+     // Corrected: Set the constrainer for resizableCorner and resizableBorder
+    resizableCorner.setConstrainer(&constrainer);
+    resizableBorder.setConstrainer(&constrainer);
 
-    // ... (rest of your existing code)
+    addAndMakeVisible(resizableCorner);
+    addAndMakeVisible(resizableBorder);
+
 
     // Overall Widgets
     addAndMakeVisible(loadButton);
