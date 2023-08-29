@@ -198,13 +198,6 @@ void ProteusAudioProcessorEditor::resized()
     // Get the total area available
     Rectangle<int> totalArea = getLocalBounds();
 
-    // Explicitly set the bounds for Load Model button and Model Select dropdown
-    loadButton.setBounds(20, 20, 100, 30);  // Top left
-    modelSelect.setBounds(130, 20, 200, 30);  // Top left
-
-    // Explicitly set the bounds for Cab Switch to stay top right
-    cabOnButton.setBounds(getWidth() - 70, 20, 50, 50);  // Top right
-
     // Divide the total area into top, middle, and bottom areas
     auto topArea = totalArea.removeFromTop(totalArea.getHeight() / 3);
     auto middleArea = totalArea.removeFromTop(totalArea.getHeight() / 2);
@@ -218,6 +211,13 @@ void ProteusAudioProcessorEditor::resized()
     topFlexBox.items.add(FlexItem().withFlex(1));  // Placeholder for modelSelect
     topFlexBox.items.add(FlexItem(cabOnButton).withFlex(1));
     topFlexBox.performLayout(topArea.toFloat());
+
+    // Explicitly set the bounds for Load Model button and Model Select dropdown
+    loadButton.setBounds(20, 20, 100, 30);  // Top left
+    modelSelect.setBounds(130, 20, 200, 30);  // Top left
+
+    // Explicitly set the bounds for Cab Switch to stay top right
+    cabOnButton.setBounds(getWidth() - 70, 20, 50, 50);  // Top right
 
     // Middle Container FlexBox for Gain
     FlexBox middleFlexBox;
@@ -243,6 +243,7 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
+
 
 
 
