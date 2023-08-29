@@ -245,16 +245,17 @@ void ProteusAudioProcessorEditor::resized()
     // Layout for Block 3
     block3.setBounds(block3Area);
 
-    // Bottom Container FlexBox for EQ and Level
-FlexBox bottomFlexBox;
-bottomFlexBox.flexDirection = FlexBox::Direction::row;
-bottomFlexBox.justifyContent = FlexBox::JustifyContent::spaceAround;
-bottomFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1));
-bottomFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1));
-bottomFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1));
-bottomFlexBox.items.add(FlexItem(odLevelKnob).withFlex(1));
-bottomFlexBox.performLayout(block1Area.toFloat());  // Layout only in block1Area
-
+   // Bottom Container FlexBox for EQ, Level, and Gain in block1Area
+    FlexBox bottomFlexBox;
+    bottomFlexBox.flexDirection = FlexBox::Direction::row;
+    bottomFlexBox.justifyContent = FlexBox::JustifyContent::spaceAround;
+    bottomFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1));
+    bottomFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1));
+    bottomFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1));
+    bottomFlexBox.items.add(FlexItem(odLevelKnob).withFlex(1));
+    bottomFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));  // Add the gain dial
+    bottomFlexBox.performLayout(block1Area.toFloat());  // Layout only in block1Area
+  
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     resizableBorder->setBounds(0, 0, getWidth(), getHeight());
