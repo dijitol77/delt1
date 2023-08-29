@@ -212,6 +212,18 @@ void ProteusAudioProcessorEditor::resized()
     // Perform layout for EQ FlexBox
     eqFlexBox.performLayout(eqArea);
 
+    // Halve the size of the EQ dials
+    for (auto& item : eqFlexBox.items)
+    {
+        if (auto* comp = item.associatedComponent)
+        {
+            auto bounds = comp->getBounds();
+            bounds.setWidth(bounds.getWidth() / 2);
+            bounds.setHeight(bounds.getHeight() / 2);
+            comp->setBounds(bounds);
+        }
+    }
+
     // Your existing FlexBox code for other elements
     mainFlexBox.performLayout(getLocalBounds().toFloat());
 
