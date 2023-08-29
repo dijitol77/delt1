@@ -32,6 +32,11 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     setConstrainer(&constrainer);  
     // Add this line
 
+    addAndMakeVisible(block1);
+    addAndMakeVisible(block2);
+    addAndMakeVisible(block3);
+
+
  
    // Debugging for Load Model Button
     addAndMakeVisible(loadButton);
@@ -226,15 +231,29 @@ void ProteusAudioProcessorEditor::resized()
     middleFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
     middleFlexBox.performLayout(middleArea.toFloat());
 
+   // Divide the bottom area into three blocks
+    auto block1Area = bottomArea.removeFromLeft(bottomArea.getWidth() / 3);
+    auto block2Area = bottomArea.removeFromLeft(bottomArea.getWidth() / 2);
+    auto block3Area = bottomArea;
+
+    // Layout for Block 1
+    block1.setBounds(block1Area);
+
+    // Layout for Block 2
+    block2.setBounds(block2Area);
+
+    // Layout for Block 3
+    block3.setBounds(block3Area);
+
     // Bottom Container FlexBox for EQ and Level
-    FlexBox bottomFlexBox;
-    bottomFlexBox.flexDirection = FlexBox::Direction::row;
-    bottomFlexBox.justifyContent = FlexBox::JustifyContent::spaceAround;
-    bottomFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1));
-    bottomFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1));
-    bottomFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1));
-    bottomFlexBox.items.add(FlexItem(odLevelKnob).withFlex(1));
-    bottomFlexBox.performLayout(bottomArea.toFloat());
+FlexBox bottomFlexBox;
+bottomFlexBox.flexDirection = FlexBox::Direction::row;
+bottomFlexBox.justifyContent = FlexBox::JustifyContent::spaceAround;
+bottomFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1));
+bottomFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1));
+bottomFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1));
+bottomFlexBox.items.add(FlexItem(odLevelKnob).withFlex(1));
+bottomFlexBox.performLayout(block1Area.toFloat());  // Layout only in block1Area
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
@@ -242,6 +261,7 @@ void ProteusAudioProcessorEditor::resized()
 
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
+
 }
 
 
