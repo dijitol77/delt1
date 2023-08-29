@@ -195,6 +195,10 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
 
 void ProteusAudioProcessorEditor::resized()
 {
+
+  // Log the dimensions of the parent component
+    DBG("Parent Width: " + String(getWidth()) + ", Parent Height: " + String(getHeight()));
+
     // Your existing FlexBox code
     mainFlexBox.performLayout(getLocalBounds().toFloat());
 
