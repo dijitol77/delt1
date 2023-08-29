@@ -58,16 +58,16 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     font.setHeight(height);
 
   // Debugging for Switch
- //   cabOnButton.setImages(true, true, true,
- //       ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-  //      Image(), 1.0, Colours::transparentWhite,
- //       ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
- //       0.0);
- //   addAndMakeVisible(cabOnButton);
- //   cabOnButton.addListener(this);
- //   cabOnButton.toFront(true);
- //   cabOnButton.setColour(juce::TextButton::buttonColourId, juce::Colours::green); // Change color for visibility
- //   cabOnButton.repaint();
+   cabOnButton.setImages(true, true, true,
+       ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
+      Image(), 1.0, Colours::transparentWhite,
+        ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
+       0.0);
+    addAndMakeVisible(cabOnButton);
+    cabOnButton.addListener(this);
+   cabOnButton.toFront(true);
+   cabOnButton.setColour(juce::TextButton::buttonColourId, juce::Colours::green); // Change color for visibility
+   cabOnButton.repaint();
 
  // addAndMakeVisible(loadedModelLabel);
  // loadedModelLabel.setText("No Model Loaded", juce::NotificationType::dontSendNotification);
