@@ -195,52 +195,43 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
 
 void ProteusAudioProcessorEditor::resized()
 {
-    // Create a FlexBox for EQ dials
-    FlexBox eqFlexBox;
-    eqFlexBox.flexDirection = FlexBox::Direction::row;
-    eqFlexBox.justifyContent = FlexBox::JustifyContent::center;
-    eqFlexBox.alignItems = FlexBox::AlignItems::center;
+    // Top Container FlexBox for Load Model, Model Select Dropdown, and Cab Switch
+    FlexBox topFlexBox;
+    topFlexBox.flexDirection = FlexBox::Direction::row;
+    topFlexBox.justifyContent = FlexBox::JustifyContent::spaceBetween;
+    topFlexBox.items.add(FlexItem(loadButton).withFlex(1));
+    topFlexBox.items.add(FlexItem(modelSelect).withFlex(1));
+    topFlexBox.items.add(FlexItem(cabOnButton).withFlex(1));
+    auto topArea = getLocalBounds().removeFromTop(100).toFloat();  // Adjust the 100 to your needs
+    topFlexBox.performLayout(topArea);
 
-    // Add EQ dials to the FlexBox
-    eqFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1));
-    eqFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1));
-    eqFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1));
+    // Middle Container FlexBox for Gain
+    FlexBox middleFlexBox;
+    middleFlexBox.flexDirection = FlexBox::Direction::row;
+    middleFlexBox.justifyContent = FlexBox::JustifyContent::center;
+    middleFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
+    auto middleArea = getLocalBounds().removeFromTop(100).toFloat();  // Adjust the 100 to your needs
+    middleFlexBox.performLayout(middleArea);
 
-    // Calculate the area where the EQ FlexBox should be placed
-    auto eqArea = getLocalBounds().removeFromBottom(100).toFloat();  // Adjust the 100 to your needs
-
-    // Perform layout for EQ FlexBox
-    eqFlexBox.performLayout(eqArea);
-
-    // Halve the size of the EQ dials
-    for (auto& item : eqFlexBox.items)
-    {
-        if (auto* comp = item.associatedComponent)
-        {
-            auto bounds = comp->getBounds();
-            bounds.setWidth(bounds.getWidth() / 2);
-            bounds.setHeight(bounds.getHeight() / 2);
-            comp->setBounds(bounds);
-        }
-    }
-
-    // Your existing FlexBox code for other elements
-    mainFlexBox.performLayout(getLocalBounds().toFloat());
+    // Bottom Container FlexBox for EQ and Volume
+    FlexBox bottomFlexBox;
+    bottomFlexBox.flexDirection = FlexBox::Direction::row;
+    bottomFlexBox.justifyContent = FlexBox::JustifyContent::spaceAround;
+    bottomFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1));
+    bottomFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1));
+    bottomFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1));
+    bottomFlexBox.items.add(FlexItem(volumeKnob).withFlex(1));  // Assuming volumeKnob is your volume control
+    auto bottomArea = getLocalBounds().removeFromTop(100).toFloat();  // Adjust the 100 to your needs
+    bottomFlexBox.performLayout(bottomArea);
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     resizableBorder->setBounds(0, 0, getWidth(), getHeight());
 
-    // Move the cabOnButton to the top right corner
-    cabOnButton.setBounds(getWidth() - 70, 20, 50, 50);  // Moved to top right
-
-    // Update the position and size of the Load Model button and Model Select dropdown
-    loadButton.setBounds(20, 20, 100, 30);  // Top left
-    modelSelect.setBounds(130, 20, 200, 30);  // Top left
-
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);  // Adjust these numbers as needed
 }
+
 
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
