@@ -75,6 +75,8 @@ private:
     juce::FlexBox controlFlexBox;
     juce::Label loadedModelLabel;  // Add this line
 
+BlockComponent block1;  // Declare block1 here
+
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
 
