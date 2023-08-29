@@ -42,11 +42,6 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     loadButton.setBounds(20, getHeight() - 50, 100, 30);
     loadButton.repaint();
 
-
-    addAndMakeVisible(modelSelect);
-    modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
-    modelSelect.setScrollWheelEnabled(true);
-    // ... (populate the dropdown)
   
     addAndMakeVisible(modelSelect);
     modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
@@ -213,7 +208,7 @@ void ProteusAudioProcessorEditor::resized()
     cabOnButton.setBounds(getWidth() - 70, getHeight() - 70, 50, 50);
 
     // Update the position and size of the Load Model button and Model Select dropdown
-    loadButton.setBounds(20, getHeight() - 50, 100, 30);  // Adjust these numbers as needed
+    loadButton.setBounds(20, getHeight() - 50, 100, 30);  // Moved to resized()
     modelSelect.setBounds(130, getHeight() - 50, 200, 30);  // Adjust these numbers as needed
 
     // Set bounds for the loaded model label
