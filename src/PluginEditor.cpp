@@ -201,39 +201,32 @@ void ProteusAudioProcessorEditor::resized()
     loadButton.setBounds(20, 20, 100, 30);  // Top left
     modelSelect.setBounds(130, 20, 200, 30);  // Top left
 
-    // Main FlexBox to hold the top, middle, and bottom FlexBoxes
-    FlexBox mainFlexBox;
-    mainFlexBox.flexDirection = FlexBox::Direction::column;
-    mainFlexBox.justifyContent = FlexBox::JustifyContent::spaceBetween;
-
-    // Top FlexBox for Cab Switch
+    // Top Container FlexBox for Cab Switch only
     FlexBox topFlexBox;
     topFlexBox.flexDirection = FlexBox::Direction::row;
     topFlexBox.justifyContent = FlexBox::JustifyContent::flexEnd;
-    topFlexBox.items.add(FlexItem(cabOnButton).withFlex(1).withAlignSelf(FlexItem::AlignSelf::flexStart));
+    topFlexBox.items.add(FlexItem(cabOnButton).withFlex(1));
+    auto topArea = localArea.removeFromTop(100);
+    topFlexBox.performLayout(topArea.toFloat());
 
-    // Middle FlexBox for Gain
+    // Middle Container FlexBox for Gain
     FlexBox middleFlexBox;
     middleFlexBox.flexDirection = FlexBox::Direction::row;
     middleFlexBox.justifyContent = FlexBox::JustifyContent::center;
-    middleFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1).withAlignSelf(FlexItem::AlignSelf::center));
+    middleFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
+    auto middleArea = localArea.removeFromTop(100);
+    middleFlexBox.performLayout(middleArea.toFloat());
 
-    // Bottom FlexBox for EQ and Level
+    // Bottom Container FlexBox for EQ and Level
     FlexBox bottomFlexBox;
     bottomFlexBox.flexDirection = FlexBox::Direction::row;
     bottomFlexBox.justifyContent = FlexBox::JustifyContent::spaceAround;
-    bottomFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1).withAlignSelf(FlexItem::AlignSelf::flexEnd));
-    bottomFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1).withAlignSelf(FlexItem::AlignSelf::flexEnd));
-    bottomFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1).withAlignSelf(FlexItem::AlignSelf::flexEnd));
-    bottomFlexBox.items.add(FlexItem(odLevelKnob).withFlex(1).withAlignSelf(FlexItem::AlignSelf::flexEnd));
-
-    // Add the top, middle, and bottom FlexBoxes to the main FlexBox
-    mainFlexBox.items.add(FlexItem(topFlexBox).withFlex(1));
-    mainFlexBox.items.add(FlexItem(middleFlexBox).withFlex(1));
-    mainFlexBox.items.add(FlexItem(bottomFlexBox).withFlex(1));
-
-    // Perform layout
-    mainFlexBox.performLayout(localArea.toFloat());
+    bottomFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1));
+    bottomFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1));
+    bottomFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1));
+    bottomFlexBox.items.add(FlexItem(odLevelKnob).withFlex(1));
+    auto bottomArea = localArea.removeFromTop(100);
+    bottomFlexBox.performLayout(bottomArea.toFloat());
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
