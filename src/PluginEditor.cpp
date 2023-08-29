@@ -62,15 +62,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     float height = font.getHeight();
     font.setHeight(height);
 
- // addAndMakeVisible(loadedModelLabel);
- // loadedModelLabel.setText("No Model Loaded", juce::NotificationType::dontSendNotification);
- // loadedModelLabel.setJustificationType(juce::Justification::centred);
-
-    // Set Widget Graphics
-    bigKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::big_knob_png, BinaryData::big_knob_pngSize));
-    smallKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::small_knob_png, BinaryData::small_knob_pngSize));
-
-   // Debugging for Switch   
+  // Debugging for Switch
     cabOnButton.setImages(true, true, true,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
         Image(), 1.0, Colours::transparentWhite,
@@ -80,7 +72,17 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     cabOnButton.addListener(this);
     cabOnButton.toFront(true);
     cabOnButton.setColour(juce::TextButton::buttonColourId, juce::Colours::green); // Change color for visibility
-    cabOnButton.repaint();  // <-- Added missing semicolon here
+    cabOnButton.repaint();
+
+ // addAndMakeVisible(loadedModelLabel);
+ // loadedModelLabel.setText("No Model Loaded", juce::NotificationType::dontSendNotification);
+ // loadedModelLabel.setJustificationType(juce::Justification::centred);
+
+    // Set Widget Graphics
+    bigKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::big_knob_png, BinaryData::big_knob_pngSize));
+    smallKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::small_knob_png, BinaryData::small_knob_pngSize));
+
+  
   
     driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
     addAndMakeVisible(odDriveKnob);
