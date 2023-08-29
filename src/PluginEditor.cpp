@@ -32,12 +32,13 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     setConstrainer(&constrainer);  
     // Add this line
 
-  // Add back the Load Model button and Model Select dropdown
+ 
+    // Add back the Load Model button and Model Select dropdown
     addAndMakeVisible(loadButton);
     loadButton.setButtonText("LOAD MODEL");
     loadButton.addListener(this);
 
-   // Debugging Step 1: Bring the button to the front
+    // Debugging Step 1: Bring the button to the front
     loadButton.toFront(true);
 
     // Debugging Step 2: Change the button's color for visibility
@@ -45,7 +46,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
 
     // ... (existing code)
 
-    // Debugging Step 5: Force a repaint after setting the bounds
+    // Debugging Step 3: Force a repaint after setting the bounds
     loadButton.setBounds(20, getHeight() - 50, 100, 30);
     loadButton.repaint();
 
