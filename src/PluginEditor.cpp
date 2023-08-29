@@ -224,7 +224,7 @@ void ProteusAudioProcessorEditor::resized()
     auto block3Area = bottomArea;
 
     // Layout for Block 1
-    block1.resized(block1Area);  // Assuming block1 is an instance of BlockComponent
+    block1.setBounds(block1Area);  // Correct  // Assuming block1 is an instance of BlockComponent
 
     // Layout for Block 2 (currently empty)
     // block2.resized(block2Area);  // Uncomment this when you have block2 implemented
