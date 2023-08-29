@@ -33,20 +33,12 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     // Add this line
 
  
-    // Add back the Load Model button and Model Select dropdown
+   // Debugging for Load Model Button
     addAndMakeVisible(loadButton);
     loadButton.setButtonText("LOAD MODEL");
     loadButton.addListener(this);
-
-    // Debugging Step 1: Bring the button to the front
     loadButton.toFront(true);
-
-    // Debugging Step 2: Change the button's color for visibility
     loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
-
-    // ... (existing code)
-
-    // Debugging Step 3: Force a repaint after setting the bounds
     loadButton.setBounds(20, getHeight() - 50, 100, 30);
     loadButton.repaint();
 
@@ -78,7 +70,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     bigKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::big_knob_png, BinaryData::big_knob_pngSize));
     smallKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::small_knob_png, BinaryData::small_knob_pngSize));
 
-
+   // Debugging for Switch   
     cabOnButton.setImages(true, true, true,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
         Image(), 1.0, Colours::transparentWhite,
@@ -86,7 +78,10 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
         0.0);
     addAndMakeVisible(cabOnButton);
     cabOnButton.addListener(this);
-
+    cabOnButton.toFront(true);
+    cabOnButton.setColour(juce::TextButton::buttonColourId, juce::Colours::green); // Change color for visibility
+    cabOnButton.repaint();  // <-- Added missing semicolon here
+  
     driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
     addAndMakeVisible(odDriveKnob);
     odDriveKnob.setLookAndFeel(&bigKnobLAF);
