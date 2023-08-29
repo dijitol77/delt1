@@ -224,13 +224,14 @@ void ProteusAudioProcessorEditor::resized()
     auto block3Area = bottomArea;
 
     // Layout for Block 1
-    block1.setBounds(block1Area);  // Correct  // Assuming block1 is an instance of BlockComponent
+    block1.setBounds(block1Area);  // Corrected line
 
     // Layout for Block 2 (currently empty)
-    // block2.resized(block2Area);  // Uncomment this when you have block2 implemented
+    // block2.setBounds(block2Area);  // Uncomment this when you have block2 implemented
 
     // Layout for Block 3 (currently empty)
-    // block3.resized(block3Area);  // Uncomment this when you have block3 implemented
+    // block3.setBounds(block3Area);  // Uncomment this when you have block3 implemented
+
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
