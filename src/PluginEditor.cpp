@@ -217,16 +217,16 @@ void ProteusAudioProcessorEditor::resized()
     auto middleArea = localArea.removeFromTop(100);
     middleFlexBox.performLayout(middleArea.toFloat());
 
-   // Bottom FlexBox for EQ and Level
+    // Bottom Container FlexBox for EQ and Level
     FlexBox bottomFlexBox;
     bottomFlexBox.flexDirection = FlexBox::Direction::row;
     bottomFlexBox.justifyContent = FlexBox::JustifyContent::spaceAround;
-    bottomFlexBox.alignItems = FlexBox::AlignItems::flexEnd;  // This line ensures that items stick to the bottom
     bottomFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1));
     bottomFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1));
     bottomFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1));
     bottomFlexBox.items.add(FlexItem(odLevelKnob).withFlex(1));
-
+    auto bottomArea = localArea;
+    bottomFlexBox.performLayout(bottomArea.toFloat());
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
@@ -235,6 +235,7 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
+
 
 
 
