@@ -210,6 +210,15 @@ void ProteusAudioProcessorEditor::resized()
     auto middleArea = totalArea.removeFromTop(totalArea.getHeight() / 2);
     auto bottomArea = totalArea;
 
+    // Top Container FlexBox for Cab Switch, Load Model button, and Model Select dropdown
+    FlexBox topFlexBox;
+    topFlexBox.flexDirection = FlexBox::Direction::row;
+    topFlexBox.justifyContent = FlexBox::JustifyContent::spaceBetween;
+    topFlexBox.items.add(FlexItem().withFlex(1).withAssociatedComponent(nullptr));  // Placeholder for loadButton
+    topFlexBox.items.add(FlexItem().withFlex(1).withAssociatedComponent(nullptr));  // Placeholder for modelSelect
+    topFlexBox.items.add(FlexItem(cabOnButton).withFlex(1));
+    topFlexBox.performLayout(topArea.toFloat());
+
     // Middle Container FlexBox for Gain
     FlexBox middleFlexBox;
     middleFlexBox.flexDirection = FlexBox::Direction::row;
@@ -234,6 +243,7 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
+
 
 
 
