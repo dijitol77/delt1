@@ -217,6 +217,26 @@ void ProteusAudioProcessorEditor::resized()
     ampMidKnob.setBounds(gainX + eqWidth + 20, eqY, eqWidth, eqHeight);  // 20 pixels to the right of Bass
     ampTrebleKnob.setBounds(gainX + 2 * (eqWidth + 20), eqY, eqWidth, eqHeight);  // 20 pixels to the right of Mid
 
+  // Debugging: Log the position and size of the EQ dials
+    DBG("Bass Knob - X: " + String(ampBassKnob.getX()) + ", Y: " + String(ampBassKnob.getY()) + ", Width: " + String(ampBassKnob.getWidth()) + ", Height: " + String(ampBassKnob.getHeight()));
+    DBG("Mid Knob - X: " + String(ampMidKnob.getX()) + ", Y: " + String(ampMidKnob.getY()) + ", Width: " + String(ampMidKnob.getWidth()) + ", Height: " + String(ampMidKnob.getHeight()));
+    DBG("Treble Knob - X: " + String(ampTrebleKnob.getX()) + ", Y: " + String(ampTrebleKnob.getY()) + ", Width: " + String(ampTrebleKnob.getWidth()) + ", Height: " + String(ampTrebleKnob.getHeight()));
+
+    // Make sure the EQ dials are visible and brought to the front
+    ampBassKnob.setVisible(true);
+    ampBassKnob.toFront(false);
+
+    ampMidKnob.setVisible(true);
+    ampMidKnob.toFront(false);
+
+    ampTrebleKnob.setVisible(true);
+    ampTrebleKnob.toFront(false);
+
+    // Force a repaint
+    ampBassKnob.repaint();
+    ampMidKnob.repaint();
+    ampTrebleKnob.repaint();
+
     // Move the cabOnButton to the top right corner
     cabOnButton.setBounds(getWidth() - 70, 20, 50, 50);  // Moved to top right
 
