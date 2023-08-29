@@ -198,13 +198,6 @@ void ProteusAudioProcessorEditor::resized()
     // Get the total area available
     juce::Rectangle<int> totalArea = getLocalBounds();
 
-    // Explicitly set the bounds for Load Model button and Model Select dropdown
-    loadButton.setBounds(20, 20, 100, 30);  // Top left
-    modelSelect.setBounds(130, 20, 200, 30);  // Top left
-
-    // Explicitly set the bounds for Cab Switch to stay top right
-    cabOnButton.setBounds(getWidth() - 70, 20, 50, 50);  // Top right
-
     // Divide the total area into top and bottom areas
     auto topArea = totalArea.removeFromTop(totalArea.getHeight() / 3);
     auto bottomArea = totalArea;
@@ -213,8 +206,8 @@ void ProteusAudioProcessorEditor::resized()
     juce::FlexBox topFlexBox;
     topFlexBox.flexDirection = juce::FlexBox::Direction::row;
     topFlexBox.justifyContent = juce::FlexBox::JustifyContent::spaceBetween;
-    topFlexBox.items.add(juce::FlexItem().withFlex(1));  // Placeholder for loadButton
-    topFlexBox.items.add(juce::FlexItem().withFlex(1));  // Placeholder for modelSelect
+    topFlexBox.items.add(juce::FlexItem(loadButton).withFlex(1));
+    topFlexBox.items.add(juce::FlexItem(modelSelect).withFlex(1));
     topFlexBox.items.add(juce::FlexItem(cabOnButton).withFlex(1));
     topFlexBox.performLayout(topArea.toFloat());
 
@@ -224,14 +217,15 @@ void ProteusAudioProcessorEditor::resized()
     auto block3Area = bottomArea;
 
     // Layout for Block 1
-    block1.setBounds(block1Area);  // Corrected line
+    block1.setBounds(block1Area);
 
     // Layout for Block 2 (currently empty)
-    // block2.setBounds(block2Area);  // Uncomment this when you have block2 implemented
+    // Uncomment this when you have block2 implemented
+    // block2.setBounds(block2Area);
 
     // Layout for Block 3 (currently empty)
-    // block3.setBounds(block3Area);  // Uncomment this when you have block3 implemented
-
+    // Uncomment this when you have block3 implemented
+    // block3.setBounds(block3Area);
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
@@ -240,6 +234,7 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
+
 
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
