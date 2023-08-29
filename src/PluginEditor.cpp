@@ -214,8 +214,8 @@ void ProteusAudioProcessorEditor::resized()
     FlexBox topFlexBox;
     topFlexBox.flexDirection = FlexBox::Direction::row;
     topFlexBox.justifyContent = FlexBox::JustifyContent::spaceBetween;
-    topFlexBox.items.add(FlexItem().withFlex(1).withAssociatedComponent(nullptr));  // Placeholder for loadButton
-    topFlexBox.items.add(FlexItem().withFlex(1).withAssociatedComponent(nullptr));  // Placeholder for modelSelect
+    topFlexBox.items.add(FlexItem().withFlex(1));  // Placeholder for loadButton
+    topFlexBox.items.add(FlexItem().withFlex(1));  // Placeholder for modelSelect
     topFlexBox.items.add(FlexItem(cabOnButton).withFlex(1));
     topFlexBox.performLayout(topArea.toFloat());
 
