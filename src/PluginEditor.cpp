@@ -219,7 +219,6 @@ void ProteusAudioProcessorEditor::resized()
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);  // Adjust these numbers as needed
 }
 
-
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
 {
     // Read in the JSON file
