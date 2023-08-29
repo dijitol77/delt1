@@ -198,39 +198,34 @@ void ProteusAudioProcessorEditor::resized()
     Rectangle<int> localArea = getLocalBounds();
 
     // Explicitly set the bounds for Load Model button and Model Select dropdown
-    loadButton.setBounds(20, 20, 100, 30);  // Top left
-    modelSelect.setBounds(130, 20, 200, 30);  // Top left
-
-    // Calculate the height for each FlexBox area
-    int topHeight = 100;
-    int middleHeight = 100;
-    int bottomHeight = localArea.getHeight() - topHeight - middleHeight;
+    loadButton.setBounds(20, 20, 100, 30);
+    modelSelect.setBounds(130, 20, 200, 30);
 
     // Top Container FlexBox for Cab Switch only
     FlexBox topFlexBox;
     topFlexBox.flexDirection = FlexBox::Direction::row;
     topFlexBox.justifyContent = FlexBox::JustifyContent::flexEnd;
-    topFlexBox.items.add(FlexItem(cabOnButton).withFlex(1));
-    auto topArea = localArea.removeFromTop(topHeight);
+    topFlexBox.items.add(FlexItem(cabOnButton).withFlex(1).withFlexGrow(1).withFlexShrink(1));
+    auto topArea = localArea.removeFromTop(100);
     topFlexBox.performLayout(topArea.toFloat());
 
     // Middle Container FlexBox for Gain
     FlexBox middleFlexBox;
     middleFlexBox.flexDirection = FlexBox::Direction::row;
     middleFlexBox.justifyContent = FlexBox::JustifyContent::center;
-    middleFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
-    auto middleArea = localArea.removeFromTop(middleHeight);
+    middleFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1).withFlexGrow(1).withFlexShrink(1));
+    auto middleArea = localArea.removeFromTop(100);
     middleFlexBox.performLayout(middleArea.toFloat());
 
     // Bottom Container FlexBox for EQ and Level
     FlexBox bottomFlexBox;
     bottomFlexBox.flexDirection = FlexBox::Direction::row;
     bottomFlexBox.justifyContent = FlexBox::JustifyContent::spaceAround;
-    bottomFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1));
-    bottomFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1));
-    bottomFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1));
-    bottomFlexBox.items.add(FlexItem(odLevelKnob).withFlex(1));
-    auto bottomArea = localArea.removeFromTop(bottomHeight);
+    bottomFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1).withFlexGrow(1).withFlexShrink(1));
+    bottomFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1).withFlexGrow(1).withFlexShrink(1));
+    bottomFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1).withFlexGrow(1).withFlexShrink(1));
+    bottomFlexBox.items.add(FlexItem(odLevelKnob).withFlex(1).withFlexGrow(1).withFlexShrink(1));
+    auto bottomArea = localArea.removeFromTop(100);
     bottomFlexBox.performLayout(bottomArea.toFloat());
 
     // Set bounds for the resizable corner and border
@@ -240,6 +235,7 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
+
 
 
 
