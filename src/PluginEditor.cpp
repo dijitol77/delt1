@@ -198,28 +198,17 @@ void ProteusAudioProcessorEditor::resized()
     Rectangle<int> localArea = getLocalBounds();
 
     // Explicitly set the bounds for Load Model button and Model Select dropdown
-    loadButton.setBounds(20, 20, 100, 30);
-    modelSelect.setBounds(130, 20, 200, 30);
+    loadButton.setBounds(20, 20, 100, 30);  // Top left
+    modelSelect.setBounds(130, 20, 200, 30);  // Top left
 
-    // Top Container FlexBox for Cab Switch only
-    FlexBox topFlexBox;
-    topFlexBox.flexDirection = FlexBox::Direction::row;
-    topFlexBox.justifyContent = FlexBox::JustifyContent::flexEnd;
-    FlexItem cabItem(cabOnButton);
-    cabItem.flexGrow = 1;
-    cabItem.flexShrink = 1;
-    topFlexBox.items.add(cabItem);
-    auto topArea = localArea.removeFromTop(100);
-    topFlexBox.performLayout(topArea.toFloat());
+    // Explicitly set the bounds for Cab Switch to stay top right
+    cabOnButton.setBounds(getWidth() - 70, 20, 50, 50);  // Top right
 
     // Middle Container FlexBox for Gain
     FlexBox middleFlexBox;
     middleFlexBox.flexDirection = FlexBox::Direction::row;
     middleFlexBox.justifyContent = FlexBox::JustifyContent::center;
-    FlexItem gainItem(odDriveKnob);
-    gainItem.flexGrow = 1;
-    gainItem.flexShrink = 1;
-    middleFlexBox.items.add(gainItem);
+    middleFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
     auto middleArea = localArea.removeFromTop(100);
     middleFlexBox.performLayout(middleArea.toFloat());
 
@@ -227,10 +216,10 @@ void ProteusAudioProcessorEditor::resized()
     FlexBox bottomFlexBox;
     bottomFlexBox.flexDirection = FlexBox::Direction::row;
     bottomFlexBox.justifyContent = FlexBox::JustifyContent::spaceAround;
-    FlexItem bassItem(ampBassKnob), midItem(ampMidKnob), trebleItem(ampTrebleKnob), levelItem(odLevelKnob);
-    bassItem.flexGrow = midItem.flexGrow = trebleItem.flexGrow = levelItem.flexGrow = 1;
-    bassItem.flexShrink = midItem.flexShrink = trebleItem.flexShrink = levelItem.flexShrink = 1;
-    bottomFlexBox.items.addArray({bassItem, midItem, trebleItem, levelItem});
+    bottomFlexBox.items.add(FlexItem(ampBassKnob).withFlex(0.5));
+    bottomFlexBox.items.add(FlexItem(ampMidKnob).withFlex(0.5));
+    bottomFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(0.5));
+    bottomFlexBox.items.add(FlexItem(odLevelKnob).withFlex(0.5));
     auto bottomArea = localArea.removeFromTop(100);
     bottomFlexBox.performLayout(bottomArea.toFloat());
 
@@ -241,9 +230,6 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
-
-
-
 
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
