@@ -205,7 +205,10 @@ void ProteusAudioProcessorEditor::resized()
     FlexBox topFlexBox;
     topFlexBox.flexDirection = FlexBox::Direction::row;
     topFlexBox.justifyContent = FlexBox::JustifyContent::flexEnd;
-    topFlexBox.items.add(FlexItem(cabOnButton).withFlex(1).withFlexGrow(1).withFlexShrink(1));
+    FlexItem cabItem(cabOnButton);
+    cabItem.flexGrow = 1;
+    cabItem.flexShrink = 1;
+    topFlexBox.items.add(cabItem);
     auto topArea = localArea.removeFromTop(100);
     topFlexBox.performLayout(topArea.toFloat());
 
@@ -213,7 +216,10 @@ void ProteusAudioProcessorEditor::resized()
     FlexBox middleFlexBox;
     middleFlexBox.flexDirection = FlexBox::Direction::row;
     middleFlexBox.justifyContent = FlexBox::JustifyContent::center;
-    middleFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1).withFlexGrow(1).withFlexShrink(1));
+    FlexItem gainItem(odDriveKnob);
+    gainItem.flexGrow = 1;
+    gainItem.flexShrink = 1;
+    middleFlexBox.items.add(gainItem);
     auto middleArea = localArea.removeFromTop(100);
     middleFlexBox.performLayout(middleArea.toFloat());
 
@@ -221,10 +227,10 @@ void ProteusAudioProcessorEditor::resized()
     FlexBox bottomFlexBox;
     bottomFlexBox.flexDirection = FlexBox::Direction::row;
     bottomFlexBox.justifyContent = FlexBox::JustifyContent::spaceAround;
-    bottomFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1).withFlexGrow(1).withFlexShrink(1));
-    bottomFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1).withFlexGrow(1).withFlexShrink(1));
-    bottomFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1).withFlexGrow(1).withFlexShrink(1));
-    bottomFlexBox.items.add(FlexItem(odLevelKnob).withFlex(1).withFlexGrow(1).withFlexShrink(1));
+    FlexItem bassItem(ampBassKnob), midItem(ampMidKnob), trebleItem(ampTrebleKnob), levelItem(odLevelKnob);
+    bassItem.flexGrow = midItem.flexGrow = trebleItem.flexGrow = levelItem.flexGrow = 1;
+    bassItem.flexShrink = midItem.flexShrink = trebleItem.flexShrink = levelItem.flexShrink = 1;
+    bottomFlexBox.items.addArray({bassItem, midItem, trebleItem, levelItem});
     auto bottomArea = localArea.removeFromTop(100);
     bottomFlexBox.performLayout(bottomArea.toFloat());
 
@@ -235,6 +241,7 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
+
 
 
 
