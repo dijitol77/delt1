@@ -213,14 +213,14 @@ void ProteusAudioProcessorEditor::resized()
     auto middleArea = getLocalBounds().removeFromTop(100).toFloat();  // Adjust the 100 to your needs
     middleFlexBox.performLayout(middleArea);
 
-    // Bottom Container FlexBox for EQ and Volume
+    // Bottom Container FlexBox for EQ and Level
     FlexBox bottomFlexBox;
     bottomFlexBox.flexDirection = FlexBox::Direction::row;
     bottomFlexBox.justifyContent = FlexBox::JustifyContent::spaceAround;
     bottomFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1));
     bottomFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1));
     bottomFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1));
-    bottomFlexBox.items.add(FlexItem(odLevelKnob).withFlex(1));  // Assuming volumeKnob is your volume control
+    bottomFlexBox.items.add(FlexItem(odLevelKnob).withFlex(1));  // Added Level knob
     auto bottomArea = getLocalBounds().removeFromTop(100).toFloat();  // Adjust the 100 to your needs
     bottomFlexBox.performLayout(bottomArea);
 
@@ -231,6 +231,7 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);  // Adjust these numbers as needed
 }
+
 
 
 
