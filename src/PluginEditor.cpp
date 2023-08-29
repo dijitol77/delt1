@@ -208,8 +208,8 @@ void ProteusAudioProcessorEditor::resized()
     cabOnButton.setBounds(getWidth() - 70, getHeight() - 70, 50, 50);
 
     // Update the position and size of the Load Model button and Model Select dropdown
-    loadButton.setBounds(20, getHeight() - 50, 100, 30);  // Moved to resized()
-    modelSelect.setBounds(130, getHeight() - 50, 200, 30);  // Adjust these numbers as needed
+    loadButton.setBounds(20, 20, 100, 30);  // Moved to top left
+    modelSelect.setBounds(130, 20, 200, 30);  // Moved to top left
 
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);  // Adjust these numbers as needed
