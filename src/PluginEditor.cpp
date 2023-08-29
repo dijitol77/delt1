@@ -195,51 +195,18 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
 
 void ProteusAudioProcessorEditor::resized()
 {
-
-  // Log the dimensions of the parent component
-    DBG("Parent Width: " + String(getWidth()) + ", Parent Height: " + String(getHeight()));
-
     // Your existing FlexBox code
     mainFlexBox.performLayout(getLocalBounds().toFloat());
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     resizableBorder->setBounds(0, 0, getWidth(), getHeight());
-  
-  // Get the position and size of the Gain (odDriveKnob) dial
-    auto gainX = odDriveKnob.getX();
-    auto gainY = odDriveKnob.getY();
-    auto gainWidth = odDriveKnob.getWidth();
-    auto gainHeight = odDriveKnob.getHeight();
 
-    // Resize EQ dials by 60% and place them underneath the Gain dial
-    int eqWidth = static_cast<int>(gainWidth * 0.6);
-    int eqHeight = static_cast<int>(gainHeight * 0.6);
-    int eqY = gainY + gainHeight + 20;  // 20 pixels below the Gain dial
-
-    ampBassKnob.setBounds(gainX, eqY, eqWidth, eqHeight);
-    ampMidKnob.setBounds(gainX + eqWidth + 20, eqY, eqWidth, eqHeight);  // 20 pixels to the right of Bass
-    ampTrebleKnob.setBounds(gainX + 2 * (eqWidth + 20), eqY, eqWidth, eqHeight);  // 20 pixels to the right of Mid
-
-  // Debugging: Log the position and size of the EQ dials
-    DBG("Bass Knob - X: " + String(ampBassKnob.getX()) + ", Y: " + String(ampBassKnob.getY()) + ", Width: " + String(ampBassKnob.getWidth()) + ", Height: " + String(ampBassKnob.getHeight()));
-    DBG("Mid Knob - X: " + String(ampMidKnob.getX()) + ", Y: " + String(ampMidKnob.getY()) + ", Width: " + String(ampMidKnob.getWidth()) + ", Height: " + String(ampMidKnob.getHeight()));
-    DBG("Treble Knob - X: " + String(ampTrebleKnob.getX()) + ", Y: " + String(ampTrebleKnob.getY()) + ", Width: " + String(ampTrebleKnob.getWidth()) + ", Height: " + String(ampTrebleKnob.getHeight()));
-
-    // Make sure the EQ dials are visible and brought to the front
-    ampBassKnob.setVisible(true);
-    ampBassKnob.toFront(false);
-
-    ampMidKnob.setVisible(true);
-    ampMidKnob.toFront(false);
-
-    ampTrebleKnob.setVisible(true);
-    ampTrebleKnob.toFront(false);
-
-    // Force a repaint
-    ampBassKnob.repaint();
-    ampMidKnob.repaint();
-    ampTrebleKnob.repaint();
+    // Move EQ dials a bit further towards the bottom
+    int newY = 200;  // Adjust this value to move the EQ dials further down
+    ampBassKnob.setBounds(113, newY, 62, 62);
+    ampMidKnob.setBounds(227, newY, 62, 62);
+    ampTrebleKnob.setBounds(340, newY, 62, 62);
 
     // Move the cabOnButton to the top right corner
     cabOnButton.setBounds(getWidth() - 70, 20, 50, 50);  // Moved to top right
@@ -251,6 +218,7 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);  // Adjust these numbers as needed
 }
+
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
 {
