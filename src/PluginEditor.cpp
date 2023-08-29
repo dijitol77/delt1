@@ -201,6 +201,21 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     resizableBorder->setBounds(0, 0, getWidth(), getHeight());
+  
+  // Get the position and size of the Gain (odDriveKnob) dial
+    auto gainX = odDriveKnob.getX();
+    auto gainY = odDriveKnob.getY();
+    auto gainWidth = odDriveKnob.getWidth();
+    auto gainHeight = odDriveKnob.getHeight();
+
+    // Resize EQ dials by 60% and place them underneath the Gain dial
+    int eqWidth = static_cast<int>(gainWidth * 0.6);
+    int eqHeight = static_cast<int>(gainHeight * 0.6);
+    int eqY = gainY + gainHeight + 20;  // 20 pixels below the Gain dial
+
+    ampBassKnob.setBounds(gainX, eqY, eqWidth, eqHeight);
+    ampMidKnob.setBounds(gainX + eqWidth + 20, eqY, eqWidth, eqHeight);  // 20 pixels to the right of Bass
+    ampTrebleKnob.setBounds(gainX + 2 * (eqWidth + 20), eqY, eqWidth, eqHeight);  // 20 pixels to the right of Mid
 
     // Move the cabOnButton to the top right corner
     cabOnButton.setBounds(getWidth() - 70, 20, 50, 50);  // Moved to top right
