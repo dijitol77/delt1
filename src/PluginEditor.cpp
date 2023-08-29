@@ -247,6 +247,7 @@ void ProteusAudioProcessorEditor::resized()
 
 
 
+
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
 {
     // Read in the JSON file
