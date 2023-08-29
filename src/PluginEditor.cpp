@@ -37,6 +37,19 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     loadButton.setButtonText("LOAD MODEL");
     loadButton.addListener(this);
 
+   // Debugging Step 1: Bring the button to the front
+    loadButton.toFront(true);
+
+    // Debugging Step 2: Change the button's color for visibility
+    loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
+
+    // ... (existing code)
+
+    // Debugging Step 5: Force a repaint after setting the bounds
+    loadButton.setBounds(20, getHeight() - 50, 100, 30);
+    loadButton.repaint();
+
+
     addAndMakeVisible(modelSelect);
     modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
     modelSelect.setScrollWheelEnabled(true);
@@ -56,9 +69,9 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     float height = font.getHeight();
     font.setHeight(height);
 
-  addAndMakeVisible(loadedModelLabel);
-  loadedModelLabel.setText("No Model Loaded", juce::NotificationType::dontSendNotification);
-  loadedModelLabel.setJustificationType(juce::Justification::centred);
+ // addAndMakeVisible(loadedModelLabel);
+ // loadedModelLabel.setText("No Model Loaded", juce::NotificationType::dontSendNotification);
+ // loadedModelLabel.setJustificationType(juce::Justification::centred);
 
     // Set Widget Graphics
     bigKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::big_knob_png, BinaryData::big_knob_pngSize));
@@ -244,6 +257,8 @@ bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
 
 void ProteusAudioProcessorEditor::loadButtonClicked()
 { 
+    DBG("loadButtonClicked() called");  // Debugging Step: Log when the function is called
+
     myChooser = std::make_unique<FileChooser> ("Select a folder to load models from",
                                                processor.folder,
                                                "*.json");
@@ -252,12 +267,18 @@ void ProteusAudioProcessorEditor::loadButtonClicked()
  
     myChooser->launchAsync (folderChooserFlags, [this] (const FileChooser& chooser)                
     {
+        DBG("Inside launchAsync()");  // Debugging Step: Log when inside the launchAsync()
+
         if (!chooser.getResult().exists()) {
+                DBG("No result exists");  // Debugging Step: Log when no result exists
                 return;
         }
+
         processor.model_loaded = false;
         Array<File> files;
+
         if (chooser.getResult().existsAsFile()) { // If a file is selected
+            DBG("File selected");  // Debugging Step: Log when a file is selected
 
             if (isValidFormat(chooser.getResult())) {
                 processor.saved_model = chooser.getResult();
@@ -267,17 +288,17 @@ void ProteusAudioProcessorEditor::loadButtonClicked()
             processor.folder = chooser.getResult().getParentDirectory();
 
         } else if (chooser.getResult().isDirectory()){ // Else folder is selected
+            DBG("Directory selected");  // Debugging Step: Log when a directory is selected
             files = chooser.getResult().findChildFiles(2, false, "*.json");
             processor.folder = chooser.getResult();
         }
         
         processor.jsonFiles.clear();
-
         modelSelect.clear();
 
         if (files.size() > 0) {
+            DBG("Files found");  // Debugging Step: Log when files are found
             for (auto file : files) {
-
                 if (isValidFormat(file)) {
                     modelSelect.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
                     processor.jsonFiles.push_back(file);
@@ -285,7 +306,6 @@ void ProteusAudioProcessorEditor::loadButtonClicked()
                 }
             }
             if (chooser.getResult().existsAsFile()) {
-                
                 if (isValidFormat(chooser.getResult()) == true) {
                     modelSelect.setText(processor.saved_model.getFileNameWithoutExtension());
                     processor.loadConfig(processor.saved_model);
@@ -298,11 +318,12 @@ void ProteusAudioProcessorEditor::loadButtonClicked()
                 }
             }
         } else {
+            DBG("No valid files found");  // Debugging Step: Log when no valid files are found
             processor.saved_model = ""; // Clear the saved model since there's nothing in the dropdown
         }
     });
-    
 }
+
 
 void ProteusAudioProcessorEditor::loadFromFolder()
 {
