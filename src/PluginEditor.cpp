@@ -195,18 +195,29 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
 
 void ProteusAudioProcessorEditor::resized()
 {
-    // Your existing FlexBox code
+    // Create a FlexBox for EQ dials
+    FlexBox eqFlexBox;
+    eqFlexBox.flexDirection = FlexBox::Direction::row;
+    eqFlexBox.justifyContent = FlexBox::JustifyContent::center;
+    eqFlexBox.alignItems = FlexBox::AlignItems::center;
+
+    // Add EQ dials to the FlexBox
+    eqFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1));
+    eqFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1));
+    eqFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1));
+
+    // Calculate the area where the EQ FlexBox should be placed
+    auto eqArea = getLocalBounds().removeFromBottom(100).toFloat();  // Adjust the 100 to your needs
+
+    // Perform layout for EQ FlexBox
+    eqFlexBox.performLayout(eqArea);
+
+    // Your existing FlexBox code for other elements
     mainFlexBox.performLayout(getLocalBounds().toFloat());
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     resizableBorder->setBounds(0, 0, getWidth(), getHeight());
-
-    // Move EQ dials a bit further towards the bottom
-    int newY = 200;  // Adjust this value to move the EQ dials further down
-    ampBassKnob.setBounds(113, newY, 62, 62);
-    ampMidKnob.setBounds(227, newY, 62, 62);
-    ampTrebleKnob.setBounds(340, newY, 62, 62);
 
     // Move the cabOnButton to the top right corner
     cabOnButton.setBounds(getWidth() - 70, 20, 50, 50);  // Moved to top right
@@ -218,6 +229,7 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);  // Adjust these numbers as needed
 }
+
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
 {
