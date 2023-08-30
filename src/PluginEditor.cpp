@@ -123,6 +123,20 @@ if (showEQ) {
 }
 
 
+  bool showLevelKnob = false; // Set this to true if you want to show the Level knob, false to hide it
+
+    // Use the helper function to set up each slider
+    setupSlider(odDriveKnob, driveSliderAttach, processor.treeState, GAIN_ID, bigKnobLAF);
+    
+    if (showLevelKnob) {
+        setupSlider(odLevelKnob, masterSliderAttach, processor.treeState, MASTER_ID, smallKnobLAF);
+        addAndMakeVisible(odLevelKnob);
+    } else {
+        masterSliderAttach.reset();
+        odLevelKnob.setVisible(false);
+    }
+
+
     bassSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob);    	    
     addAndMakeVisible(ampBassKnob);
     ampBassKnob.setLookAndFeel(&smallKnobLAF);
