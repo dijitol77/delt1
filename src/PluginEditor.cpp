@@ -151,8 +151,15 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     mainFlexBox.items.add(juce::FlexItem(loadButton).withFlex(1));
     mainFlexBox.items.add(juce::FlexItem(controlFlexBox).withFlex(4));
 
-  File imageFile2 = File::getCurrentWorkingDirectory().getChildFile("Resources/BACK2.jpg");
-  background2 = ImageFileFormat::loadFrom(imageFile2);
+ // Remove these lines
+// File imageFile2 = File::getCurrentWorkingDirectory().getChildFile("resources/BACK2.jpg");
+// background2 = ImageFileFormat::loadFrom(imageFile2);
+
+// Use this line to load the image from binary data
+background2 = ImageCache::getFromMemory(BinaryData::BACK2_jpg, BinaryData::BACK2_jpgSize);
+
+// Rest of your constructor code
+  
   
     // === END OF UPDATES ===
  
