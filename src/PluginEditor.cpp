@@ -263,18 +263,11 @@ void ProteusAudioProcessorEditor::resized()
     middleFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
     middleFlexBox.performLayout(middleArea.toFloat());
 
-    // Manually adjust the position of odDriveKnob
-    Rectangle<int> currentBounds = odDriveKnob.getBounds();
-    int moveUp = currentBounds.getHeight();  // Move up by its own height
-    int moveRight = currentBounds.getWidth() * 0.3;  // Move 30% to the right
-    odDriveKnob.setBounds(currentBounds.translated(moveRight, -moveUp));
-
     // Bottom Container FlexBox for EQ, Level, and Gain
     FlexBox bottomFlexBox;
     bottomFlexBox.flexDirection = FlexBox::Direction::row;
     bottomFlexBox.justifyContent = FlexBox::JustifyContent::spaceAround;
     bottomFlexBox.items.add(FlexItem(odLevelKnob).withFlex(1));
-    bottomFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
     bottomFlexBox.performLayout(bottomArea.toFloat());
 
     // Explicitly set the bounds for Load Model button and Model Select dropdown
@@ -291,6 +284,7 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
+
 
 
 
