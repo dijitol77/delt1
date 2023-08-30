@@ -45,9 +45,13 @@ private:
 
     bool isValidFormat(File configFile);
     void loadButtonClicked();
-    
-  Image background2;
-  
+   Image background2;
+  // Image background2 = ImageCache::getFromMemory(BinaryData::BACK2_jpg, BinaryData::BACK2_jpgSize);
+    //Image background = ImageCache::getFromMemory(BinaryData::smart_pedal_jpg, BinaryData::smart_pedal_jpgSize);
+    // LookandFeels and Graphics
+  //  Image background_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
+  //  Image background_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
+    //Image background_off = ImageCache::getFromMemory(BinaryData::background_off_jpg, BinaryData::background_off_jpgSize);
 
     // Global Widgets
     Label modelLabel;
@@ -61,14 +65,15 @@ private:
     Slider ampTrebleKnob;
     Slider odDriveKnob;
     Slider odLevelKnob;
+
     ImageButton cabOnButton;
     juce::FlexBox mainFlexBox;
     juce::FlexBox controlFlexBox;
-    juce::Label loadedModelLabel;
+    juce::Label loadedModelLabel;  // Add this line
 
-    juce::Component block1;
-    juce::Component block2;
-    juce::Component block3;
+juce::Component block1;
+juce::Component block2;  // Declare block2 here
+juce::Component block3;  // Declare block3 here
 
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
@@ -77,13 +82,6 @@ private:
     std::unique_ptr<juce::ResizableBorderComponent> resizableBorder;
     juce::ComponentBoundsConstrainer constrainer;
 
-    juce::FlexBox flexBox;
-    juce::FlexBox nestedFlexBox;
-
-    // ... other member variables ...
-
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (YourAudioProcessorEditor)
-};
 
     virtual void sliderValueChanged(Slider* slider) override;
 
