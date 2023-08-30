@@ -269,10 +269,8 @@ middleFlexBox.flexDirection = FlexBox::Direction::row;
 middleFlexBox.justifyContent = FlexBox::JustifyContent::center;
 middleFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
 
-// Define middleArea here if it's not already defined
-Rectangle<int> middleArea = getLocalBounds(); // Replace with your actual middleArea definition
-
 // Perform FlexBox layout for the middle area
+// Assuming middleArea is already defined elsewhere in your code
 middleFlexBox.performLayout(middleArea.toFloat());
 
 // Manually adjust the position of odDriveKnob
