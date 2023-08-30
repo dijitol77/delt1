@@ -254,12 +254,22 @@ void ProteusAudioProcessorEditor::resized()
     // Explicitly set the bounds for Cab Switch to stay top right
     cabOnButton.setBounds(getWidth() - 70, 20, 50, 50);  // Top right
 
-    // Middle Container FlexBox for Gain
-    FlexBox middleFlexBox;
-    middleFlexBox.flexDirection = FlexBox::Direction::row;
-    middleFlexBox.justifyContent = FlexBox::JustifyContent::center;
-    middleFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
-    middleFlexBox.performLayout(middleArea.toFloat());
+  // Middle Container FlexBox for Gain
+FlexBox middleFlexBox;
+middleFlexBox.flexDirection = FlexBox::Direction::row;
+middleFlexBox.justifyContent = FlexBox::JustifyContent::center;
+middleFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
+
+// Perform FlexBox layout first
+middleFlexBox.performLayout(middleArea.toFloat());
+
+// Then manually adjust the position of odDriveKnob
+auto dialArea = odDriveKnob.getBounds();
+auto dialWidth = dialArea.getWidth();
+auto dialHeight = dialArea.getHeight();
+
+// Move the odDriveKnob up by its own height and 30% to the right
+odDriveKnob.setBounds(dialArea.translated(dialWidth * 0.3, -dialHeight));
 
    // Divide the bottom area into three blocks
     auto block1Area = bottomArea.removeFromLeft(bottomArea.getWidth() / 3);
