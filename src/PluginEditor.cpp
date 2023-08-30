@@ -244,41 +244,34 @@ void ProteusAudioProcessorEditor::resized()
     // Get the total area available
     Rectangle<int> totalArea = getLocalBounds();
 
-    // Divide the total area into top, middle, and bottom areas
-    auto topArea = totalArea.removeFromTop(totalArea.getHeight() / 3);
-    auto middleArea = totalArea.removeFromTop(totalArea.getHeight() / 2);
-    auto bottomArea = totalArea;
+    // Divide the total area into three rows
+    auto row1Area = totalArea.removeFromTop(totalArea.getHeight() / 3);
+    auto row2Area = totalArea.removeFromTop(totalArea.getHeight() / 2);
+    auto row3Area = totalArea;
 
-    // Top Container FlexBox for Cab Switch, Load Model button, and Model Select dropdown
-    FlexBox topFlexBox;
-    topFlexBox.flexDirection = FlexBox::Direction::row;
-    topFlexBox.justifyContent = FlexBox::JustifyContent::spaceBetween;
-    topFlexBox.items.add(FlexItem(loadButton).withFlex(1));
-    topFlexBox.items.add(FlexItem(modelSelect).withFlex(1));
-    topFlexBox.items.add(FlexItem(cabOnButton).withFlex(1));
-    topFlexBox.performLayout(topArea.toFloat());
+    // Top Container FlexBox for Drive Knob
+    FlexBox row1FlexBox;
+    row1FlexBox.flexDirection = FlexBox::Direction::row;
+    row1FlexBox.justifyContent = FlexBox::JustifyContent::center;
+    row1FlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
+    row1FlexBox.performLayout(row1Area.toFloat());
 
-    // Middle Container FlexBox for odDriveKnob
-    FlexBox middleFlexBox;
-    middleFlexBox.flexDirection = FlexBox::Direction::row;
-    middleFlexBox.justifyContent = FlexBox::JustifyContent::center;
-    middleFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
-    middleFlexBox.performLayout(middleArea.toFloat());
+    // Middle Container FlexBox for other controls
+    FlexBox row2FlexBox;
+    row2FlexBox.flexDirection = FlexBox::Direction::row;
+    row2FlexBox.justifyContent = FlexBox::JustifyContent::spaceBetween;
+    row2FlexBox.items.add(FlexItem(loadButton).withFlex(1));
+    row2FlexBox.items.add(FlexItem(modelSelect).withFlex(1));
+    row2FlexBox.items.add(FlexItem(cabOnButton).withFlex(1));
+    row2FlexBox.performLayout(row2Area.toFloat());
 
     // Bottom Container FlexBox for EQ, Level, and Gain
-    FlexBox bottomFlexBox;
-    bottomFlexBox.flexDirection = FlexBox::Direction::row;
-    bottomFlexBox.justifyContent = FlexBox::JustifyContent::spaceAround;
-    bottomFlexBox.items.add(FlexItem(odLevelKnob).withFlex(1));
-    bottomFlexBox.performLayout(bottomArea.toFloat());
+    FlexBox row3FlexBox;
+    row3FlexBox.flexDirection = FlexBox::Direction::row;
+    row3FlexBox.justifyContent = FlexBox::JustifyContent::spaceAround;
+    row3FlexBox.items.add(FlexItem(odLevelKnob).withFlex(1));
+    row3FlexBox.performLayout(row3Area.toFloat());
 
-    // Explicitly set the bounds for Load Model button and Model Select dropdown
-    loadButton.setBounds(20, 20, 100, 30);  // Top left
-    modelSelect.setBounds(130, 20, 200, 30);  // Top left
-
-    // Explicitly set the bounds for Cab Switch to stay top right
-    cabOnButton.setBounds(getWidth() - 70, 20, 50, 50);  // Top right
-  
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     resizableBorder->setBounds(0, 0, getWidth(), getHeight());
