@@ -150,6 +150,10 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     // Add Components to mainFlexBox
     mainFlexBox.items.add(juce::FlexItem(loadButton).withFlex(1));
     mainFlexBox.items.add(juce::FlexItem(controlFlexBox).withFlex(4));
+
+  File imageFile2 = File::getCurrentWorkingDirectory().getChildFile("Resources/BACK2.jpg");
+  background2 = ImageFileFormat::loadFrom(imageFile2);
+  
     // === END OF UPDATES ===
  
     // Size of plugin GUI
@@ -175,7 +179,7 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
     //if (processor.fw_state == 0) {
     //    g.drawImageAt(background_off, 0, 0);  // Debug Line: Redraw entire background image
    if (processor.fw_state == 1 && processor.conditioned == true) {
-        g.drawImageWithin(background_on, 0, 0, getWidth(), getHeight(), RectanglePlacement::stretchToFit, false);
+        g.drawImageWithin(background2, 0, 0, getWidth(), getHeight(), RectanglePlacement::stretchToFit, false);
     } else if (processor.fw_state == 1 && processor.conditioned == false) {
         g.drawImageWithin(background_on_blue, 0, 0, getWidth(), getHeight(), RectanglePlacement::stretchToFit, false);
     }
@@ -186,7 +190,7 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
     //if (processor.fw_state == 0) {
     //    g.drawImage(background_off, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
     if (processor.fw_state == 1 && processor.conditioned == true) {
-        g.drawImage(background_on, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
+        g.drawImage(background2, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
     } else if (processor.fw_state == 1 && processor.conditioned == false)
         g.drawImage(background_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
 #endif
