@@ -274,13 +274,22 @@ int modelSelectY = blockB1.getY() + 10;  // Align to the top of blockB3 with a s
 modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
 
-int odDriveKnobWidth = 75;  // Set the width of the odDriveKnob
-int odDriveKnobHeight = 75;  // Set the height of the odDriveKnob
+ // Recalculate blockA2's dimensions
+    auto rowA = totalArea.removeFromTop(totalArea.getHeight() / 3);
+    auto blockA1 = rowA.removeFromLeft(rowA.getWidth() / 3);
+    auto blockA2 = rowA.removeFromLeft(rowA.getWidth() / 2);
+    auto blockA3 = rowA;
 
-int odDriveKnobX = blockA2.getX() + blockA2.getWidth() - odDriveKnobWidth - 10 - 10 - 8 - 1 - 8;  // Move an additional 8px to the left
-int odDriveKnobY = blockA2.getY() + 10 + 30 + 4 + 5 + 2 + 2;  // Move an additional 2px down
+    // Set the knob's dimensions relative to blockA2
+    int knobWidth = blockA2.getWidth() * 0.8;  // 80% of blockA2's width
+    int knobHeight = blockA2.getHeight() * 0.8;  // 80% of blockA2's height
 
-odDriveKnob.setBounds(odDriveKnobX, odDriveKnobY, odDriveKnobWidth, odDriveKnobHeight);
+    // Set the knob's position relative to blockA2
+    int knobX = blockA2.getX() + blockA2.getWidth() - knobWidth - 10;  // 10 pixels from the right edge of blockA2
+    int knobY = blockA2.getY() + (blockA2.getHeight() - knobHeight) / 2;  // Vertically centered in blockA2
+
+    // Update the knob's bounds
+    odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
 
 
 
