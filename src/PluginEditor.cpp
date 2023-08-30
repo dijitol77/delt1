@@ -248,8 +248,12 @@ void ProteusAudioProcessorEditor::resized()
     topFlexBox.performLayout(topArea.toFloat());
 
     // Explicitly set the bounds for Load Model button and Model Select dropdown
-    loadButton.setBounds(20, 20, 100, 30);  // Top left
+   // loadButton.setBounds(20, 20, 100, 30);  // Top left
+   loadButton.setBounds(getWidth() - 100, getHeight() - 50, 80, 40);
     modelSelect.setBounds(130, 20, 200, 30);  // Top left
+  
+   // Place the "Load" button at the bottom
+   
 
     // Explicitly set the bounds for Cab Switch to stay top right
     cabOnButton.setBounds(getWidth() - 70, 20, 50, 50);  // Top right
