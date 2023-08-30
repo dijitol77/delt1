@@ -286,8 +286,8 @@ odDriveKnob.setBounds(odDriveKnobX, odDriveKnobY, odDriveKnobWidth, odDriveKnobH
 
 
   // Explicitly set the bounds for the switch
-    int switchWidth = 50;  // Set the width of the switch
-    int switchHeight = 50;  // Set the height of the switch
+    int switchWidth = 45;  // Set the width of the switch
+    int switchHeight = 45;  // Set the height of the switch
     int switchX = blockC1.getX() + (blockC1.getWidth() - switchWidth) / 2;  // Center the switch horizontally within blockC1
     int switchY = blockC1.getY() + (blockC1.getHeight() - switchHeight) / 2;  // Center the switch vertically within blockC1
     cabOnButton.setBounds(switchX, switchY, switchWidth, switchHeight);
