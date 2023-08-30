@@ -264,10 +264,10 @@ void ProteusAudioProcessorEditor::resized()
 
     // Explicitly set the bounds for Load Model button and Model Select dropdown
     loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
-    modelSelect.setBounds(blockB1.getX() + 10, blockB1.getY() + 10, 200, 30);
+    modelSelect.setBounds(blockB3.getX() + 10, blockB3.getY() + 10, 200, 30);
 
     // Place other components in their respective blocks
-    odDriveKnob.setBounds(blockA2);  // Placed in A2
+    odDriveKnob.setBounds(blockA2.getX() + 10, blockA2.getY() + 10, 100, 30);
 
 
   // Explicitly set the bounds for the switch
