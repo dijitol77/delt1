@@ -262,20 +262,15 @@ void ProteusAudioProcessorEditor::resized()
     auto rowC2 = colC.removeFromTop(colC.getHeight() / 2);
     auto rowC3 = colC;
 
-    // Place the components in their respective blocks
-    loadButton.setBounds(rowA1.reduced(10));  // Placed in A1, reduced for padding
-
-    // Move odDriveKnob to the left by its own width
-    odDriveKnob.setBounds(rowA2.translated(-odDriveKnob.getWidth(), 0));  // Placed in A2 and moved left
-
-    modelSelect.setBounds(rowB1.reduced(10));  // Placed in B1, reduced for padding
-
-    // Move cabOnButton down into rowC3
-    cabOnButton.setBounds(rowC3.reduced(10));  // Placed in C3, reduced for padding
-
     // Explicitly set the bounds for Load Model button and Model Select dropdown
     loadButton.setBounds(rowA1.getX() + 10, rowA1.getY() + 10, 100, 30);  // Explicit bounds in A1
     modelSelect.setBounds(rowB1.getX() + 10, rowB1.getY() + 10, 200, 30);  // Explicit bounds in B1
+
+    // Move odDriveKnob to the left by its own width
+    odDriveKnob.setBounds(rowA2.getX() + odDriveKnob.getWidth(), rowA2.getY(), odDriveKnob.getWidth(), odDriveKnob.getHeight());
+
+    // Move cabOnButton down into rowC3
+    cabOnButton.setBounds(rowC3.getX() + 10, rowC3.getY() + 10, 50, 50);  // Explicit bounds in C3
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
@@ -284,6 +279,7 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
+
 
 
 
