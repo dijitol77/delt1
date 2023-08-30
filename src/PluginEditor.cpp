@@ -239,44 +239,6 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
 
 void ProteusAudioProcessorEditor::resized()
 {
-   void ProteusAudioProcessorEditor::resized()
-{
-    // Get the total area available
-    Rectangle<int> totalArea = getLocalBounds();
-
-    // Divide the total area into three rows
-    auto row1Area = totalArea.removeFromTop(totalArea.getHeight() / 3);
-    auto row2Area = totalArea.removeFromTop(totalArea.getHeight() / 2);
-    auto row3Area = totalArea;
-
-    // Divide each row into three blocks
-    auto row1Block1Area = row1Area.removeFromLeft(row1Area.getWidth() / 3);
-    auto row1Block2Area = row1Area.removeFromLeft(row1Area.getWidth() / 2);
-    auto row1Block3Area = row1Area;
-
-    auto row2Block1Area = row2Area.removeFromLeft(row2Area.getWidth() / 3);
-    auto row2Block2Area = row2Area.removeFromLeft(row2Area.getWidth() / 2);
-    auto row2Block3Area = row2Area;
-
-    auto row3Block1Area = row3Area.removeFromLeft(row3Area.getWidth() / 3);
-    auto row3Block2Area = row3Area.removeFromLeft(row3Area.getWidth() / 2);
-    auto row3Block3Area = row3Area;
-
-    // Set the bounds for each block
-    block1.setBounds(row1Block1Area);
-    block2.setBounds(row1Block2Area);
-    block3.setBounds(row1Block3Area);
-
-    block4.setBounds(row2Block1Area);
-    block5.setBounds(row2Block2Area);
-    block6.setBounds(row2Block3Area);
-
-    block7.setBounds(row3Block1Area);
-    block8.setBounds(row3Block2Area);
-    block9.setBounds(row3Block3Area);
-
-    // ... (Your existing code for FlexBox layouts and other components)
-  
     // Get the total area available
     Rectangle<int> totalArea = getLocalBounds();
 
@@ -289,83 +251,33 @@ void ProteusAudioProcessorEditor::resized()
     FlexBox topFlexBox;
     topFlexBox.flexDirection = FlexBox::Direction::row;
     topFlexBox.justifyContent = FlexBox::JustifyContent::spaceBetween;
-    topFlexBox.items.add(FlexItem().withFlex(1));  // Placeholder for loadButton
-    topFlexBox.items.add(FlexItem().withFlex(1));  // Placeholder for modelSelect
+    topFlexBox.items.add(FlexItem(loadButton).withFlex(1));
+    topFlexBox.items.add(FlexItem(modelSelect).withFlex(1));
     topFlexBox.items.add(FlexItem(cabOnButton).withFlex(1));
     topFlexBox.performLayout(topArea.toFloat());
 
-   
+    // Middle Container FlexBox for odDriveKnob
+    FlexBox middleFlexBox;
+    middleFlexBox.flexDirection = FlexBox::Direction::row;
+    middleFlexBox.justifyContent = FlexBox::JustifyContent::center;
+    middleFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
+    middleFlexBox.performLayout(middleArea.toFloat());
 
-// Perform FlexBox layout first for the middle area
-FlexBox middleFlexBox;
-middleFlexBox.flexDirection = FlexBox::Direction::row;
-middleFlexBox.justifyContent = FlexBox::JustifyContent::center;
-middleFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
+    // Manually adjust the position of odDriveKnob
+    Rectangle<int> currentBounds = odDriveKnob.getBounds();
+    int moveUp = currentBounds.getHeight();  // Move up by its own height
+    int moveRight = currentBounds.getWidth() * 0.3;  // Move 30% to the right
+    odDriveKnob.setBounds(currentBounds.translated(moveRight, -moveUp));
 
-// Perform FlexBox layout for the middle area
-// Assuming middleArea is already defined elsewhere in your code
-middleFlexBox.performLayout(middleArea.toFloat());
-
-// Manually adjust the position of odDriveKnob
-Rectangle<int> currentBounds = odDriveKnob.getBounds();
-int moveUp = currentBounds.getHeight();  // Move up by its own height
-int moveRight = currentBounds.getWidth() * 0.3;  // Move 30% to the right
-
-// Update the bounds
-odDriveKnob.setBounds(currentBounds.translated(moveRight, -moveUp));
-  
-// Perform FlexBox layout first
-// FlexBox middleFlexBox;
-// middleFlexBox.flexDirection = FlexBox::Direction::row;
-// middleFlexBox.justifyContent = FlexBox::JustifyContent::center;
-// middleFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
-
-// Define middleArea here if it's not already defined
-// Rectangle<int> middleArea = getLocalBounds(); // Replace with your actual middleArea definition
-
-// Perform FlexBox layout for the middle area
-//  middleFlexBox.performLayout(middleArea.toFloat());
-
-// Manually adjust the position of odDriveKnob
-//  Rectangle<int> currentBounds = odDriveKnob.getBounds();
-//  int moveUp = currentBounds.getHeight();  // Move up by its own height
-//  int moveRight = currentBounds.getWidth() * 0.3;  // Move 30% to the right
-
-// Update the bounds
-// odDriveKnob.setBounds(currentBounds.translated(moveRight, -moveUp));
-
-
-   // Divide the bottom area into three blocks
-    auto block1Area = bottomArea.removeFromLeft(bottomArea.getWidth() / 3);
-    auto block2Area = bottomArea.removeFromLeft(bottomArea.getWidth() / 2);
-    auto block3Area = bottomArea;
-
-    // Layout for Block 1
-    block1.setBounds(block1Area);
-
-    // Layout for Block 2
-    block2.setBounds(block2Area);
-
-    // Layout for Block 3
-    block3.setBounds(block3Area);
-
-   // Bottom Container FlexBox for EQ, Level, and Gain in block1Area
+    // Bottom Container FlexBox for EQ, Level, and Gain
     FlexBox bottomFlexBox;
     bottomFlexBox.flexDirection = FlexBox::Direction::row;
     bottomFlexBox.justifyContent = FlexBox::JustifyContent::spaceAround;
-
-  // eq
-  //  bottomFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1));
-   // bottomFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1));
-  //  bottomFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1));
-
-  
     bottomFlexBox.items.add(FlexItem(odLevelKnob).withFlex(1));
-  
-    bottomFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));  // Add the gain dial
-    bottomFlexBox.performLayout(block1Area.toFloat());  // Layout only in block1Area
+    bottomFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
+    bottomFlexBox.performLayout(bottomArea.toFloat());
 
-   // Explicitly set the bounds for Load Model button and Model Select dropdown
+    // Explicitly set the bounds for Load Model button and Model Select dropdown
     loadButton.setBounds(20, 20, 100, 30);  // Top left
     modelSelect.setBounds(130, 20, 200, 30);  // Top left
 
@@ -378,7 +290,6 @@ odDriveKnob.setBounds(currentBounds.translated(moveRight, -moveUp));
 
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
-
 }
 
 
