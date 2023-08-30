@@ -82,8 +82,6 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     bigKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::big_knob_png, BinaryData::big_knob_pngSize));
     smallKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::small_knob_png, BinaryData::small_knob_pngSize));
 
-  
-  
 // Setup odDriveKnob
 driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
 addAndMakeVisible(odDriveKnob);
@@ -92,6 +90,17 @@ odDriveKnob.addListener(this);
 odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
 odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
 odDriveKnob.setDoubleClickReturnValue(true, 0.5);
+
+// Check if odDriveKnob is visible, if not make it visible
+if (!odDriveKnob.isVisible()) {
+    odDriveKnob.setVisible(true);
+}
+
+// Manually set the position of odDriveKnob at the top-left corner
+odDriveKnob.setBounds(0, 0, 100, 100);  // x, y, width, height
+
+// Call repaint on odDriveKnob to refresh its appearance
+odDriveKnob.repaint();
 
 // Hide odLevelKnob
 odLevelKnob.setVisible(false);
