@@ -254,11 +254,12 @@ void ProteusAudioProcessorEditor::resized()
     // Explicitly set the bounds for Cab Switch to stay top right
     cabOnButton.setBounds(getWidth() - 70, 20, 50, 50);  // Top right
 
-// Perform FlexBox layout first
+// Perform FlexBox layout first for other components
 FlexBox middleFlexBox;
 middleFlexBox.flexDirection = FlexBox::Direction::row;
 middleFlexBox.justifyContent = FlexBox::JustifyContent::center;
 middleFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
+  
 middleFlexBox.performLayout(middleArea.toFloat());
 
 // Manually adjust the position of odDriveKnob
@@ -268,10 +269,6 @@ int moveRight = currentBounds.getWidth() * 0.3;  // Move 30% to the right
 
 // Update the bounds
 odDriveKnob.setBounds(currentBounds.translated(moveRight, -moveUp));
-
-// Perform FlexBox layout
-middleFlexBox.performLayout(middleArea.toFloat());
-
    // Divide the bottom area into three blocks
     auto block1Area = bottomArea.removeFromLeft(bottomArea.getWidth() / 3);
     auto block2Area = bottomArea.removeFromLeft(bottomArea.getWidth() / 2);
