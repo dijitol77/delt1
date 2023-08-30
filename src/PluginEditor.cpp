@@ -84,21 +84,35 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
 
   
   
-    driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
-    addAndMakeVisible(odDriveKnob);
-    odDriveKnob.setLookAndFeel(&bigKnobLAF);
-    odDriveKnob.addListener(this);
-    odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    odDriveKnob.setDoubleClickReturnValue(true, 0.5);
+    
+   // Setup odDriveKnob
+driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
+addAndMakeVisible(odDriveKnob);
+odDriveKnob.setLookAndFeel(&bigKnobLAF);
+odDriveKnob.addListener(this);
+odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
+odDriveKnob.setDoubleClickReturnValue(true, 0.5);
 
-    masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
-    addAndMakeVisible(odLevelKnob);
-    odLevelKnob.setLookAndFeel(&smallKnobLAF);
-    odLevelKnob.addListener(this);
-    odLevelKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    odLevelKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    odLevelKnob.setDoubleClickReturnValue(true, 0.5);
+// Hide odLevelKnob
+masterSliderAttach.reset();
+odLevelKnob.setVisible(false);
+
+// Do NOT add these lines for odLevelKnob if you want to keep it hidden
+// masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
+// addAndMakeVisible(odLevelKnob);
+// odLevelKnob.setLookAndFeel(&smallKnobLAF);
+// odLevelKnob.addListener(this);
+// odLevelKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+// odLevelKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
+// odLevelKnob.setDoubleClickReturnValue(true, 0.5);
+By doing this, odLevelKnob will be hidden, and odDriveKnob will remain visible and functional.
+
+
+
+
+
+
 
   bool showEQ = false; // Set this to true if you want to show the EQ, false to hide it
 
@@ -122,19 +136,6 @@ if (showEQ) {
     ampTrebleKnob.setVisible(false);
 }
 
-
-  bool showLevelKnob = false; // Set this to true if you want to show the Level knob, false to hide it
-
-    // Use the helper function to set up each slider
-    setupSlider(odDriveKnob, driveSliderAttach, processor.treeState, GAIN_ID, bigKnobLAF);
-    
-    if (showLevelKnob) {
-        setupSlider(odLevelKnob, masterSliderAttach, processor.treeState, MASTER_ID, smallKnobLAF);
-        addAndMakeVisible(odLevelKnob);
-    } else {
-        masterSliderAttach.reset();
-        odLevelKnob.setVisible(false);
-    }
 
 
     bassSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob);    	    
