@@ -274,13 +274,14 @@ int modelSelectY = blockB1.getY() + 10;  // Align to the top of blockB3 with a s
 modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
 
-    int odDriveKnobWidth = 100;  // Set the width of the odDriveKnob
+int odDriveKnobWidth = 100;  // Set the width of the odDriveKnob
 int odDriveKnobHeight = 100;  // Set the height of the odDriveKnob
 
-int odDriveKnobX = blockA2.getX() + blockA2.getWidth() - odDriveKnobWidth - 10;  // Align to the right of blockA2 with a small margin
-int odDriveKnobY = blockA2.getY() + 10;  // Align to the top of blockA2 with a small margin
+int odDriveKnobX = blockA2.getX() + blockA2.getWidth() - odDriveKnobWidth - 10 - 25;  // Align to the right of blockA2 with a small margin and move left by 25px
+int odDriveKnobY = blockA2.getY() + 10 + 70;  // Align to the top of blockA2 with a small margin and move down by 70px
 
 odDriveKnob.setBounds(odDriveKnobX, odDriveKnobY, odDriveKnobWidth, odDriveKnobHeight);
+
 
 
   // Explicitly set the bounds for the switch
