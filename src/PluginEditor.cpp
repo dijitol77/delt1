@@ -94,12 +94,11 @@ odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false
 odDriveKnob.setDoubleClickReturnValue(true, 0.5);
 
 // Hide odLevelKnob
-masterSliderAttach.reset();
 odLevelKnob.setVisible(false);
 
 // Re-setup odLevelKnob (it will remain hidden)
 masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
-addAndMakeVisible(odLevelKnob);
+// Do NOT call addAndMakeVisible for odLevelKnob here
 odLevelKnob.setLookAndFeel(&smallKnobLAF);
 odLevelKnob.addListener(this);
 odLevelKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
