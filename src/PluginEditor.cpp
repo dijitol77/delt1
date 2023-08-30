@@ -106,14 +106,8 @@ odLevelKnob.setVisible(false);
 // odLevelKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
 // odLevelKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
 // odLevelKnob.setDoubleClickReturnValue(true, 0.5);
-By doing this, odLevelKnob will be hidden, and odDriveKnob will remain visible and functional.
 
-
-
-
-
-
-
+  
   bool showEQ = false; // Set this to true if you want to show the EQ, false to hide it
 
 if (showEQ) {
