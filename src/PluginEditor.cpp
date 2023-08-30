@@ -174,30 +174,20 @@ ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
 //==============================================================================
 void ProteusAudioProcessorEditor::paint(Graphics& g)
 {
-    // Workaround for graphics on Windows builds (clipping code doesn't work correctly on Windows)
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
-    //if (processor.fw_state == 0) {
-    //    g.drawImageAt(background_off, 0, 0);  // Debug Line: Redraw entire background image
-   if (processor.fw_state == 1 && processor.conditioned == true) {
+    if (processor.fw_state == 1 && processor.conditioned == true) {
         g.drawImageWithin(background2, 0, 0, getWidth(), getHeight(), RectanglePlacement::stretchToFit, false);
     } else if (processor.fw_state == 1 && processor.conditioned == false) {
         g.drawImageWithin(background_on_blue, 0, 0, getWidth(), getHeight(), RectanglePlacement::stretchToFit, false);
     }
 #else
-// Redraw only the clipped part of the background image
-
     juce::Rectangle<int> ClipRect = g.getClipBounds();
-    //if (processor.fw_state == 0) {
-    //    g.drawImage(background_off, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
     if (processor.fw_state == 1 && processor.conditioned == true) {
         g.drawImage(background2, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
-    } else if (processor.fw_state == 1 && processor.conditioned == false)
+    } else if (processor.fw_state == 1 && processor.conditioned == false) {
         g.drawImage(background_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
+    }
 #endif
-  // Add the resizable corner and set its constrainer
-   // addAndMakeVisible(resizableCorner);
-   // addAndMakeVisible(resizableBorder);  // Add this line
-   // constrainer.setSizeLimits(500, 650, 2000, 1300);  // Set min and max sizes
 }
 
 // In your resized() method
