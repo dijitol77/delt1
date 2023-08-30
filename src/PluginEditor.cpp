@@ -205,6 +205,8 @@ background2 = ImageCache::getFromMemory(BinaryData::BACK2_jpg, BinaryData::BACK2
     setSize(1121, 326); 
 
     loadFromFolder();
+   // Call resized() to set the initial layout
+    resized();
 }
 
 ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
