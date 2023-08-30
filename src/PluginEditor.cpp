@@ -159,7 +159,7 @@ if (showEQ) {
     versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     versionLabel.setFont(font);
 
- // === START OF UPDATES ===
+// === START OF UPDATES ===
     // Initialize FlexBox Properties
     mainFlexBox.flexDirection = juce::FlexBox::Direction::column;
     mainFlexBox.justifyContent = juce::FlexBox::JustifyContent::flexStart;
@@ -187,10 +187,7 @@ if (showEQ) {
 // Use this line to load the image from binary data
 background2 = ImageCache::getFromMemory(BinaryData::BACK2_jpg, BinaryData::BACK2_jpgSize);
 
-// Initialize FlexItems and add them to FlexBoxes
-    flexBox.items.add(juce::FlexItem(odDriveKnob).withFlex(1).withMargin(juce::FlexItem::Margin(-odDriveKnob.getHeight(), 0, 0, odDriveKnob.getWidth() * 0.3)));
-    nestedFlexBox.items.add(juce::FlexItem(someOtherComponent).withFlex(1));
-    flexBox.items.add(juce::FlexItem(nestedFlexBox).withFlex(1));
+// Rest of your constructor code
   
   
     // === END OF UPDATES ===
@@ -251,12 +248,8 @@ void ProteusAudioProcessorEditor::resized()
     topFlexBox.performLayout(topArea.toFloat());
 
     // Explicitly set the bounds for Load Model button and Model Select dropdown
-   // loadButton.setBounds(20, 20, 100, 30);  // Top left
-   loadButton.setBounds(getWidth() - 100, getHeight() - 50, 80, 40);
+    loadButton.setBounds(20, 20, 100, 30);  // Top left
     modelSelect.setBounds(130, 20, 200, 30);  // Top left
-  
-   // Place the "Load" button at the bottom
-   
 
     // Explicitly set the bounds for Cab Switch to stay top right
     cabOnButton.setBounds(getWidth() - 70, 20, 50, 50);  // Top right
