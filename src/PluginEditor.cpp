@@ -263,15 +263,25 @@ void ProteusAudioProcessorEditor::resized()
     // Explicitly set the bounds for Cab Switch to stay top right
     cabOnButton.setBounds(getWidth() - 70, 20, 50, 50);  // Top right
 
-  // Get the local bounds of the parent component
-Rectangle<int> localArea = getLocalBounds();
+// Perform FlexBox layout first for the middle area
+FlexBox middleFlexBox;
+middleFlexBox.flexDirection = FlexBox::Direction::row;
+middleFlexBox.justifyContent = FlexBox::JustifyContent::center;
+middleFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
 
-// Define the size and position for odDriveKnob
-int knobWidth = 100;  // Set the width
-int knobHeight = 100;  // Set the height
+// Define middleArea here if it's not already defined
+Rectangle<int> middleArea = getLocalBounds(); // Replace with your actual middleArea definition
 
-// Set the bounds for odDriveKnob at the top-left corner
-odDriveKnob.setBounds(0, 0, knobWidth, knobHeight);
+// Perform FlexBox layout for the middle area
+middleFlexBox.performLayout(middleArea.toFloat());
+
+// Manually adjust the position of odDriveKnob
+Rectangle<int> currentBounds = odDriveKnob.getBounds();
+int moveUp = currentBounds.getHeight();  // Move up by its own height
+int moveRight = currentBounds.getWidth() * 0.3;  // Move 30% to the right
+
+// Update the bounds
+odDriveKnob.setBounds(currentBounds.translated(moveRight, -moveUp));
 
 // Perform FlexBox layout first
 // FlexBox middleFlexBox;
