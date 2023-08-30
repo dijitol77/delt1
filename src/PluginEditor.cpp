@@ -178,14 +178,14 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
     if (processor.fw_state == 1 && processor.conditioned == true) {
         g.drawImageWithin(background2, 0, 0, getWidth(), getHeight(), RectanglePlacement::stretchToFit, false);
     } else if (processor.fw_state == 1 && processor.conditioned == false) {
-        g.drawImageWithin(background_on_blue, 0, 0, getWidth(), getHeight(), RectanglePlacement::stretchToFit, false);
+        g.drawImageWithin(background2, 0, 0, getWidth(), getHeight(), RectanglePlacement::stretchToFit, false);
     }
 #else
     juce::Rectangle<int> ClipRect = g.getClipBounds();
     if (processor.fw_state == 1 && processor.conditioned == true) {
         g.drawImage(background2, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
     } else if (processor.fw_state == 1 && processor.conditioned == false) {
-        g.drawImage(background_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
+        g.drawImage(background2, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
     }
 #endif
 }
