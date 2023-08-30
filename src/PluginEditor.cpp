@@ -268,8 +268,8 @@ void ProteusAudioProcessorEditor::resized()
 int modelSelectWidth = 200;  // Set the width of the modelSelect
 int modelSelectHeight = 30;  // Set the height of the modelSelect
 
-int modelSelectX = blockB3.getX() + (blockB3.getWidth() - modelSelectWidth) / 2;  // Center the modelSelect horizontally within blockB3
-int modelSelectY = blockB3.getY() + 10;  // Align to the top of blockB3 with a small margin
+int modelSelectX = blockB1.getX() + (blockB1.getWidth() - modelSelectWidth) / 2;  // Center the modelSelect horizontally within blockB3
+int modelSelectY = blockB1.getY() + 10;  // Align to the top of blockB3 with a small margin
 
 modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
