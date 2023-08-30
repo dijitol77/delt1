@@ -277,11 +277,11 @@ modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectH
 int odDriveKnobWidth = 100;  // Set the width of the odDriveKnob
 int odDriveKnobHeight = 100;  // Set the height of the odDriveKnob
 
-// Align to the right of blockA2 with a small margin and move left by 10px
-int odDriveKnobX = blockA2.getX() + blockA2.getWidth() - odDriveKnobWidth - 10 - 10;  
+// Align to the right of blockA2 with a small margin and move right by an additional 3px
+int odDriveKnobX = blockA2.getX() + blockA2.getWidth() - odDriveKnobWidth - 10 - 10 + 3;
 
-// Align to the top of blockA2 with a small margin and move up by 15px
-int odDriveKnobY = blockA2.getY() + 10 + 30 - 15;  
+// Align to the top of blockA2 with a small margin and move down by an additional 20px
+int odDriveKnobY = blockA2.getY() + 10 + 30 - 15 + 20;
 
 odDriveKnob.setBounds(odDriveKnobX, odDriveKnobY, odDriveKnobWidth, odDriveKnobHeight);
 
