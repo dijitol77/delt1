@@ -244,41 +244,33 @@ void ProteusAudioProcessorEditor::resized()
     // Get the total area available
     Rectangle<int> totalArea = getLocalBounds();
 
-    // Divide the total area into three rows
-    auto row1Area = totalArea.removeFromTop(totalArea.getHeight() / 3);
-    auto row2Area = totalArea.removeFromTop(totalArea.getHeight() / 2);
-    auto row3Area = totalArea;
+    // Divide the total area into three main rows: A, B, and C
+    auto rowA = totalArea.removeFromTop(totalArea.getHeight() / 3);
+    auto rowB = totalArea.removeFromTop(totalArea.getHeight() / 2);
+    auto rowC = totalArea;
 
-    // Top Container FlexBox for Drive Knob
-    FlexBox row1FlexBox;
-    row1FlexBox.flexDirection = FlexBox::Direction::row;
-    row1FlexBox.justifyContent = FlexBox::JustifyContent::center;
-    row1FlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));
-    row1FlexBox.performLayout(row1Area.toFloat());
+    // Divide each main row into three blocks: 1, 2, and 3
+    auto blockA1 = rowA.removeFromLeft(rowA.getWidth() / 3);
+    auto blockA2 = rowA.removeFromLeft(rowA.getWidth() / 2);
+    auto blockA3 = rowA;
 
-    // Middle Container FlexBox for other controls
-    FlexBox row2FlexBox;
-    row2FlexBox.flexDirection = FlexBox::Direction::row;
-    row2FlexBox.justifyContent = FlexBox::JustifyContent::spaceBetween;
-    row2FlexBox.items.add(FlexItem(loadButton).withFlex(1));
-    row2FlexBox.items.add(FlexItem(modelSelect).withFlex(1));
-    row2FlexBox.items.add(FlexItem(cabOnButton).withFlex(1));
-    row2FlexBox.performLayout(row2Area.toFloat());
+    auto blockB1 = rowB.removeFromLeft(rowB.getWidth() / 3);
+    auto blockB2 = rowB.removeFromLeft(rowB.getWidth() / 2);
+    auto blockB3 = rowB;
 
-    // Bottom Container FlexBox for EQ, Level, and Gain
-    FlexBox row3FlexBox;
-    row3FlexBox.flexDirection = FlexBox::Direction::row;
-    row3FlexBox.justifyContent = FlexBox::JustifyContent::spaceAround;
-    row3FlexBox.items.add(FlexItem(odLevelKnob).withFlex(1));
-    row3FlexBox.performLayout(row3Area.toFloat());
+    auto blockC1 = rowC.removeFromLeft(rowC.getWidth() / 3);
+    auto blockC2 = rowC.removeFromLeft(rowC.getWidth() / 2);
+    auto blockC3 = rowC;
 
-    // Set bounds for the resizable corner and border
-    resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
-    resizableBorder->setBounds(0, 0, getWidth(), getHeight());
+    // Place the components in their respective blocks
+    loadButton.setBounds(blockA1.reduced(10));  // Placed in A1, reduced for padding
+    odDriveKnob.setBounds(blockA2);  // Placed in A2
+    modelSelect.setBounds(blockB1.reduced(10));  // Placed in B1, reduced for padding
+    cabOnButton.setBounds(blockC1.reduced(10));  // Placed in C1, reduced for padding
 
-    // Set bounds for the loaded model label
-    loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
+    // Additional layout settings can go here for other blocks
 }
+
 
 
 
