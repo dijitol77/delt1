@@ -159,44 +159,37 @@ if (showEQ) {
     versionLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     versionLabel.setFont(font);
 
-// === START OF UPDATES ===
-    // Initialize FlexBox Properties
-    mainFlexBox.flexDirection = juce::FlexBox::Direction::column;
-    mainFlexBox.justifyContent = juce::FlexBox::JustifyContent::flexStart;
+// Initialize FlexBox Properties
+mainFlexBox.flexDirection = juce::FlexBox::Direction::column;
+mainFlexBox.justifyContent = juce::FlexBox::JustifyContent::flexStart;
 
-    controlFlexBox.flexDirection = juce::FlexBox::Direction::row;
-    controlFlexBox.justifyContent = juce::FlexBox::JustifyContent::spaceAround;
+controlFlexBox.flexDirection = juce::FlexBox::Direction::row;
+controlFlexBox.justifyContent = juce::FlexBox::JustifyContent::spaceAround;
 
-    // Add Components to controlFlexBox
-    controlFlexBox.items.add(juce::FlexItem(versionLabel).withFlex(1));
-    controlFlexBox.items.add(juce::FlexItem(cabOnButton).withFlex(1));
-    controlFlexBox.items.add(juce::FlexItem(odDriveKnob).withFlex(1));
-    controlFlexBox.items.add(juce::FlexItem(odLevelKnob).withFlex(1));
-    controlFlexBox.items.add(juce::FlexItem(ampBassKnob).withFlex(1));
-    controlFlexBox.items.add(juce::FlexItem(ampMidKnob).withFlex(1));
-    controlFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withFlex(1));
+// Add Components to controlFlexBox
+controlFlexBox.items.add(juce::FlexItem(versionLabel).withFlex(1));
+controlFlexBox.items.add(juce::FlexItem(cabOnButton).withFlex(1));
+controlFlexBox.items.add(juce::FlexItem(odDriveKnob).withFlex(1).withMargin(juce::FlexItem::Margin(-odDriveKnob.getHeight(), 0, 0, odDriveKnob.getWidth() * 0.3)));
+controlFlexBox.items.add(juce::FlexItem(odLevelKnob).withFlex(1));
+controlFlexBox.items.add(juce::FlexItem(ampBassKnob).withFlex(1));
+controlFlexBox.items.add(juce::FlexItem(ampMidKnob).withFlex(1));
+controlFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withFlex(1));
 
-    // Add Components to mainFlexBox
-    mainFlexBox.items.add(juce::FlexItem(loadButton).withFlex(1));
-    mainFlexBox.items.add(juce::FlexItem(controlFlexBox).withFlex(4));
+// Initialize nestedFlexBox and add someOtherComponent to it
+nestedFlexBox.items.add(juce::FlexItem(someOtherComponent).withFlex(1));
 
- // Remove these lines
-// File imageFile2 = File::getCurrentWorkingDirectory().getChildFile("resources/BACK2.jpg");
-// background2 = ImageFileFormat::loadFrom(imageFile2);
+// Add Components to mainFlexBox
+mainFlexBox.items.add(juce::FlexItem(loadButton).withFlex(1));
+mainFlexBox.items.add(juce::FlexItem(controlFlexBox).withFlex(4));
+mainFlexBox.items.add(juce::FlexItem(nestedFlexBox).withFlex(1));  // Add nestedFlexBox to mainFlexBox
 
-// Use this line to load the image from binary data
+// Load background image
 background2 = ImageCache::getFromMemory(BinaryData::BACK2_jpg, BinaryData::BACK2_jpgSize);
 
-// Rest of your constructor code
-  
-  
-    // === END OF UPDATES ===
- 
-    // Size of plugin GUI
-    setSize(1121, 326); 
+// Size of plugin GUI
+setSize(1121, 326); 
 
-    loadFromFolder();
-}
+loadFromFolder();
 
 ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
 {
