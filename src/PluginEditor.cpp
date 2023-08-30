@@ -244,33 +244,41 @@ void ProteusAudioProcessorEditor::resized()
     // Get the total area available
     Rectangle<int> totalArea = getLocalBounds();
 
-    // Divide the total area into three main rows: A, B, and C
-    auto rowA = totalArea.removeFromTop(totalArea.getHeight() / 3);
-    auto rowB = totalArea.removeFromTop(totalArea.getHeight() / 2);
-    auto rowC = totalArea;
+    // Divide the total area into three columns: A, B, and C
+    auto colA = totalArea.removeFromLeft(totalArea.getWidth() / 3);
+    auto colB = totalArea.removeFromLeft(totalArea.getWidth() / 2);
+    auto colC = totalArea;
 
-    // Divide each main row into three blocks: 1, 2, and 3
-    auto blockA1 = rowA.removeFromLeft(rowA.getWidth() / 3);
-    auto blockA2 = rowA.removeFromLeft(rowA.getWidth() / 2);
-    auto blockA3 = rowA;
+    // Divide each column into three rows: 1, 2, and 3
+    auto rowA1 = colA.removeFromTop(colA.getHeight() / 3);
+    auto rowA2 = colA.removeFromTop(colA.getHeight() / 2);
+    auto rowA3 = colA;
 
-    auto blockB1 = rowB.removeFromLeft(rowB.getWidth() / 3);
-    auto blockB2 = rowB.removeFromLeft(rowB.getWidth() / 2);
-    auto blockB3 = rowB;
+    auto rowB1 = colB.removeFromTop(colB.getHeight() / 3);
+    auto rowB2 = colB.removeFromTop(colB.getHeight() / 2);
+    auto rowB3 = colB;
 
-    auto blockC1 = rowC.removeFromLeft(rowC.getWidth() / 3);
-    auto blockC2 = rowC.removeFromLeft(rowC.getWidth() / 2);
-    auto blockC3 = rowC;
+    auto rowC1 = colC.removeFromTop(colC.getHeight() / 3);
+    auto rowC2 = colC.removeFromTop(colC.getHeight() / 2);
+    auto rowC3 = colC;
 
     // Place the components in their respective blocks
-    loadButton.setBounds(blockA1.reduced(10));  // Placed in A1, reduced for padding
-    odDriveKnob.setBounds(blockA2);  // Placed in A2
-    modelSelect.setBounds(blockB1.reduced(10));  // Placed in B1, reduced for padding
-    cabOnButton.setBounds(blockC1.reduced(10));  // Placed in C1, reduced for padding
+    loadButton.setBounds(rowA1.reduced(10));  // Placed in A1, reduced for padding
+    odDriveKnob.setBounds(rowA2);  // Placed in A2
+    modelSelect.setBounds(rowB1.reduced(10));  // Placed in B1, reduced for padding
+    cabOnButton.setBounds(rowC1.reduced(10));  // Placed in C1, reduced for padding
 
-    // Additional layout settings can go here for other blocks
+    // Explicitly set the bounds for Load Model button and Model Select dropdown
+    loadButton.setBounds(rowA1.getX() + 10, rowA1.getY() + 10, 100, 30);  // Explicit bounds in A1
+    modelSelect.setBounds(rowB1.getX() + 10, rowB1.getY() + 10, 200, 30);  // Explicit bounds in B1
+
+    // Set bounds for the resizable corner and border
+    resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
+    resizableBorder->setBounds(0, 0, getWidth(), getHeight());
+
+    // Set bounds for the loaded model label
+    loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
-
 
 
 
