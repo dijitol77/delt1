@@ -262,10 +262,12 @@ void ProteusAudioProcessorEditor::resized()
     auto blockC2 = colC.removeFromTop(colC.getHeight() / 2);
     auto blockC3 = colC;
 
-    // Place the components in their respective blocks
-    loadButton.setBounds(blockA1.reduced(10));  // Placed in A1, reduced for padding
+    // Explicitly set the bounds for Load Model button and Model Select dropdown
+    loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
+    modelSelect.setBounds(blockB1.getX() + 10, blockB1.getY() + 10, 200, 30);
+
+    // Place other components in their respective blocks
     odDriveKnob.setBounds(blockA2);  // Placed in A2
-    modelSelect.setBounds(blockB1.reduced(10));  // Placed in B1, reduced for padding
     cabOnButton.setBounds(blockC1.reduced(10));  // Placed in C1, reduced for padding
 
     // Set bounds for the resizable corner and border
@@ -275,6 +277,7 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
+
 
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
