@@ -157,7 +157,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     // === END OF UPDATES ===
  
     // Size of plugin GUI
-    setSize(500, 650);
+    setSize(1121, 326); 
 
     loadFromFolder();
 }
