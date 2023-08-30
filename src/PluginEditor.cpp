@@ -239,6 +239,44 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
 
 void ProteusAudioProcessorEditor::resized()
 {
+   void ProteusAudioProcessorEditor::resized()
+{
+    // Get the total area available
+    Rectangle<int> totalArea = getLocalBounds();
+
+    // Divide the total area into three rows
+    auto row1Area = totalArea.removeFromTop(totalArea.getHeight() / 3);
+    auto row2Area = totalArea.removeFromTop(totalArea.getHeight() / 2);
+    auto row3Area = totalArea;
+
+    // Divide each row into three blocks
+    auto row1Block1Area = row1Area.removeFromLeft(row1Area.getWidth() / 3);
+    auto row1Block2Area = row1Area.removeFromLeft(row1Area.getWidth() / 2);
+    auto row1Block3Area = row1Area;
+
+    auto row2Block1Area = row2Area.removeFromLeft(row2Area.getWidth() / 3);
+    auto row2Block2Area = row2Area.removeFromLeft(row2Area.getWidth() / 2);
+    auto row2Block3Area = row2Area;
+
+    auto row3Block1Area = row3Area.removeFromLeft(row3Area.getWidth() / 3);
+    auto row3Block2Area = row3Area.removeFromLeft(row3Area.getWidth() / 2);
+    auto row3Block3Area = row3Area;
+
+    // Set the bounds for each block
+    block1.setBounds(row1Block1Area);
+    block2.setBounds(row1Block2Area);
+    block3.setBounds(row1Block3Area);
+
+    block4.setBounds(row2Block1Area);
+    block5.setBounds(row2Block2Area);
+    block6.setBounds(row2Block3Area);
+
+    block7.setBounds(row3Block1Area);
+    block8.setBounds(row3Block2Area);
+    block9.setBounds(row3Block3Area);
+
+    // ... (Your existing code for FlexBox layouts and other components)
+  
     // Get the total area available
     Rectangle<int> totalArea = getLocalBounds();
 
