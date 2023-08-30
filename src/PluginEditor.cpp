@@ -264,7 +264,15 @@ void ProteusAudioProcessorEditor::resized()
 
     // Explicitly set the bounds for Load Model button and Model Select dropdown
     loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
-    modelSelect.setBounds(blockB3.getX() + 10, blockB3.getY() + 10, 200, 30);
+  
+int modelSelectWidth = 200;  // Set the width of the modelSelect
+int modelSelectHeight = 30;  // Set the height of the modelSelect
+
+int modelSelectX = blockB3.getX() + (blockB3.getWidth() - modelSelectWidth) / 2;  // Center the modelSelect horizontally within blockB3
+int modelSelectY = blockB3.getY() + 10;  // Align to the top of blockB3 with a small margin
+
+modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
+
 
     // Place other components in their respective blocks
     odDriveKnob.setBounds(blockA2.getX() + 10, blockA2.getY() + 10, 100, 30);
