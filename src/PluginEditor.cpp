@@ -270,7 +270,7 @@ void ProteusAudioProcessorEditor::resized()
     odDriveKnob.setBounds(rowA2.getX() + odDriveKnob.getWidth(), rowA2.getY(), odDriveKnob.getWidth(), odDriveKnob.getHeight());
 
     // Move cabOnButton down into rowC3
-    cabOnButton.setBounds(rowC3.getX() + 10, rowC3.getY() + 10, 50, 50);  // Explicit bounds in C3
+    cabOnButton.setBounds(rowC3.getX() + rowC3.getWidth() / 2 - 25, rowC3.getY() + rowC3.getHeight() / 2 - 25, 50, 50);  // Explicit bounds in C3
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
@@ -279,6 +279,7 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
+
 
 
 
