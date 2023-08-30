@@ -1,4 +1,5 @@
 juce_add_binary_data(BinaryData SOURCES
+BACK2.jpg
     background_on.jpg
     background2_on.jpg
     background_on_blue.jpg
