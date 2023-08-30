@@ -268,7 +268,15 @@ void ProteusAudioProcessorEditor::resized()
 
     // Place other components in their respective blocks
     odDriveKnob.setBounds(blockA2);  // Placed in A2
-    cabOnButton.setBounds(blockC1.reduced(10));  // Placed in C1, reduced for padding
+
+
+  // Explicitly set the bounds for the switch
+    int switchWidth = 50;  // Set the width of the switch
+    int switchHeight = 50;  // Set the height of the switch
+    int switchX = blockC1.getX() + (blockC1.getWidth() - switchWidth) / 2;  // Center the switch horizontally within blockC1
+    int switchY = blockC1.getY() + (blockC1.getHeight() - switchHeight) / 2;  // Center the switch vertically within blockC1
+    cabOnButton.setBounds(switchX, switchY, switchWidth, switchHeight);
+
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
