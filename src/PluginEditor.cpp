@@ -100,6 +100,29 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     odLevelKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odLevelKnob.setDoubleClickReturnValue(true, 0.5);
 
+  bool showEQ = false; // Set this to true if you want to show the EQ, false to hide it
+
+if (showEQ) {
+    bassSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob);
+    midSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MID_ID, ampMidKnob);
+    trebleSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, TREBLE_ID, ampTrebleKnob);
+    
+    addAndMakeVisible(ampBassKnob);
+    addAndMakeVisible(ampMidKnob);
+    addAndMakeVisible(ampTrebleKnob);
+    
+    // ... (other knob settings)
+} else {
+    bassSliderAttach.reset();
+    midSliderAttach.reset();
+    trebleSliderAttach.reset();
+    
+    ampBassKnob.setVisible(false);
+    ampMidKnob.setVisible(false);
+    ampTrebleKnob.setVisible(false);
+}
+
+
     bassSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob);    	    
     addAndMakeVisible(ampBassKnob);
     ampBassKnob.setLookAndFeel(&smallKnobLAF);
@@ -250,10 +273,15 @@ void ProteusAudioProcessorEditor::resized()
     FlexBox bottomFlexBox;
     bottomFlexBox.flexDirection = FlexBox::Direction::row;
     bottomFlexBox.justifyContent = FlexBox::JustifyContent::spaceAround;
-    bottomFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1));
-    bottomFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1));
-    bottomFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1));
+
+  // eq
+  //  bottomFlexBox.items.add(FlexItem(ampBassKnob).withFlex(1));
+   // bottomFlexBox.items.add(FlexItem(ampMidKnob).withFlex(1));
+  //  bottomFlexBox.items.add(FlexItem(ampTrebleKnob).withFlex(1));
+
+  
     bottomFlexBox.items.add(FlexItem(odLevelKnob).withFlex(1));
+  
     bottomFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));  // Add the gain dial
     bottomFlexBox.performLayout(block1Area.toFloat());  // Layout only in block1Area
   
@@ -433,8 +461,10 @@ void ProteusAudioProcessorEditor::cabOnButtonClicked() {
 void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
 {
     // Amp
-    if (slider == &ampBassKnob || slider == &ampMidKnob || slider == &ampTrebleKnob) {
-        processor.set_ampEQ(ampBassKnob.getValue(), ampMidKnob.getValue(), ampTrebleKnob.getValue());
+    if (ampBassKnob.isVisible() && ampMidKnob.isVisible() && ampTrebleKnob.isVisible()) {
+        if (slider == &ampBassKnob || slider == &ampMidKnob || slider == &ampTrebleKnob) {
+            processor.set_ampEQ(ampBassKnob.getValue(), ampMidKnob.getValue(), ampTrebleKnob.getValue());
+        }
     }
 }
 
