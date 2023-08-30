@@ -279,8 +279,8 @@ int odDriveKnobHeight = 100;  // Set the height of the odDriveKnob
 
 
 
-int odDriveKnobX = blockA2.getX() + blockA2.getWidth() - odDriveKnobWidth - 10 - 10 - 8;  // Move 8px to the left
-int odDriveKnobY = blockA2.getY() + 10 + 30;  // Keep the Y position the same
+int odDriveKnobX = blockA2.getX() + blockA2.getWidth() - odDriveKnobWidth - 10 - 10 - 8 + 1;  // Move 1px to the right
+int odDriveKnobY = blockA2.getY() + 10 + 30 + 4;  // Move 4px down
 
 odDriveKnob.setBounds(odDriveKnobX, odDriveKnobY, odDriveKnobWidth, odDriveKnobHeight);
 
