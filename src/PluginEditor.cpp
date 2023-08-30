@@ -279,10 +279,11 @@ int odDriveKnobHeight = 90;  // Set the height of the odDriveKnob
 
 
 
-int odDriveKnobX = blockA2.getX() + blockA2.getWidth() - odDriveKnobWidth - 10 - 10 - 8 + 1;  // Move 1px to the right
+int odDriveKnobX = blockA2.getX() + blockA2.getWidth() - odDriveKnobWidth - 10 - 10 - 8 - 1;  // Move 1px to the left
 int odDriveKnobY = blockA2.getY() + 10 + 30 + 4;  // Move 4px down
 
 odDriveKnob.setBounds(odDriveKnobX, odDriveKnobY, odDriveKnobWidth, odDriveKnobHeight);
+
 
 
   // Explicitly set the bounds for the switch
