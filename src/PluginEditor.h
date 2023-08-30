@@ -50,7 +50,8 @@ private:
 
     bool isValidFormat(File configFile);
     void loadButtonClicked();
-
+    Image background2;
+  //  Image background2 = ImageCache::getFromMemory(BinaryData::BACK2_jpg, BinaryData::BACK2_jpgSize);
     //Image background = ImageCache::getFromMemory(BinaryData::smart_pedal_jpg, BinaryData::smart_pedal_jpgSize);
     // LookandFeels and Graphics
     Image background_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
