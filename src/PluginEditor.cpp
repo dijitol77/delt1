@@ -256,12 +256,7 @@ void ProteusAudioProcessorEditor::resized()
     topFlexBox.items.add(FlexItem(cabOnButton).withFlex(1));
     topFlexBox.performLayout(topArea.toFloat());
 
-    // Explicitly set the bounds for Load Model button and Model Select dropdown
-    loadButton.setBounds(20, 20, 100, 30);  // Top left
-    modelSelect.setBounds(130, 20, 200, 30);  // Top left
-
-    // Explicitly set the bounds for Cab Switch to stay top right
-    cabOnButton.setBounds(getWidth() - 70, 20, 50, 50);  // Top right
+   
 
 // Perform FlexBox layout first for the middle area
 FlexBox middleFlexBox;
@@ -280,7 +275,7 @@ int moveRight = currentBounds.getWidth() * 0.3;  // Move 30% to the right
 
 // Update the bounds
 odDriveKnob.setBounds(currentBounds.translated(moveRight, -moveUp));
-
+  
 // Perform FlexBox layout first
 // FlexBox middleFlexBox;
 // middleFlexBox.flexDirection = FlexBox::Direction::row;
@@ -331,6 +326,13 @@ odDriveKnob.setBounds(currentBounds.translated(moveRight, -moveUp));
   
     bottomFlexBox.items.add(FlexItem(odDriveKnob).withFlex(1));  // Add the gain dial
     bottomFlexBox.performLayout(block1Area.toFloat());  // Layout only in block1Area
+
+   // Explicitly set the bounds for Load Model button and Model Select dropdown
+    loadButton.setBounds(20, 20, 100, 30);  // Top left
+    modelSelect.setBounds(130, 20, 200, 30);  // Top left
+
+    // Explicitly set the bounds for Cab Switch to stay top right
+    cabOnButton.setBounds(getWidth() - 70, 20, 50, 50);  // Top right
   
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
