@@ -274,8 +274,8 @@ int modelSelectY = blockB1.getY() + 10;  // Align to the top of blockB3 with a s
 modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
 
-int odDriveKnobWidth = 100;  // Set the width of the odDriveKnob
-int odDriveKnobHeight = 100;  // Set the height of the odDriveKnob
+int odDriveKnobWidth = 90;  // Set the width of the odDriveKnob
+int odDriveKnobHeight = 90;  // Set the height of the odDriveKnob
 
 
 
