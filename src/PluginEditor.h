@@ -33,12 +33,7 @@ public:
     void loadFromFolder();
     void resetImages();
 
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> midSliderAttach;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
-    std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
-
+    
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
@@ -97,6 +92,12 @@ juce::Component block3;  // Declare block3 here
     void cabOnButtonClicked();
 
     bool model_loaded = false;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> midSliderAttach;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
 };
