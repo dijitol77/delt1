@@ -273,8 +273,9 @@ void ProteusAudioProcessorEditor::resized()
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
     // Explicitly set the bounds for odDriveKnob
-    int knobWidth = std::max(50, blockA2.getWidth() * 0.1);  // Minimum width of 50
-    int knobHeight = std::max(50, blockA2.getHeight() * 0.1);  // Minimum height of 50
+    int knobWidth = std::max(50, static_cast<int>(blockA2.getWidth() * 0.1));  // Minimum width of 50
+int knobHeight = std::max(50, static_cast<int>(blockA2.getHeight() * 0.1));  // Minimum height of 50
+
     int knobX = blockA2.getX() + blockA2.getWidth() * 0.2;
     int knobY = blockA2.getY() + blockA2.getHeight() * 0.2;
     odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
