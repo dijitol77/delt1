@@ -262,26 +262,23 @@ void ProteusAudioProcessorEditor::resized()
     auto blockC2 = rowC.removeFromLeft(rowC.getWidth() / 2);
     auto blockC3 = rowC;
 
-    // Explicitly set the bounds for Load Model button and Model Select dropdown
+    // Explicitly set the bounds for Load Model button
     loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
 
-    int modelSelectWidth = 200;  // Set the width of the modelSelect
-    int modelSelectHeight = 30;  // Set the height of the modelSelect
-
-    int modelSelectX = blockB1.getX() + (blockB1.getWidth() - modelSelectWidth) / 2;  // Center the modelSelect horizontally within blockB1
-    int modelSelectY = blockB1.getY() + 10;  // Align to the top of blockB1 with a small margin
-
+    // Explicitly set the bounds for Model Select dropdown
+    int modelSelectWidth = 200;
+    int modelSelectHeight = 30;
+    int modelSelectX = blockB1.getX() + (blockB1.getWidth() - modelSelectWidth) / 2;
+    int modelSelectY = blockB1.getY() + 10;
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
-    // Calculate the dimensions and position of the knob relative to blockA2
-    int knobWidth = blockA2.getWidth() * 0.1;  // 10% of blockA2's width
-    int knobHeight = blockA2.getHeight() * 0.1;  // 10% of blockA2's height
-
-    int knobX = blockA2.getX() + blockA2.getWidth() * 0.2;  // 20% from the left edge of blockA2
-    int knobY = blockA2.getY() + blockA2.getHeight() * 0.2;  // 20% from the top edge of blockA2
-
-    // Update the knob's bounds
+    // Explicitly set the bounds for odDriveKnob
+    int knobWidth = std::max(50, blockA2.getWidth() * 0.1);  // Minimum width of 50
+    int knobHeight = std::max(50, blockA2.getHeight() * 0.1);  // Minimum height of 50
+    int knobX = blockA2.getX() + blockA2.getWidth() * 0.2;
+    int knobY = blockA2.getY() + blockA2.getHeight() * 0.2;
     odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
+
 
 
   // Explicitly set the bounds for the switch
