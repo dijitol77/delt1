@@ -258,7 +258,7 @@ void ProteusAudioProcessorEditor::resized()
     auto blockC3 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
     
     // Set bounds for each component
-    odDriveKnob.setBounds(blockA2.reduced(10));
+   // odDriveKnob.setBounds(blockA2.reduced(10));
     odToneKnob.setBounds(blockB2.reduced(10));
     odLevelKnob.setBounds(blockC2.reduced(10));
     
@@ -269,7 +269,7 @@ void ProteusAudioProcessorEditor::resized()
 
     int knobX = blockA2.getX() + blockA2.getWidth() * 0.2;
     int knobY = blockA2.getY() + blockA2.getHeight() * 0.2;
-    odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
+    
     
     // Explicitly set the bounds for Load Model button
     loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
