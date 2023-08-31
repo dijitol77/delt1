@@ -7,7 +7,7 @@
 
   ==============================================================================
 */
-//need this to be quicker and without fannying on
+//need this to be quicker and without fannying on ...ss
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
