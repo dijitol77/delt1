@@ -242,61 +242,54 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
 
 void ProteusAudioProcessorEditor::resized()
 {
-    auto area = getLocalBounds();
+    auto totalArea = getLocalBounds();
     
-    // Divide the area into 3x3 grid
-    auto blockA1 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
-    auto blockB1 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
-    auto blockC1 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
-    
-    auto blockA2 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
-    auto blockB2 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
-    auto blockC2 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
-    
-    auto blockA3 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
-    auto blockB3 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
-    auto blockC3 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
-    
-    // Set bounds for each component
-   // odDriveKnob.setBounds(blockA2.reduced(10));
-    // odToneKnob.setBounds(blockB2.reduced(10));
-    // odLevelKnob.setBounds(blockC2.reduced(10));
-    
-    // Explicitly set the bounds for odDriveKnob
-    int knobWidth = std::max(50, static_cast<int>(blockA2.getWidth() * 0.1));  // Minimum width of 50
-    int knobHeight = std::max(50, static_cast<int>(blockA2.getHeight() * 0.1));  // Minimum height of 50
-    odDriveKnob.setBounds((blockA2.getWidth() - knobWidth) / 2, (blockA2.getHeight() - knobHeight) / 2, knobWidth, knobHeight);
+    // Divide the total area into three columns: A, B, and C
+    auto colA = totalArea.removeFromLeft(totalArea.getWidth() / 3);
+    auto colB = totalArea.removeFromLeft(totalArea.getWidth() / 2);
+    auto colC = totalArea;
 
-    int knobX = blockA2.getX() + blockA2.getWidth() * 0.2;
-    int knobY = blockA2.getY() + blockA2.getHeight() * 0.2;
-    
-    
-    // Explicitly set the bounds for Load Model button
-    loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
+    // Divide each column into three blocks: 1, 2, and 3
+    auto blockA1 = colA.removeFromTop(colA.getHeight() / 3);
+    auto blockA2 = colA.removeFromTop(colA.getHeight() / 2);
+    auto blockA3 = colA;
 
-    // Explicitly set the bounds for Model Select dropdown
+    auto blockB1 = colB.removeFromTop(colB.getHeight() / 3);
+    auto blockB2 = colB.removeFromTop(colB.getHeight() / 2);
+    auto blockB3 = colB;
+
+    auto blockC1 = colC.removeFromTop(colC.getHeight() / 3);
+    auto blockC2 = colC.removeFromTop(colC.getHeight() / 2);
+    auto blockC3 = colC;
+
+    // Set bounds for Buttons and Dropdowns
+    loadButton.setBounds(blockA1.reduced(10));
     int modelSelectWidth = 200;
     int modelSelectHeight = 30;
     int modelSelectX = blockB1.getX() + (blockB1.getWidth() - modelSelectWidth) / 2;
     int modelSelectY = blockB1.getY() + 10;
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
+    // Set bounds for Knobs
+    int knobWidth = std::max(50, static_cast<int>(blockA2.getWidth() * 0.1));
+    int knobHeight = std::max(50, static_cast<int>(blockA2.getHeight() * 0.1));
+    odDriveKnob.setBounds((blockA2.getWidth() - knobWidth) / 2, (blockA2.getHeight() - knobHeight) / 2, knobWidth, knobHeight);
 
-  // Explicitly set the bounds for the switch
-    int switchWidth = 45;  // Set the width of the switch
-    int switchHeight = 45;  // Set the height of the switch
-    int switchX = blockC1.getX() + (blockC1.getWidth() - switchWidth) / 2;  // Center the switch horizontally within blockC1
-    int switchY = blockC1.getY() + (blockC1.getHeight() - switchHeight) / 2;  // Center the switch vertically within blockC1
+    // Set bounds for Switch
+    int switchWidth = 45;
+    int switchHeight = 45;
+    int switchX = blockC1.getX() + (blockC1.getWidth() - switchWidth) / 2;
+    int switchY = blockC1.getY() + (blockC1.getHeight() - switchHeight) / 2;
     cabOnButton.setBounds(switchX, switchY, switchWidth, switchHeight);
 
-
-    // Set bounds for the resizable corner and border
+    // Set bounds for Resizable Corner and Border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     resizableBorder->setBounds(0, 0, getWidth(), getHeight());
 
-    // Set bounds for the loaded model label
+    // Set bounds for Labels
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
+
 
 
 
