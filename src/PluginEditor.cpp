@@ -7,7 +7,7 @@
 
   ==============================================================================
 */
-//hi there ll ggg
+//need this to be quicker
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
