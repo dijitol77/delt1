@@ -259,8 +259,8 @@ void ProteusAudioProcessorEditor::resized()
     
     // Set bounds for each component
    // odDriveKnob.setBounds(blockA2.reduced(10));
-    odToneKnob.setBounds(blockB2.reduced(10));
-    odLevelKnob.setBounds(blockC2.reduced(10));
+    // odToneKnob.setBounds(blockB2.reduced(10));
+    // odLevelKnob.setBounds(blockC2.reduced(10));
     
     // Explicitly set the bounds for odDriveKnob
     int knobWidth = std::max(50, static_cast<int>(blockA2.getWidth() * 0.1));  // Minimum width of 50
