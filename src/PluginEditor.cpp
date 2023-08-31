@@ -262,34 +262,33 @@ void ProteusAudioProcessorEditor::resized()
     auto blockC2 = colC.removeFromTop(colC.getHeight() / 2);
     auto blockC3 = colC;
 
-    // Set bounds for Buttons and Dropdowns
+    // Set bounds for Load Model button
     loadButton.setBounds(blockA1.reduced(10));
-    int modelSelectWidth = 200;
-    int modelSelectHeight = 30;
-    int modelSelectX = blockB1.getX() + (blockB1.getWidth() - modelSelectWidth) / 2;
-    int modelSelectY = blockB1.getY() + 10;
-    modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
-    // Set bounds for Knobs
+    // Set bounds for Model Select dropdown
+    modelSelect.setBounds(blockB1.reduced(10));
+
+    // Set bounds for odDriveKnob
     int knobWidth = std::max(50, static_cast<int>(blockA2.getWidth() * 0.1));
     int knobHeight = std::max(50, static_cast<int>(blockA2.getHeight() * 0.1));
-    odDriveKnob.setBounds((blockA2.getWidth() - knobWidth) / 2, (blockA2.getHeight() - knobHeight) / 2, knobWidth, knobHeight);
+    int knobX = blockA2.getX() + (blockA2.getWidth() - knobWidth) / 2;
+    int knobY = blockA2.getY() + (blockA2.getHeight() - knobHeight) / 2;
+    odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
 
-    // Set bounds for Switch
-    int switchWidth = 45;
-    int switchHeight = 45;
+    // Set bounds for cabOnButton (Switch)
+    int switchWidth = std::max(45, static_cast<int>(blockC1.getWidth() * 0.1));
+    int switchHeight = std::max(45, static_cast<int>(blockC1.getHeight() * 0.1));
     int switchX = blockC1.getX() + (blockC1.getWidth() - switchWidth) / 2;
     int switchY = blockC1.getY() + (blockC1.getHeight() - switchHeight) / 2;
     cabOnButton.setBounds(switchX, switchY, switchWidth, switchHeight);
 
-    // Set bounds for Resizable Corner and Border
+    // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     resizableBorder->setBounds(0, 0, getWidth(), getHeight());
 
-    // Set bounds for Labels
+    // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
-
 
 
 
