@@ -281,7 +281,7 @@ void ProteusAudioProcessorEditor::resized()
 
     // Move odDriveKnob 70px to the right and 20px down
    // auto knobBounds = blockA2.reduced(10);
-  // knobBounds.translate(113, 45);  // Move xxpx to the right and yypx down
+  // knobBounds.translate(115, 45);  // Move xxpx to the right and yypx down
   //  odDriveKnob.setBounds(knobBounds);
 
     // Set bounds for cabOnButton (Switch) (relative size)
