@@ -244,55 +244,44 @@ void ProteusAudioProcessorEditor::resized()
     // Get the total area available
     Rectangle<int> totalArea = getLocalBounds();
 
-    // Divide the total area into three columns: A, B, and C
-    auto colA = totalArea.removeFromLeft(totalArea.getWidth() / 3);
-    auto colB = totalArea.removeFromLeft(totalArea.getWidth() / 2);
-    auto colC = totalArea;
-
-    // Divide each column into three blocks: 1, 2, and 3
-    auto blockA1 = colA.removeFromTop(colA.getHeight() / 3);
-    auto blockA2 = colA.removeFromTop(colA.getHeight() / 2);
-    auto blockA3 = colA;
-
-    auto blockB1 = colB.removeFromTop(colB.getHeight() / 3);
-    auto blockB2 = colB.removeFromTop(colB.getHeight() / 2);
-    auto blockB3 = colB;
-
-    auto blockC1 = colC.removeFromTop(colC.getHeight() / 3);
-    auto blockC2 = colC.removeFromTop(colC.getHeight() / 2);
-    auto blockC3 = colC;
-
-    // Explicitly set the bounds for Load Model button and Model Select dropdown
-    loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
-  
-int modelSelectWidth = 200;  // Set the width of the modelSelect
-int modelSelectHeight = 30;  // Set the height of the modelSelect
-
-int modelSelectX = blockB1.getX() + (blockB1.getWidth() - modelSelectWidth) / 2;  // Center the modelSelect horizontally within blockB3
-int modelSelectY = blockB1.getY() + 10;  // Align to the top of blockB3 with a small margin
-
-modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
-
-
- // Recalculate blockA2's dimensions
+    // Divide the total area into three main rows: A, B, and C
     auto rowA = totalArea.removeFromTop(totalArea.getHeight() / 3);
+    auto rowB = totalArea.removeFromTop(totalArea.getHeight() / 2);
+    auto rowC = totalArea;
+
+    // Divide each main row into three blocks: 1, 2, and 3
     auto blockA1 = rowA.removeFromLeft(rowA.getWidth() / 3);
     auto blockA2 = rowA.removeFromLeft(rowA.getWidth() / 2);
     auto blockA3 = rowA;
 
-    // Set the knob's dimensions relative to blockA2
-    int knobWidth = blockA2.getWidth() * 0.8;  // 80% of blockA2's width
-    int knobHeight = blockA2.getHeight() * 0.8;  // 80% of blockA2's height
+    auto blockB1 = rowB.removeFromLeft(rowB.getWidth() / 3);
+    auto blockB2 = rowB.removeFromLeft(rowB.getWidth() / 2);
+    auto blockB3 = rowB;
 
-    // Set the knob's position relative to blockA2
-    int knobX = blockA2.getX() + blockA2.getWidth() - knobWidth - 10;  // 10 pixels from the right edge of blockA2
-    int knobY = blockA2.getY() + (blockA2.getHeight() - knobHeight) / 2;  // Vertically centered in blockA2
+    auto blockC1 = rowC.removeFromLeft(rowC.getWidth() / 3);
+    auto blockC2 = rowC.removeFromLeft(rowC.getWidth() / 2);
+    auto blockC3 = rowC;
+
+    // Explicitly set the bounds for Load Model button and Model Select dropdown
+    loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
+
+    int modelSelectWidth = 200;  // Set the width of the modelSelect
+    int modelSelectHeight = 30;  // Set the height of the modelSelect
+
+    int modelSelectX = blockB1.getX() + (blockB1.getWidth() - modelSelectWidth) / 2;  // Center the modelSelect horizontally within blockB1
+    int modelSelectY = blockB1.getY() + 10;  // Align to the top of blockB1 with a small margin
+
+    modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
+
+    // Calculate the dimensions and position of the knob relative to blockA2
+    int knobWidth = blockA2.getWidth() * 0.1;  // 10% of blockA2's width
+    int knobHeight = blockA2.getHeight() * 0.1;  // 10% of blockA2's height
+
+    int knobX = blockA2.getX() + blockA2.getWidth() * 0.2;  // 20% from the left edge of blockA2
+    int knobY = blockA2.getY() + blockA2.getHeight() * 0.2;  // 20% from the top edge of blockA2
 
     // Update the knob's bounds
     odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
-
-
-
 
 
   // Explicitly set the bounds for the switch
