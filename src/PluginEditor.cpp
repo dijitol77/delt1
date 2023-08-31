@@ -242,27 +242,35 @@ void ProteusAudioProcessorEditor::paint(Graphics& g)
 
 void ProteusAudioProcessorEditor::resized()
 {
-    // Get the total area available
-    Rectangle<int> totalArea = getLocalBounds();
+    auto area = getLocalBounds();
+    
+    // Divide the area into 3x3 grid
+    auto blockA1 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
+    auto blockB1 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
+    auto blockC1 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
+    
+    auto blockA2 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
+    auto blockB2 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
+    auto blockC2 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
+    
+    auto blockA3 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
+    auto blockB3 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
+    auto blockC3 = area.removeFromTop(area.getHeight() / 3).removeFromLeft(area.getWidth() / 3);
+    
+    // Set bounds for each component
+    odDriveKnob.setBounds(blockA2.reduced(10));
+    odToneKnob.setBounds(blockB2.reduced(10));
+    odLevelKnob.setBounds(blockC2.reduced(10));
+    
+    // Explicitly set the bounds for odDriveKnob
+    int knobWidth = std::max(50, static_cast<int>(blockA2.getWidth() * 0.1));  // Minimum width of 50
+    int knobHeight = std::max(50, static_cast<int>(blockA2.getHeight() * 0.1));  // Minimum height of 50
+    odDriveKnob.setBounds((blockA2.getWidth() - knobWidth) / 2, (blockA2.getHeight() - knobHeight) / 2, knobWidth, knobHeight);
 
-    // Divide the total area into three main rows: A, B, and C
-    auto rowA = totalArea.removeFromTop(totalArea.getHeight() / 3);
-    auto rowB = totalArea.removeFromTop(totalArea.getHeight() / 2);
-    auto rowC = totalArea;
-
-    // Divide each main row into three blocks: 1, 2, and 3
-    auto blockA1 = rowA.removeFromLeft(rowA.getWidth() / 3);
-    auto blockA2 = rowA.removeFromLeft(rowA.getWidth() / 2);
-    auto blockA3 = rowA;
-
-    auto blockB1 = rowB.removeFromLeft(rowB.getWidth() / 3);
-    auto blockB2 = rowB.removeFromLeft(rowB.getWidth() / 2);
-    auto blockB3 = rowB;
-
-    auto blockC1 = rowC.removeFromLeft(rowC.getWidth() / 3);
-    auto blockC2 = rowC.removeFromLeft(rowC.getWidth() / 2);
-    auto blockC3 = rowC;
-
+    int knobX = blockA2.getX() + blockA2.getWidth() * 0.2;
+    int knobY = blockA2.getY() + blockA2.getHeight() * 0.2;
+    odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
+    
     // Explicitly set the bounds for Load Model button
     loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
 
@@ -272,16 +280,6 @@ void ProteusAudioProcessorEditor::resized()
     int modelSelectX = blockB1.getX() + (blockB1.getWidth() - modelSelectWidth) / 2;
     int modelSelectY = blockB1.getY() + 10;
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
-
-    // Explicitly set the bounds for odDriveKnob
-   // Explicitly set the bounds for odDriveKnob
-int knobWidth = std::max(50, static_cast<int>(blockA2.getWidth() * 0.1));  // Minimum width of 50
-int knobHeight = std::max(50, static_cast<int>(blockA2.getHeight() * 0.1));  // Minimum height of 50
-
-    int knobX = blockA2.getX() + blockA2.getWidth() * 0.2;
-    int knobY = blockA2.getY() + blockA2.getHeight() * 0.2;
-    odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
-
 
 
   // Explicitly set the bounds for the switch
