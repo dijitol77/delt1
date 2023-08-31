@@ -265,6 +265,59 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for Load Model button (fixed size)
     loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
 
+    // Center the Model Select dropdown inside blockB1 (fixed size)
+    int modelSelectWidth = 200;
+    int modelSelectHeight = 30;
+    int modelSelectX = blockB1.getX() + (blockB1.getWidth() - modelSelectWidth) / 2;
+    int modelSelectY = blockB1.getY() + (blockB1.getHeight() - modelSelectHeight) / 2;
+    modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
+
+    // Place odDriveKnob in the far corner of blockA2
+    int knobWidth = 50;  // You can adjust this
+    int knobHeight = 50;  // You can adjust this
+    int knobX = blockA2.getRight() - knobWidth;
+    int knobY = blockA2.getBottom() - knobHeight;
+    odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
+
+    // Set bounds for cabOnButton (Switch) with a maximum size of 45x45
+    int switchWidth = std::min(45, blockC1.getWidth());  // Max width of 45
+    int switchHeight = std::min(45, blockC1.getHeight());  // Max height of 45
+    int switchX = blockC1.getX() + (blockC1.getWidth() - switchWidth) / 2;
+    int switchY = blockC1.getY() + (blockC1.getHeight() - switchHeight) / 2;
+    cabOnButton.setBounds(switchX, switchY, switchWidth, switchHeight);
+
+    // Set bounds for the resizable corner and border
+    resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
+    resizableBorder->setBounds(0, 0, getWidth(), getHeight());
+
+    // Set bounds for the loaded model label
+    loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
+}
+
+{
+    auto totalArea = getLocalBounds();
+    
+    // Divide the total area into three columns: A, B, and C
+    auto colA = totalArea.removeFromLeft(totalArea.getWidth() / 3);
+    auto colB = totalArea.removeFromLeft(totalArea.getWidth() / 2);
+    auto colC = totalArea;
+
+    // Divide each column into three blocks: 1, 2, and 3
+    auto blockA1 = colA.removeFromTop(colA.getHeight() / 3);
+    auto blockA2 = colA.removeFromTop(colA.getHeight() / 2);
+    auto blockA3 = colA;
+
+    auto blockB1 = colB.removeFromTop(colB.getHeight() / 3);
+    auto blockB2 = colB.removeFromTop(colB.getHeight() / 2);
+    auto blockB3 = colB;
+
+    auto blockC1 = colC.removeFromTop(colC.getHeight() / 3);
+    auto blockC2 = colC.removeFromTop(colC.getHeight() / 2);
+    auto blockC3 = colC;
+
+    // Set bounds for Load Model button (fixed size)
+    loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
+
     // Set bounds for Model Select dropdown (fixed size)
     modelSelect.setBounds(blockB1.getX() + 10, blockB1.getY() + 10, 200, 30);
 
