@@ -292,9 +292,7 @@ void ProteusAudioProcessorEditor::resized()
 
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
-}
 
-{
     auto totalArea = getLocalBounds();
     
     // Divide the total area into three columns: A, B, and C
