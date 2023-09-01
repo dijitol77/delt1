@@ -272,26 +272,24 @@ void ProteusAudioProcessorEditor::resized()
     int modelSelectY = blockB1.getY() + (blockB1.getHeight() - modelSelectHeight) / 2;
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
-    // Calculate odDriveKnob position and size relative to blockA2
-  //  int knobWidth = blockA2.getWidth() * 0.8;  // 80% of blockA2's width
-  //  int knobHeight = blockA2.getHeight() * 0.8;  // 80% of blockA2's height
+  // Calculate odDriveKnob position and size relative to blockA2
+    int knobWidth = round(blockA2.getWidth() * 0.8);  // 80% of blockA2's width
+    int knobHeight = round(blockA2.getHeight() * 0.8);  // 80% of blockA2's height
 
-    // Calculate relative offsets based on initial offsets (140 and 60)
-    float relativeOffsetX = static_cast<float>(140) / colA.getWidth();
-    float relativeOffsetY = static_cast<float>(60) / colA.getHeight();
+    // ... (Same as before for calculating relative offsets)
 
-    int knobX = blockA2.getX() + (blockA2.getWidth() - knobWidth) / 2 + static_cast<int>(blockA2.getWidth() * relativeOffsetX);
-    int knobY = blockA2.getY() + (blockA2.getHeight() - knobHeight) / 2 + static_cast<int>(blockA2.getHeight() * relativeOffsetY);
+    int knobX = round(blockA2.getX() + (blockA2.getWidth() - knobWidth) / 2.0 + blockA2.getWidth() * relativeOffsetX);
+    int knobY = round(blockA2.getY() + (blockA2.getHeight() - knobHeight) / 2.0 + blockA2.getHeight() * relativeOffsetY);
     
     odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
     odDriveKnob.repaint();  // Explicitly call repaint on the knob
 
     // Set bounds for cabOnButton (Switch) (relative size)
     int switchMaxSize = 45;
-    int switchWidth = std::min(blockC1.getWidth(), switchMaxSize);
-    int switchHeight = std::min(blockC1.getHeight(), switchMaxSize);
-    int switchX = blockC1.getX() + (blockC1.getWidth() - switchWidth) / 2;
-    int switchY = blockC1.getY() + (blockC1.getHeight() - switchHeight) / 2;
+    int switchWidth = round(std::min(blockC1.getWidth(), switchMaxSize));
+    int switchHeight = round(std::min(blockC1.getHeight(), switchMaxSize));
+    int switchX = round(blockC1.getX() + (blockC1.getWidth() - switchWidth) / 2.0);
+    int switchY = round(blockC1.getY() + (blockC1.getHeight() - switchHeight) / 2.0);
     cabOnButton.setBounds(switchX, switchY, switchWidth, switchHeight);
 
     // Set bounds for the resizable corner and border
