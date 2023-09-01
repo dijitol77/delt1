@@ -464,6 +464,14 @@ void ProteusAudioProcessorEditor::cabOnButtonClicked() {
     repaint();
 }
 
+void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override
+{
+    if (comboBoxThatHasChanged == &modelSelect)
+    {
+        modelSelectChanged();
+    }
+}
+
 void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
 {
     // Amp
