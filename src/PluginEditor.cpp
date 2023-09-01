@@ -273,8 +273,8 @@ void ProteusAudioProcessorEditor::resized()
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
     // Calculate odDriveKnob position and size relative to blockA2
-    int knobWidth = blockA2.getWidth() * 0.8;
-    int knobHeight = blockA2.getHeight() * 0.8;
+    int knobWidth = blockA2.getWidth() * 0.8;  // 80% of blockA2's width
+    int knobHeight = blockA2.getHeight() * 0.8;  // 80% of blockA2's height
 
     // Calculate relative offsets based on initial offsets (140 and 60)
     float relativeOffsetX = static_cast<float>(140) / colA.getWidth();
@@ -284,6 +284,7 @@ void ProteusAudioProcessorEditor::resized()
     int knobY = blockA2.getY() + (blockA2.getHeight() - knobHeight) / 2 + static_cast<int>(blockA2.getHeight() * relativeOffsetY);
     
     odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
+    odDriveKnob.repaint();  // Explicitly call repaint on the knob
 
     // Set bounds for cabOnButton (Switch) (relative size)
     int switchMaxSize = 45;
@@ -300,6 +301,7 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
+
 
 
 
