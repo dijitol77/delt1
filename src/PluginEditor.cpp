@@ -262,7 +262,7 @@ void ProteusAudioProcessorEditor::resized()
     auto blockC2 = colC.removeFromTop(colC.getHeight() / 2);
     auto blockC3 = colC;
 
-// Set bounds for Load Model button (fixed size)
+    // Set bounds for Load Model button (fixed size)
     loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
 
     // Center the Model Select dropdown
@@ -272,16 +272,16 @@ void ProteusAudioProcessorEditor::resized()
     int modelSelectY = blockB1.getY() + (blockB1.getHeight() - modelSelectHeight) / 2;
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
-     // Calculate odDriveKnob position and size relative to blockA2
-    int knobWidth = blockA2.getWidth() * 0.8;  // 80% of blockA2's width
-    int knobHeight = blockA2.getHeight() * 0.8;  // 80% of blockA2's height
+    // Calculate odDriveKnob position and size relative to blockA2
+    int knobWidth = blockA2.getWidth() * 0.8;
+    int knobHeight = blockA2.getHeight() * 0.8;
 
-    // Calculate relative offsets (these should be set to whatever your initial relative offsets are)
-    float relativeOffsetX = 0.234;  // initial offset 117 / initial width 500
-    float relativeOffsetY = 0.08;   // initial offset 40 / initial height 500
+    // Calculate relative offsets based on initial offsets (140 and 60)
+    float relativeOffsetX = static_cast<float>(140) / colA.getWidth();
+    float relativeOffsetY = static_cast<float>(60) / colA.getHeight();
 
-    int knobX = blockA2.getX() + (blockA2.getWidth() - knobWidth) / 2 + (blockA2.getWidth() * relativeOffsetX);
-    int knobY = blockA2.getY() + (blockA2.getHeight() - knobHeight) / 2 + (blockA2.getHeight() * relativeOffsetY);
+    int knobX = blockA2.getX() + (blockA2.getWidth() - knobWidth) / 2 + static_cast<int>(blockA2.getWidth() * relativeOffsetX);
+    int knobY = blockA2.getY() + (blockA2.getHeight() - knobHeight) / 2 + static_cast<int>(blockA2.getHeight() * relativeOffsetY);
     
     odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
 
