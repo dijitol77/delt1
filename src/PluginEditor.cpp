@@ -104,7 +104,31 @@ odDriveKnob.setBounds(0, 0, 100, 100);  // x, y, width, height
 odDriveKnob.repaint();
 
 // Hide odLevelKnob
-odLevelKnob.setVisible(false);
+odLevelKnob.setVisible(false);#
+  
+
+  // Setup odDriveKnob
+driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob2);
+addAndMakeVisible(odDriveKnob);
+odDriveKnob2.setLookAndFeel(&bigKnobLAF);
+odDriveKnob2.addListener(this);
+odDriveKnob2.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
+odDriveKnob2.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
+odDriveKnob2.setDoubleClickReturnValue(true, 0.5);
+
+// Check if odDriveKnob is visible, if not make it visible
+if (!odDriveKnob.isVisible()) {
+    odDriveKnob.setVisible(true);
+}
+
+// Manually set the position of odDriveKnob at the top-left corner
+odDriveKnob2.setBounds(0, 0, 100, 100);  // x, y, width, height
+
+// Call repaint on odDriveKnob to refresh its appearance
+odDriveKnob2.repaint();
+
+// Hide odLevelKnob
+odLevelKnob2.setVisible(false);
 
 // Re-setup odLevelKnob (it will remain hidden)
 masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
@@ -275,17 +299,27 @@ void ProteusAudioProcessorEditor::resized()
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
     // Calculate the relative offsets based on blockA2's dimensions
-    int offsetX = blockA2.getWidth() * 0.31;  // 30% of blockA2's width
-    int offsetY = blockA2.getHeight() * 0.37;  // 10% of blockA2's height
+    int offsetX_A2 = blockA2.getWidth() * 0.31;  // 30% of blockA2's width
+    int offsetY_A2 = blockA2.getHeight() * 0.37;  // 50% of blockA2's height
 
-    // Calculate the size and position for odDriveKnob
-    int knobWidth = blockA2.getWidth() - 20;  // 10 pixels reduced from each side
-    int knobHeight = blockA2.getHeight() - 20;  // 10 pixels reduced from each side
-    int knobX = blockA2.getX() + 10 + offsetX;  // 10 pixels from the left edge of blockA2 + offsetX
-    int knobY = blockA2.getY() + 10 + offsetY;  // 10 pixels from the top edge of blockA2 + offsetY
+    // Calculate the size and position for odDriveKnob in blockA2
+    int knobWidth_A2 = blockA2.getWidth() - 20;  // 10 pixels reduced from each side
+    int knobHeight_A2 = blockA2.getHeight() - 20;  // 10 pixels reduced from each side
+    int knobX_A2 = blockA2.getX() + 10 + offsetX_A2;
+    int knobY_A2 = blockA2.getY() + 10 + offsetY_A2;
 
-    // Set bounds for odDriveKnob
-    odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
+    // Calculate the relative offsets based on blockC2's dimensions
+    int offsetX_C2 = blockC2.getWidth() * 0.31;  // 31% of blockC2's width
+    int offsetY_C2 = blockC2.getHeight() * 0.37;  // 37% of blockC2's height
+
+    // Calculate the size and position for odDriveKnob2 in blockC2
+    int knobWidth_C2 = blockC2.getWidth() - 20;  // 10 pixels reduced from each side
+    int knobHeight_C2 = blockC2.getHeight() - 20;  // 10 pixels reduced from each side
+    int knobX_C2 = blockC2.getX() + 10 + offsetX_C2;
+    int knobY_C2 = blockC2.getY() + 10 + offsetY_C2;
+
+    // Set bounds for odDriveKnob2 in blockC2
+    odDriveKnob2.setBounds(knobX_C2, knobY_C2, knobWidth_C2, knobHeight_C2);
 
     // Set bounds for cabOnButton (Switch) (relative size)
     cabOnButton.setBounds(blockC1.reduced(10));
