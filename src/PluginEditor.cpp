@@ -273,8 +273,8 @@ void ProteusAudioProcessorEditor::resized()
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
   // Move odDriveKnob 70px to the right and 20px down
-    int knobX = blockA2.getX() + 116;  // 70px to the right
-    int knobY = blockA2.getY() + 42;  // 20px down
+    int knobX = blockA2.getX() + 117;  // 70px to the right
+    int knobY = blockA2.getY() + 40;  // 20px down
     int knobWidth = blockA2.getWidth();
     int knobHeight = blockA2.getHeight();
     odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
