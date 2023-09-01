@@ -128,7 +128,7 @@ odDriveKnob2.setBounds(0, 0, 100, 100);  // x, y, width, height
 odDriveKnob2.repaint();
 
 // Hide odLevelKnob
-odLevelKnob2.setVisible(false);
+odLevelKnob.setVisible(false);
 
 // Re-setup odLevelKnob (it will remain hidden)
 masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
