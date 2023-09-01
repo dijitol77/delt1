@@ -275,8 +275,8 @@ void ProteusAudioProcessorEditor::resized()
     // Calculate dimensions for odDriveKnob based on blockA2
     int knobWidth = blockA2.getWidth();
     int knobHeight = blockA2.getHeight();
-    int knobX = blockA2.getX() + 70 * (knobWidth / static_cast<float>(totalArea.getWidth()));  // 70px to the right, scaled
-    int knobY = blockA2.getY() + 20 * (knobHeight / static_cast<float>(totalArea.getHeight()));  // 20px down, scaled
+    int knobX = blockA2.getX() + 114 * (knobWidth / static_cast<float>(totalArea.getWidth()));  // 70px to the right, scaled
+    int knobY = blockA2.getY() + 38 * (knobHeight / static_cast<float>(totalArea.getHeight()));  // 20px down, scaled
     odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
 
     // Set bounds for cabOnButton (Switch) (relative size)
