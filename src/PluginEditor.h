@@ -17,6 +17,15 @@
 //==============================================================================
 /**
 */
+
+
+class ProteusAudioProcessorEditor : public juce::AudioProcessorEditor, public juce::ComboBox::Listener
+{
+public:
+    // ... (other members and functions)
+    void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
+    // ... (other members and functions)
+};
 class ProteusAudioProcessorEditor : public juce::AudioProcessorEditor,
                                     public Button::Listener,
                                     public Slider::Listener,
@@ -92,6 +101,7 @@ juce::Component block3;  // Declare block3 here
     void odFootSwClicked();
     void modelSelectChanged();
     void cabOnButtonClicked();
+void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 
     bool model_loaded = false;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
