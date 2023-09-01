@@ -275,7 +275,7 @@ void ProteusAudioProcessorEditor::resized()
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
     // Calculate the relative offsets based on blockA2's dimensions
-    int offsetX = blockA2.getWidth() * 0.35;  // 30% of blockA2's width
+    int offsetX = blockA2.getWidth() * 0.25;  // 30% of blockA2's width
     int offsetY = blockA2.getHeight() * 0.25;  // 10% of blockA2's height
 
     // Calculate the size and position for odDriveKnob
