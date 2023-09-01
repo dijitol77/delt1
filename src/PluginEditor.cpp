@@ -204,8 +204,11 @@ background2 = ImageCache::getFromMemory(BinaryData::BACK2_jpg, BinaryData::BACK2
  
     // Size of plugin GUI
     setSize(1121, 326); 
-
+  
+modelSelect.addListener(this);
+  
     loadFromFolder();
+  
    // Call resized() to set the initial layout
     resized();
 }
