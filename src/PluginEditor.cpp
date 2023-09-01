@@ -104,7 +104,7 @@ odDriveKnob.setBounds(0, 0, 100, 100);  // x, y, width, height
 odDriveKnob.repaint();
 
 // Hide odLevelKnob
-odLevelKnob.setVisible(false);#
+odLevelKnob.setVisible(false);
   
 
   // Setup odDriveKnob
