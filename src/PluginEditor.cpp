@@ -468,8 +468,22 @@ void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHa
 {
     if (comboBoxThatHasChanged == &modelSelect)
     {
-        modelSelectChanged();
+        // Your logic for when modelSelect changes
+        const int selectedFileIndex = modelSelect.getSelectedItemIndex();
+        if (selectedFileIndex >= 0 && selectedFileIndex < processor.jsonFiles.size() && !processor.jsonFiles.empty()) {
+            if (processor.jsonFiles[selectedFileIndex].existsAsFile() && isValidFormat(processor.jsonFiles[selectedFileIndex])) {
+                processor.loadConfig(processor.jsonFiles[selectedFileIndex]);
+                processor.current_model_index = selectedFileIndex;
+                processor.saved_model = processor.jsonFiles[selectedFileIndex];
+            }
+        }
+        repaint();
     }
+    // You can add more conditions here if you have other ComboBoxes
+    // else if (comboBoxThatHasChanged == &anotherComboBox)
+    // {
+    //     // Your logic for when anotherComboBox changes
+    // }
 }
 
 void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
