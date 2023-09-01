@@ -272,19 +272,20 @@ void ProteusAudioProcessorEditor::resized()
     int modelSelectY = blockB1.getY() + (blockB1.getHeight() - modelSelectHeight) / 2;
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
-    // Calculate dimensions for odDriveKnob based on blockA2
-    int knobWidth = blockA2.getWidth();
-    int knobHeight = blockA2.getHeight();
-    int knobX = blockA2.getX() + 114 * (knobWidth / static_cast<float>(totalArea.getWidth()));  // 70px to the right, scaled
-    int knobY = blockA2.getY() + 38 * (knobHeight / static_cast<float>(totalArea.getHeight()));  // 20px down, scaled
+    // Calculate odDriveKnob position and size relative to blockA2
+    int knobWidth = blockA2.getWidth() * 0.8;  // 80% of blockA2's width
+    int knobHeight = blockA2.getHeight() * 0.8;  // 80% of blockA2's height
+    int knobX = blockA2.getX() + (blockA2.getWidth() - knobWidth) / 2 + 117;  // Centered and then moved 70px to the right
+    int knobY = blockA2.getY() + (blockA2.getHeight() - knobHeight) / 2 + 40;  // Centered and then moved 20px down
     odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
 
     // Set bounds for cabOnButton (Switch) (relative size)
     int switchMaxSize = 45;
-    int switchSize = std::min(blockC1.getWidth(), std::min(blockC1.getHeight(), switchMaxSize));
-    int switchX = blockC1.getX() + (blockC1.getWidth() - switchSize) / 2;
-    int switchY = blockC1.getY() + (blockC1.getHeight() - switchSize) / 2;
-    cabOnButton.setBounds(switchX, switchY, switchSize, switchSize);
+    int switchWidth = std::min(blockC1.getWidth(), switchMaxSize);
+    int switchHeight = std::min(blockC1.getHeight(), switchMaxSize);
+    int switchX = blockC1.getX() + (blockC1.getWidth() - switchWidth) / 2;
+    int switchY = blockC1.getY() + (blockC1.getHeight() - switchHeight) / 2;
+    cabOnButton.setBounds(switchX, switchY, switchWidth, switchHeight);
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
