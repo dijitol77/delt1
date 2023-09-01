@@ -262,7 +262,7 @@ void ProteusAudioProcessorEditor::resized()
     auto blockC2 = colC.removeFromTop(colC.getHeight() / 2);
     auto blockC3 = colC;
 
-  // Set bounds for Load Model button (fixed size)
+ // Set bounds for Load Model button (fixed size)
     loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
 
     // Center the Model Select dropdown
@@ -272,17 +272,12 @@ void ProteusAudioProcessorEditor::resized()
     int modelSelectY = blockB1.getY() + (blockB1.getHeight() - modelSelectHeight) / 2;
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
-  // Move odDriveKnob 70px to the right and 20px down
+    // Move odDriveKnob 70px to the right and 20px down
     int knobX = blockA2.getX() + 117;  // 70px to the right
     int knobY = blockA2.getY() + 40;  // 20px down
     int knobWidth = blockA2.getWidth();
     int knobHeight = blockA2.getHeight();
     odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
-
-    // Move odDriveKnob 70px to the right and 20px down
-   // auto knobBounds = blockA2.reduced(10);
-  // knobBounds.translate(114, 45);  // Move xxpx to the right and yypx down
-  //  odDriveKnob.setBounds(knobBounds);
 
     // Set bounds for cabOnButton (Switch) (relative size)
     cabOnButton.setBounds(blockC1.reduced(10));
