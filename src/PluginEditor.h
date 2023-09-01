@@ -19,13 +19,6 @@
 */
 
 
-class ProteusAudioProcessorEditor : public juce::AudioProcessorEditor, public juce::ComboBox::Listener
-{
-public:
-    // ... (other members and functions)
-    void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
-    // ... (other members and functions)
-};
 class ProteusAudioProcessorEditor : public juce::AudioProcessorEditor,
                                     public Button::Listener,
                                     public Slider::Listener,
