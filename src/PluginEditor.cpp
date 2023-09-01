@@ -262,7 +262,7 @@ void ProteusAudioProcessorEditor::resized()
     auto blockC2 = colC.removeFromTop(colC.getHeight() / 2);
     auto blockC3 = colC;
 
-    // Set bounds for Load Model button (fixed size)
+ // Set bounds for Load Model button (fixed size)
     loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
 
     // Center the Model Select dropdown
@@ -272,25 +272,15 @@ void ProteusAudioProcessorEditor::resized()
     int modelSelectY = blockB1.getY() + (blockB1.getHeight() - modelSelectHeight) / 2;
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
-  // Calculate odDriveKnob position and size relative to blockA2
-    int knobWidth = round(blockA2.getWidth() * 0.8);  // 80% of blockA2's width
-    int knobHeight = round(blockA2.getHeight() * 0.8);  // 80% of blockA2's height
-
-    // ... (Same as before for calculating relative offsets)
-
-    int knobX = round(blockA2.getX() + (blockA2.getWidth() - knobWidth) / 2.0 + blockA2.getWidth() * relativeOffsetX);
-    int knobY = round(blockA2.getY() + (blockA2.getHeight() - knobHeight) / 2.0 + blockA2.getHeight() * relativeOffsetY);
-    
+    // Move odDriveKnob 70px to the right and 20px down
+    int knobX = blockA2.getX() + 117;  // 70px to the right
+    int knobY = blockA2.getY() + 40;  // 20px down
+    int knobWidth = blockA2.getWidth();
+    int knobHeight = blockA2.getHeight();
     odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
-    odDriveKnob.repaint();  // Explicitly call repaint on the knob
 
     // Set bounds for cabOnButton (Switch) (relative size)
-    int switchMaxSize = 45;
-    int switchWidth = round(std::min(blockC1.getWidth(), switchMaxSize));
-    int switchHeight = round(std::min(blockC1.getHeight(), switchMaxSize));
-    int switchX = round(blockC1.getX() + (blockC1.getWidth() - switchWidth) / 2.0);
-    int switchY = round(blockC1.getY() + (blockC1.getHeight() - switchHeight) / 2.0);
-    cabOnButton.setBounds(switchX, switchY, switchWidth, switchHeight);
+    cabOnButton.setBounds(blockC1.reduced(10));
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
@@ -299,7 +289,6 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
-
 
 
 
