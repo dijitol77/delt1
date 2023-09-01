@@ -274,12 +274,18 @@ void ProteusAudioProcessorEditor::resized()
     int modelSelectY = blockB1.getY() + (blockB1.getHeight() - modelSelectHeight) / 2;
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
-  // Add an offset to move the knob to the right and down within blockA2
-    int offsetX = 117;  // Move the knob 100 pixels to the right
-    int offsetY = 38;   // Move the knob 40 pixels down
+    // Calculate odDriveKnob position and size relative to blockA2
+    int knobWidth = blockA2.getWidth() * 0.8;  // 80% of blockA2's width
+    int knobHeight = blockA2.getHeight() * 0.8;  // 80% of blockA2's height
 
-    // Set bounds for odDriveKnob (relative size)
-    odDriveKnob.setBounds(blockA2.reduced(10).withX(blockA2.getX() + offsetX).withY(blockA2.getY() + offsetY));
+    // Add an offset to move the knob to the right and down within blockA2
+    int offsetX = 100;  // Move the knob 100 pixels to the right
+    int offsetY = 40;   // Move the knob 40 pixels down
+
+    int knobX = blockA2.getX() + offsetX;
+    int knobY = blockA2.getY() + offsetY;
+
+    odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
 
     // Set bounds for cabOnButton (Switch) (relative size)
     cabOnButton.setBounds(blockC1.reduced(10));
