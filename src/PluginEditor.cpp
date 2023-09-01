@@ -262,15 +262,7 @@ void ProteusAudioProcessorEditor::resized()
     auto blockC2 = colC.removeFromTop(colC.getHeight() / 2);
     auto blockC3 = colC;
 
- // Set bounds for Load Model button (fixed size)
-    loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
-
-    // Center the Model Select dropdown
-    int modelSelectWidth = 200;
-    int modelSelectHeight = 30;
-    int modelSelectX = blockB1.getX() + (blockB1.getWidth() - modelSelectWidth) / 2;
-    int modelSelectY = blockB1.getY() + (blockB1.getHeight() - modelSelectHeight) / 2;
-    modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
+ 
 
  // Set bounds for Load Model button (fixed size)
     loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
