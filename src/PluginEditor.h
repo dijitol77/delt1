@@ -64,6 +64,7 @@ private:
     Slider ampMidKnob;
     Slider ampTrebleKnob;
     Slider odDriveKnob;
+Slider odDriveKnob2;
     Slider odLevelKnob;
 
     ImageButton cabOnButton;
