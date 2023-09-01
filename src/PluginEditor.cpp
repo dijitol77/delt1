@@ -272,12 +272,8 @@ void ProteusAudioProcessorEditor::resized()
     int modelSelectY = blockB1.getY() + (blockB1.getHeight() - modelSelectHeight) / 2;
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
-    // Move odDriveKnob 70px to the right and 20px down
-    int knobX = blockA2.getX() + 117;  // 70px to the right
-    int knobY = blockA2.getY() + 40;  // 20px down
-    int knobWidth = blockA2.getWidth();
-    int knobHeight = blockA2.getHeight();
-    odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
+    // Set bounds for odDriveKnob (relative size)
+    odDriveKnob.setBounds(blockA2.reduced(10));
 
     // Set bounds for cabOnButton (Switch) (relative size)
     cabOnButton.setBounds(blockC1.reduced(10));
@@ -289,8 +285,6 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
-
-
 
 
 bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
