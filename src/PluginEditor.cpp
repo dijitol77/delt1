@@ -262,7 +262,7 @@ void ProteusAudioProcessorEditor::resized()
     auto blockC2 = colC.removeFromTop(colC.getHeight() / 2);
     auto blockC3 = colC;
 
- // Set bounds for Load Model button (fixed size)
+// Set bounds for Load Model button (fixed size)
     loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
 
     // Center the Model Select dropdown
@@ -272,15 +272,19 @@ void ProteusAudioProcessorEditor::resized()
     int modelSelectY = blockB1.getY() + (blockB1.getHeight() - modelSelectHeight) / 2;
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
-    // Move odDriveKnob 70px to the right and 20px down
-    int knobX = blockA2.getX() + 117;  // 70px to the right
-    int knobY = blockA2.getY() + 40;  // 20px down
+    // Calculate dimensions for odDriveKnob based on blockA2
     int knobWidth = blockA2.getWidth();
     int knobHeight = blockA2.getHeight();
+    int knobX = blockA2.getX() + 70 * (knobWidth / static_cast<float>(totalArea.getWidth()));  // 70px to the right, scaled
+    int knobY = blockA2.getY() + 20 * (knobHeight / static_cast<float>(totalArea.getHeight()));  // 20px down, scaled
     odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
 
     // Set bounds for cabOnButton (Switch) (relative size)
-    cabOnButton.setBounds(blockC1.reduced(10));
+    int switchMaxSize = 45;
+    int switchSize = std::min(blockC1.getWidth(), std::min(blockC1.getHeight(), switchMaxSize));
+    int switchX = blockC1.getX() + (blockC1.getWidth() - switchSize) / 2;
+    int switchY = blockC1.getY() + (blockC1.getHeight() - switchSize) / 2;
+    cabOnButton.setBounds(switchX, switchY, switchSize, switchSize);
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
