@@ -79,6 +79,9 @@ juce::Component block1;
 juce::Component block2;  // Declare block2 here
 juce::Component block3;  // Declare block3 here
 
+juce::Button ButtonX;  // Declare once
+juce::Button ButtonY;  // Declare once
+
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
 
