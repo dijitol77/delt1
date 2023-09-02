@@ -298,7 +298,7 @@ void ProteusAudioProcessorEditor::resized()
     int ButtonY = blockA2.getY() + 10 + offsetY;  // 10 pixels from the top edge of blockA2 + offsetY
 
     // Set bounds for cabOnButton 
-    cabOnButton..setBounds(knobX, knobY, knobWidth, knobHeight);
+    cabOnButton.setBounds(knobX, knobY, knobWidth, knobHeight);
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
