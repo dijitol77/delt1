@@ -408,6 +408,7 @@ void ProteusAudioProcessorEditor::loadButtonClicked()
 void ProteusAudioProcessorEditor::loadFromFolder()
 {
     processor.model_loaded = false;
+
     processor.jsonFiles.clear();
     modelSelect.clear();
 
@@ -417,23 +418,25 @@ void ProteusAudioProcessorEditor::loadFromFolder()
     // Navigate to the parent directory
     File parentDir = currentDir.getParentDirectory();
     
-    // Locate the /models directory
-    File modelsDir = parentDir.getChildFile("models");
+    // Locate the /src directory
+    File srcDir = parentDir.getChildFile("src");
+
+    // Locate the /models directory inside /src
+    File modelsDir = srcDir.getChildFile("models");
 
     // Now use modelsDir to find your model files
     Array<File> files = modelsDir.findChildFiles(File::findFiles, false, "*.json");
 
-
     if (files.size() > 0) {
         for (auto file : files) {
-            
             if (isValidFormat(file)) {
                 modelSelect.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
                 processor.jsonFiles.push_back(file);
                 processor.num_models += 1;
             }
         }
-        // Try to load model from saved_model, if it doesnt exist and jsonFiles is not empty, load the first model (if it exists and is valid format)
+        
+        // Try to load model from saved_model, if it doesn't exist and jsonFiles is not empty, load the first model (if it exists and is a valid format)
         if (!processor.jsonFiles.empty()) {
             if (processor.saved_model.existsAsFile() && isValidFormat(processor.saved_model)) {
                 processor.loadConfig(processor.saved_model);
@@ -447,6 +450,7 @@ void ProteusAudioProcessorEditor::loadFromFolder()
         }
     }
 }
+
 
 
 void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
