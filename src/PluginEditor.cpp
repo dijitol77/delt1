@@ -40,13 +40,13 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
 
  
    // Debugging for Load Model Button
-    addAndMakeVisible(loadButton);
-    loadButton.setButtonText("LOAD MODEL");
-    loadButton.addListener(this);
-    loadButton.toFront(true);
-    loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
-    loadButton.setBounds(20, getHeight() - 50, 100, 30);
-    loadButton.repaint();
+ //   addAndMakeVisible(loadButton);
+ //   loadButton.setButtonText("LOAD MODEL");
+//   loadButton.addListener(this);
+//    loadButton.toFront(true);
+ //   loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
+ //   loadButton.setBounds(20, getHeight() - 50, 100, 30);
+//    loadButton.repaint();
 
   
     addAndMakeVisible(modelSelect);
@@ -187,7 +187,7 @@ if (showEQ) {
     controlFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withFlex(1));
 
     // Add Components to mainFlexBox
-    mainFlexBox.items.add(juce::FlexItem(loadButton).withFlex(1));
+   // mainFlexBox.items.add(juce::FlexItem(loadButton).withFlex(1));
     mainFlexBox.items.add(juce::FlexItem(controlFlexBox).withFlex(4));
 
  // Remove these lines
@@ -268,7 +268,7 @@ void ProteusAudioProcessorEditor::resized()
  
 
   // Set bounds for Load Model button (fixed size)
-    loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
+ //   loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
 
     // Center the Model Select dropdown
     int modelSelectWidth = 200;
