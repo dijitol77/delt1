@@ -297,8 +297,8 @@ void ProteusAudioProcessorEditor::resized()
     int ButtonX = blockA2.getX() + (blockA2.getWidth() - modelSelectWidth) / 2;
     int ButtonY = blockA2.getY() + (blockA2.getHeight() - modelSelectHeight) / 2;
   
-   // int ButtonX = blockA2.getX() + 10 + offsetX;  // 10 pixels from the left edge of blockA2 + offsetX
-  //  int ButtonY = blockA2.getY() + 10 + offsetY;  // 10 pixels from the top edge of blockA2 + offsetY
+  int ButtonX = blockA2.getX() + 10 + offsetX;  // 10 pixels from the left edge of blockA2 + offsetX
+   int ButtonY = blockA2.getY() + 10 + offsetY;  // 10 pixels from the top edge of blockA2 + offsetY
 
     // Set bounds for cabOnButton 
     cabOnButton.setBounds(ButtonX, ButtonY, ButtonWidth, ButtonHeight);
