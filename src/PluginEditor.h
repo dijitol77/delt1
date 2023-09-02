@@ -43,11 +43,11 @@ private:
     ProteusAudioProcessor& processor;
 
 
-    TextButton loadButton;
-    virtual void buttonClicked(Button* button) override;
+ //   TextButton loadButton;
+ //   virtual void buttonClicked(Button* button) override;
 
-    bool isValidFormat(File configFile);
-    void loadButtonClicked();
+ //   bool isValidFormat(File configFile);
+//    void loadButtonClicked();
    Image background2;
   // Image background2 = ImageCache::getFromMemory(BinaryData::BACK2_jpg, BinaryData::BACK2_jpgSize);
     //Image background = ImageCache::getFromMemory(BinaryData::smart_pedal_jpg, BinaryData::smart_pedal_jpgSize);
