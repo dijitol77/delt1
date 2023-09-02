@@ -408,7 +408,6 @@ void ProteusAudioProcessorEditor::loadButtonClicked()
 void ProteusAudioProcessorEditor::loadFromFolder()
 {
     processor.model_loaded = false;
-
     processor.jsonFiles.clear();
     modelSelect.clear();
 
