@@ -408,11 +408,21 @@ void ProteusAudioProcessorEditor::loadButtonClicked()
 void ProteusAudioProcessorEditor::loadFromFolder()
 {
     processor.model_loaded = false;
-    Array<File> files;
-    files = processor.folder.findChildFiles(2, false, "*.json");
-
     processor.jsonFiles.clear();
     modelSelect.clear();
+
+    // Get the current working directory
+    File currentDir = File::getCurrentWorkingDirectory();
+    
+    // Navigate to the parent directory
+    File parentDir = currentDir.getParentDirectory();
+    
+    // Locate the /models directory
+    File modelsDir = parentDir.getChildFile("models");
+
+    // Now use modelsDir to find your model files
+    Array<File> files = modelsDir.findChildFiles(File::findFiles, false, "*.json");
+
 
     if (files.size() > 0) {
         for (auto file : files) {
