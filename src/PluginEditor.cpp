@@ -277,31 +277,19 @@ void ProteusAudioProcessorEditor::resized()
     int modelSelectY = blockB1.getY() + (blockB1.getHeight() - modelSelectHeight) / 2;
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
-    // Calculate the relative offsets based on blockA2's dimensions
-    int offsetX = blockA2.getWidth() * 0.31;  // 30% of blockA2's width
-    int offsetY = blockA2.getHeight() * 0.37;  // 10% of blockA2's height
+  // For the knob
+int knobWidth = blockA2.getWidth() - 20;
+int knobHeight = blockA2.getHeight() - 20;
+int knobX = blockA2.getX() + 10;  // 10 pixels from the left edge of blockA2
+int knobY = blockA2.getY() + 10;  // 10 pixels from the top edge of blockA2
+odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
 
-    // Calculate the size and position for odDriveKnob
-    int knobWidth = blockA2.getWidth() - 20;  // 10 pixels reduced from each side
-    int knobHeight = blockA2.getHeight() - 20;  // 10 pixels reduced from each side
-    int knobX = blockA2.getX() + 10 + offsetX;  // 10 pixels from the left edge of blockA2 + offsetX
-    int knobY = blockA2.getY() + 10 + offsetY;  // 10 pixels from the top edge of blockA2 + offsetY
-
-    // Set bounds for odDriveKnob
-    odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
-
-  
-   // Calculate the size and position for odDriveKnob
-    int ButtonWidth = blockA2.getWidth() - 20;  // 10 pixels reduced from each side
-    int ButtonHeight = blockA2.getHeight() - 20;  // 10 pixels reduced from each side
-    int ButtonX = blockA2.getX() + (blockA2.getWidth() - modelSelectWidth) / 2;
-    int ButtonY = blockA2.getY() + (blockA2.getHeight() - modelSelectHeight) / 2;
-  
-  int ButtonX = blockA2.getX() + 10 + offsetX;  // 10 pixels from the left edge of blockA2 + offsetX
-   int ButtonY = blockA2.getY() + 10 + offsetY;  // 10 pixels from the top edge of blockA2 + offsetY
-
-    // Set bounds for cabOnButton 
-    cabOnButton.setBounds(ButtonX, ButtonY, ButtonWidth, ButtonHeight);
+// For the button
+int buttonWidth = blockA2.getWidth() - 20;
+int buttonHeight = blockA2.getHeight() - 20;
+int buttonX = blockA2.getX() + blockA2.getWidth() - buttonWidth - 10;  // 10 pixels from the right edge of blockA2
+int buttonY = blockA2.getY() + 10;  // 10 pixels from the top edge of blockA2
+cabOnButton.setBounds(buttonX, buttonY, buttonWidth, buttonHeight);
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
