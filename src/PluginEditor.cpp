@@ -476,7 +476,6 @@ void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
         }
     }
 
-
 }
 
 void ProteusAudioProcessorEditor::odFootSwClicked() {
