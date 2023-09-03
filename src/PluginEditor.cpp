@@ -291,15 +291,17 @@ void ProteusAudioProcessorEditor::resized()
 
     cabOnButton.setBounds(blockC1.reduced(10));
 
-    int switchOffsetX = blockA2.getWidth() * 0.31;
-    int switchOffsetY = blockA2.getHeight() * 0.37;
+    int switchOffsetX = blockA2.getWidth() * 0.5;
+    int switchOffsetY = blockA2.getHeight() * 0.5;
 
-    int switchWidth = blockA2.getWidth() - 20;
-    int switchHeight = blockA2.getHeight() - 20;
+    int switchWidth = 20;  // You can adjust this
+    int switchHeight = 20;  // You can adjust this
     int switchX = blockA2.getX() + 10 + switchOffsetX + 25;
     int switchY = blockA2.getY() + 10 + switchOffsetY + 40;
 
     placeholderSwitch.setBounds(switchX, switchY, switchWidth, switchHeight);
+
+   
 
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     resizableBorder->setBounds(0, 0, getWidth(), getHeight());
