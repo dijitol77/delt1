@@ -283,9 +283,12 @@ void ProteusAudioProcessorEditor::resized()
     int modelSelectY = blockB1.getY() + (blockB1.getHeight() - modelSelectHeight) / 2;
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
-    // Calculate the relative offsets based on blockA2's dimensions
-    int offsetX = blockA2.getWidth() * 0.31;  // 30% of blockA2's width
-    int offsetY = blockA2.getHeight() * 0.37;  // 10% of blockA2's height
+   
+    // Calculate the relative offsets based on blockA2's dimensions for odDriveKnob
+    int knobOffsetX = blockA2.getWidth() * 0.31;  // 31% of blockA2's width
+    int knobOffsetY = blockA2.getHeight() * 0.37;  // 37% of blockA2's height
+
+   
 
     // Calculate the size and position for odDriveKnob
     int knobWidth = blockA2.getWidth() - 20;  // 10 pixels reduced from each side
