@@ -3,8 +3,6 @@
 
     This file was auto-generated!
 
-ddd
-
     It contains the basic framework code for a JUCE plugin editor.
 
   ==============================================================================
@@ -19,8 +17,6 @@ ddd
 //==============================================================================
 /**
 */
-
-
 class ProteusAudioProcessorEditor : public juce::AudioProcessorEditor,
                                     public Button::Listener,
                                     public Slider::Listener,
@@ -45,11 +41,11 @@ private:
     ProteusAudioProcessor& processor;
 
 
- //   TextButton loadButton;
-   virtual void buttonClicked(Button* button) override;
+    TextButton loadButton;
+    virtual void buttonClicked(Button* button) override;
 
-   bool isValidFormat(File configFile);
- // void loadButtonClicked();
+    bool isValidFormat(File configFile);
+    void loadButtonClicked();
    Image background2;
   // Image background2 = ImageCache::getFromMemory(BinaryData::BACK2_jpg, BinaryData::BACK2_jpgSize);
     //Image background = ImageCache::getFromMemory(BinaryData::smart_pedal_jpg, BinaryData::smart_pedal_jpgSize);
@@ -72,8 +68,7 @@ private:
 Slider odDriveKnob2;
     Slider odLevelKnob;
 
-juce::ImageButton cabOnButton;  // or juce::ImageButton cabOnButton;
-    
+    ImageButton cabOnButton;
     juce::FlexBox mainFlexBox;
     juce::FlexBox controlFlexBox;
     juce::Label loadedModelLabel;  // Add this line
@@ -81,9 +76,6 @@ juce::ImageButton cabOnButton;  // or juce::ImageButton cabOnButton;
 juce::Component block1;
 juce::Component block2;  // Declare block2 here
 juce::Component block3;  // Declare block3 here
-
-juce::TextButton ButtonX;  // Declare once
-juce::TextButton ButtonY;  // Declare once
 
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
@@ -100,7 +92,6 @@ juce::TextButton ButtonY;  // Declare once
     void odFootSwClicked();
     void modelSelectChanged();
     void cabOnButtonClicked();
-void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 
     bool model_loaded = false;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
