@@ -301,16 +301,19 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for cabOnButton (Switch) (relative size)
     cabOnButton.setBounds(blockC1.reduced(10));
 
-    // Assuming blockA2 is the component you want to place the placeholderSwitch in
-    // Calculate the relative offsets based on blockA2's dimensions
-    int offsetX = blockA2.getWidth() * 0.31;  // 31% of blockA2's width
-    int offsetY = blockA2.getHeight() * 0.37;  // 37% of blockA2's height
+   // Calculate the relative offsets based on blockA2's dimensions for placeholderSwitch
+    int switchOffsetX = blockA2.getWidth() * 0.31;  // 31% of blockA2's width
+    int switchOffsetY = blockA2.getHeight() * 0.37;  // 37% of blockA2's height
 
     // Calculate the size and position for placeholderSwitch
     int switchWidth = blockA2.getWidth() - 20;  // 10 pixels reduced from each side
     int switchHeight = blockA2.getHeight() - 20;  // 10 pixels reduced from each side
-    int switchX = blockA2.getX() + 10 + offsetX + 25;  // 10 pixels from the left edge of blockA2 + offsetX + 25 pixels to the right
-    int switchY = blockA2.getY() + 10 + offsetY + 40;  // 10 pixels from the top edge of blockA2 + offsetY + 40 pixels down
+    int switchX = blockA2.getX() + 10 + switchOffsetX + 25;  // 10 pixels from the left edge of blockA2 + offsetX + 25 pixels to the right
+    int switchY = blockA2.getY() + 10 + switchOffsetY + 40;  // 10 pixels from the top edge of blockA2 + offsetY + 40 pixels down
+
+    // Set bounds for placeholderSwitch
+    placeholderSwitch.setBounds(switchX, switchY, switchWidth, switchHeight);
+
 
     // Set bounds for placeholderSwitch
     placeholderSwitch.setBounds(switchX, switchY, switchWidth, switchHeight);
