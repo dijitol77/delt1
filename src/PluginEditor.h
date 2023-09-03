@@ -92,6 +92,7 @@ juce::Component block3;  // Declare block3 here
     void odFootSwClicked();
     void modelSelectChanged();
     void cabOnButtonClicked();
+void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 
     bool model_loaded = false;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
