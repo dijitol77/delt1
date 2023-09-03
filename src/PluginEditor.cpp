@@ -273,9 +273,7 @@ void ProteusAudioProcessorEditor::resized()
     auto blockC2 = colC.removeFromTop(colC.getHeight() / 2);
     auto blockC3 = colC;
 
- 
-
-  // Set bounds for Load Model button (fixed size)
+     // Set bounds for Load Model button (fixed size)
     loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
 
     // Center the Model Select dropdown
@@ -312,13 +310,7 @@ void ProteusAudioProcessorEditor::resized()
     int switchY = blockA2.getY() + 10 + switchOffsetY + 40;  // 10 pixels from the top edge of blockA2 + offsetY + 40 pixels down
 
     // Set bounds for placeholderSwitch
-    placeholderSwitch.setBounds(switchX, switchY, switchWidth, switchHeight);
-
-
-    // Set bounds for placeholderSwitch
-    placeholderSwitch.setBounds(switchX, switchY, switchWidth, switchHeight);
-
-    
+    placeholderSwitch.setBounds(switchX, switchY, switchWidth, switchHeight);    
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
