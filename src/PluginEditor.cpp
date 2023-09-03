@@ -279,29 +279,34 @@ void ProteusAudioProcessorEditor::resized()
     int modelSelectY = blockB1.getY() + (blockB1.getHeight() - modelSelectHeight) / 2;
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
+ // Calculate the relative offsets based on blockA2's dimensions for odDriveKnob
     int knobOffsetX = blockA2.getWidth() * 0.31;
     int knobOffsetY = blockA2.getHeight() * 0.37;
 
+    // Calculate the size and position for odDriveKnob
     int knobWidth = blockA2.getWidth() - 20;
     int knobHeight = blockA2.getHeight() - 20;
     int knobX = blockA2.getX() + 10 + knobOffsetX;
     int knobY = blockA2.getY() + 10 + knobOffsetY;
 
+    // Set bounds for odDriveKnob
     odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
 
-    cabOnButton.setBounds(blockC1.reduced(10));
+    // Calculate the relative offsets based on blockA2's dimensions for placeholderSwitch
+    int switchOffsetX = blockA2.getWidth() * 0.6;  // Different offset for the switch
+    int switchOffsetY = blockA2.getHeight() * 0.6;  // Different offset for the switch
 
-    int switchOffsetX = blockA2.getWidth() * 0.5;
-    int switchOffsetY = blockA2.getHeight() * 0.5;
-
-    int switchWidth = 20;  // You can adjust this
-    int switchHeight = 20;  // You can adjust this
-    int switchX = blockA2.getX() + 10 + switchOffsetX + 25;
-    int switchY = blockA2.getY() + 10 + switchOffsetY + 40;
+    // Set bounds for placeholderSwitch with different dimensions
+    int switchWidth = 50;  // Smaller width
+    int switchHeight = 20;  // Smaller height
+    int switchX = blockA2.getX() + 10 + switchOffsetX;
+    int switchY = blockA2.getY() + 10 + switchOffsetY;
 
     placeholderSwitch.setBounds(switchX, switchY, switchWidth, switchHeight);
 
-   
+    // ... (remaining code remains unchanged)
+
+    cabOnButton.setBounds(blockC1.reduced(10));   
 
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     resizableBorder->setBounds(0, 0, getWidth(), getHeight());
