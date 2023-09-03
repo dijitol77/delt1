@@ -255,12 +255,10 @@ void ProteusAudioProcessorEditor::resized()
 {
     auto totalArea = getLocalBounds();
     
-    // Divide the total area into three columns: A, B, and C
     auto colA = totalArea.removeFromLeft(totalArea.getWidth() / 3);
     auto colB = totalArea.removeFromLeft(totalArea.getWidth() / 2);
     auto colC = totalArea;
 
-    // Divide each column into three blocks: 1, 2, and 3
     auto blockA1 = colA.removeFromTop(colA.getHeight() / 3);
     auto blockA2 = colA.removeFromTop(colA.getHeight() / 2);
     auto blockA3 = colA;
@@ -273,53 +271,39 @@ void ProteusAudioProcessorEditor::resized()
     auto blockC2 = colC.removeFromTop(colC.getHeight() / 2);
     auto blockC3 = colC;
 
-     // Set bounds for Load Model button (fixed size)
     loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
 
-    // Center the Model Select dropdown
     int modelSelectWidth = 200;
     int modelSelectHeight = 30;
     int modelSelectX = blockB1.getX() + (blockB1.getWidth() - modelSelectWidth) / 2;
     int modelSelectY = blockB1.getY() + (blockB1.getHeight() - modelSelectHeight) / 2;
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
-   
-    // Calculate the relative offsets based on blockA2's dimensions for odDriveKnob
-    int knobOffsetX = blockA2.getWidth() * 0.31;  // 31% of blockA2's width
-    int knobOffsetY = blockA2.getHeight() * 0.37;  // 37% of blockA2's height
+    int knobOffsetX = blockA2.getWidth() * 0.31;
+    int knobOffsetY = blockA2.getHeight() * 0.37;
 
-   
+    int knobWidth = blockA2.getWidth() - 20;
+    int knobHeight = blockA2.getHeight() - 20;
+    int knobX = blockA2.getX() + 10 + knobOffsetX;
+    int knobY = blockA2.getY() + 10 + knobOffsetY;
 
-    // Calculate the size and position for odDriveKnob
-int knobWidth = blockA2.getWidth() - 20;  // 10 pixels reduced from each side
-int knobHeight = blockA2.getHeight() - 20;  // 10 pixels reduced from each side
-int knobX = blockA2.getX() + 10 + knobOffsetX;  // 10 pixels from the left edge of blockA2 + knobOffsetX
-int knobY = blockA2.getY() + 10 + knobOffsetY;  // 10 pixels from the top edge of blockA2 + knobOffsetY
+    odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
 
-// Set bounds for odDriveKnob
-odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
-
-    // Set bounds for cabOnButton (Switch) (relative size)
     cabOnButton.setBounds(blockC1.reduced(10));
 
-   // Calculate the relative offsets based on blockA2's dimensions for placeholderSwitch
-    int switchOffsetX = blockA2.getWidth() * 0.31;  // 31% of blockA2's width
-    int switchOffsetY = blockA2.getHeight() * 0.37;  // 37% of blockA2's height
+    int switchOffsetX = blockA2.getWidth() * 0.31;
+    int switchOffsetY = blockA2.getHeight() * 0.37;
 
-    // Calculate the size and position for placeholderSwitch
-    int switchWidth = blockA2.getWidth() - 20;  // 10 pixels reduced from each side
-    int switchHeight = blockA2.getHeight() - 20;  // 10 pixels reduced from each side
-    int switchX = blockA2.getX() + 10 + switchOffsetX + 25;  // 10 pixels from the left edge of blockA2 + offsetX + 25 pixels to the right
-    int switchY = blockA2.getY() + 10 + switchOffsetY + 40;  // 10 pixels from the top edge of blockA2 + offsetY + 40 pixels down
+    int switchWidth = blockA2.getWidth() - 20;
+    int switchHeight = blockA2.getHeight() - 20;
+    int switchX = blockA2.getX() + 10 + switchOffsetX + 25;
+    int switchY = blockA2.getY() + 10 + switchOffsetY + 40;
 
-    // Set bounds for placeholderSwitch
-    placeholderSwitch.setBounds(switchX, switchY, switchWidth, switchHeight);    
+    placeholderSwitch.setBounds(switchX, switchY, switchWidth, switchHeight);
 
-    // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     resizableBorder->setBounds(0, 0, getWidth(), getHeight());
 
-    // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
 
