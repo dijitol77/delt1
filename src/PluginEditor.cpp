@@ -462,9 +462,11 @@ void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
         cabOnButtonClicked();
     }
 
-   if (button == &placeholderSwitch)
+  if (button == &placeholderSwitch)
     {
-        if (placeholderSwitch.getColour(juce::TextButton::buttonColourId) == juce::Colours::grey)
+        isPlaceholderSwitchOn = !isPlaceholderSwitchOn; // Toggle the state
+
+        if (isPlaceholderSwitchOn)
         {
             placeholderSwitch.setColour(juce::TextButton::buttonColourId, juce::Colours::green);
         }
@@ -473,6 +475,7 @@ void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
             placeholderSwitch.setColour(juce::TextButton::buttonColourId, juce::Colours::grey);
         }
     }
+
 
 }
 
