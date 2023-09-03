@@ -70,7 +70,8 @@ private:
 Slider odDriveKnob2;
     Slider odLevelKnob;
 
-    ImageButton cabOnButton;
+juce::TextButton cabOnButton;  // or juce::ImageButton cabOnButton;
+    
     juce::FlexBox mainFlexBox;
     juce::FlexBox controlFlexBox;
     juce::Label loadedModelLabel;  // Add this line
