@@ -83,6 +83,7 @@ juce::Component block3;  // Declare block3 here
     std::unique_ptr<juce::ResizableCornerComponent> resizableCorner;
     std::unique_ptr<juce::ResizableBorderComponent> resizableBorder;
     juce::ComponentBoundsConstrainer constrainer;
+ juce::TextButton placeholderSwitch;
 
 
     virtual void sliderValueChanged(Slider* slider) override;
