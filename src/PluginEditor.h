@@ -3,6 +3,8 @@
 
     This file was auto-generated!
 
+ddd
+
     It contains the basic framework code for a JUCE plugin editor.
 
   ==============================================================================
