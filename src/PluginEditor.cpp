@@ -75,6 +75,14 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
    cabOnButton.setColour(juce::TextButton::buttonColourId, juce::Colours::green); // Change color for visibility
    cabOnButton.repaint();
 
+  
+    addAndMakeVisible(placeholderSwitch);
+    placeholderSwitch.setButtonText("Switch");
+    placeholderSwitch.addListener(this);
+    placeholderSwitch.setColour(juce::TextButton::buttonColourId, juce::Colours::grey);
+
+   
+
  // addAndMakeVisible(loadedModelLabel);
  // loadedModelLabel.setText("No Model Loaded", juce::NotificationType::dontSendNotification);
  // loadedModelLabel.setJustificationType(juce::Justification::centred);
@@ -447,6 +455,19 @@ void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
     } else if (button == &cabOnButton) {
         cabOnButtonClicked();
     }
+
+   if (button == &placeholderSwitch)
+    {
+        if (placeholderSwitch.getColour(juce::TextButton::buttonColourId) == juce::Colours::grey)
+        {
+            placeholderSwitch.setColour(juce::TextButton::buttonColourId, juce::Colours::green);
+        }
+        else
+        {
+            placeholderSwitch.setColour(juce::TextButton::buttonColourId, juce::Colours::grey);
+        }
+    }
+
 }
 
 void ProteusAudioProcessorEditor::odFootSwClicked() {
