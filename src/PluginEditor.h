@@ -35,7 +35,32 @@ private:
 
     Image background2;
 
-    // ... (rest of the code remains unchanged)
+    juce::FlexBox mainFlexBox;
+    juce::FlexBox controlFlexBox;
+    juce::Label loadedModelLabel;
+
+    juce::Component block1;
+    juce::Component block2;
+    juce::Component block3;
+
+    myLookAndFeel bigKnobLAF;
+    myLookAndFeel smallKnobLAF;
+
+    std::unique_ptr<juce::ResizableCornerComponent> resizableCorner;
+    std::unique_ptr<juce::ResizableBorderComponent> resizableBorder;
+    juce::ComponentBoundsConstrainer constrainer;
+
+    virtual void sliderValueChanged(Slider* slider) override;
+    AudioProcessorParameter* getParameter(const String& paramId);
+    void modelSelectChanged();
+    void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
+
+    bool model_loaded = false;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> midSliderAttach;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
 };
