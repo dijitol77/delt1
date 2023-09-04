@@ -37,6 +37,8 @@ private:
     Slider odDriveKnob2;
     Slider odLevelKnob;
 
+Image background2;
+
     juce::FlexBox mainFlexBox;
     juce::FlexBox controlFlexBox;
     juce::Label loadedModelLabel;
