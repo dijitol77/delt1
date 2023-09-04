@@ -117,12 +117,9 @@ odLevelKnob.setDoubleClickReturnValue(true, 0.5);
 
     // Add Components to controlFlexBox
     controlFlexBox.items.add(juce::FlexItem(versionLabel).withFlex(1));
-  //  controlFlexBox.items.add(juce::FlexItem(cabOnButton).withFlex(1));
+  
     controlFlexBox.items.add(juce::FlexItem(odDriveKnob).withFlex(1));
     controlFlexBox.items.add(juce::FlexItem(odLevelKnob).withFlex(1));
-    controlFlexBox.items.add(juce::FlexItem(ampBassKnob).withFlex(1));
-    controlFlexBox.items.add(juce::FlexItem(ampMidKnob).withFlex(1));
-    controlFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withFlex(1));
 
     // Add Components to mainFlexBox
   
@@ -155,9 +152,7 @@ ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
 {
     odDriveKnob.setLookAndFeel(nullptr);
     odLevelKnob.setLookAndFeel(nullptr);
-    ampBassKnob.setLookAndFeel(nullptr);
-    ampMidKnob.setLookAndFeel(nullptr);
-    ampTrebleKnob.setLookAndFeel(nullptr);
+   
 }
 
 //==============================================================================
