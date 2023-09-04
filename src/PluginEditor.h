@@ -18,6 +18,8 @@ public:
     void loadFromFolder();
     void resetImages();
     void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
+    bool loadModelByName(const juce::String& modelName); // Only declaration here
+   
 
 private:
     ProteusAudioProcessor& processor;
