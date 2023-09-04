@@ -226,7 +226,7 @@ ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
 void ProteusAudioProcessorEditor::paint(Graphics& g)
 {
   // Cast size_t to int to resolve the warning
-    int someIntValue = static_cast<int>(someSizeTValue);
+  //  int someIntValue = static_cast<int>(someSizeTValue);
   
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
     if (processor.fw_state == 1 && processor.conditioned == true) {
