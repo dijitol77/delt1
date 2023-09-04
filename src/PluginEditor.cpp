@@ -15,7 +15,7 @@
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p), block1(/* constructor arguments, if any */)
 {
-        // Existing code...
+    // Existing code...
     resizableCorner = std::make_unique<juce::ResizableCornerComponent>(this, &constrainer);
     resizableBorder = std::make_unique<juce::ResizableBorderComponent>(this, &constrainer);
 
@@ -37,9 +37,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     addAndMakeVisible(block2);
     addAndMakeVisible(block3);
 
-
- 
-   // Debugging for Load Model Button
+    // Debugging for Load Model Button
     addAndMakeVisible(loadButton);
     loadButton.setButtonText("LOAD MODEL");
     loadButton.addListener(this);
@@ -48,7 +46,6 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     loadButton.setBounds(20, getHeight() - 50, 100, 30);
     loadButton.repaint();
 
-  
     addAndMakeVisible(modelSelect);
     modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
     modelSelect.setScrollWheelEnabled(true);
@@ -59,31 +56,27 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     }
     modelSelect.onChange = [this] {modelSelectChanged();};
 
-  // modelSelect.addListener(this);
-
     auto font = modelLabel.getFont();
     float height = font.getHeight();
     font.setHeight(height);
 
-  // Debugging for Switch
-   cabOnButton.setImages(true, true, true,
-       ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-      Image(), 1.0, Colours::transparentWhite,
+    // Debugging for Switch
+    cabOnButton.setImages(true, true, true,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-       0.0);
+        Image(), 1.0, Colours::transparentWhite,
+        ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
+        0.0);
     addAndMakeVisible(cabOnButton);
     cabOnButton.addListener(this);
-   cabOnButton.toFront(true);
-   cabOnButton.setColour(juce::TextButton::buttonColourId, juce::Colours::green); // Change color for visibility
-   cabOnButton.repaint();
+    cabOnButton.toFront(true);
+    cabOnButton.setColour(juce::TextButton::buttonColourId, juce::Colours::green);
+    cabOnButton.repaint();
 
-  
     addAndMakeVisible(placeholderSwitch);
     placeholderSwitch.setButtonText("Switch");
     placeholderSwitch.addListener(this);
     placeholderSwitch.setColour(juce::TextButton::buttonColourId, juce::Colours::grey);
 
-    
     addAndMakeVisible(secondPlaceholderSwitch);
     secondPlaceholderSwitch.setButtonText("Second Switch");
     secondPlaceholderSwitch.addListener(this);
@@ -206,26 +199,17 @@ if (showEQ) {
     mainFlexBox.items.add(juce::FlexItem(loadButton).withFlex(1));
     mainFlexBox.items.add(juce::FlexItem(controlFlexBox).withFlex(4));
 
- // Remove these lines
-// File imageFile2 = File::getCurrentWorkingDirectory().getChildFile("resources/BACK2.jpg");
-// background2 = ImageFileFormat::loadFrom(imageFile2);
+    // Use this line to load the image from binary data
+    background2 = ImageCache::getFromMemory(BinaryData::BACK2_jpg, BinaryData::BACK2_jpgSize);
 
-// Use this line to load the image from binary data
-background2 = ImageCache::getFromMemory(BinaryData::BACK2_jpg, BinaryData::BACK2_jpgSize);
-
-// Rest of your constructor code
-  
-  
-    // === END OF UPDATES ===
- 
     // Size of plugin GUI
     setSize(1121, 326); 
-  
-modelSelect.addListener(this);
-  
+
+    modelSelect.addListener(this);
+
     loadFromFolder();
-  
-   // Call resized() to set the initial layout
+
+    // Call resized() to set the initial layout
     resized();
 }
 
