@@ -6,6 +6,7 @@
 
 class ProteusAudioProcessorEditor : public AudioProcessorEditor,
                                     public Slider::Listener,
+                                    public Button::Listener, // <-- Add this line
                                     public ComboBox::Listener
 {
 public:
