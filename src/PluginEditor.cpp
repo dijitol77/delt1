@@ -288,6 +288,16 @@ void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
 }
 
 
+void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
+{
+    if (button == &placeholderSwitch)
+    {
+        isPlaceholderSwitchOn = placeholderSwitch.getToggleState();
+        // Do something when the placeholder switch is toggled
+    }
+}
+
+
 void ProteusAudioProcessorEditor::loadFromFolder()
 {
     processor.model_loaded = false;
