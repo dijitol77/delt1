@@ -551,11 +551,10 @@ void ProteusAudioProcessorEditor::cabOnButtonClicked() {
     repaint();
 }
 
-void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override
+void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) 
 {
     if (comboBoxThatHasChanged == &modelSelect)
     {
-        // Your logic for when modelSelect changes
         const int selectedFileIndex = modelSelect.getSelectedItemIndex();
         if (selectedFileIndex >= 0 && selectedFileIndex < processor.jsonFiles.size() && !processor.jsonFiles.empty()) {
             if (processor.jsonFiles[selectedFileIndex].existsAsFile() && isValidFormat(processor.jsonFiles[selectedFileIndex])) {
@@ -566,7 +565,8 @@ void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHa
         }
         repaint();
     }
-    
+    // You can add more conditions here if you have other ComboBoxes
+    // ...
 }
 
 
