@@ -550,9 +550,23 @@ void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHa
 {
     if (comboBoxThatHasChanged == &modelSelect)
     {
-        modelSelectChanged();
+        int selectedId = modelSelect.getSelectedId();
+        String selectedModel = modelSelect.getText();
+
+        // Assuming you have a function in your processor to load the model by its name
+        if (processor.loadModelByName(selectedModel))
+        {
+            // Update the UI to reflect the loaded model
+            loadedModelLabel.setText("Loaded Model: " + selectedModel, juce::NotificationType::dontSendNotification);
+        }
+        else
+        {
+            // Handle the case where the model could not be loaded
+            loadedModelLabel.setText("Failed to load model", juce::NotificationType::dontSendNotification);
+        }
     }
 }
+
 
 void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
 {
