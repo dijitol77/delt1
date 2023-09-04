@@ -13,7 +13,8 @@
 #include <algorithm>
 
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p), block1(/* constructor arguments, if any */)
+    : AudioProcessorEditor (&p), processor (p), block1(/* constructor arguments, if any */),
+      isPlaceholderSwitchOn(false), issecondPlaceholderSwitchOn(false)  // Initialize here
 {
     // Existing code...
     resizableCorner = std::make_unique<juce::ResizableCornerComponent>(this, &constrainer);
