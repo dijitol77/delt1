@@ -59,6 +59,8 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     }
     modelSelect.onChange = [this] {modelSelectChanged();};
 
+  // modelSelect.addListener(this);
+
     auto font = modelLabel.getFont();
     float height = font.getHeight();
     font.setHeight(height);
@@ -553,23 +555,16 @@ void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHa
 {
     if (comboBoxThatHasChanged == &modelSelect)
     {
-        int selectedId = modelSelect.getSelectedId();
-        String selectedModel = modelSelect.getText();
-
-        // Assuming you have a function in your processor to load the model by its name
-        if (processor.loadModelByName(selectedModel))
-        {
-            // Update the UI to reflect the loaded model
-            loadedModelLabel.setText("Loaded Model: " + selectedModel, juce::NotificationType::dontSendNotification);
-        }
-        else
-        {
-            // Handle the case where the model could not be loaded
-            loadedModelLabel.setText("Failed to load model", juce::NotificationType::dontSendNotification);
-        }
+        auto selectedModel = modelSelect.getText();
+        processor.loadModelByName(selectedModel);
     }
 }
 
+bool ProteusAudioProcessor::loadModelByName(const juce::String& modelName)
+{
+    // Your code to load the model by its name
+    return true; // or false, based on whether the model was successfully loaded
+}
 
 void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
 {
