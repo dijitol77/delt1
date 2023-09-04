@@ -268,7 +268,10 @@ bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
     }
 }
 
-
+void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
+{
+    // Your implementation here
+}
 
 
 void ProteusAudioProcessorEditor::loadFromFolder()
