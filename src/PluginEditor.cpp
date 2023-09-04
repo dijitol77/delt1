@@ -39,14 +39,6 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
 
 
  
-   // Debugging for Load Model Button
-    addAndMakeVisible(loadButton);
-    loadButton.setButtonText("LOAD MODEL");
-    loadButton.addListener(this);
-    loadButton.toFront(true);
-    loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
-    loadButton.setBounds(20, getHeight() - 50, 100, 30);
-    loadButton.repaint();
 
   
     addAndMakeVisible(modelSelect);
@@ -63,17 +55,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     float height = font.getHeight();
     font.setHeight(height);
 
-  // Debugging for Switch
-   cabOnButton.setImages(true, true, true,
-       ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-      Image(), 1.0, Colours::transparentWhite,
-        ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-       0.0);
-    addAndMakeVisible(cabOnButton);
-    cabOnButton.addListener(this);
-   cabOnButton.toFront(true);
-   cabOnButton.setColour(juce::TextButton::buttonColourId, juce::Colours::green); // Change color for visibility
-   cabOnButton.repaint();
+ 
 
  // addAndMakeVisible(loadedModelLabel);
  // loadedModelLabel.setText("No Model Loaded", juce::NotificationType::dontSendNotification);
@@ -179,7 +161,7 @@ if (showEQ) {
 
     // Add Components to controlFlexBox
     controlFlexBox.items.add(juce::FlexItem(versionLabel).withFlex(1));
-    controlFlexBox.items.add(juce::FlexItem(cabOnButton).withFlex(1));
+  //  controlFlexBox.items.add(juce::FlexItem(cabOnButton).withFlex(1));
     controlFlexBox.items.add(juce::FlexItem(odDriveKnob).withFlex(1));
     controlFlexBox.items.add(juce::FlexItem(odLevelKnob).withFlex(1));
     controlFlexBox.items.add(juce::FlexItem(ampBassKnob).withFlex(1));
@@ -291,7 +273,7 @@ void ProteusAudioProcessorEditor::resized()
     odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
 
     // Set bounds for cabOnButton (Switch) (relative size)
-    cabOnButton.setBounds(blockC1.reduced(10));
+
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
@@ -443,27 +425,13 @@ void ProteusAudioProcessorEditor::loadFromFolder()
 void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
 {
  
-    if (button == &loadButton) {
-        loadButtonClicked();
-    } else if (button == &cabOnButton) {
-        cabOnButtonClicked();
-    }
 }
 
 void ProteusAudioProcessorEditor::odFootSwClicked() {
  
 }
 
-void ProteusAudioProcessorEditor::cabOnButtonClicked() {
-    if (processor.cab_state == 0) {
-        processor.cab_state = 1;
-    }
-    else {
-        processor.cab_state = 0;
-    }
-    resetImages();
-    repaint();
-}
+
 
 void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) 
 {
@@ -506,25 +474,9 @@ void ProteusAudioProcessorEditor::modelSelectChanged()
     repaint();
 }
 
-// ... (rest of your existing methods)
 
 void ProteusAudioProcessorEditor::resetImages()
 {
     repaint();
   
-    // Set On/Off cab graphic
-    if (processor.cab_state == 0) {
-        cabOnButton.setImages(true, true, true,
-            ImageCache::getFromMemory(BinaryData::cab_switch_off_png, BinaryData::cab_switch_off_pngSize), 1.0, Colours::transparentWhite,
-            Image(), 1.0, Colours::transparentWhite,
-            ImageCache::getFromMemory(BinaryData::cab_switch_off_png, BinaryData::cab_switch_off_pngSize), 1.0, Colours::transparentWhite,
-            0.0);
-    }
-    else {
-        cabOnButton.setImages(true, true, true,
-            ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-            Image(), 1.0, Colours::transparentWhite,
-            ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-            0.0);
-    }
 }
