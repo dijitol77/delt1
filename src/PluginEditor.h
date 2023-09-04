@@ -33,6 +33,7 @@ public:
 
     void loadFromFolder();
     void resetImages();
+
 void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 
     
@@ -72,7 +73,7 @@ Slider odDriveKnob2;
     ImageButton cabOnButton;
     juce::FlexBox mainFlexBox;
     juce::FlexBox controlFlexBox;
-    juce::Label loadedModelLabel;  // Add this line
+  
 
 juce::Component block1;
 juce::Component block2;  // Declare block2 here
@@ -98,11 +99,14 @@ juce::TextButton secondPlaceholderSwitch;
     void odFootSwClicked();
     void modelSelectChanged();
     void cabOnButtonClicked();
-void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 
  bool loadModelByName(const juce::String& modelName);
-bool isPlaceholderSwitchOn = false; // Add this line
- bool issecondPlaceholderSwitchOn = false;  // Add this line
+
+
+bool isPlaceholderSwitchOn = false;
+bool issecondPlaceholderSwitchOn = false;
+
+
     bool model_loaded = false;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> midSliderAttach;
