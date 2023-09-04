@@ -8,13 +8,12 @@
   ==============================================================================
 */
 
-// #include "PluginProcessor.h"
+#include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include <algorithm>
 
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p), block1(/* constructor arguments, if any */),
-      isPlaceholderSwitchOn(false), issecondPlaceholderSwitchOn(false)  // Initialize here
+    : AudioProcessorEditor (&p), processor (p), block1(/* constructor arguments, if any */)
 {
         // Existing code...
     resizableCorner = std::make_unique<juce::ResizableCornerComponent>(this, &constrainer);
@@ -41,13 +40,13 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
 
  
    // Debugging for Load Model Button
- //   addAndMakeVisible(loadButton);
- //   loadButton.setButtonText("LOAD MODEL");
-//   loadButton.addListener(this);
-//    loadButton.toFront(true);
- //   loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
- //   loadButton.setBounds(20, getHeight() - 50, 100, 30);
-//    loadButton.repaint();
+    addAndMakeVisible(loadButton);
+    loadButton.setButtonText("LOAD MODEL");
+    loadButton.addListener(this);
+    loadButton.toFront(true);
+    loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
+    loadButton.setBounds(20, getHeight() - 50, 100, 30);
+    loadButton.repaint();
 
   
     addAndMakeVisible(modelSelect);
@@ -64,29 +63,21 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     float height = font.getHeight();
     font.setHeight(height);
 
-    // Debugging for Switch
-    cabOnButton.setImages(true, true, true,
+  // Debugging for Switch
+   cabOnButton.setImages(true, true, true,
+       ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
+      Image(), 1.0, Colours::transparentWhite,
         ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-        Image(), 1.0, Colours::transparentWhite,
-        ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-        0.0);
+       0.0);
     addAndMakeVisible(cabOnButton);
     cabOnButton.addListener(this);
-    cabOnButton.toFront(true);
-    cabOnButton.setColour(juce::TextButton::buttonColourId, juce::Colours::green);
-    cabOnButton.repaint();
+   cabOnButton.toFront(true);
+   cabOnButton.setColour(juce::TextButton::buttonColourId, juce::Colours::green); // Change color for visibility
+   cabOnButton.repaint();
 
-    addAndMakeVisible(placeholderSwitch);
-    placeholderSwitch.setButtonText("Switch");
-    placeholderSwitch.addListener(this);
-    placeholderSwitch.setColour(juce::TextButton::buttonColourId, juce::Colours::grey);
-
-    addAndMakeVisible(secondPlaceholderSwitch);
-    secondPlaceholderSwitch.setButtonText("Second Switch");
-    secondPlaceholderSwitch.addListener(this);
-    secondPlaceholderSwitch.setColour(juce::TextButton::buttonColourId, juce::Colours::grey);
-
-
+ // addAndMakeVisible(loadedModelLabel);
+ // loadedModelLabel.setText("No Model Loaded", juce::NotificationType::dontSendNotification);
+ // loadedModelLabel.setJustificationType(juce::Justification::centred);
 
     // Set Widget Graphics
     bigKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::big_knob_png, BinaryData::big_knob_pngSize));
@@ -196,20 +187,29 @@ if (showEQ) {
     controlFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withFlex(1));
 
     // Add Components to mainFlexBox
-   // mainFlexBox.items.add(juce::FlexItem(loadButton).withFlex(1));
+    mainFlexBox.items.add(juce::FlexItem(loadButton).withFlex(1));
     mainFlexBox.items.add(juce::FlexItem(controlFlexBox).withFlex(4));
 
-    // Use this line to load the image from binary data
-    background2 = ImageCache::getFromMemory(BinaryData::BACK2_jpg, BinaryData::BACK2_jpgSize);
+ // Remove these lines
+// File imageFile2 = File::getCurrentWorkingDirectory().getChildFile("resources/BACK2.jpg");
+// background2 = ImageFileFormat::loadFrom(imageFile2);
 
+// Use this line to load the image from binary data
+background2 = ImageCache::getFromMemory(BinaryData::BACK2_jpg, BinaryData::BACK2_jpgSize);
+
+// Rest of your constructor code
+  
+  
+    // === END OF UPDATES ===
+ 
     // Size of plugin GUI
     setSize(1121, 326); 
-
-    modelSelect.addListener(this);
-
+  
+modelSelect.addListener(this);
+  
     loadFromFolder();
-
-    // Call resized() to set the initial layout
+  
+   // Call resized() to set the initial layout
     resized();
 }
 
@@ -268,7 +268,7 @@ void ProteusAudioProcessorEditor::resized()
  
 
   // Set bounds for Load Model button (fixed size)
-
+    loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
 
     // Center the Model Select dropdown
     int modelSelectWidth = 200;
@@ -277,50 +277,21 @@ void ProteusAudioProcessorEditor::resized()
     int modelSelectY = blockB1.getY() + (blockB1.getHeight() - modelSelectHeight) / 2;
     modelSelect.setBounds(modelSelectX, modelSelectY, modelSelectWidth, modelSelectHeight);
 
- // Calculate the relative offsets based on blockA2's dimensions for odDriveKnob
-    int knobOffsetX = blockA2.getWidth() * 0.31;
-    int knobOffsetY = blockA2.getHeight() * 0.37;
+    // Calculate the relative offsets based on blockA2's dimensions
+    int offsetX = blockA2.getWidth() * 0.31;  // 30% of blockA2's width
+    int offsetY = blockA2.getHeight() * 0.37;  // 10% of blockA2's height
 
     // Calculate the size and position for odDriveKnob
-    int knobWidth = blockA2.getWidth() - 20;
-    int knobHeight = blockA2.getHeight() - 20;
-    int knobX = blockA2.getX() + 10 + knobOffsetX;
-    int knobY = blockA2.getY() + 10 + knobOffsetY;
+    int knobWidth = blockA2.getWidth() - 20;  // 10 pixels reduced from each side
+    int knobHeight = blockA2.getHeight() - 20;  // 10 pixels reduced from each side
+    int knobX = blockA2.getX() + 10 + offsetX;  // 10 pixels from the left edge of blockA2 + offsetX
+    int knobY = blockA2.getY() + 10 + offsetY;  // 10 pixels from the top edge of blockA2 + offsetY
 
     // Set bounds for odDriveKnob
     odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
 
-    // Calculate the relative offsets based on blockA3's dimensions for placeholderSwitch
-    int switchOffsetX = blockA3.getWidth() * 0.05;  // 5% of blockA3's width for the switch
-    int switchOffsetY = blockA3.getHeight() * 0;  // 0% of blockA3's height for the switch
-
-    // Set bounds for placeholderSwitch with different dimensions
-    int switchWidth = 50;  // Smaller width
-    int switchHeight = 20;  // Smaller height
-    int switchX = blockA3.getX() + 10 + switchOffsetX;
-    int switchY = blockA3.getY() + switchOffsetY;
-
-    placeholderSwitch.setBounds(switchX, switchY, switchWidth, switchHeight);
-
-    // Calculate the relative offsets based on blockC3's dimensions for the second switch
-    int secondSwitchOffsetX = blockC3.getWidth() * 0.52;  // 5% of blockC3's width for the switch
-    int secondSwitchOffsetY = blockC3.getHeight() * 0.1;  // 0% of blockC3's height for the switch
-
-    // Set bounds for the second switch with different dimensions
-    int secondSwitchWidth = 50;  // Smaller width
-    int secondSwitchHeight = 20;  // Smaller height
-    int secondSwitchX = blockC3.getX() + 10 + secondSwitchOffsetX;
-    int secondSwitchY = blockC3.getY() + secondSwitchOffsetY;
-
-    secondPlaceholderSwitch.setBounds(secondSwitchX, secondSwitchY, secondSwitchWidth, secondSwitchHeight);
-
-    // ... (existing code)
-
-    placeholderSwitch.setBounds(switchX, switchY, switchWidth, switchHeight);
-
-    // ... (remaining code remains unchanged)
-
-    cabOnButton.setBounds(blockC1.reduced(10));   
+    // Set bounds for cabOnButton (Switch) (relative size)
+    cabOnButton.setBounds(blockC1.reduced(10));
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
@@ -364,6 +335,75 @@ bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
     }
 }
 
+void ProteusAudioProcessorEditor::loadButtonClicked()
+{ 
+    DBG("loadButtonClicked() called");  // Debugging Step: Log when the function is called
+
+    myChooser = std::make_unique<FileChooser> ("Select a folder to load models from",
+                                               processor.folder,
+                                               "*.json");
+ 
+    auto folderChooserFlags = FileBrowserComponent::openMode | FileBrowserComponent::canSelectDirectories | FileBrowserComponent::canSelectFiles;
+ 
+    myChooser->launchAsync (folderChooserFlags, [this] (const FileChooser& chooser)                
+    {
+        DBG("Inside launchAsync()");  // Debugging Step: Log when inside the launchAsync()
+
+        if (!chooser.getResult().exists()) {
+                DBG("No result exists");  // Debugging Step: Log when no result exists
+                return;
+        }
+
+        processor.model_loaded = false;
+        Array<File> files;
+
+        if (chooser.getResult().existsAsFile()) { // If a file is selected
+            DBG("File selected");  // Debugging Step: Log when a file is selected
+
+            if (isValidFormat(chooser.getResult())) {
+                processor.saved_model = chooser.getResult();
+            }
+
+            files = chooser.getResult().getParentDirectory().findChildFiles(2, false, "*.json");
+            processor.folder = chooser.getResult().getParentDirectory();
+
+        } else if (chooser.getResult().isDirectory()){ // Else folder is selected
+            DBG("Directory selected");  // Debugging Step: Log when a directory is selected
+            files = chooser.getResult().findChildFiles(2, false, "*.json");
+            processor.folder = chooser.getResult();
+        }
+        
+        processor.jsonFiles.clear();
+        modelSelect.clear();
+
+        if (files.size() > 0) {
+            DBG("Files found");  // Debugging Step: Log when files are found
+            for (auto file : files) {
+                if (isValidFormat(file)) {
+                    modelSelect.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
+                    processor.jsonFiles.push_back(file);
+                    processor.num_models += 1;
+                }
+            }
+            if (chooser.getResult().existsAsFile()) {
+                if (isValidFormat(chooser.getResult()) == true) {
+                    modelSelect.setText(processor.saved_model.getFileNameWithoutExtension());
+                    processor.loadConfig(processor.saved_model);
+                }
+            }
+            else {
+                if (!processor.jsonFiles.empty()) {
+                    modelSelect.setSelectedItemIndex(0, juce::NotificationType::dontSendNotification);
+                    modelSelectChanged();
+                }
+            }
+        } else {
+            DBG("No valid files found");  // Debugging Step: Log when no valid files are found
+            processor.saved_model = ""; // Clear the saved model since there's nothing in the dropdown
+        }
+    });
+}
+
 
 void ProteusAudioProcessorEditor::loadFromFolder()
 {
@@ -378,7 +418,6 @@ void ProteusAudioProcessorEditor::loadFromFolder()
     processor.jsonFiles.clear();
     modelSelect.clear();
 
-    // Populate the modelSelect ComboBox and jsonFiles array
     if (files.size() > 0) {
         for (auto file : files) {
             if (isValidFormat(file)) {
@@ -387,8 +426,6 @@ void ProteusAudioProcessorEditor::loadFromFolder()
                 processor.num_models += 1;
             }
         }
-
-        // Try to load model from saved_model, if it doesn't exist and jsonFiles is not empty, load the first model (if it exists and is a valid format)
         if (!processor.jsonFiles.empty()) {
             if (processor.saved_model.existsAsFile() && isValidFormat(processor.saved_model)) {
                 processor.loadConfig(processor.saved_model);
@@ -403,74 +440,19 @@ void ProteusAudioProcessorEditor::loadFromFolder()
     }
 }
 
-
-void ProteusAudioProcessor::loadModelByName(const std::string& modelName)
-{
-    // Implement the function here
-    // return true; // or false, depending on your implementation
-
-    processor.setModelName(modelName);  // Call the setter function in ProteusAudioProcessor
-    // Add any additional GUI logic here
-  
-    // Your logic to load the model based on its name
-    // This could involve reading a file from a specific directory
-    File modelDirectory("/models");
-    File modelFile = modelDirectory.getChildFile(modelName + ".extension");
-
-    if (modelFile.exists())
-    {
-        // Load the model from the file
-        // Return true if successful
-        return true;
-    }
-    else
-    {
-        // Return false if the model could not be loaded
-        return false;
-    }
-}
-
 void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
 {
-    // Removed the loadButton related code
-    if (button == &cabOnButton) {
+ 
+    if (button == &loadButton) {
+        loadButtonClicked();
+    } else if (button == &cabOnButton) {
         cabOnButtonClicked();
     }
-
-  if (button == &placeholderSwitch)
-    {
-        isPlaceholderSwitchOn = !isPlaceholderSwitchOn; // Toggle the state
-
-        if (isPlaceholderSwitchOn)
-        {
-            placeholderSwitch.setColour(juce::TextButton::buttonColourId, juce::Colours::green);
-        }
-        else
-        {
-            placeholderSwitch.setColour(juce::TextButton::buttonColourId, juce::Colours::grey);
-        }
-    }
-   if (button == &secondPlaceholderSwitch)
-    {
-        issecondPlaceholderSwitchOn = !issecondPlaceholderSwitchOn; // Toggle the state
-
-        if (issecondPlaceholderSwitchOn)
-        {
-            secondPlaceholderSwitch.setColour(juce::TextButton::buttonColourId, juce::Colours::green);
-        }
-        else
-        {
-            secondPlaceholderSwitch.setColour(juce::TextButton::buttonColourId, juce::Colours::grey);
-        }
-    }
-
 }
 
 void ProteusAudioProcessorEditor::odFootSwClicked() {
  
 }
-
-
 
 void ProteusAudioProcessorEditor::cabOnButtonClicked() {
     if (processor.cab_state == 0) {
@@ -483,7 +465,7 @@ void ProteusAudioProcessorEditor::cabOnButtonClicked() {
     repaint();
 }
 
-void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBox)
+void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) 
 {
     if (comboBoxThatHasChanged == &modelSelect)
     {
