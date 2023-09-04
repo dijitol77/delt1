@@ -18,8 +18,8 @@ public:
     void loadFromFolder();
     void resetImages();
     void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
-     void loadModelByName(const std::string& modelName);  // Make sure this line exists
-   
+    // void loadModelByName(const std::string& modelName);  // Make sure this line exists
+    void loadModelByName(const String& modelName);  // Add this line
 
 private:
     ProteusAudioProcessor& processor;
