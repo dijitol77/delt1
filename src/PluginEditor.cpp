@@ -349,7 +349,7 @@ void ProteusAudioProcessorEditor::loadFromFolder()
 void ProteusAudioProcessor::loadModelByName(const std::string& modelName)
 {
     // Implement the function here
-    return true; // or false, depending on your implementation
+    // return true; // or false, depending on your implementation
   
     // Your logic to load the model based on its name
     // This could involve reading a file from a specific directory
