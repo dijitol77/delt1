@@ -169,7 +169,7 @@ if (showEQ) {
     controlFlexBox.items.add(juce::FlexItem(ampTrebleKnob).withFlex(1));
 
     // Add Components to mainFlexBox
-    mainFlexBox.items.add(juce::FlexItem(loadButton).withFlex(1));
+  
     mainFlexBox.items.add(juce::FlexItem(controlFlexBox).withFlex(4));
 
  // Remove these lines
@@ -250,7 +250,7 @@ void ProteusAudioProcessorEditor::resized()
  
 
   // Set bounds for Load Model button (fixed size)
-    loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
+ 
 
     // Center the Model Select dropdown
     int modelSelectWidth = 200;
@@ -317,74 +317,7 @@ bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
     }
 }
 
-void ProteusAudioProcessorEditor::loadButtonClicked()
-{ 
-    DBG("loadButtonClicked() called");  // Debugging Step: Log when the function is called
 
-    myChooser = std::make_unique<FileChooser> ("Select a folder to load models from",
-                                               processor.folder,
-                                               "*.json");
- 
-    auto folderChooserFlags = FileBrowserComponent::openMode | FileBrowserComponent::canSelectDirectories | FileBrowserComponent::canSelectFiles;
- 
-    myChooser->launchAsync (folderChooserFlags, [this] (const FileChooser& chooser)                
-    {
-        DBG("Inside launchAsync()");  // Debugging Step: Log when inside the launchAsync()
-
-        if (!chooser.getResult().exists()) {
-                DBG("No result exists");  // Debugging Step: Log when no result exists
-                return;
-        }
-
-        processor.model_loaded = false;
-        Array<File> files;
-
-        if (chooser.getResult().existsAsFile()) { // If a file is selected
-            DBG("File selected");  // Debugging Step: Log when a file is selected
-
-            if (isValidFormat(chooser.getResult())) {
-                processor.saved_model = chooser.getResult();
-            }
-
-            files = chooser.getResult().getParentDirectory().findChildFiles(2, false, "*.json");
-            processor.folder = chooser.getResult().getParentDirectory();
-
-        } else if (chooser.getResult().isDirectory()){ // Else folder is selected
-            DBG("Directory selected");  // Debugging Step: Log when a directory is selected
-            files = chooser.getResult().findChildFiles(2, false, "*.json");
-            processor.folder = chooser.getResult();
-        }
-        
-        processor.jsonFiles.clear();
-        modelSelect.clear();
-
-        if (files.size() > 0) {
-            DBG("Files found");  // Debugging Step: Log when files are found
-            for (auto file : files) {
-                if (isValidFormat(file)) {
-                    modelSelect.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
-                    processor.jsonFiles.push_back(file);
-                    processor.num_models += 1;
-                }
-            }
-            if (chooser.getResult().existsAsFile()) {
-                if (isValidFormat(chooser.getResult()) == true) {
-                    modelSelect.setText(processor.saved_model.getFileNameWithoutExtension());
-                    processor.loadConfig(processor.saved_model);
-                }
-            }
-            else {
-                if (!processor.jsonFiles.empty()) {
-                    modelSelect.setSelectedItemIndex(0, juce::NotificationType::dontSendNotification);
-                    modelSelectChanged();
-                }
-            }
-        } else {
-            DBG("No valid files found");  // Debugging Step: Log when no valid files are found
-            processor.saved_model = ""; // Clear the saved model since there's nothing in the dropdown
-        }
-    });
-}
 
 
 void ProteusAudioProcessorEditor::loadFromFolder()
