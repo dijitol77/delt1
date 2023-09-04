@@ -4,9 +4,9 @@
 #include "PluginProcessor.h"
 #include "myLookAndFeel.h"
 
-class ProteusAudioProcessorEditor : public AudioProcessorEditor,
+class ProteusAudioProcessorEditor : public juce::AudioProcessorEditor,
+                                    public Button::Listener,
                                     public Slider::Listener,
-                                    public Button::Listener, // <-- Add this line
                                     public ComboBox::Listener
 {
 public:
@@ -15,33 +15,35 @@ public:
 
     void paint (Graphics&) override;
     void resized() override;
-    std::unique_ptr<FileChooser> myChooser;
-
     void loadFromFolder();
     void resetImages();
-    bool isValidFormat(File configFile);
-
-     juce::ToggleButton placeholderSwitch;
-    bool isPlaceholderSwitchOn = false;
+    void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
+     void loadModelByName(const std::string& modelName);  // Make sure this line exists
+   
 
 private:
     ProteusAudioProcessor& processor;
 
-    // Global Widgets
+   // TextButton loadButton;
+    void buttonClicked(Button* button) override;
+    bool isValidFormat(File configFile);
+   // void loadButtonClicked();
+    Image background2;
+
     Label modelLabel;
     Label versionLabel;
     ComboBox modelSelect;
 
-    // Overdrive Widgets
+    Slider ampBassKnob;
+    Slider ampMidKnob;
+    Slider ampTrebleKnob;
     Slider odDriveKnob;
     Slider odDriveKnob2;
     Slider odLevelKnob;
 
-    Image background2;
-
+    ImageButton cabOnButton;
     juce::FlexBox mainFlexBox;
     juce::FlexBox controlFlexBox;
-    juce::Label loadedModelLabel;
 
     juce::Component block1;
     juce::Component block2;
@@ -52,12 +54,27 @@ private:
 
     std::unique_ptr<juce::ResizableCornerComponent> resizableCorner;
     std::unique_ptr<juce::ResizableBorderComponent> resizableBorder;
+
+    std::unique_ptr<FileChooser> myChooser;  // Add this line
+
     juce::ComponentBoundsConstrainer constrainer;
 
-    virtual void sliderValueChanged(Slider* slider) override;
+    juce::TextButton placeholderSwitch;
+    juce::TextButton secondPlaceholderSwitch;
+
+    juce::Label loadedModelLabel;
+
+
+
+    void sliderValueChanged(Slider* slider) override;
     AudioProcessorParameter* getParameter(const String& paramId);
+
+    void odFootSwClicked();
     void modelSelectChanged();
-    void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
+    void cabOnButtonClicked();
+
+    bool isPlaceholderSwitchOn = false;
+    bool issecondPlaceholderSwitchOn = false;
 
     bool model_loaded = false;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
