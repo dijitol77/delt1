@@ -350,6 +350,9 @@ void ProteusAudioProcessor::loadModelByName(const std::string& modelName)
 {
     // Implement the function here
     // return true; // or false, depending on your implementation
+
+    processor.setModelName(modelName);  // Call the setter function in ProteusAudioProcessor
+    // Add any additional GUI logic here
   
     // Your logic to load the model based on its name
     // This could involve reading a file from a specific directory
@@ -371,7 +374,11 @@ void ProteusAudioProcessor::loadModelByName(const std::string& modelName)
 
 void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
 {
- 
+
+   if (button == &loadButton)
+    {
+        loadModelByName("someModelName");  // Replace "someModelName" with the actual model name
+    }
      if (button == &cabOnButton) {
         cabOnButtonClicked();
     }
@@ -407,6 +414,13 @@ void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
 
 void ProteusAudioProcessorEditor::odFootSwClicked() {
  
+}
+
+// In PluginProcessor.cpp
+void ProteusAudioProcessor::setModelName(const std::string& modelName)
+{
+    currentModelName = modelName;
+    // Add any additional logic to update the processor based on the model name
 }
 
 void ProteusAudioProcessorEditor::cabOnButtonClicked() {
