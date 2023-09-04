@@ -473,8 +473,11 @@ void ProteusAudioProcessorEditor::loadFromFolder()
     }
 }
 
-bool ProteusAudioProcessor::loadModelByName(const String& modelName)
+bool ProteusAudioProcessor::loadModelByName(const juce::String& modelName)
 {
+    // Implement the function here
+    return true; // or false, depending on your implementation
+  
     // Your logic to load the model based on its name
     // This could involve reading a file from a specific directory
     File modelDirectory("/models");
