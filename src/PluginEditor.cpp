@@ -179,7 +179,7 @@ if (showEQ) {
 
     // Add Components to controlFlexBox
     controlFlexBox.items.add(juce::FlexItem(versionLabel).withFlex(1));
-    controlFlexBox.items.add(juce::FlexItem(cabOnButton).withFlex(1));
+   // controlFlexBox.items.add(juce::FlexItem(cabOnButton).withFlex(1));
     controlFlexBox.items.add(juce::FlexItem(odDriveKnob).withFlex(1));
     controlFlexBox.items.add(juce::FlexItem(odLevelKnob).withFlex(1));
     controlFlexBox.items.add(juce::FlexItem(ampBassKnob).withFlex(1));
@@ -292,7 +292,7 @@ int buttonWidth = blockA2.getWidth() - 20;
 int buttonHeight = blockA2.getHeight() - 20;
 int buttonX = blockA2.getX() + blockA2.getWidth() - buttonWidth - 10;  // 10 pixels from the right edge of blockA2
 int buttonY = blockA2.getY() + 10;  // 10 pixels from the top edge of blockA2
-cabOnButton.setBounds(buttonX, buttonY, buttonWidth, buttonHeight);
+//cabOnButton.setBounds(buttonX, buttonY, buttonWidth, buttonHeight);
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
@@ -374,26 +374,13 @@ void ProteusAudioProcessorEditor::loadFromFolder()
 
 void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
 {
-    // Removed the loadButton related code
-    if (button == &cabOnButton) {
-        cabOnButtonClicked();
-    }
+   
 }
 
 void ProteusAudioProcessorEditor::odFootSwClicked() {
  
 }
 
-void ProteusAudioProcessorEditor::cabOnButtonClicked() {
-    if (processor.cab_state == 0) {
-        processor.cab_state = 1;
-    }
-    else {
-        processor.cab_state = 0;
-    }
-    resetImages();
-    repaint();
-}
 
 void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) 
 {
@@ -436,25 +423,9 @@ void ProteusAudioProcessorEditor::modelSelectChanged()
     repaint();
 }
 
-// ... (rest of your existing methods)
 
 void ProteusAudioProcessorEditor::resetImages()
 {
     repaint();
   
-    // Set On/Off cab graphic
-    if (processor.cab_state == 0) {
-        cabOnButton.setImages(true, true, true,
-            ImageCache::getFromMemory(BinaryData::cab_switch_off_png, BinaryData::cab_switch_off_pngSize), 1.0, Colours::transparentWhite,
-            Image(), 1.0, Colours::transparentWhite,
-            ImageCache::getFromMemory(BinaryData::cab_switch_off_png, BinaryData::cab_switch_off_pngSize), 1.0, Colours::transparentWhite,
-            0.0);
-    }
-    else {
-        cabOnButton.setImages(true, true, true,
-            ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-            Image(), 1.0, Colours::transparentWhite,
-            ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-            0.0);
-    }
 }
