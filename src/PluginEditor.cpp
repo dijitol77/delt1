@@ -279,8 +279,12 @@ void ProteusAudioProcessorEditor::resized()
     auto blockC2 = colC.removeFromTop(colC.getHeight() / 2);
     auto blockC3 = colC;
 
+ 
+
+  // Set bounds for Load Model button (fixed size)
     loadButton.setBounds(blockA1.getX() + 10, blockA1.getY() + 10, 100, 30);
 
+    // Center the Model Select dropdown
     int modelSelectWidth = 200;
     int modelSelectHeight = 30;
     int modelSelectX = blockB1.getX() + (blockB1.getWidth() - modelSelectWidth) / 2;
@@ -332,9 +336,11 @@ void ProteusAudioProcessorEditor::resized()
 
     cabOnButton.setBounds(blockC1.reduced(10));   
 
+    // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     resizableBorder->setBounds(0, 0, getWidth(), getHeight());
 
+    // Set bounds for the loaded model label
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
 }
 
@@ -445,11 +451,28 @@ void ProteusAudioProcessorEditor::loadButtonClicked()
 void ProteusAudioProcessorEditor::loadFromFolder()
 {
     processor.model_loaded = false;
-    Array<File> files;
-    files = processor.folder.findChildFiles(2, false, "*.json");
+
+    // Get the directory where the models are stored
+    File modelsDir = File::getSpecialLocation(File::currentExecutableFile).getParentDirectory().getChildFile("models");
+
+    // Find all JSON files in the models directory
+    Array<File> files = modelsDir.findChildFiles(File::findFiles, false, "*.json");
 
     processor.jsonFiles.clear();
     modelSelect.clear();
+
+    // Get the current working directory
+    File currentDir = File::getCurrentWorkingDirectory();
+    
+    // Navigate to the parent directory
+    File parentDir = currentDir.getParentDirectory();
+    
+    // Locate the /models directory
+    File modelsDir = parentDir.getChildFile("models");
+
+    // Now use modelsDir to find your model files
+    Array<File> files = modelsDir.findChildFiles(File::findFiles, false, "*.json");
+
 
     if (files.size() > 0) {
         for (auto file : files) {
@@ -569,12 +592,6 @@ void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHa
     // ...
 }
 
-
-bool ProteusAudioProcessor::loadModelByName(const juce::String& modelName)
-{
-    // Your code to load the model by its name
-    return true; // or false, based on whether the model was successfully loaded
-}
 
 void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
 {
