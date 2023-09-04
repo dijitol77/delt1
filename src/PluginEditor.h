@@ -20,6 +20,9 @@ public:
     void resetImages();
     bool isValidFormat(File configFile);
 
+     juce::ToggleButton placeholderSwitch;
+    bool isPlaceholderSwitchOn = false;
+
 private:
     ProteusAudioProcessor& processor;
 
