@@ -33,6 +33,7 @@ public:
 
     void loadFromFolder();
     void resetImages();
+void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 
     
 private:
@@ -86,6 +87,8 @@ juce::Component block3;  // Declare block3 here
 
 juce::TextButton placeholderSwitch;
 juce::TextButton secondPlaceholderSwitch;
+
+ juce::Label loadedModelLabel;  // Add this line
 
 
     virtual void sliderValueChanged(Slider* slider) override;
