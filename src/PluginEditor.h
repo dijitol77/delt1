@@ -6,7 +6,7 @@
 
 class ProteusAudioProcessorEditor : public juce::AudioProcessorEditor,
                                     public Slider::Listener,
-                                    public juce::ComboBox::Listener
+                                    public ComboBox::Listener
 {
 public:
     ProteusAudioProcessorEditor (ProteusAudioProcessor&);
