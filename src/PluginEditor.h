@@ -1,84 +1,51 @@
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-
-    It contains the basic framework code for a JUCE plugin editor.
-
-  ==============================================================================
-*/
-
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 #include "myLookAndFeel.h"
 
-//==============================================================================
-/**
-*/
 class ProteusAudioProcessorEditor : public juce::AudioProcessorEditor,
                                     public Button::Listener,
                                     public Slider::Listener,
-                                    public ComboBox::Listener // <-- Add this line               
+                                    public ComboBox::Listener
 {
 public:
     ProteusAudioProcessorEditor (ProteusAudioProcessor&);
     ~ProteusAudioProcessorEditor();
 
-    //==============================================================================
     void paint (Graphics&) override;
     void resized() override;
-    std::unique_ptr<FileChooser> myChooser;
-
     void loadFromFolder();
     void resetImages();
+    void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 
-void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
-bool loadModelByName(const juce::String& modelName);
-
-    
 private:
-    // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
     ProteusAudioProcessor& processor;
 
-
     TextButton loadButton;
-    virtual void buttonClicked(Button* button) override;
-
+    void buttonClicked(Button* button) override;
     bool isValidFormat(File configFile);
     void loadButtonClicked();
-   Image background2;
-  // Image background2 = ImageCache::getFromMemory(BinaryData::BACK2_jpg, BinaryData::BACK2_jpgSize);
-    //Image background = ImageCache::getFromMemory(BinaryData::smart_pedal_jpg, BinaryData::smart_pedal_jpgSize);
-    // LookandFeels and Graphics
-  //  Image background_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
-  //  Image background_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
-    //Image background_off = ImageCache::getFromMemory(BinaryData::background_off_jpg, BinaryData::background_off_jpgSize);
+    Image background2;
 
-    // Global Widgets
     Label modelLabel;
     Label versionLabel;
-
     ComboBox modelSelect;
 
-    // Overdrive Widgets
     Slider ampBassKnob;
     Slider ampMidKnob;
     Slider ampTrebleKnob;
     Slider odDriveKnob;
-Slider odDriveKnob2;
+    Slider odDriveKnob2;
     Slider odLevelKnob;
 
     ImageButton cabOnButton;
     juce::FlexBox mainFlexBox;
     juce::FlexBox controlFlexBox;
-  
 
-juce::Component block1;
-juce::Component block2;  // Declare block2 here
-juce::Component block3;  // Declare block3 here
+    juce::Component block1;
+    juce::Component block2;
+    juce::Component block3;
 
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
@@ -87,27 +54,20 @@ juce::Component block3;  // Declare block3 here
     std::unique_ptr<juce::ResizableBorderComponent> resizableBorder;
     juce::ComponentBoundsConstrainer constrainer;
 
-juce::TextButton placeholderSwitch;
-juce::TextButton secondPlaceholderSwitch;
+    juce::TextButton placeholderSwitch;
+    juce::TextButton secondPlaceholderSwitch;
 
- juce::Label loadedModelLabel;  // Add this line
+    juce::Label loadedModelLabel;
 
-
-    virtual void sliderValueChanged(Slider* slider) override;
-
+    void sliderValueChanged(Slider* slider) override;
     AudioProcessorParameter* getParameter(const String& paramId);
- 
+
     void odFootSwClicked();
     void modelSelectChanged();
     void cabOnButtonClicked();
 
-// bool loadModelByName(const juce::String& modelName);
-
-
-bool isPlaceholderSwitchOn = false;
-bool issecondPlaceholderSwitchOn = false;
-// bool loadModelByName(const juce::String& modelName);
-
+    bool isPlaceholderSwitchOn = false;
+    bool issecondPlaceholderSwitchOn = false;
 
     bool model_loaded = false;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
@@ -115,7 +75,6 @@ bool issecondPlaceholderSwitchOn = false;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
-
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
 };
