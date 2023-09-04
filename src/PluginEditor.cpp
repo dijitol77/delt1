@@ -311,8 +311,8 @@ void ProteusAudioProcessorEditor::resized()
     placeholderSwitch.setBounds(switchX, switchY, switchWidth, switchHeight);
 
     // Calculate the relative offsets based on blockC3's dimensions for the second switch
-    int secondSwitchOffsetX = blockC3.getWidth() * 0.05;  // 5% of blockC3's width for the switch
-    int secondSwitchOffsetY = blockC3.getHeight() * 0;  // 0% of blockC3's height for the switch
+    int secondSwitchOffsetX = blockC3.getWidth() * 0.31;  // 5% of blockC3's width for the switch
+    int secondSwitchOffsetY = blockC3.getHeight() * 0.37;  // 0% of blockC3's height for the switch
 
     // Set bounds for the second switch with different dimensions
     int secondSwitchWidth = 50;  // Smaller width
@@ -494,6 +494,19 @@ void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
         else
         {
             placeholderSwitch.setColour(juce::TextButton::buttonColourId, juce::Colours::grey);
+        }
+    }
+   if (button == &secondPlaceholderSwitch)
+    {
+        issecondPlaceholderSwitchOn = !issecondPlaceholderSwitchOn; // Toggle the state
+
+        if (issecondPlaceholderSwitchOn)
+        {
+            secondPlaceholderSwitch.setColour(juce::TextButton::buttonColourId, juce::Colours::green);
+        }
+        else
+        {
+            secondPlaceholderSwitch.setColour(juce::TextButton::buttonColourId, juce::Colours::grey);
         }
     }
 
