@@ -551,14 +551,24 @@ void ProteusAudioProcessorEditor::cabOnButtonClicked() {
     repaint();
 }
 
-void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged)
+void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override
 {
     if (comboBoxThatHasChanged == &modelSelect)
     {
-        auto selectedModel = modelSelect.getText();
-        processor.loadModelByName(selectedModel);
+        // Your logic for when modelSelect changes
+        const int selectedFileIndex = modelSelect.getSelectedItemIndex();
+        if (selectedFileIndex >= 0 && selectedFileIndex < processor.jsonFiles.size() && !processor.jsonFiles.empty()) {
+            if (processor.jsonFiles[selectedFileIndex].existsAsFile() && isValidFormat(processor.jsonFiles[selectedFileIndex])) {
+                processor.loadConfig(processor.jsonFiles[selectedFileIndex]);
+                processor.current_model_index = selectedFileIndex;
+                processor.saved_model = processor.jsonFiles[selectedFileIndex];
+            }
+        }
+        repaint();
     }
+    
 }
+
 
 bool ProteusAudioProcessor::loadModelByName(const juce::String& modelName)
 {
