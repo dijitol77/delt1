@@ -81,6 +81,12 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     placeholderSwitch.addListener(this);
     placeholderSwitch.setColour(juce::TextButton::buttonColourId, juce::Colours::grey);
 
+    
+    addAndMakeVisible(secondPlaceholderSwitch);
+    secondPlaceholderSwitch.setButtonText("Second Switch");
+    secondPlaceholderSwitch.addListener(this);
+    secondPlaceholderSwitch.setColour(juce::TextButton::buttonColourId, juce::Colours::grey);
+
    
 
  // addAndMakeVisible(loadedModelLabel);
