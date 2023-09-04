@@ -54,12 +54,17 @@ private:
 
     std::unique_ptr<juce::ResizableCornerComponent> resizableCorner;
     std::unique_ptr<juce::ResizableBorderComponent> resizableBorder;
+
+    std::unique_ptr<FileChooser> myChooser;  // Add this line
+
     juce::ComponentBoundsConstrainer constrainer;
 
     juce::TextButton placeholderSwitch;
     juce::TextButton secondPlaceholderSwitch;
 
     juce::Label loadedModelLabel;
+
+
 
     void sliderValueChanged(Slider* slider) override;
     AudioProcessorParameter* getParameter(const String& paramId);
