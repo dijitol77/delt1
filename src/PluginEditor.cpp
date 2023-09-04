@@ -355,16 +355,6 @@ void ProteusAudioProcessorEditor::loadFromFolder()
     }
 }
 
-void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
-{
- 
-}
-
-void ProteusAudioProcessorEditor::odFootSwClicked() {
- 
-}
-
-
 
 void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) 
 {
