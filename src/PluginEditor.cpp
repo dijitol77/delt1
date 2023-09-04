@@ -288,8 +288,7 @@ void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
     // Your implementation here
 }
 
-
-void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
+void ProteusAudioProcessorEditor::buttonClicked(Button* button)
 {
     if (button == &placeholderSwitch)
     {
