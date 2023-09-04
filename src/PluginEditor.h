@@ -106,6 +106,7 @@ juce::TextButton secondPlaceholderSwitch;
 
 bool isPlaceholderSwitchOn = false;
 bool issecondPlaceholderSwitchOn = false;
+// bool loadModelByName(const juce::String& modelName);
 
 
     bool model_loaded = false;
