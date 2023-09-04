@@ -64,16 +64,16 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     font.setHeight(height);
 
   // Debugging for Switch
-   cabOnButton.setImages(true, true, true,
-       ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-      Image(), 1.0, Colours::transparentWhite,
-        ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
-       0.0);
-    addAndMakeVisible(cabOnButton);
-    cabOnButton.addListener(this);
-   cabOnButton.toFront(true);
-   cabOnButton.setColour(juce::TextButton::buttonColourId, juce::Colours::green); // Change color for visibility
-   cabOnButton.repaint();
+ //  cabOnButton.setImages(true, true, true,
+ //      ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
+ //     Image(), 1.0, Colours::transparentWhite,
+ //       ImageCache::getFromMemory(BinaryData::cab_switch_on_png, BinaryData::cab_switch_on_pngSize), 1.0, Colours::transparentWhite,
+ //      0.0);
+ //   addAndMakeVisible(cabOnButton);
+ //   cabOnButton.addListener(this);
+ //  cabOnButton.toFront(true);
+ //  cabOnButton.setColour(juce::TextButton::buttonColourId, juce::Colours::green); // Change color for visibility
+ //  cabOnButton.repaint();
 
  // addAndMakeVisible(loadedModelLabel);
  // loadedModelLabel.setText("No Model Loaded", juce::NotificationType::dontSendNotification);
@@ -225,6 +225,9 @@ ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
 //==============================================================================
 void ProteusAudioProcessorEditor::paint(Graphics& g)
 {
+  // Cast size_t to int to resolve the warning
+    int someIntValue = static_cast<int>(someSizeTValue);
+  
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
     if (processor.fw_state == 1 && processor.conditioned == true) {
         g.drawImageWithin(background2, 0, 0, getWidth(), getHeight(), RectanglePlacement::stretchToFit, false);
