@@ -100,6 +100,7 @@ juce::TextButton secondPlaceholderSwitch;
     void cabOnButtonClicked();
 void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 
+ bool loadModelByName(const juce::String& modelName);
 bool isPlaceholderSwitchOn = false; // Add this line
  bool issecondPlaceholderSwitchOn = false;  // Add this line
     bool model_loaded = false;
