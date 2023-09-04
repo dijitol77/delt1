@@ -35,6 +35,7 @@ public:
     void resetImages();
 
 void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
+bool loadModelByName(const juce::String& modelName);
 
     
 private:
@@ -100,7 +101,7 @@ juce::TextButton secondPlaceholderSwitch;
     void modelSelectChanged();
     void cabOnButtonClicked();
 
- bool loadModelByName(const juce::String& modelName);
+// bool loadModelByName(const juce::String& modelName);
 
 
 bool isPlaceholderSwitchOn = false;
