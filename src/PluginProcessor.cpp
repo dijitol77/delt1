@@ -55,6 +55,13 @@ ProteusAudioProcessor::~ProteusAudioProcessor()
 {
 }
 
+// Add your new function here
+bool ProteusAudioProcessor::loadModelByName(const std::string& modelName)
+{
+    // your code here
+    return true; // or false
+}
+
 //==============================================================================
 const String ProteusAudioProcessor::getName() const
 {
