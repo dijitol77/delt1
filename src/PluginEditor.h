@@ -21,6 +21,10 @@ public:
     void loadFromFolder();
     void resetImages();
 
+  // Add this line to declare the function
+    bool isValidFormat(File configFile);
+
+
 private:
     ProteusAudioProcessor& processor;
 
