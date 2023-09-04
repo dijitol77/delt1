@@ -293,14 +293,14 @@ void ProteusAudioProcessorEditor::resized()
     odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
 
    // Calculate the relative offsets based on blockA2's dimensions for placeholderSwitch
-    int switchOffsetX = blockA2.getWidth() * 0.08;  // 5% of blockA2's width for the switch
-    int switchOffsetY = blockA2.getHeight() * 0.9;  // 37% of blockA2's height for the switch
+    int switchOffsetX = blockA3.getWidth() * 0.08;  // 5% of blockA2's width for the switch
+    int switchOffsetY = blockA3.getHeight() * 0.1;  // 37% of blockA2's height for the switch
 
     // Set bounds for placeholderSwitch with different dimensions
     int switchWidth = 50;  // Smaller width
     int switchHeight = 20;  // Smaller height
-    int switchX = blockA2.getX() + 10 + switchOffsetX;
-    int switchY = blockA2.getY() + 10 + switchOffsetY;
+    int switchX = blockA3.getX() + 10 + switchOffsetX;
+    int switchY = blockA3.getY() + 10 + switchOffsetY;
 
     placeholderSwitch.setBounds(switchX, switchY, switchWidth, switchHeight);
 
