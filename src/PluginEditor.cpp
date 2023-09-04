@@ -37,14 +37,6 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     addAndMakeVisible(block2);
     addAndMakeVisible(block3);
 
-    // Debugging for Load Model Button
-    addAndMakeVisible(loadButton);
-    loadButton.setButtonText("LOAD MODEL");
-    loadButton.addListener(this);
-    loadButton.toFront(true);
-    loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
-    loadButton.setBounds(20, getHeight() - 50, 100, 30);
-    loadButton.repaint();
 
     addAndMakeVisible(modelSelect);
     modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
@@ -82,11 +74,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     secondPlaceholderSwitch.addListener(this);
     secondPlaceholderSwitch.setColour(juce::TextButton::buttonColourId, juce::Colours::grey);
 
-   
 
- // addAndMakeVisible(loadedModelLabel);
- // loadedModelLabel.setText("No Model Loaded", juce::NotificationType::dontSendNotification);
- // loadedModelLabel.setJustificationType(juce::Justification::centred);
 
     // Set Widget Graphics
     bigKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::big_knob_png, BinaryData::big_knob_pngSize));
@@ -126,51 +114,9 @@ odLevelKnob.setDoubleClickReturnValue(true, 0.5);
   
   bool showEQ = false; // Set this to true if you want to show the EQ, false to hide it
 
-if (showEQ) {
-    bassSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob);
-    midSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MID_ID, ampMidKnob);
-    trebleSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, TREBLE_ID, ampTrebleKnob);
-    
-    addAndMakeVisible(ampBassKnob);
-    addAndMakeVisible(ampMidKnob);
-    addAndMakeVisible(ampTrebleKnob);
-    
-    // ... (other knob settings)
-} else {
-    bassSliderAttach.reset();
-    midSliderAttach.reset();
-    trebleSliderAttach.reset();
-    
-    ampBassKnob.setVisible(false);
-    ampMidKnob.setVisible(false);
-    ampTrebleKnob.setVisible(false);
-}
 
 
 
-    bassSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, BASS_ID, ampBassKnob);    	    
-    addAndMakeVisible(ampBassKnob);
-    ampBassKnob.setLookAndFeel(&smallKnobLAF);
-    ampBassKnob.addListener(this);
-    ampBassKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    ampBassKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    ampBassKnob.setDoubleClickReturnValue(true, 0.0);
-
-    midSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MID_ID, ampMidKnob);    
-    addAndMakeVisible(ampMidKnob);
-    ampMidKnob.setLookAndFeel(&smallKnobLAF);
-    ampMidKnob.addListener(this);
-    ampMidKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    ampMidKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    ampMidKnob.setDoubleClickReturnValue(true, 0.0);
-
-    trebleSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, TREBLE_ID, ampTrebleKnob);
-    addAndMakeVisible(ampTrebleKnob);
-    ampTrebleKnob.setLookAndFeel(&smallKnobLAF);
-    ampTrebleKnob.addListener(this);
-    ampTrebleKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    ampTrebleKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    ampTrebleKnob.setDoubleClickReturnValue(true, 0.0);
 
     addAndMakeVisible(versionLabel);
     versionLabel.setText("v1.2", juce::NotificationType::dontSendNotification);
