@@ -483,7 +483,7 @@ void ProteusAudioProcessorEditor::cabOnButtonClicked() {
     repaint();
 }
 
-void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) 
+void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBox)
 {
     if (comboBoxThatHasChanged == &modelSelect)
     {
