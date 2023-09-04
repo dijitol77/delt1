@@ -300,7 +300,7 @@ void ProteusAudioProcessorEditor::resized()
     int switchWidth = 50;  // Smaller width
     int switchHeight = 20;  // Smaller height
     int switchX = blockA3.getX() + 10 + switchOffsetX;
-    int switchY = blockA3.getY() + 10 + switchOffsetY;
+    int switchY = blockA3.getY() + switchOffsetY;
 
     placeholderSwitch.setBounds(switchX, switchY, switchWidth, switchHeight);
 
