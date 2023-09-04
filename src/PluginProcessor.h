@@ -74,6 +74,10 @@ public:
 
     void set_ampEQ(float bass_slider, float mid_slider, float treble_slider);
 
+// ... (existing declarations)
+    bool loadModelByName(const std::string& modelName);  // Make sure this line is here
+    // ... (existing declarations)
+
     // Files and configuration
     void loadConfig(File configFile);
 
