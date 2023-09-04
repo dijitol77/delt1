@@ -416,12 +416,7 @@ void ProteusAudioProcessorEditor::odFootSwClicked() {
  
 }
 
-// In PluginProcessor.cpp
-void ProteusAudioProcessor::setModelName(const std::string& modelName)
-{
-    currentModelName = modelName;
-    // Add any additional logic to update the processor based on the model name
-}
+
 
 void ProteusAudioProcessorEditor::cabOnButtonClicked() {
     if (processor.cab_state == 0) {
