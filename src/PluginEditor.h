@@ -83,6 +83,9 @@ private:
     void odFootSwClicked();
     void cabOnButtonClicked();
 
+ // Add this if it's a member function of this class
+    void loadModelByName(const String& modelName);
+
     // State
     bool model_loaded = false;
 
