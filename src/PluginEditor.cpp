@@ -37,7 +37,10 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     addAndMakeVisible(block2);
     addAndMakeVisible(block3);
 
-
+// Initialize the placeholder switch
+    placeholderSwitch.setButtonText("Placeholder");
+    placeholderSwitch.addListener(this);
+    addAndMakeVisible(&placeholderSwitch);
  
 
   
