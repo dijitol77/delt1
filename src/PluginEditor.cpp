@@ -292,15 +292,31 @@ void ProteusAudioProcessorEditor::resized()
     // Set bounds for odDriveKnob
     odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
 
-   // Calculate the relative offsets based on blockA2's dimensions for placeholderSwitch
-    int switchOffsetX = blockA3.getWidth() * 0.05;  // 5% of blockA2's width for the switch
-    int switchOffsetY = blockA3.getHeight() * 0;  // 37% of blockA2's height for the switch
+    // Calculate the relative offsets based on blockA3's dimensions for placeholderSwitch
+    int switchOffsetX = blockA3.getWidth() * 0.05;  // 5% of blockA3's width for the switch
+    int switchOffsetY = blockA3.getHeight() * 0;  // 0% of blockA3's height for the switch
 
     // Set bounds for placeholderSwitch with different dimensions
     int switchWidth = 50;  // Smaller width
     int switchHeight = 20;  // Smaller height
     int switchX = blockA3.getX() + 10 + switchOffsetX;
     int switchY = blockA3.getY() + switchOffsetY;
+
+    placeholderSwitch.setBounds(switchX, switchY, switchWidth, switchHeight);
+
+    // Calculate the relative offsets based on blockC3's dimensions for the second switch
+    int secondSwitchOffsetX = blockC3.getWidth() * 0.05;  // 5% of blockC3's width for the switch
+    int secondSwitchOffsetY = blockC3.getHeight() * 0;  // 0% of blockC3's height for the switch
+
+    // Set bounds for the second switch with different dimensions
+    int secondSwitchWidth = 50;  // Smaller width
+    int secondSwitchHeight = 20;  // Smaller height
+    int secondSwitchX = blockC3.getX() + 10 + secondSwitchOffsetX;
+    int secondSwitchY = blockC3.getY() + secondSwitchOffsetY;
+
+    secondPlaceholderSwitch.setBounds(secondSwitchX, secondSwitchY, secondSwitchWidth, secondSwitchHeight);
+
+    // ... (existing code)
 
     placeholderSwitch.setBounds(switchX, switchY, switchWidth, switchHeight);
 
