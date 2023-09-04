@@ -473,6 +473,25 @@ void ProteusAudioProcessorEditor::loadFromFolder()
     }
 }
 
+bool ProteusAudioProcessor::loadModelByName(const String& modelName)
+{
+    // Your logic to load the model based on its name
+    // This could involve reading a file from a specific directory
+    File modelDirectory("/models");
+    File modelFile = modelDirectory.getChildFile(modelName + ".extension");
+
+    if (modelFile.exists())
+    {
+        // Load the model from the file
+        // Return true if successful
+        return true;
+    }
+    else
+    {
+        // Return false if the model could not be loaded
+        return false;
+    }
+}
 
 void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
 {
