@@ -19,6 +19,7 @@ public:
     void resetImages();
     void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
      void loadModelByName(const std::string& modelName);  // Make sure this line exists
+    std::string currentModelName;  // Add this line
    
 
 private:
