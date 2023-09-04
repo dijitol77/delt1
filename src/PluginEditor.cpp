@@ -375,10 +375,6 @@ void ProteusAudioProcessor::loadModelByName(const std::string& modelName)
 void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
 {
 
-   if (button == &loadButton)
-    {
-        loadModelByName("someModelName");  // Replace "someModelName" with the actual model name
-    }
      if (button == &cabOnButton) {
         cabOnButtonClicked();
     }
