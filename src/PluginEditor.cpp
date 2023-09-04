@@ -498,7 +498,7 @@ void ProteusAudioProcessorEditor::loadFromFolder()
     }
 }
 
-bool ProteusAudioProcessor::loadModelByName(const juce::String& modelName)
+void ProteusAudioProcessor::loadModelByName(const std::string& modelName)
 {
     // Implement the function here
     return true; // or false, depending on your implementation
