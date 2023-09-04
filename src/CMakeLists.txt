@@ -8,10 +8,7 @@ target_sources(Proteus PRIVATE
 	PluginProcessor.cpp
 	PluginProcessor.h
 	RTNeuralLSTM.cpp
-	RTNeuralLSTM.h
-        CabSim.h
-        Eq4Band.cpp
-        Eq4Band.h
+	RTNeuralLSTM.h      
 )
 
 #target_precompile_headers(Proteus PRIVATE pch.h)
