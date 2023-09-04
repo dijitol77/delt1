@@ -24,10 +24,10 @@ public:
 private:
     ProteusAudioProcessor& processor;
 
-    TextButton loadButton;
+   // TextButton loadButton;
     void buttonClicked(Button* button) override;
     bool isValidFormat(File configFile);
-    void loadButtonClicked();
+   // void loadButtonClicked();
     Image background2;
 
     Label modelLabel;
