@@ -55,6 +55,13 @@ private:
     juce::FlexBox controlFlexBox;
     juce::Label loadedModelLabel;  // Add this line
 
+ // Add these new members
+    Image background2;
+    ToggleButton placeholderSwitch;  // Assuming it's a ToggleButton
+    ToggleButton secondPlaceholderSwitch;  // Assuming it's a ToggleButton
+    bool isPlaceholderSwitchOn = false;
+    bool issecondPlaceholderSwitchOn = false;
+
     juce::Component block1;
     juce::Component block2;
     juce::Component block3;
