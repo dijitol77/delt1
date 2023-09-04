@@ -98,6 +98,7 @@ juce::TextButton secondPlaceholderSwitch;
 void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 
 bool isPlaceholderSwitchOn = false; // Add this line
+ bool issecondPlaceholderSwitchOn = false;  // Add this line
     bool model_loaded = false;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> midSliderAttach;
