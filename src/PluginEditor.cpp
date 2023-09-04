@@ -311,7 +311,7 @@ void ProteusAudioProcessorEditor::resized()
     placeholderSwitch.setBounds(switchX, switchY, switchWidth, switchHeight);
 
     // Calculate the relative offsets based on blockC3's dimensions for the second switch
-    int secondSwitchOffsetX = blockC3.getWidth() * 0.7;  // 5% of blockC3's width for the switch
+    int secondSwitchOffsetX = blockC3.getWidth() * 0.3;  // 5% of blockC3's width for the switch
     int secondSwitchOffsetY = blockC3.getHeight() * 0.1;  // 0% of blockC3's height for the switch
 
     // Set bounds for the second switch with different dimensions
