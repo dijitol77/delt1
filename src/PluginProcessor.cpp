@@ -1,4 +1,12 @@
+/*
+  ==============================================================================
 
+    This file was auto-generated!
+
+    It contains the basic framework code for a JUCE plugin processor.
+
+  ==============================================================================
+*/
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
@@ -14,15 +22,21 @@ ProteusAudioProcessor::ProteusAudioProcessor()
         .withOutput("Output", AudioChannelSet::stereo(), true)
 #endif
     ),
+
     treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN_ID, GAIN_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
-                       std::make_unique<AudioParameterFloat>(MASTER_ID, MASTER_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5) })
+                        std::make_unique<AudioParameterFloat>(MASTER_ID, MASTER_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5) })
+   
 #endif
 {
-    driveParam = treeState.getRawParameterValue(GAIN_ID);
-    masterParam = treeState.getRawParameterValue(MASTER_ID);
-    pauseVolume = 3;
-}
+    driveParam = treeState.getRawParameterValue (GAIN_ID);
+    masterParam = treeState.getRawParameterValue (MASTER_ID);
+    
 
+    pauseVolume = 3;
+
+    
+
+}
 
 ProteusAudioProcessor::~ProteusAudioProcessor()
 {
