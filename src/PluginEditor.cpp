@@ -306,7 +306,7 @@ void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
    
 }
 
-void ProteusAudioProcessorEditor::odFootSwClicked() {
+void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider) {
  
 }
 
