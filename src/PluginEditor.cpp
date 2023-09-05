@@ -10,15 +10,12 @@ constexpr int MaxWidth = 1168;
 constexpr int MaxHeight = 489;
 
 
-ProteusAudioProcessorEditor::ProteusAudioProcessorEditor(ProteusAudioProcessor& p)
-    : AudioProcessorEditor(&p), audioProcessor(p),
+ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
+    : AudioProcessorEditor (&p), processor (p),
       resizableCorner(std::make_unique<juce::ResizableCornerComponent>(this, &constrainer)),
       resizableBorder(std::make_unique<juce::ResizableBorderComponent>(this, &constrainer))
 {
-      // block1(/* constructor arguments, if any */),
-      resizableCorner(std::make_unique<juce::ResizableCornerComponent>(this, &constrainer)),
-      resizableBorder(std::make_unique<juce::ResizableBorderComponent>(this, &constrainer))
-{
+     
    // Set up resizable components
     addAndMakeVisible(resizableCorner.get());
     addAndMakeVisible(resizableBorder.get());
