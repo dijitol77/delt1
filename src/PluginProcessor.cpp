@@ -21,6 +21,7 @@ ProteusAudioProcessor::ProteusAudioProcessor()
     pauseVolume = 3;
 }
 
+
 ProteusAudioProcessor::~ProteusAudioProcessor()
 {
 }
