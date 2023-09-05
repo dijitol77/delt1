@@ -59,12 +59,29 @@ void ProteusAudioProcessorEditor::initializeComponents()
     background2 = ImageCache::getFromMemory(BinaryData::BACK2_jpg, BinaryData::BACK2_jpgSize);
     setSize(1121, 326);
     modelSelect.addListener(this);
+
+    setSize (400, 300);
+
+    // Drive Knob
+    driveKnob.setSliderStyle(Slider::Rotary);
+    driveKnob.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 20);
+    driveKnob.setRange(0.0, 1.0, 0.01);
+    driveKnob.setValue(0.5);
+    driveKnob.setTextValueSuffix(" Drive");
+    driveKnob.setVisible(true);  // Explicitly set visibility
+    addAndMakeVisible(&driveKnob);
+
+    // Attach the drive knob to the parameter
+    driveAttachment = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.treeState, "drive", driveKnob);
     loadFromFolder();
     resized();
 }
 
 void ProteusAudioProcessorEditor::paint(Graphics& g)
 {
+      // (Our component is opaque, so we must completely fill the background with a solid colour)
+    g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
+}
     if (processor.fw_state == 1 && processor.conditioned == true) {
         g.drawImageWithin(background2, 0, 0, getWidth(), getHeight(), RectanglePlacement::stretchToFit, false);
     } else if (processor.fw_state == 1 && processor.conditioned == false) {
