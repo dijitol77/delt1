@@ -4,76 +4,79 @@
 #include "PluginProcessor.h"
 #include "myLookAndFeel.h"
 
-//==============================================================================
-/**
-*/
 class ProteusAudioProcessorEditor : public juce::AudioProcessorEditor,
-                                    public juce::Button::Listener,
-                                    public juce::Slider::Listener,
-                                    public juce::ComboBox::Listener
+                                    public Button::Listener,
+                                    public Slider::Listener,
+                                    public ComboBox::Listener
 {
 public:
     ProteusAudioProcessorEditor (ProteusAudioProcessor&);
-    ~ProteusAudioProcessorEditor() override;
+    ~ProteusAudioProcessorEditor();
 
-    void paint (juce::Graphics&) override;
+    void paint (Graphics&) override;
     void resized() override;
-
     void loadFromFolder();
     void resetImages();
-    bool isValidFormat(juce::File configFile);
-
-    void buttonClicked(juce::Button* button) override;
-    void sliderValueChanged(juce::Slider* slider) override;
     void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
+    void loadModelByName(const std::string& modelName);  // Make sure this line exists
+    std::string currentModelName;  // Add this line
+   
 
 private:
-    void initializeComponents();
-    void modelSelectChanged();
+    ProteusAudioProcessor& processor;
 
-    // Removed duplicate declarations of paint and resized
+   // TextButton loadButton;
+    void buttonClicked(Button* button) override;
+    bool isValidFormat(File configFile);
+   // void loadButtonClicked();
+    Image background2;
 
-    juce::Label modelLabel;
-    juce::Label versionLabel;
-    juce::ComboBox modelSelect;
+    Label modelLabel;
+    Label versionLabel;
+    ComboBox modelSelect;
 
-    juce::Slider ampBassKnob;
-    juce::Slider ampMidKnob;
-    juce::Slider ampTrebleKnob;
-    juce::Slider odDriveKnob;
-    juce::Slider odLevelKnob;
+    Slider odDriveKnob;
+    Slider odDriveKnob2;
+    Slider odLevelKnob;
 
-    juce::TextButton cabOnButton;
-
+    ImageButton cabOnButton;
     juce::FlexBox mainFlexBox;
     juce::FlexBox controlFlexBox;
-    juce::Label loadedModelLabel;
 
     juce::Component block1;
     juce::Component block2;
     juce::Component block3;
-
-    juce::TextButton ButtonX;
-    juce::TextButton ButtonY;
 
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
 
     std::unique_ptr<juce::ResizableCornerComponent> resizableCorner;
     std::unique_ptr<juce::ResizableBorderComponent> resizableBorder;
+
+    std::unique_ptr<FileChooser> myChooser;  // Add this line
+
     juce::ComponentBoundsConstrainer constrainer;
 
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> midSliderAttach;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
+   // juce::TextButton placeholderSwitch;
+   // juce::TextButton secondPlaceholderSwitch;
 
-    juce::Image background2;
+   // juce::Label loadedModelLabel;
 
-    ProteusAudioProcessor& audioProcessor;  // Make sure this is initialized in the constructor
 
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> driveAttachment;
+
+    void sliderValueChanged(Slider* slider) override;
+    AudioProcessorParameter* getParameter(const String& paramId);
+
+    void odFootSwClicked();
+    void modelSelectChanged();
+    void cabOnButtonClicked();
+
+  //  bool isPlaceholderSwitchOn = false;
+  //  bool issecondPlaceholderSwitchOn = false;
+
+    bool model_loaded = false;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
 };
