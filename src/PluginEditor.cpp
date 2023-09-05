@@ -62,17 +62,16 @@ void ProteusAudioProcessorEditor::initializeComponents()
 
     setSize (400, 300);
 
-    // Drive Knob
-    driveKnob.setSliderStyle(Slider::Rotary);
-    driveKnob.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 20);
-    driveKnob.setRange(0.0, 1.0, 0.01);
-    driveKnob.setValue(0.5);
-    driveKnob.setTextValueSuffix(" Drive");
-    driveKnob.setVisible(true);  // Explicitly set visibility
-    addAndMakeVisible(&driveKnob);
+    odDriveKnob.setSliderStyle(Slider::Rotary);
+    odDriveKnob.setRange(0.0, 1.0, 0.01);
+    odDriveKnob.setValue(0.5);
+    odDriveKnob.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 20);
+    addAndMakeVisible(&odDriveKnob);
 
-    // Attach the drive knob to the parameter
-    driveAttachment = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.treeState, "drive", driveKnob);
+    // Initialize the attachment
+    odDriveAttachment = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.treeState, "drive", odDriveKnob);
+
+    // ... rest of your code
     loadFromFolder();
     resized();
 }
