@@ -96,7 +96,8 @@ void ProteusAudioProcessorEditor::resized()
     int knobHeight = blockA2.getHeight() - 20;
     int knobX = blockA2.getX() + 10;
     int knobY = blockA2.getY() + 10;
-    odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
+    // odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
+     odDriveKnob.setBounds(20, 20, 100, 100);  // Explicitly set bounds
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
     resizableBorder->setBounds(0, 0, getWidth(), getHeight());
     loadedModelLabel.setBounds(20, getHeight() - 80, 300, 30);
