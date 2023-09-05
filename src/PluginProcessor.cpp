@@ -226,9 +226,6 @@ void ProteusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
         for (int ch = 0; ch < buffer.getNumChannels(); ++ch)
        
 
-       
-        }
-
         // Master Volume 
         // Apply ramped changes for gain smoothing
         if (masterValue == previousMasterValue)
