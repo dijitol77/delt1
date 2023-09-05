@@ -60,8 +60,6 @@ void ProteusAudioProcessorEditor::initializeComponents()
     setSize(1121, 326);
     modelSelect.addListener(this);
 
-    setSize (400, 300);
-
     odDriveKnob.setSliderStyle(Slider::Rotary);
     odDriveKnob.setRange(0.0, 1.0, 0.01);
     odDriveKnob.setValue(0.5);
