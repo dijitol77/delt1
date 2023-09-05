@@ -10,14 +10,16 @@ constexpr int MaxWidth = 1168;
 constexpr int MaxHeight = 489;
 
 
-ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
-    : AudioProcessorEditor(&p), audioProcessor(p)  // Initialize references here
-{
-      block1(/* constructor arguments, if any */),
+ProteusAudioProcessorEditor::ProteusAudioProcessorEditor(ProteusAudioProcessor& p)
+    : AudioProcessorEditor(&p), audioProcessor(p),
       resizableCorner(std::make_unique<juce::ResizableCornerComponent>(this, &constrainer)),
       resizableBorder(std::make_unique<juce::ResizableBorderComponent>(this, &constrainer))
 {
-    // Set up resizable components
+      // block1(/* constructor arguments, if any */),
+      resizableCorner(std::make_unique<juce::ResizableCornerComponent>(this, &constrainer)),
+      resizableBorder(std::make_unique<juce::ResizableBorderComponent>(this, &constrainer))
+{
+   // Set up resizable components
     addAndMakeVisible(resizableCorner.get());
     addAndMakeVisible(resizableBorder.get());
     constrainer.setFixedAspectRatio(FixedAspectRatio);
@@ -67,7 +69,7 @@ void ProteusAudioProcessorEditor::initializeComponents()
     odDriveKnob.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 20);
     addAndMakeVisible(&odDriveKnob);
 
-    // Initialize the attachment
+      // Initialize the attachment
     odDriveAttachment = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.treeState, "drive", odDriveKnob);
 
     // ... rest of your code
@@ -77,9 +79,8 @@ void ProteusAudioProcessorEditor::initializeComponents()
 
 void ProteusAudioProcessorEditor::paint(Graphics& g)
 {
-      // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
-}
+    g.fillAll(getLookAndFeel().findColour(ResizableWindow::backgroundColourId));
+
     if (processor.fw_state == 1 && processor.conditioned == true) {
         g.drawImageWithin(background2, 0, 0, getWidth(), getHeight(), RectanglePlacement::stretchToFit, false);
     } else if (processor.fw_state == 1 && processor.conditioned == false) {
