@@ -1,26 +1,13 @@
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-
-    It contains the basic framework code for a JUCE plugin processor.
-
-  ==============================================================================
-*/
-
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-
+#include <nlohmann/json.hpp>
+#include "RTNeuralLSTM.h"
 
 #define GAIN_ID "drive"
 #define GAIN_NAME "Drive"
 #define MASTER_ID "level"
 #define MASTER_NAME "Level"
-
-
-#include <nlohmann/json.hpp>
-#include "RTNeuralLSTM.h"
 
 //==============================================================================
 /**
@@ -65,17 +52,11 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
-  
-// ... (existing declarations)
-    bool loadModelByName(const std::string& modelName);  // Make sure this line is here
-    // ... (existing declarations)
-
     // Files and configuration
     void loadConfig(File configFile);
 
     // Pedal/amp states
     int fw_state = 1;       // 0 = off, 1 = on
-   
 
     File currentDirectory = File::getCurrentWorkingDirectory().getFullPathName();
     int current_model_index = 0;
@@ -97,16 +78,11 @@ public:
     bool model_loaded = false;
 
 private:
-
-  
-
     std::atomic<float>* driveParam = nullptr;
     std::atomic<float>* masterParam = nullptr;
-   
 
     float previousDriveValue = 0.5;
     float previousMasterValue = 0.5;
-    //float steppedValue1 = 0.0;
 
     RT_LSTM LSTM;
     RT_LSTM LSTM2;
@@ -114,8 +90,6 @@ private:
     dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> dcBlocker;
 
     chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>> resampler;
-
-  
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessor)
