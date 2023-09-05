@@ -1,20 +1,22 @@
+
+
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
 //==============================================================================
 ProteusAudioProcessor::ProteusAudioProcessor()
-#ifndef JucePlugin_PreferredChannelConfigurations  // Start of #ifndef JucePlugin_PreferredChannelConfigurations
+#ifndef JucePlugin_PreferredChannelConfigurations
     : AudioProcessor(BusesProperties()
-#endif  // End of #ifndef JucePlugin_PreferredChannelConfigurations
-#if ! JucePlugin_IsMidiEffect  // Start of #if ! JucePlugin_IsMidiEffect
-#if ! JucePlugin_IsSynth  // Start of #if ! JucePlugin_IsSynth
+#if ! JucePlugin_IsMidiEffect
+#if ! JucePlugin_IsSynth
         .withInput("Input", AudioChannelSet::stereo(), true)
-#endif  // End of #if ! JucePlugin_IsSynth
+#endif
         .withOutput("Output", AudioChannelSet::stereo(), true)
-#endif  // End of #if ! JucePlugin_IsMidiEffect
+#endif
     ),
     treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN_ID, GAIN_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
                        std::make_unique<AudioParameterFloat>(MASTER_ID, MASTER_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5) })
+#endif
 {
     driveParam = treeState.getRawParameterValue(GAIN_ID);
     masterParam = treeState.getRawParameterValue(MASTER_ID);
