@@ -31,9 +31,7 @@ private:
     void initializeComponents();
     void modelSelectChanged();
 
-  //==============================================================================
-    void paint (Graphics&) override;
-    void resized() override;
+    // Removed duplicate declarations of paint and resized
 
     juce::Label modelLabel;
     juce::Label versionLabel;
@@ -73,10 +71,9 @@ private:
 
     juce::Image background2;
 
-   ProteusAudioProcessor& audioProcessor;
+    ProteusAudioProcessor& audioProcessor;  // Make sure this is initialized in the constructor
 
-    // Slider driveKnob;  // Declare the driveKnob here
-    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> driveAttachment;  // Declare the driveAttachment here
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> driveAttachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
 };
