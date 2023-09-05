@@ -14,7 +14,7 @@ ProteusAudioProcessor::ProteusAudioProcessor()
     ),
     treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN_ID, GAIN_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
                        std::make_unique<AudioParameterFloat>(MASTER_ID, MASTER_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5) })
-#endif
+#endif  // <-- This is the missing #endif
 {
     driveParam = treeState.getRawParameterValue(GAIN_ID);
     masterParam = treeState.getRawParameterValue(MASTER_ID);
