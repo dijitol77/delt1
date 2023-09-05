@@ -92,7 +92,6 @@ odLevelKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
 odLevelKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
 odLevelKnob.setDoubleClickReturnValue(true, 0.5);
   
-  bool showEQ = false; // Set this to true if you want to show the EQ, false to hide it
 
 
 
@@ -330,15 +329,7 @@ void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHa
     // ...
 }
 
-void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
-{
-    // Amp
-    if (ampBassKnob.isVisible() && ampMidKnob.isVisible() && ampTrebleKnob.isVisible()) {
-        if (slider == &ampBassKnob || slider == &ampMidKnob || slider == &ampTrebleKnob) {
-            processor.set_ampEQ(ampBassKnob.getValue(), ampMidKnob.getValue(), ampTrebleKnob.getValue());
-        }
-    }
-}
+
 
 void ProteusAudioProcessorEditor::modelSelectChanged()
 {
