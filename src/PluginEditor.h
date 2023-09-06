@@ -15,13 +15,12 @@ public:
 
     void paint (Graphics&) override;
     void resized() override;
-    void loadFromFolder();
     void resetImages();
     void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
     void loadModelByName(const std::string& modelName);  // Make sure this line exists
     std::string currentModelName;  // Add this line
 
-    void timerCallback() override;
+    void timerCallback();
     bool loadModel(const juce::String& modelName);
     void loadFromFolder();
    
