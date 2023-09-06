@@ -228,12 +228,7 @@ int knobX = blockA2.getX() + 10;  // 10 pixels from the left edge of blockA2
 int knobY = blockA2.getY() + 10;  // 10 pixels from the top edge of blockA2
 odDriveKnob.setBounds(knobX, knobY, knobWidth, knobHeight);
 
-// For the button
-int buttonWidth = blockA2.getWidth() - 20;
-int buttonHeight = blockA2.getHeight() - 20;
-int buttonX = blockA2.getX() + blockA2.getWidth() - buttonWidth - 10;  // 10 pixels from the right edge of blockA2
-int buttonY = blockA2.getY() + 10;  // 10 pixels from the top edge of blockA2
-cabOnButton.setBounds(buttonX, buttonY, buttonWidth, buttonHeight);
+
 
     // Set bounds for the resizable corner and border
     resizableCorner->setBounds(getWidth() - 16, getHeight() - 16, 16, 16);
