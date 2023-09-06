@@ -379,7 +379,7 @@ void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHa
 
 void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
 {
-     if (slider == &odDriveKnob)   
+   //  if (slider == &odDriveKnob)   
 }
 
 void ProteusAudioProcessorEditor::modelSelectChanged()
