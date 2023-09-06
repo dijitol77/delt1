@@ -1,3 +1,15 @@
+/*
+  ==============================================================================
+
+    This file was auto-generated!
+
+ddd
+
+    It contains the basic framework code for a JUCE plugin editor.
+
+  ==============================================================================
+*/
+
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
@@ -7,54 +19,71 @@
 //==============================================================================
 /**
 */
+
+
 class ProteusAudioProcessorEditor : public juce::AudioProcessorEditor,
-                                    public juce::Button::Listener,
-                                    public juce::Slider::Listener,
-                                    public juce::ComboBox::Listener
+                                    public Button::Listener,
+                                    public Slider::Listener,
+                                    public juce::ComboBox::Listener // <-- Add this line               
 {
 public:
     ProteusAudioProcessorEditor (ProteusAudioProcessor&);
-    ~ProteusAudioProcessorEditor() override;
+    ~ProteusAudioProcessorEditor();
 
-    void paint (juce::Graphics&) override;
+    //==============================================================================
+    void paint (Graphics&) override;
     void resized() override;
+    std::unique_ptr<FileChooser> myChooser;
 
     void loadFromFolder();
     void resetImages();
-    bool isValidFormat(juce::File configFile);
 
-    void buttonClicked(juce::Button* button) override;
-    void sliderValueChanged(juce::Slider* slider) override;
-    void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
-
+    
 private:
-    void initializeComponents();
-    void modelSelectChanged();
+    // This reference is provided as a quick way for your editor to
+    // access the processor object that created it.
+    ProteusAudioProcessor& processor;
 
-    // Removed duplicate declarations of paint and resized
 
-    juce::Label modelLabel;
-    juce::Label versionLabel;
-    juce::ComboBox modelSelect;
+ //   TextButton loadButton;
+   virtual void buttonClicked(Button* button) override;
 
-    juce::Slider ampBassKnob;
-    juce::Slider ampMidKnob;
-    juce::Slider ampTrebleKnob;
-    juce::Slider odDriveKnob;
-    juce::Slider odLevelKnob;
+   bool isValidFormat(File configFile);
+ // void loadButtonClicked();
+   Image background2;
+  // Image background2 = ImageCache::getFromMemory(BinaryData::BACK2_jpg, BinaryData::BACK2_jpgSize);
+    //Image background = ImageCache::getFromMemory(BinaryData::smart_pedal_jpg, BinaryData::smart_pedal_jpgSize);
+    // LookandFeels and Graphics
+  //  Image background_on = ImageCache::getFromMemory(BinaryData::background_on_jpg, BinaryData::background_on_jpgSize);
+  //  Image background_on_blue = ImageCache::getFromMemory(BinaryData::background_on_blue_jpg, BinaryData::background_on_blue_jpgSize);
+    //Image background_off = ImageCache::getFromMemory(BinaryData::background_off_jpg, BinaryData::background_off_jpgSize);
 
-    juce::TextButton cabOnButton;
+    // Global Widgets
+    Label modelLabel;
+    Label versionLabel;
 
+    ComboBox modelSelect;
+
+    // Overdrive Widgets
+   // Slider ampBassKnob;
+   // Slider ampMidKnob;
+   // Slider ampTrebleKnob;
+    Slider odDriveKnob;
+Slider odDriveKnob2;
+    Slider odLevelKnob;
+
+juce::TextButton cabOnButton;  // or juce::ImageButton cabOnButton;
+    
     juce::FlexBox mainFlexBox;
     juce::FlexBox controlFlexBox;
-    juce::Label loadedModelLabel;
+    juce::Label loadedModelLabel;  // Add this line
 
-    juce::Component block1;
-    juce::Component block2;
-    juce::Component block3;
+juce::Component block1;
+juce::Component block2;  // Declare block2 here
+juce::Component block3;  // Declare block3 here
 
-    juce::TextButton ButtonX;
-    juce::TextButton ButtonY;
+juce::TextButton ButtonX;  // Declare once
+juce::TextButton ButtonY;  // Declare once
 
     myLookAndFeel bigKnobLAF;
     myLookAndFeel smallKnobLAF;
@@ -63,17 +92,23 @@ private:
     std::unique_ptr<juce::ResizableBorderComponent> resizableBorder;
     juce::ComponentBoundsConstrainer constrainer;
 
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> midSliderAttach;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
 
-    juce::Image background2;
+    virtual void sliderValueChanged(Slider* slider) override;
 
-    ProteusAudioProcessor& audioProcessor;  // Make sure this is initialized in the constructor
+    AudioProcessorParameter* getParameter(const String& paramId);
+ 
+    void odFootSwClicked();
+    void modelSelectChanged();
+    void cabOnButtonClicked();
+void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> driveAttachment;
+    bool model_loaded = false;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> midSliderAttach;
+////    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach;
+//    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
+ //   std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
 };
