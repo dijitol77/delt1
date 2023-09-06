@@ -71,9 +71,9 @@ private:
     void sliderValueChanged(Slider* slider) override;
     AudioProcessorParameter* getParameter(const String& paramId);
 
-    void odFootSwClicked();
+  //  void odFootSwClicked();
     void modelSelectChanged();
-    void cabOnButtonClicked();
+ //   void cabOnButtonClicked();
 
   //  bool isPlaceholderSwitchOn = false;
   //  bool issecondPlaceholderSwitchOn = false;
