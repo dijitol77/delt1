@@ -325,8 +325,8 @@ void ProteusAudioProcessorEditor::loadFromFolder()
 
 void ProteusAudioProcessorEditor::buttonClicked(Button* button)
 {
-    // Intentionally left blank for now
-    std::cout << "1" << std::endl;  // Writes the number 1 to the console
+    // Your implementation here
+    std::cout << "1" << std::endl;
 }
 
 bool ProteusAudioProcessorEditor::loadModel(const juce::String& modelName)
