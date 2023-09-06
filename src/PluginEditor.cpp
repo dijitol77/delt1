@@ -330,15 +330,7 @@ void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHa
     // ...
 }
 
-//void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
-//{
-    // Amp
-  /////  if (ampBassKnob.isVisible() && ampMidKnob.isVisible() && ampTrebleKnob.isVisible()) {
-  ////      if (slider == &ampBassKnob || slider == &ampMidKnob || slider == &ampTrebleKnob) {
- //           processor.set_ampEQ(ampBassKnob.getValue(), ampMidKnob.getValue(), ampTrebleKnob.getValue());
- ////       }
- //   }
-//}
+
 
 void ProteusAudioProcessorEditor::modelSelectChanged()
 {
