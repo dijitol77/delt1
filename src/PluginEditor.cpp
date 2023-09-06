@@ -11,6 +11,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include <algorithm>
+#include <iostream>  // Include this header at the top of your .cpp file if it's not already there
 
 // ... (other includes and namespace declarations)
 
@@ -322,10 +323,10 @@ void ProteusAudioProcessorEditor::loadFromFolder()
     }
 }
 
-
 void ProteusAudioProcessorEditor::buttonClicked(Button* button)
 {
-    // Your implementation here
+    // Intentionally left blank for now
+    std::cout << "1" << std::endl;  // Writes the number 1 to the console
 }
 
 bool ProteusAudioProcessorEditor::loadModel(const juce::String& modelName)
