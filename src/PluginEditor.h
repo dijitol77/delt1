@@ -29,10 +29,10 @@ public:
 private:
     ProteusAudioProcessor& processor;
 
-   // TextButton loadButton;
-  //  void buttonClicked(Button* button) override;
+
+  
     bool isValidFormat(File configFile);
-   // void loadButtonClicked();
+  
     Image background2;
 
     Label modelLabel;
@@ -73,7 +73,7 @@ private:
 
   //  void odFootSwClicked();
     void modelSelectChanged();
- //   void cabOnButtonClicked();
+
 
   //  bool isPlaceholderSwitchOn = false;
   //  bool issecondPlaceholderSwitchOn = false;
