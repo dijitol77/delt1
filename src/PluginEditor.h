@@ -103,11 +103,11 @@ juce::TextButton ButtonY;  // Declare once
 void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 
     bool model_loaded = false;
-    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
-    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> midSliderAttach;
+//    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
+  //  std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> midSliderAttach;
 ////    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach;
-//    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
- //   std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
+   std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
+  std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProteusAudioProcessorEditor)
