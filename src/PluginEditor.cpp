@@ -61,7 +61,7 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     smallKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::small_knob_png, BinaryData::small_knob_pngSize));
 
 // Setup odDriveKnob
-driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
+// driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
 addAndMakeVisible(odDriveKnob);
 odDriveKnob.setLookAndFeel(&bigKnobLAF);
 odDriveKnob.addListener(this);
@@ -84,7 +84,7 @@ odDriveKnob.repaint();
 odLevelKnob.setVisible(false);
 
 // Re-setup odLevelKnob (it will remain hidden)
-masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
+// masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
 // Do NOT call addAndMakeVisible for odLevelKnob here
 odLevelKnob.setLookAndFeel(&smallKnobLAF);
 odLevelKnob.addListener(this);
