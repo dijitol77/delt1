@@ -322,6 +322,12 @@ void ProteusAudioProcessorEditor::loadFromFolder()
     }
 }
 
+
+void ProteusAudioProcessorEditor::buttonClicked(Button* button)
+{
+    // Your implementation here
+}
+
 bool ProteusAudioProcessorEditor::loadModel(const juce::String& modelName)
 {
     // Implement your logic to load the selected model
