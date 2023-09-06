@@ -360,7 +360,7 @@ void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHa
         repaint();
     }
 
-     if (comboBox == &modelSelect)
+     if (comboBoxThatHasChanged == &modelSelect)
     {
         // Handle model selection
         juce::String selectedModel = modelSelect.getText();
