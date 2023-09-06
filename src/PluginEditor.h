@@ -20,6 +20,10 @@ public:
     void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
     void loadModelByName(const std::string& modelName);  // Make sure this line exists
     std::string currentModelName;  // Add this line
+
+    void timerCallback() override;
+    bool loadModel(const juce::String& modelName);
+    void loadFromFolder();
    
 
 private:
