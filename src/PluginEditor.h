@@ -93,7 +93,6 @@ juce::TextButton ButtonY;  // Declare once
     juce::ComponentBoundsConstrainer constrainer;
 
 
- //   virtual void sliderValueChanged(Slider* slider) override;
 
     AudioProcessorParameter* getParameter(const String& paramId);
  
@@ -103,9 +102,7 @@ juce::TextButton ButtonY;  // Declare once
 void comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) override;
 
     bool model_loaded = false;
-//    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> bassSliderAttach;
-  //  std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> midSliderAttach;
-////    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> trebleSliderAttach;
+
    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> driveSliderAttach;
   std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> masterSliderAttach;
 
