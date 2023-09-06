@@ -23,7 +23,7 @@ ddd
 
 class ProteusAudioProcessorEditor : public juce::AudioProcessorEditor,
                                     public Button::Listener,
-                                    public Slider::Listener,
+                                 public Slider::Listener,
                                     public juce::ComboBox::Listener // <-- Add this line               
 {
 public:
@@ -93,7 +93,7 @@ juce::TextButton ButtonY;  // Declare once
     juce::ComponentBoundsConstrainer constrainer;
 
 
-    virtual void sliderValueChanged(Slider* slider) override;
+ //   virtual void sliderValueChanged(Slider* slider) override;
 
     AudioProcessorParameter* getParameter(const String& paramId);
  
