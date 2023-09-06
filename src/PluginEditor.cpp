@@ -12,6 +12,8 @@
 #include "PluginEditor.h"
 #include <algorithm>
 
+// ... (other includes and namespace declarations)
+
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p)
 {
@@ -43,23 +45,16 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     addAndMakeVisible(block3);
 
 
+    // Initialize the ComboBox
     addAndMakeVisible(modelSelect);
     modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
     modelSelect.setScrollWheelEnabled(true);
     loadFromFolder();  // Load the initial list of models
+    modelSelect.addListener(this);
 
-    // Add listener for the ComboBox
-    modelSelect.addListener(this);  // <-- This line ensures that comboBoxChanged will be called
-    int c = 1;
-    for (const auto& jsonFile : processor.jsonFiles) {
-        modelSelect.addItem(jsonFile.getFileName(), c);
-        c += 1;
-    }
-    modelSelect.onChange = [this] {modelSelectChanged();};
+    // ... (rest of your existing constructor code)
 
-
-    // Start the timer to auto-refresh the dropdown every 5 seconds
-    startTimer(5000);
+    
 
     auto font = modelLabel.getFont();
     float height = font.getHeight();
@@ -151,7 +146,8 @@ background2 = ImageCache::getFromMemory(BinaryData::BACK2_jpg, BinaryData::BACK2
   
     loadFromFolder();
   
-  
+  // Start the timer to auto-refresh the dropdown every 5 seconds
+    startTimer(5000);
    // Call resized() to set the initial layout
     resized();
 }
@@ -345,7 +341,7 @@ void ProteusAudioProcessorEditor::timerCallback()
 }
 
 // In your comboBoxChanged method
-void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) 
+void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged)
 {
     if (comboBoxThatHasChanged == &modelSelect)
     {
@@ -366,18 +362,21 @@ void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHa
         juce::String selectedModel = modelSelect.getText();
         if (loadModel(selectedModel))
         {
-            // Change the background color to green to indicate successful model loading
-          modelSelect.setColour(juce::ComboBox::backgroundColourId, juce::Colours::green);
-          
+            modelSelect.setColour(juce::ComboBox::backgroundColourId, juce::Colours::green);
+        }
         else
         {
             // Reset the background color if the model couldn't be loaded
             modelSelect.setColour(juce::ComboBox::backgroundColourId, juce::Colours::white);
         }
     }
-    
 }
 
+void ProteusAudioProcessorEditor::timerCallback()
+{
+    // Refresh the list of models
+    loadFromFolder();
+}
 void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
 {
      if (slider == &odDriveKnob)
@@ -395,6 +394,13 @@ void ProteusAudioProcessorEditor::modelSelectChanged()
         }
     }
     repaint();
+}
+
+bool ProteusAudioProcessorEditor::loadModel(const juce::String& modelName)
+{
+    // Implement your logic to load the selected model
+    // Return true if the model was successfully loaded, false otherwise
+    return true;
 }
 
 // ... (rest of your existing methods)
