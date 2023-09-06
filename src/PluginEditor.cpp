@@ -13,7 +13,7 @@
 #include <algorithm>
 
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p), block1(/* constructor arguments, if any */)
+    : AudioProcessorEditor (&p), processor (p)
 {
      // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -46,6 +46,10 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
     addAndMakeVisible(modelSelect);
     modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
     modelSelect.setScrollWheelEnabled(true);
+    loadFromFolder();  // Load the initial list of models
+
+    // Add listener for the ComboBox
+    modelSelect.addListener(this);  // <-- This line ensures that comboBoxChanged will be called
     int c = 1;
     for (const auto& jsonFile : processor.jsonFiles) {
         modelSelect.addItem(jsonFile.getFileName(), c);
@@ -142,7 +146,8 @@ background2 = ImageCache::getFromMemory(BinaryData::BACK2_jpg, BinaryData::BACK2
     // Size of plugin GUI
     setSize(1121, 326); 
   
-modelSelect.addListener(this);
+    modelSelect.addListener(this);
+
   
     loadFromFolder();
   
@@ -339,13 +344,10 @@ void ProteusAudioProcessorEditor::timerCallback()
     loadFromFolder();
 }
 
-
-
+// In your comboBoxChanged method
 void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) 
 {
-    
-   
-     if (comboBoxThatHasChanged == &modelSelect)
+    if (comboBoxThatHasChanged == &modelSelect)
     {
         const int selectedFileIndex = modelSelect.getSelectedItemIndex();
         if (selectedFileIndex >= 0 && selectedFileIndex < processor.jsonFiles.size() && !processor.jsonFiles.empty()) {
@@ -365,8 +367,8 @@ void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHa
         if (loadModel(selectedModel))
         {
             // Change the background color to green to indicate successful model loading
-            modelSelect.setColour(juce::ComboBox::backgroundColourId, juce::Colours::green);
-        }
+          modelSelect.setColour(juce::ComboBox::backgroundColourId, juce::Colours::green);
+          
         else
         {
             // Reset the background color if the model couldn't be loaded
