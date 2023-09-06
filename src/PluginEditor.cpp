@@ -15,6 +15,11 @@
 ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p), block1(/* constructor arguments, if any */)
 {
+     // Make sure that before the constructor has finished, you've set the
+    // editor's size to whatever you need it to be.
+    setSize (400, 300);
+
+    // Initialize the drive knob
         // Existing code...
     resizableCorner = std::make_unique<juce::ResizableCornerComponent>(this, &constrainer);
     resizableBorder = std::make_unique<juce::ResizableBorderComponent>(this, &constrainer);
@@ -47,6 +52,10 @@ ProteusAudioProcessorEditor::ProteusAudioProcessorEditor (ProteusAudioProcessor&
         c += 1;
     }
     modelSelect.onChange = [this] {modelSelectChanged();};
+
+
+    // Start the timer to auto-refresh the dropdown every 5 seconds
+    startTimer(5000);
 
     auto font = modelLabel.getFont();
     float height = font.getHeight();
@@ -137,6 +146,7 @@ modelSelect.addListener(this);
   
     loadFromFolder();
   
+  
    // Call resized() to set the initial layout
     resized();
 }
@@ -151,6 +161,13 @@ ProteusAudioProcessorEditor::~ProteusAudioProcessorEditor()
 //==============================================================================
 void ProteusAudioProcessorEditor::paint(Graphics& g)
 {
+     // (Our component is opaque, so we must completely fill the background with a solid colour)
+    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+
+    g.setColour (juce::Colours::white);
+    g.setFont (15.0f);
+    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
+
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
     if (processor.fw_state == 1 && processor.conditioned == true) {
         g.drawImageWithin(background2, 0, 0, getWidth(), getHeight(), RectanglePlacement::stretchToFit, false);
@@ -262,6 +279,20 @@ bool ProteusAudioProcessorEditor::isValidFormat(File configFile)
 
 void ProteusAudioProcessorEditor::loadFromFolder()
 {
+    // Clear the existing items
+    modelSelect.clear();
+
+    // Specify the folder path (this is just an example; replace with your actual path)
+    juce::File folder("./models/");
+
+    juce::Array<juce::File> modelFiles;
+    folder.findChildFiles(modelFiles, juce::File::findFiles, false, "*.json");
+
+    for (const auto& file : modelFiles)
+    {
+        modelSelect.addItem(file.getFileName(), modelSelect.getNumItems() + 1);
+    }
+
     processor.model_loaded = false;
 
     // Get the directory where the models are stored
@@ -295,18 +326,26 @@ void ProteusAudioProcessorEditor::loadFromFolder()
     }
 }
 
-void ProteusAudioProcessorEditor::buttonClicked(juce::Button* button)
+bool ProteusAudioProcessorEditor::loadModel(const juce::String& modelName)
 {
-   
+    // Implement your logic to load the selected model
+    // Return true if the model was successfully loaded, false otherwise
+    return true;
 }
 
-
+void ProteusAudioProcessorEditor::timerCallback()
+{
+    // Refresh the list of models
+    loadFromFolder();
+}
 
 
 
 void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged) 
 {
-    if (comboBoxThatHasChanged == &modelSelect)
+    
+   
+     if (comboBoxThatHasChanged == &modelSelect)
     {
         const int selectedFileIndex = modelSelect.getSelectedItemIndex();
         if (selectedFileIndex >= 0 && selectedFileIndex < processor.jsonFiles.size() && !processor.jsonFiles.empty()) {
@@ -318,11 +357,28 @@ void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHa
         }
         repaint();
     }
+
+     if (comboBox == &modelSelect)
+    {
+        // Handle model selection
+        juce::String selectedModel = modelSelect.getText();
+        if (loadModel(selectedModel))
+        {
+            // Change the background color to green to indicate successful model loading
+            modelSelect.setColour(juce::ComboBox::backgroundColourId, juce::Colours::green);
+        }
+        else
+        {
+            // Reset the background color if the model couldn't be loaded
+            modelSelect.setColour(juce::ComboBox::backgroundColourId, juce::Colours::white);
+        }
+    }
     
 }
 
 void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
 {
+     if (slider == &odDriveKnob)
    
 }
 
