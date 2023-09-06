@@ -4,7 +4,7 @@
 #include "PluginProcessor.h"
 #include "myLookAndFeel.h"
 
-class ProteusAudioProcessorEditor : public juce::AudioProcessorEditor,
+class ProteusAudioProcessorEditor : public AudioProcessorEditor,
                                     public Button::Listener,
                                     public Slider::Listener,
                                     public ComboBox::Listener,
