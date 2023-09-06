@@ -14,6 +14,7 @@ public:
     ProteusAudioProcessorEditor (ProteusAudioProcessor&);
     ~ProteusAudioProcessorEditor();
 
+ void buttonClicked(Button* button) override;
     void paint (Graphics&) override;
     void resized() override;
     void resetImages();
