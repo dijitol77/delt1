@@ -331,8 +331,7 @@ bool ProteusAudioProcessorEditor::loadModel(const juce::String& modelName)
 
 void ProteusAudioProcessorEditor::timerCallback()
 {
-    // Refresh the list of models
-    loadFromFolder();
+    // Your implementation here
 }
 
 // In your comboBoxChanged method
