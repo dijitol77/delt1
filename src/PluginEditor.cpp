@@ -343,15 +343,18 @@ void ProteusAudioProcessorEditor::timerCallback()
 // In your comboBoxChanged method
 void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHasChanged)
 {
-    if (comboBoxThatHasChanged == &modelSelect)
+    if (comboBoxThatHasChanged == &modelSelect)  // Changed from "comboBox" to "comboBoxThatHasChanged"
     {
-        const int selectedFileIndex = modelSelect.getSelectedItemIndex();
-        if (selectedFileIndex >= 0 && selectedFileIndex < processor.jsonFiles.size() && !processor.jsonFiles.empty()) {
-            if (processor.jsonFiles[selectedFileIndex].existsAsFile() && isValidFormat(processor.jsonFiles[selectedFileIndex])) {
-                processor.loadConfig(processor.jsonFiles[selectedFileIndex]);
-                processor.current_model_index = selectedFileIndex;
-                processor.saved_model = processor.jsonFiles[selectedFileIndex];
-            }
+        // Handle model selection
+        juce::String selectedModel = modelSelect.getText();
+        if (loadModel(selectedModel))
+        {
+            modelSelect.setColour(juce::ComboBox::backgroundColourId, juce::Colours::green);
+        }
+        else
+        {
+            // Reset the background color if the model couldn't be loaded
+            modelSelect.setColour(juce::ComboBox::backgroundColourId, juce::Colours::white);
         }
         repaint();
     }
@@ -372,11 +375,7 @@ void ProteusAudioProcessorEditor::comboBoxChanged(juce::ComboBox* comboBoxThatHa
     }
 }
 
-void ProteusAudioProcessorEditor::timerCallback()
-{
-    // Refresh the list of models
-    loadFromFolder();
-}
+
 void ProteusAudioProcessorEditor::sliderValueChanged(Slider* slider)
 {
      if (slider == &odDriveKnob)
@@ -396,12 +395,9 @@ void ProteusAudioProcessorEditor::modelSelectChanged()
     repaint();
 }
 
-bool ProteusAudioProcessorEditor::loadModel(const juce::String& modelName)
-{
-    // Implement your logic to load the selected model
-    // Return true if the model was successfully loaded, false otherwise
-    return true;
-}
+
+
+
 
 // ... (rest of your existing methods)
 
